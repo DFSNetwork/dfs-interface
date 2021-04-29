@@ -1,0 +1,230 @@
+// color css
+
+$color-main: #29D4B0;
+$color-aux: #01c798;
+$color-black: #000;
+$color-bgcolor: #fff;
+$color-border: #f3f3f3;
+$color-shadow: #e0e0e0;
+$color-tip: #a6a6a6;
+$color-red: #ff6871;
+
+.fontFamily{
+  font-family: 'Monospace' 'Sarasa', Helvetica, Arial, sans-serif !important;
+}
+
+.tip{
+  color: $color-tip;
+}
+.red_p{
+  color: #ff6871 !important;
+}
+.green_p{
+  color: #02c698 !important;
+}
+.svgIcon{
+  display: block;
+}
+
+.flex{
+  display: flex;
+}
+.flexc{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.flexb{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.flexa{
+  display: flex;
+  align-items: center;
+}
+.flexs{
+  display: flex;
+  align-items: flex-start;
+}
+.flexend{
+  display: flex;
+  align-items: flex-end;
+}
+.gold {
+  border: 1px solid rgb(238, 198, 4) !important;
+  box-shadow: 0 0 5px 0px rgba(238, 198, 4, .5) !important;
+}
+.silver {
+  border: 1px solid #b0dbff !important;
+  box-shadow: 0 0 5px 0px rgba(#b0dbff, .5) !important;
+}
+.bronze {
+  border: 1px solid #8C7853 !important;
+  box-shadow: 0 0 5px 0px rgba(#8C7853, .5) !important;
+}
+.el-message{
+  // width: 80% !important;
+  min-width: 60% !important;
+  max-width: 80% !important;
+}
+.el-message__icon{
+  font-size: 36px !important;
+}
+.el-message__content{
+  font-size: 24px !important;
+  line-height: 30px !important;
+}
+.el-loading-spinner .path{
+  stroke: rgba(2,198,152,1) !important;
+}
+.el-loading-spinner .circular{
+  height: 42px !important;
+  width: 42px !important;
+}
+
+@keyframes changeBgShadow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+.bgShadow{
+  border-radius: 10px;
+  &::before{
+    content: '';
+    filter: blur(9px);
+    position: absolute;
+    top: -3px;
+    right: -3px;
+    bottom: -3px;
+    left: -3px;
+    z-index: 1;
+    background: linear-gradient(45deg, rgb(255, 0, 0) 0%, rgb(255, 154, 0) 10%, rgb(208, 222, 33) 20%, rgb(79, 220, 74) 30%, rgb(63, 218, 216) 40%, rgb(47, 201, 226) 50%, rgb(28, 127, 238) 60%, rgb(95, 21, 242) 70%, rgb(186, 12, 248) 80%, rgb(251, 7, 217) 90%, rgb(255, 0, 0) 100%) 0% 0% / 300% 300%;
+    animation: 2s linear 0s infinite normal none running changeBgShadow;
+    border-radius: 20px !important;
+  }
+}
+
+.poolslv1{
+  border: 1px solid #B56DD9 !important;
+  box-shadow: 0 0 5px 0px rgba(#B56DD9, .5) !important;
+}
+.poolslv2{
+  border: 1px solid #9891c5 !important;
+  box-shadow: 0 0 5px 0px rgba(#9891c5, .5) !important;
+}
+.poolslv3{
+  border: 1px solid #5ebd81 !important;
+  box-shadow: 0 0 5px 0px rgba(#5ebd81, .5) !important;
+}
+.poolslv4{
+  border: 1px solid #AAB5BD !important;
+  box-shadow: 0 0 5px 0px rgba(#AAB5BD, .5) !important;
+}
+.poolslv5{
+  border: 1px solid #FFBD23 !important;
+  box-shadow: 0 0 5px 0px rgba(#FFBD23, .5) !important;
+}
+.poolslv6{
+  border: 1px solid #15a97b !important;
+  box-shadow: 0 0 5px 0px rgba(#15a97b, .5) !important;
+}
+.dinBold{
+  font-family: 'DinBold', 'Sarasa', Helvetica, Arial, sans-serif !important;
+}
+.din{
+  font-family: 'Din', 'Sarasa', Helvetica, Arial, sans-serif !important;
+}
+.dinReg{
+  font-family: 'DinReg', 'Sarasa', Helvetica, Arial, sans-serif !important;
+}
+
+
+input::-webkit-input-placeholder {
+  color: #ccc !important;
+}
+
+.mydialog{
+  /deep/ .el-dialog{
+    border-radius: 12px;
+    width: 650px;
+    margin-top: 15vh !important;
+    .el-dialog__header{
+      padding: 0;
+    }
+    .el-dialog__body{
+      padding: 0;
+    }
+    .el-dialog__headerbtn{
+      font-size: 40px;
+      z-index: 1;
+    }
+  }
+}
+.percent_p{
+  font-size: 28px;
+  color: #333;
+  &>span{
+    width: 92px;
+    border: 1px solid rgba(#333, .1);
+    border-radius: 8px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &.act_p{
+      color: #29D4B0;
+      background: rgba(#29D4B0, .2);
+      border: 1px solid rgba(#11AE8D, .2);
+    }
+  }
+}
+
+.van-popover--light{
+  border-radius: 8px;
+  box-shadow: 2px 4px 8px 4px rgba(219,219,219,0.5) !important;
+}
+.van-popover__action{
+  width: 150px !important;
+  padding: 0px !important;;
+}
+.newMarket{
+  width: 70%;
+  top: 0px;
+  bottom: 0px;
+  transform: translate(0, 0);
+  max-width: 550px;
+  border-radius: 0px;
+}
+
+.popup_p{
+  margin-top: 15vh;
+  width: 90%;
+  top: 0px;
+  transform: translate(-50%, 0);
+  max-width: 700px;
+  border-radius: 15px;
+}
+
+.loading_p{
+  margin: 70px auto;
+}
+.accVoteNum_p{
+  background: #FFF;
+  margin: 0 28px 18px;
+  box-shadow: 0px 4px 8px 4px rgba(231,231,231,0.41);
+  border-radius: 8px 8px 0px 0px;
+  padding: 28px 0 0 0;
+  position: relative;
+}
+.noData_p{
+  padding: 50px 0;
+  font-size: 24px;
+  color: #999;
+}
