@@ -1,4 +1,4 @@
-# jin-network
+# DFS-network
 DeFis Network front end.
 
 ## Project setup
