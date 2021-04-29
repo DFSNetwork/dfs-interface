@@ -66,7 +66,7 @@
           <div>大丰收日记</div>
           <img class="beta hot" src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/hot.png" alt="">
         </div>
-        <div class="list" @click="handleTo('pools')">
+        <div class="list" @click="handleTo('dfsMine')">
           <img class="icon" src="https://cdn.jsdelivr.net/gh/defis-net/material2/coin/minedfstoken-dfs.png" alt="">
           <div>DFS 矿池</div>
         </div>
@@ -198,10 +198,6 @@ export default {
       }
       if (name === 'eosdefi') {
         location.href = 'http://eos-defi.sgxiang.com/'
-        return
-      }
-      if (name === 'pbtc') {
-        location.href = 'https://dapp.ptokens.io/pbtc-on-eos/issue-redeem'
         return
       }
       if (name === 'totalData') {

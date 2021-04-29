@@ -302,9 +302,6 @@ function regExchange(coin, v) {
   if (tCoin === 'DFS' && v.contract0 === 'minedfstoken' && v.sym0 === '4,DFS') {
     return true
   }
-  if (tCoin === 'PBTC' && v.contract0 === 'btc.ptokens' && v.sym0 === '8,PBTC') {
-    return true
-  }
   return false
 }
 // 处理币种APY
