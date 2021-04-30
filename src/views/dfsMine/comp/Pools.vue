@@ -4,50 +4,50 @@
       <img class="coin" src="https://cdn.jsdelivr.net/gh/defis-net/material2/coin/minedfstoken-dfs.png">
       <div>
         <div class="coinName din">DFS</div>
-        <div>发行量=流通量+蓄水池+矿池</div>
+        <div>{{ $t('dfsMine.totalLiq') }}</div>
       </div>
     </div>
     <div class="flexb token">
       <div class="item">
         <div class="dinBold num">{{ parseInt(current) }}</div>
-        <div class="tip">总发行</div>
+        <div class="tip">{{ $t('dfsMine.supply') }}</div>
       </div>
       <div class="item">
         <div class="dinBold num">{{ usedDfs }}</div>
-        <div class="tip">总流通</div>
+        <div class="tip">{{ $t('dfsMine.liq') }}</div>
       </div>
       <div class="item">
         <div class="dinBold num">${{ price5min }}</div>
-        <div class="tip">价格</div>
+        <div class="tip">{{ $t('dfsMine.price') }}</div>
       </div>
     </div>
 
     <div class="speed">
       <div class="total dinBold">{{ totalBal }}</div>
       <div class="vil">
-        <div class="green">蓄水池</div>
+        <div class="green">{{ $t('dfsMine.reservoir') }}</div>
         <img class="down" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/down-black.png">
         <div class="flexc tip spdNum" @click="showSpeed = true">
-          <span>{{ speed }} DFS/秒</span>
+          <span>{{ speed }} DFS/{{ $t('dfsMine.sec') }}</span>
           <img class="tipImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/tips_icon_btn.svg">
         </div>
       </div>
       <div class="subPools flexb">
         <div class="subPool">
           <div class="bal din">{{ 100 > parseInt(dfsPoolsBal) ? dfsPoolsBal : parseInt(dfsPoolsBal) }}</div>
-          <div class="tip">DFS池子</div>
+          <div class="tip">{{ $t('dfsMine.coinPool', {coin: 'DFS'}) }}</div>
         </div>
         <div class="subPool">
           <div class="bal din">{{ 100 > parseInt(eosPoolsBal) ? eosPoolsBal : parseInt(eosPoolsBal)}}</div>
-          <div class="tip">EOS池子</div>
+          <div class="tip">{{ $t('dfsMine.coinPool', {coin: 'EOS'}) }}</div>
         </div>
         <div class="subPool">
           <div class="bal din">{{ 100 > parseInt(usdtPoolsBal) ? usdtPoolsBal : parseInt(usdtPoolsBal)}}</div>
-          <div class="tip">USDT池子</div>
+          <div class="tip">{{ $t('dfsMine.coinPool', {coin: 'USDT'}) }}</div>
         </div>
         <div class="subPool">
           <div class="bal din">{{ 100 > parseInt(dssPoolsBal) ? dssPoolsBal : parseInt(dssPoolsBal)}}</div>
-          <div class="tip">DSS池子</div>
+          <div class="tip">{{ $t('dfsMine.coinPool', {coin: 'DSS'}) }}</div>
         </div>
       </div>
     </div>

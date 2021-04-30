@@ -16,6 +16,7 @@ import sysParams from './appsLang/sysParams'
 import pddex from './appsLang/pddex'
 import home from './appsLang/home'
 import invite from './appsLang/invite'
+import dfsMine from './appsLang/dfsMine'
 
 Vue.use(VueI18n);
 
@@ -31,6 +32,7 @@ const messages = {
     ...pddex['zh-CN'],
     ...home['zh-CN'],
     ...invite['zh-CN'],
+    ...dfsMine['zh-CN'],
     ...sys['zh-CN']
   },
   en: { // 英文包
@@ -44,6 +46,7 @@ const messages = {
     ...pddex['en'],
     ...home['en'],
     ...invite['en'],
+    ...dfsMine['en'],
     ...sys['en']
   },
 };

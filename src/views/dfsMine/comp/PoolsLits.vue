@@ -1,7 +1,7 @@
 <template>
   <div class="poolsLists">
     <div class="title flexb">
-      <span>矿池列表</span>
+      <span>{{ $t('mine.poolsList') }}</span>
       <!-- <div class="flexa rules">
         <img class="tipImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/tips_icon_btn.svg">
         <span>挖矿规则</span>
@@ -24,7 +24,7 @@
             </div>
           </div>
           <div class="liq flexa dinReg tip">
-            <div>资金池：</div>
+            <div>{{ $t('dex.pools') }}：</div>
             <div>{{ parseInt(v.reserve1) }} {{ v.symbol1 }} / {{ parseInt(v.reserve0) }} {{ v.symbol0 }}</div>
           </div>
         </div>
@@ -115,7 +115,7 @@ export default {
   methods: {
     handleToMarket(item) {
       this.$router.push({
-        name: 'poolsMarket',
+        name: 'dfsMinePool',
         params: {
           mid: item.mid
         }

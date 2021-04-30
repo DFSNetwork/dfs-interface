@@ -1,7 +1,7 @@
 <template>
   <div class="reward flexb">
     <div>
-      <div>挖矿收益</div>
+      <div>{{ $t('mine.mineBonus') }}</div>
       <div class="flexa green">
         <span class="dinBold rdNum">{{ parseFloat(total || 0).toFixed(4) }}</span>
         <span class="coin dinReg">DFS</span>
@@ -10,7 +10,7 @@
     </div>
     <div class="claim flexa">
       <!-- <img class="tipImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/tips_icon_btn.svg"> -->
-      <div class="btn flexc" @click="handleClaimAll">一键领取</div>
+      <div class="btn flexc" @click="handleClaimAll">{{ $t('mine.claimAll') }}</div>
     </div>
   </div>
 </template>

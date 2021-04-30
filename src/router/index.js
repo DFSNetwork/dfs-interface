@@ -423,6 +423,12 @@ const constantRouter = [
         component: () => import(/* webpackChunkName: "home" */ '@/views/dfsMine/Index'),
         meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noTab: true },
       },
+      {
+        path: ':mid',
+        name: 'dfsMinePool',
+        component: () => import(/* webpackChunkName: "home" */ '@/views/dfsMine/childView/PoolMarket'),
+        meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noTab: true },
+      },
     ],
   },
 ]

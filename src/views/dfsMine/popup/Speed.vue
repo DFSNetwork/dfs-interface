@@ -1,18 +1,18 @@
 <template>
   <div class="speedTip">
-    <div class="title">流速规则</div>
-    <div class="rls">每日基础发行量：3600 DFS</div>
-    <div class="rls">衰减系数：没发行100万DFS，衰减25%</div>
-    <div class="rls">当前衰减系数：{{ parseFloat(damping).toFixed(4) }}</div>
-    <div class="rls">流速计算公式：(每日基础发行量 * 衰减系数) / 86400</div>
-    <div class="rls">当前流速：{{ speed }} DFS/秒</div>
+    <div class="title">{{ $t('dfsMine.speedRules') }}</div>
+    <div class="rls">{{ $t('dfsMine.speedRules1') }}</div>
+    <div class="rls">{{ $t('dfsMine.speedRules2') }}</div>
+    <div class="rls">{{ $t('dfsMine.speedRules3') }}{{ parseFloat(damping).toFixed(4) }}</div>
+    <div class="rls">{{ $t('dfsMine.speedRules4') }}</div>
+    <div class="rls">{{ $t('dfsMine.speedRules', {speed}) }}</div>
 
-    <div class="rls"><strong>DFS以当前流速流入以下矿池</strong></div>
+    <div class="rls"><strong>{{ $t('dfsMine.speedRules6') }}</strong></div>
     <ul class="ul">
-      <li>DFS矿池：35%</li>
-      <li>EOS矿池：30%</li>
-      <li>USDT矿池：25%</li>
-      <li>DSS矿池：10%</li>
+      <li>{{ $t('dfsMine.speedRules7') }}</li>
+      <li>{{ $t('dfsMine.speedRules8') }}</li>
+      <li>{{ $t('dfsMine.speedRules9') }}</li>
+      <li>{{ $t('dfsMine.speedRules10') }}</li>
     </ul>
   </div>
 </template>

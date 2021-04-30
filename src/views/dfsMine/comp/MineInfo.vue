@@ -3,21 +3,21 @@
     <div class="flexb lists">
       <div class="item">
         <div class="dinBold num">${{ tvl_usdt }}</div>
-        <div class="small">锁定资金</div>
+        <div class="small">{{ $t('mine.lockFunds') }}</div>
       </div>
       <div class="item mr0">
         <div class="dinBold num">{{ maxApy }}%</div>
-        <div class="small">实时年化 </div>
+        <div class="small">{{ $t('dsr.nowApy') }} </div>
       </div>
     </div>
     <div class="flexb lists">
       <div class="item">
         <div class="dinBold num">{{ nextLess }}</div>
-        <div class="small">下次产量衰减(DFS)</div>
+        <div class="small">{{ $t('mine.nextLess') }}(DFS)</div>
       </div>
       <div class="item mr0">
         <div class="dinBold num">{{ showCurrent }}</div>
-        <div class="small">已经产出(DFS)</div>
+        <div class="small">{{ $t('mine.current') }}(DFS)</div>
       </div>
     </div>
   </div>
