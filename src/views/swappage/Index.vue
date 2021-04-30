@@ -72,7 +72,7 @@
           </div>
           <div class="btnDiv flexb">
             <div class="btn flexc" v-loading="loading" @click="handleSwapTrade">{{ $t('tab.dex') }}</div>
-            <div class="ptokens" v-if="isPtokens" @click="handleToProject('dtoken')">
+            <div class="dtokens" v-if="isDtokens" @click="handleToProject('dtoken')">
               <img :src="ptokenData.imgUrl">
               <div>{{ $t('sys.dAndW') }}</div>
             </div>
@@ -331,7 +331,7 @@ export default {
       marketLists: state => state.sys.marketLists,
       rSwitch: state => state.app.rSwitch,
     }),
-    isPtokens() {
+    isDtokens() {
       if (this.thisMarket0.contract === 'asset.dtoken' && this.thisMarket0.symbol === 'ETH') {
         return this.thisMarket0
       }
@@ -1188,7 +1188,7 @@ export default {
       background:rgba(2,198,152,1);
     }
   }
-  .ptokens{
+  .dtokens{
     margin-left: 30px;
     font-size: 24px;
     text-align: center;

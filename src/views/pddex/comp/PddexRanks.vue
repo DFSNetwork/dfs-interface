@@ -1,17 +1,17 @@
 <template>
   <div class="">
-    <div class="pddexTab flexb">
+    <!-- <div class="pddexTab flexb">
       <span class="flexc" :class="{'act': active === 0}" @click="active = 0">{{ $t('pddex.follow') }}</span>
       <span class="flexc" :class="{'act': active === 1}" @click="active = 1">{{ $t('pddex.all') }}</span>
-    </div>
+    </div> -->
     <div class="rankTabs">
       <van-tabs v-model="coinName"
-        v-if="active === 1"
         animated
         class="subTab"
         title-inactive-color="#999"
         title-active-color="#29D4B0"
         color="#29D4B0">
+        <van-tab name="follow" :title="$t('pddex.follow')"></van-tab>
         <van-tab v-for="(a, i) in areaLists" :key="`area${i}`" :name="a" :title="a"></van-tab>
       </van-tabs>
       <div class="subTitle flexb">
@@ -57,14 +57,14 @@
         :success-text="$t('pddex.refreshSuccess')"
         @refresh="onRefresh"
       >
-        <div class="rankList" v-if="active === 0">
+        <div class="rankList" v-if="coinName === 'follow'">
           <div class="loading_p flexc" v-if="!getLike"><van-loading type="spinner" color="#29D4B0"/></div>
           <div class="noDate tip" v-if="!followList.length && getLike">
             <img class="noDataPng" src="https://cdn.jsdelivr.net/gh/defis-net/material/noData/noStar.png" alt="">
             <div>{{ $t('pddex.noFollow') }}</div>
-            <div class="toFollow flexc" @click="active = 1">{{ $t('pddex.add') }}</div>
+            <div class="toFollow flexc" @click="coinName = 'USDT'">{{ $t('pddex.add') }}</div>
           </div>
-          <div class="rankItem flexb dinReg" v-for="(v, index) in followList" :key="`${active}-${index}`" @click="handleToTrade(v)">
+          <div class="rankItem flexb dinReg" v-for="(v, index) in followList" :key="`${coinName}-${index}`" @click="handleToTrade(v)">
             <div class="name flexa">
               <img class="coinUrl" :src="v.sym1Data.imgUrl" :onerror="errorCoinImg">
               <div>
@@ -106,7 +106,7 @@
             <img class="noDataPng" src="https://cdn.jsdelivr.net/gh/defis-net/material/noData/noStar.png" alt="">
             <div>{{ $t('public.noData') }}</div>
           </div>
-          <div class="rankItem flexb dinReg" v-for="(v, index) in cdAreaLists" :key="`${active}-${index}`" @click="handleToTrade(v)">
+          <div class="rankItem flexb dinReg" v-for="(v, index) in cdAreaLists" :key="`${coinName}-${index}`" @click="handleToTrade(v)">
             <div class="name flexa">
               <img class="coinUrl" :src="v.sym1Data.imgUrl" :onerror="errorCoinImg">
               <div>
@@ -168,7 +168,7 @@ export default {
   },
   data() {
     return {
-      coinName: 'USDT',
+      coinName: 'follow',
       active: 0,
       followList: [], // 关注展示列表
       tradeRankList: [], // 成交量排行
@@ -298,7 +298,7 @@ export default {
                                      : parseFloat(b.price) - parseFloat(a.price)
         })
       } 
-      this.active === 0 ? this.followList = tArr : this.cdAreaLists = tArr;
+      this.coinName === 'follow' ? this.followList = tArr : this.cdAreaLists = tArr;
     },
     handleSortVol() {
       let t = (this.sortVol + 1) % 3;
@@ -358,11 +358,12 @@ export default {
       }
       const rows = result.rows;
       if (!rows.length) {
-        if (this.active === 0) {
-          this.active = 1;
+        if (this.coinName === 'follow') {
+          this.coinName = 'USDT';
         }
         return
       }
+      this.coinName === 'follow';
       this.likeArr = rows;
       this.handleDealLike()
     },
