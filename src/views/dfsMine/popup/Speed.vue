@@ -5,7 +5,8 @@
     <div class="rls">{{ $t('dfsMine.speedRules2') }}</div>
     <div class="rls">{{ $t('dfsMine.speedRules3') }}{{ parseFloat(damping).toFixed(4) }}</div>
     <div class="rls">{{ $t('dfsMine.speedRules4') }}</div>
-    <div class="rls">{{ $t('dfsMine.speedRules', {speed}) }}</div>
+    <div class="rls">{{ $t('dfsMine.speedRules5_1', {supply}) }}</div>
+    <div class="rls">{{ $t('dfsMine.speedRules5', {speed}) }}</div>
 <!-- 
     <div class="rls"><strong>{{ $t('dfsMine.speedRules6') }}</strong></div>
     <ul class="ul">
@@ -32,6 +33,10 @@ export default {
     ...mapState({
       damping: (state) => state.sys.damping,
     }),
+    supply() {
+      const supply = this.damping * 3600;
+      return parseFloat(supply || 0).toFixed(4)
+    }
   },
 }
 </script>
