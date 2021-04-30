@@ -149,11 +149,12 @@ export default {
     }
   },
   methods: {
-    handleGetApy() {
+    async handleGetApy() {
       const params = {
         mid: this.$route.params.mid
       };
-      console.log(params)
+      const {status, result} = await this.$api.get_market_info(params)
+      this.apy = parseFloat(result.apy || 0).toFixed(2);
     },
     handleClose() {
       this.showMarketList = false;
