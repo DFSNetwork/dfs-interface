@@ -148,7 +148,7 @@
             </span>
             <span class="din">{{fees}} {{ thisMarket0.symbol }}</span>
           </div>
-          <div class="flexb" v-if="Number(reward)">
+          <!-- <div class="flexb" v-if="Number(reward)">
             <span class="flex">
               <span class="tip">{{ $t('mine.mineBonus') }}</span>
               <el-popover 
@@ -156,13 +156,12 @@
                 popper-class="mypopper"
                 placement="top-start"
                 trigger="click">
-                <!-- 每笔交易的（0.30%）会给到流动性提供者 -->
                 <div class="qusTip">{{ $t('dex.qusTip4') }}</div>
                 <span slot="reference" class="flexc ml10"><img width="100%" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/tips_icon_btn.svg" alt=""></span>
               </el-popover>
             </span>
             <span class="din">{{ reward }} DFS</span>
-          </div>
+          </div> -->
           <div class="flexb fee">
             <div>
               <span class="flexa" v-if="isMoreRouter" @click="showMoreRouter = true">
