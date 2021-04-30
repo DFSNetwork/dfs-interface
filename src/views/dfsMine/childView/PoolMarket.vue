@@ -27,7 +27,7 @@
       <div class="apy flexa">
         <span>{{ $t('apy.title') }}：</span>
         <span class="dinBold num">{{ apy }}%</span>
-        <span class="green">{{ $t('public.detail') }}></span>
+        <span class="green" @click="showApyDetail = true">{{ $t('public.detail') }}></span>
       </div>
       <div class="liq dinReg">
         {{ $t('dex.pools') }}：{{ thisMarket.reserve0 }} / {{ thisMarket.reserve1 }}
@@ -47,6 +47,13 @@
         @listenMarketChange="handleMarketChange"
         @listenClose="handleClose"/>
     </van-popup>
+
+    <van-popup
+      class="popup_p"
+      v-model="showApyDetail">
+      <MarketApy :countApy="apy" :isActual="true"
+                 :aprInfo="aprInfo"/>
+    </van-popup>
   </div>
 </template>
 
@@ -62,10 +69,11 @@ import { getReward } from '../dfsMine'
 import RewardInfo from '../comp/RewardInfo'
 import MinerLists from '../comp/MinerLists'
 import MarketList from '@/components/MarketArea';
+import MarketApy from '@/views/market/popup/MarketApy'
 export default {
   name: 'poolMarket',
   components: {
-    RewardInfo, MinerLists, MarketList,
+    RewardInfo, MinerLists, MarketList, MarketApy,
   },
   data() {
     return {
@@ -84,6 +92,8 @@ export default {
       secTimer: null,
       runTimer: null,
       showMarketList: false,
+      showApyDetail: false,
+      aprInfo: {},
     }
   },
   mounted() {
@@ -155,6 +165,7 @@ export default {
       };
       const {status, result} = await this.$api.get_market_info(params)
       this.apy = parseFloat(result.apy || 0).toFixed(2);
+      this.aprInfo = result.apy_detail
     },
     handleClose() {
       this.showMarketList = false;

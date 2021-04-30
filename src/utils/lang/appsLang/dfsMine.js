@@ -12,7 +12,7 @@ export default {
 
       speedRules: '流速规则',
       speedRules1: '每日基础发行量：3600 DFS',
-      speedRules2: '衰减系数：没发行100万DFS，衰减25%',
+      speedRules2: '衰减系数：每发行100万DFS，衰减25%',
       speedRules3: '当前衰减系数：',
       speedRules4: '流速计算公式：(每日基础发行量 * 衰减系数) / 86400',
       speedRules5: '当前流速：{ speed } DFS/秒',
@@ -35,7 +35,7 @@ export default {
 
        speedRules:'Flow rate rules',
        speedRules1:'Daily basic circulation: 3600 DFS',
-       speedRules2:'Attenuation coefficient: 1 million DFS is not issued, attenuation 25%',
+       speedRules2:'Attenuation coefficient: every 1 million DFS issued, attenuation 25%',
        speedRules3:'Current attenuation coefficient:',
        speedRules4:'Flow rate calculation formula: (daily basic circulation * attenuation coefficient) / 86400',
        speedRules5:'Current flow rate: {speed} DFS/sec',

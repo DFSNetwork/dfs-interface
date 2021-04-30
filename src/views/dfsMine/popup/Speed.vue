@@ -6,14 +6,14 @@
     <div class="rls">{{ $t('dfsMine.speedRules3') }}{{ parseFloat(damping).toFixed(4) }}</div>
     <div class="rls">{{ $t('dfsMine.speedRules4') }}</div>
     <div class="rls">{{ $t('dfsMine.speedRules', {speed}) }}</div>
-
+<!-- 
     <div class="rls"><strong>{{ $t('dfsMine.speedRules6') }}</strong></div>
     <ul class="ul">
       <li>{{ $t('dfsMine.speedRules7') }}</li>
       <li>{{ $t('dfsMine.speedRules8') }}</li>
       <li>{{ $t('dfsMine.speedRules9') }}</li>
       <li>{{ $t('dfsMine.speedRules10') }}</li>
-    </ul>
+    </ul> -->
   </div>
 </template>
 
