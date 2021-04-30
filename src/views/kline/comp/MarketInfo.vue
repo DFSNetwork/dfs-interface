@@ -62,7 +62,7 @@
       <div class="item">
         <div class="subTitle flexa">
           <span>流动池数量</span>
-          <span class="detail" @click="handleTo('poolsMarket')">前往矿池></span>
+          <span class="detail" @click="handleTo('dfsMinePool')">前往矿池></span>
         </div>
         <div class="num flexa dinReg">
           {{ checkedMarket.reserve1 }} / {{ checkedMarket.reserve0 }}

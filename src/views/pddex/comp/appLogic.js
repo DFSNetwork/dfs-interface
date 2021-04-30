@@ -266,13 +266,13 @@ export function dealAreaArr(arr, coin) {
       imgUrl: getCoin(v.contract1, v.symbol1),
     }
     // 年化计算
-    const {countApy, lpApy, tagLpApy, aprV3, feesApr, usdcApr} = dealApy(v)
+    const {countApy, lpApy, tagLpApy, aprV3, feesApy, usdcApr} = dealApy(v)
     v.countApy = parseFloat(countApy || 0).toFixed(2);
     v.lpApy = lpApy;
     v.tagLpApy = parseFloat(tagLpApy || 0).toFixed(2);
     v.aprV3 = parseFloat(aprV3 || 0).toFixed(2);
-    v.feesApr = parseFloat(feesApr || 0).toFixed(2);
-    v.usdcApr = parseFloat(usdcApr || 0).toFixed(2);
+    v.feesApy = parseFloat(feesApy || 0).toFixed(2);
+    v.usdcApy = parseFloat(usdcApr || 0).toFixed(2);
     newArr.push(v)
   })
   return newArr
@@ -314,7 +314,7 @@ export function dealApy(v) {
   const tagLpMids = store.state.config.tagLpMids;
   const lpMid = store.state.config.lpMid;
   // 手续费年化
-  let feesApr = 0
+  let feesApy = 0
   let newItem = v;
   if (!newItem.volume24H) {
     const market = marketListsPddex.find(vv => vv.mid === v.mid)
@@ -323,11 +323,11 @@ export function dealApy(v) {
   if (newItem.volume24H) {
     const fees = parseFloat(newItem.volume24H || 0) * 0.002;
     const sym0Liq = parseFloat(newItem.reserve0 || 0) * 2;
-    feesApr = fees / (sym0Liq - fees) * 365 * 100;
+    feesApy = fees / (sym0Liq - fees) * 365 * 100;
   } else {
     const storeFeesApr = store.state.sys.feesApr;
     const aprJson = storeFeesApr.find(vv => vv.mid === v.mid) || {};
-    feesApr = parseFloat(aprJson.poolsApr || 0)
+    feesApy = parseFloat(aprJson.poolsApr || 0)
     if (newItem.mid === 637) {
       console.log(aprJson)
     }
@@ -341,7 +341,7 @@ export function dealApy(v) {
   if (has) {
     tagLpApy = getTagLpApy(v.mid)
   }
-  let countApy = parseFloat(feesApr) + parseFloat(aprV3)
+  let countApy = parseFloat(feesApy) + parseFloat(aprV3)
                  + parseFloat(tagLpApy)
   // LP 挖矿
   let lpApy = {}
@@ -411,7 +411,7 @@ export function dealApy(v) {
   // }
   countApy += Number(usdcApr || 0)
 
-  return {countApy, lpApy, tagLpApy, aprV3, feesApr, usdcApr}
+  return {countApy, lpApy, tagLpApy, aprV3, feesApy, usdcApr}
 }
 function mineCoinPrice(mineCoin = {}) {
   if (mineCoin.symbol0 === 'DFS') {

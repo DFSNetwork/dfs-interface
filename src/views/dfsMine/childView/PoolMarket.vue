@@ -164,6 +164,9 @@ export default {
         mid: this.$route.params.mid
       };
       const {status, result} = await this.$api.get_market_info(params)
+      if (!status) {
+        return
+      }
       this.apy = parseFloat(result.apy || 0).toFixed(2);
       this.aprInfo = result.apy_detail
     },
@@ -394,7 +397,7 @@ export default {
           type: 'success',
           message: 'Success'
         })
-        this.handleGetLiqs();
+        this.handleGetAccLiq();
       })
     },
   }

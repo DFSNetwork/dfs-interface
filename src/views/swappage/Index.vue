@@ -186,7 +186,7 @@
       <div class="flexb">
         <div>
           <span>{{ $t('dex.poolNum') }}</span>
-          <span class="marketNow" @click="handleTo('poolsMarket')">{{ $t('pools.toPool') }} ></span>
+          <span class="marketNow" @click="handleTo('dfsMinePool')">{{ $t('pools.toPool') }} ></span>
         </div>
         <div class="flexa usddTip" v-if="showTip" @click="showUsddTip = true">
           <img class="tipIcon" src="https://cdn.jsdelivr.net/gh/defis-net/material/dex/tip.svg" alt="">
