@@ -1,9 +1,5 @@
 <template>
   <div class="">
-    <!-- <div class="pddexTab flexb">
-      <span class="flexc" :class="{'act': active === 0}" @click="active = 0">{{ $t('pddex.follow') }}</span>
-      <span class="flexc" :class="{'act': active === 1}" @click="active = 1">{{ $t('pddex.all') }}</span>
-    </div> -->
     <div class="rankTabs">
       <van-tabs v-model="coinName"
         animated
@@ -169,7 +165,6 @@ export default {
   data() {
     return {
       coinName: 'follow',
-      active: 0,
       followList: [], // 关注展示列表
       tradeRankList: [], // 成交量排行
       tradeList: [],
@@ -264,7 +259,7 @@ export default {
     handleDealSort() {
       const area = this.coinName;
       let arr = JSON.parse(JSON.stringify(this.allMarket[area] || []));
-      if (this.active === 0) {
+      if (this.coinName === 'follow') {
         this.handleDealLike()
         arr = JSON.parse(JSON.stringify(this.followList || []));
       }
