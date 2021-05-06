@@ -33,6 +33,7 @@ export default {
 .banner{
   margin: 10px 28px 28px;
   .bannerImg{
+    border-radius: 8px;
     width: 100%;
     max-height: 280px;
     display: block;

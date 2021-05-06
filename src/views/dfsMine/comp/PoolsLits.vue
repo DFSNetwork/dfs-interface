@@ -238,7 +238,7 @@ export default {
           return
         }
         const row = result.rows[0];
-        const item = this.marketLists.find(vv => vv.mid === v.mid)
+        const item = this.lists.find(vv => vv.mid === v.mid)
         const inData = {
           poolSym0: item.reserve0.split(' ')[0],
           poolSym1: item.reserve1.split(' ')[0],
