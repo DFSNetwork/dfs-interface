@@ -7,6 +7,10 @@
         <img class="bannerImg" v-else
           src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/banner1-en.png">
       </van-swipe-item>
+      <van-swipe-item @click="handleToObj('trade')">
+        <img class="bannerImg"
+          src="@/assets/banner/trade.jpeg">
+      </van-swipe-item>
       <van-swipe-item>
         <img class="bannerImg" v-if="language === 'zh-CN'"
           src="https://cdn.jsdelivr.net/gh/defis-net/material2/banner/dfsMine.png">
@@ -26,6 +30,13 @@ export default {
       language: state => state.app.language, // 基础配置 - 默认为{}
     })
   },
+  methods: {
+    handleToObj(type) {
+      if (type === 'trade') {
+        location.href = 'https://dfsfans.io/?page=home&tab=play'
+      }
+    }
+  }
 }
 </script>
 
