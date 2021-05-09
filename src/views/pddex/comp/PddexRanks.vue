@@ -71,7 +71,7 @@
                 <div class="tip smallTip">
                   <span v-if="sortPools">{{ $t('pddex.pools') }} {{ v.poolsNum }}</span>
                   <span v-else-if="sortApy">
-                    <span>{{ $t('pddex.apys1') }} {{ v.countApy }}%</span>
+                    <span>{{ $t('pddex.apys1') }} {{ parseFloat(v.apy).toFixed(2) }}%</span>
                     <span class="green_p" @click.stop="handleShowApy(v)">详情＞</span>
                   </span>
                   <span v-else>{{ $t('pddex.amt1') }} {{ parseFloat(v.volume24H) }}</span>
@@ -113,7 +113,7 @@
                 <div class="tip smallTip">
                   <span v-if="sortPools">{{ $t('pddex.pools') }} {{ v.poolsNum }}</span>
                   <span v-else-if="sortApy">
-                    <span>{{ $t('pddex.apys1') }} {{ v.countApy }}%</span>
+                    <span>{{ $t('pddex.apys1') }} {{ v.apy }}%</span>
                     <span class="green_p" @click.stop="handleShowApy(v)">详情＞</span>
                   </span>
                   <span v-else>{{ $t('pddex.amt1') }} {{ parseFloat(v.volume24H) }}</span>
@@ -251,8 +251,8 @@ export default {
     },
     // 显示年化
     handleShowApy(v) {
-      this.countApy = v.countApy;
-      this.aprInfo = v;
+      this.countApy = v.apy;
+      this.aprInfo = v.apy_detail;
       this.showApyDetail = true
     },
     // 处理排序
@@ -274,8 +274,8 @@ export default {
         })
       } else if (this.sortApy) {
         tArr = arr.sort((a, b) => {
-          return this.sortApy === 2 ? parseFloat(a.countApy) - parseFloat(b.countApy)
-                                     : parseFloat(b.countApy) - parseFloat(a.countApy)
+          return this.sortApy === 2 ? parseFloat(a.apy) - parseFloat(b.apy)
+                                     : parseFloat(b.apy) - parseFloat(a.apy)
         })
       } else if (this.sortPools) {
         tArr = arr.sort((a, b) => {
