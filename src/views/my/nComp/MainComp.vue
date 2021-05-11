@@ -168,6 +168,10 @@ export default {
       }
       const arr = [];
       this.bals.forEach(v => {
+        const has = this.marketLists.find(vv => {
+          return (v.contract === vv.contract0 && v.symbol === vv.symbol0)
+              || (v.contract === vv.contract1 && v.symbol === vv.symbol1)
+        })
         const imgUrl = getCoin(v.contract, v.currency.toLowerCase());
         v.imgUrl = imgUrl;
         v.symbol = v.currency;
