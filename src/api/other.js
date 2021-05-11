@@ -137,3 +137,16 @@ export function debugApi(params) {
     })
   })
 }
+
+// 获取所有币种余额
+// https://api.light.xeos.me/api/balances/eos/dfsdeveloper
+export function get_acc_bals(acc) {
+  return new Promise((resolve, reject) => {
+    axios.get(`https://api.light.xeos.me/api/balances/eos/${acc}`).then((res) => {
+      let result = Object.assign(res.data, {});
+      resolve({ status: res.status === 200, result });
+    }, err => {
+      reject(err)
+    })
+  })
+}

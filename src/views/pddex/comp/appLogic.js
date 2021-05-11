@@ -190,7 +190,6 @@ export function logicToDealBoxMids(obj) {
 export function dealAreaArr(arr, coin) {
   const newArr = []
   const coinPrice = getAreaPrice(coin);
-  console.log(arr)
   arr.forEach(list => {
     let v = list;
     if (v.contract0 === 'bgbgbgbgbgbg' || v.contract0 === 'betdicetoken' || v.contract0 === 'sportbetsbet'
@@ -332,9 +331,6 @@ export function dealApy(v) {
     const storeFeesApr = store.state.sys.feesApr;
     const aprJson = storeFeesApr.find(vv => vv.mid === v.mid) || {};
     feesApy = parseFloat(aprJson.poolsApr || 0)
-    if (newItem.mid === 637) {
-      console.log(aprJson)
-    }
   }
   // DFS 挖矿年化
   const rewardV3 = perDayRewardV3(v.mid)
