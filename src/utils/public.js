@@ -11,7 +11,7 @@ async function getCdnImgJson() {
     return
   }
   cdnImgJson = result;
-  localStorage.setItem('ImgJson', JSON.stringify(ImgJson))
+  localStorage.setItem('ImgJson', JSON.stringify(cdnImgJson))
 }
 getCdnImgJson();
 export function getPngLen() {
