@@ -190,6 +190,7 @@ export function logicToDealBoxMids(obj) {
 export function dealAreaArr(arr, coin) {
   const newArr = []
   const coinPrice = getAreaPrice(coin);
+  // console.log(arr)
   arr.forEach(list => {
     let v = list;
     if (v.contract0 === 'bgbgbgbgbgbg' || v.contract0 === 'betdicetoken' || v.contract0 === 'sportbetsbet'
