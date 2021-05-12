@@ -75,6 +75,7 @@ export default {
     }
   },
   methods: {
+    // 获取账户余额
     async handleGetAllAssets() {
       const name = this.account.name;
       if (!name) {
@@ -86,9 +87,10 @@ export default {
       }
       const bals = result.balances || [];
       this.bals = bals;
-      // console.log(this.bals)
+      console.log('this.bals', this.bals)
       this.handleDealBals()
     },
+    // 获取做市流动池
     async handleGetMarkets() {
       const name = this.account.name;
       if (!name) {
@@ -109,6 +111,7 @@ export default {
       this.markets = rows;
       this.handleDealLiqs()
     },
+    // 做市流动性处理
     handleDealLiqs() {
       if (!this.marketLists.length) {
         return
@@ -142,6 +145,7 @@ export default {
       this.handleDealBals()
       // console.log(this.markets, mkBals)
     },
+    // 获取用户做市余额
     handleGetNowMarket(item) {
       const inData = {
         poolSym0: item.reserve0.split(' ')[0],
@@ -169,9 +173,12 @@ export default {
       const arr = [];
       this.bals.forEach(v => {
         const has = this.marketLists.find(vv => {
-          return (v.contract === vv.contract0 && v.symbol === vv.symbol0)
-              || (v.contract === vv.contract1 && v.symbol === vv.symbol1)
+          return (v.contract === vv.contract0 && v.currency === vv.symbol0)
+              || (v.contract === vv.contract1 && v.currency === vv.symbol1)
         })
+        if (!has) {
+          return
+        }
         const imgUrl = getCoin(v.contract, v.currency.toLowerCase());
         v.imgUrl = imgUrl;
         v.symbol = v.currency;
@@ -186,6 +193,7 @@ export default {
         arr[index].bal = v.bal;
       })
       this.allBals = arr;
+      console.log(arr)
       this.handleGetTokenAmt()
     },
     // 获取币种对USDT的估值
@@ -229,7 +237,7 @@ export default {
 .totalCount{
   color: #FFF;
   height: 420px;
-  background: linear-gradient(right bottom, #49D7C4, #28C5A3);
+  background: linear-gradient(to right bottom, #49D7C4, #28C5A3);
   font-size: 28px;
   padding: 38px 30px;
   text-align: left;
