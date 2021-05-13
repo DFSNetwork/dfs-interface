@@ -192,42 +192,39 @@ export default {
         }
         arr[index].bal = v.bal;
       })
-      this.allBals = arr;
-      console.log(arr)
-      this.handleGetTokenAmt()
+      this.allBals = this.handleGetTokenAmt(arr);
     },
     // 获取币种对USDT的估值
-    handleGetTokenAmt() {
-      this.allBals.forEach(token => {
+    handleGetTokenAmt(allBals) {
+      allBals.forEach(token => {
         let fltArrToken = this.marketLists.filter(v => {
-          return (v.contract0 === token.contract && v.symbol0 === token.symbol)
-              || (v.contract1 === token.contract && v.symbol1 === token.symbol)
+          const hasToken = (v.contract0 === token.contract && v.symbol0 === token.symbol)
+            || (v.contract1 === token.contract && v.symbol1 === token.symbol)
+          if (!hasToken) {
+            return false
+          }
+          const hasPrice = this.coinPrices.find(vv => (v.contract0 === vv.contract && v.symbol0 === vv.symbol)
+            || (v.contract1 === vv.contract && v.vv === token.symbol))
+          return hasToken && hasPrice
         })
-        fltArrToken = fltArrToken.filter(v => parseFloat(v.reserve0))
-        let pArr = [];
-        // this.mkFilterConf.forEach(v => {
-        //   const arr = fltArrToken.filter(vv => {
-        //     return (vv.contract0 === v.contract && vv.symbol0 === v.symbol)
-        //         || (vv.contract1 === v.contract && vv.symbol1 === v.symbol)
-        //   })
-        //   pArr.push(...arr)
+        // fltArrToken = fltArrToken.filter(v => parseFloat(v.reserve0))
+        // let pArr = [];
+        // const arr = fltArrToken.filter(v => {
+        //   return ('tethertether' === v.contract0 && 'USDT' === v.symbol0)
+        //       || ('tethertether' === v.contract1 && 'USDT' === v.symbol1)
         // })
-
-        const arr = fltArrToken.filter(v => {
-          return ('tethertether' === v.contract0 && 'USDT' === v.symbol0)
-              || ('tethertether' === v.contract1 && 'USDT' === v.symbol1)
-        })
-        pArr.push(...arr)
-        if (!pArr.length) {
-          return
-        }
-        const pMarket = pArr[0];
-        const tokenA = token.contract === pMarket.contract0 ? pMarket.reserve0 : pMarket.reserve1;
-        const tokenB = token.contract === pMarket.contract0 ? pMarket.reserve1 : pMarket.reserve0;
-        const price = parseFloat(tokenB) / parseFloat(tokenA)
-        this.$set(token, 'price', price)
+        // pArr.push(...arr)
+        // if (!pArr.length) {
+        //   return
+        // }
+        // const pMarket = pArr[0];
+        // const tokenA = token.contract === pMarket.contract0 ? pMarket.reserve0 : pMarket.reserve1;
+        // const tokenB = token.contract === pMarket.contract0 ? pMarket.reserve1 : pMarket.reserve0;
+        // const price = parseFloat(tokenB) / parseFloat(tokenA)
+        // this.$set(token, 'price', price)
       })
       console.log(this.allBals)
+      return allBals;
     }
   }
 }
