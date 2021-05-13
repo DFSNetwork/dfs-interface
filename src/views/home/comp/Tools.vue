@@ -29,16 +29,17 @@
           <div>{{ $t('home.mine') }}</div>
         </div>
         <!-- https://usdtcross.starteos.io/  兑换USDT -->
-        <div class="list" @click="handleToPro('starteos')">
+        <!-- <div class="list" @click="handleToPro('starteos')">
           <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/exchange.png">
           <div>{{ $t('home.exchange') }}</div>
+        </div> -->
+
+        <div class="list" @click="handleTo('fundation')">
+          <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/fundation_icon.png">
+          <div>{{ $t('home.community') }}</div>
         </div>
       </div>
       <div class="lists flexb">
-        <!-- <div class="list" @click="handleTo('fundation')">
-          <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/fundation_icon.png">
-          <div>{{ $t('home.fundation') }}</div>
-        </div> -->
         <div class="list" @click="handleTo('financial')">
           <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/financial_icon.png">
           <div>{{ $t('home.financial') }}</div>
