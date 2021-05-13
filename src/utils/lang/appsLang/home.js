@@ -29,6 +29,7 @@ export default {
       fundation: '乐捐一下',
       diary: '大丰收日记',
       exchange: '兑换USDT',
+      issues: '建言献策',
     }
   },
   'en': {
@@ -60,6 +61,7 @@ export default {
       fundation:'Fundation',
       diary:'DFS Diary',
       exchange: 'Get USDT',
+      issues: 'Issues',
     }
   }
 }

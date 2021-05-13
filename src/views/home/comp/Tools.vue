@@ -34,9 +34,9 @@
           <div>{{ $t('home.exchange') }}</div>
         </div> -->
 
-        <div class="list" @click="handleTo('fundation')">
+        <div class="list" @click="handleToPro('suggestions')">
           <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/fundation_icon.png">
-          <div>{{ $t('home.community') }}</div>
+          <div>{{ $t('home.issues') }}</div>
         </div>
       </div>
       <div class="lists flexb">
@@ -82,6 +82,10 @@ export default {
       }
       if (name === 'usdx') {
         location.href = 'https://usdx.gitee.io/'
+        return
+      }
+      if (name === 'suggestions') {
+        location.href = 'https://support.qq.com/embed/323769'
         return
       }
       if (name === 'starteos') {
