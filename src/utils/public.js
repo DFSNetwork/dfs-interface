@@ -4,13 +4,14 @@ import moment from 'moment';
 import store from '@/store';
 import {getJson} from './api'
 
-let cdnImgJson; // CDN 图片配置
+let cdnImgJson = localStorage.getItem('ImgJson') ? JSON.parse(localStorage.getItem('ImgJson')) : {}; // CDN 图片配置
 async function getCdnImgJson() {
   const {status, result} = await getJson()
   if (!status) {
     return
   }
   cdnImgJson = result;
+  localStorage.setItem('ImgJson', JSON.stringify(cdnImgJson))
 }
 getCdnImgJson();
 export function getPngLen() {
