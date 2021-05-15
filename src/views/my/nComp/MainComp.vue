@@ -17,7 +17,7 @@
     </div>
 
     <div class="subView">
-      <Assets v-if="act === 0"/>
+      <Assets v-if="act === 0" :allBals="allBals"/>
       <Markets v-else-if="act === 1" />
       <More v-else />
     </div>
@@ -87,7 +87,7 @@ export default {
       }
       const bals = result.balances || [];
       this.bals = bals;
-      console.log('this.bals', this.bals)
+      // console.log('this.bals', this.bals)
       this.handleDealBals()
     },
     // 获取做市流动池
@@ -142,7 +142,7 @@ export default {
       });
       this.markets = rows;
       this.marketBals = mkBals;
-      this.handleDealBals()
+      // this.handleDealBals()
       // console.log(this.markets, mkBals)
     },
     // 获取用户做市余额
@@ -200,31 +200,39 @@ export default {
         let fltArrToken = this.marketLists.filter(v => {
           const hasToken = (v.contract0 === token.contract && v.symbol0 === token.symbol)
             || (v.contract1 === token.contract && v.symbol1 === token.symbol)
-          if (!hasToken) {
-            return false
-          }
-          const hasPrice = this.coinPrices.find(vv => (v.contract0 === vv.contract && v.symbol0 === vv.symbol)
-            || (v.contract1 === vv.contract && v.vv === token.symbol))
+          const hasPrice = this.coinPrices.find(vv => 
+            (v.contract0 === vv.contract && v.symbol0 === vv.coin)
+            || (v.contract1 === vv.contract && v.vv === token.coin))
           return hasToken && hasPrice
         })
-        // fltArrToken = fltArrToken.filter(v => parseFloat(v.reserve0))
-        // let pArr = [];
-        // const arr = fltArrToken.filter(v => {
-        //   return ('tethertether' === v.contract0 && 'USDT' === v.symbol0)
-        //       || ('tethertether' === v.contract1 && 'USDT' === v.symbol1)
-        // })
-        // pArr.push(...arr)
-        // if (!pArr.length) {
-        //   return
-        // }
-        // const pMarket = pArr[0];
-        // const tokenA = token.contract === pMarket.contract0 ? pMarket.reserve0 : pMarket.reserve1;
-        // const tokenB = token.contract === pMarket.contract0 ? pMarket.reserve1 : pMarket.reserve0;
-        // const price = parseFloat(tokenB) / parseFloat(tokenA)
-        // this.$set(token, 'price', price)
+        if (!fltArrToken.length) {
+          return
+        }
+        fltArrToken.sort((a, b) => {
+          const isA = a.contract0 === token.contract && a.symbol0 === token.symbol;
+          let aR = isA ? parseFloat(a.reserve0) : parseFloat(a.reserve1);
+          const isB = b.contract0 === token.contract && b.symbol0 === token.symbol;
+          let bR = isB ? parseFloat(b.reserve0) : parseFloat(b.reserve1);
+          return bR - aR;
+        })
+        const pMarket = fltArrToken[0];
+        const tokenA = token.contract === pMarket.contract0 ? pMarket.reserve0 : pMarket.reserve1;
+        const tokenB = token.contract === pMarket.contract0 ? pMarket.reserve1 : pMarket.reserve0;
+        const price = parseFloat(tokenB) / parseFloat(tokenA)
+        this.$set(token, 'price', price)
+        const amtCNY = parseFloat(token.amount || 0) * price;
+        this.$set(token, 'amtCNY', parseFloat(amtCNY).toFixed(2))
+        const balCNY = parseFloat(token.bal || 0) * price;
+        this.$set(token, 'balCNY', parseFloat(balCNY).toFixed(2))
+        const tokenCNY = amtCNY + balCNY;
+        this.$set(token, 'tokenCNY', parseFloat(tokenCNY).toFixed(2))
+        const count = parseFloat(token.amount || 0) + parseFloat(token.bal || 0);
+        this.$set(token, 'count', parseFloat(count).toFixed(4))
       })
-      console.log(this.allBals)
-      return allBals;
+      const sortArr = allBals.sort((a, b) => {
+        return parseFloat(b.tokenCNY || 0) - parseFloat(a.tokenCNY || 0)
+      })
+      return sortArr;
     }
   }
 }

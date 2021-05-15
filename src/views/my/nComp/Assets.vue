@@ -8,8 +8,10 @@
       </div>
     </div>
     <div class="tools tip item flexb">
-      <div class="flexa">
-        <div class="select"></div>
+      <div class="flexa" @click="hidLess = !hidLess">
+        <div class="select">
+          <img src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/checked.png" alt="">
+        </div>
         <div>隐藏小额资产</div>
         <img class="tips" src="">
       </div>
@@ -20,29 +22,31 @@
     </div>
     <!-- 币种列表 -->
     <div class="coinLists">
-      <div class="item">
-        <div class="coin flexa">
-          <img class="logo" src="https://ndi.340wan.com/eos/usdxusdxusdx-usdc.png">
-          <span>EOS</span>
+      <template v-for="(v, i) in sArr">
+        <div class="item" v-if="!(parseFloat(v.count || 0) < minNum && hidLess)" :key="i">
+          <div class="coin flexa">
+            <img class="logo" :src="v.imgUrl" :onerror="$errorImg">
+            <span>{{ v.symbol }}</span>
+          </div>
+          <div class="flexb balData">
+            <div class="bal">
+              <div class="subTitle">估值</div>
+              <div class="num din">{{ v.count || '0.0000' }}</div>
+              <div class="abt din">¥{{ v.tokenCNY }}</div>
+            </div>
+            <div class="bal">
+              <div class="subTitle">做市</div>
+              <div class="num din">{{ v.bal || '0.0000' }}</div>
+              <div class="abt din">¥{{ v.balCNY }}</div>
+            </div>
+            <div class="bal">
+              <div class="subTitle">余额</div>
+              <div class="num din">{{ v.amount || '0.0000' }}</div>
+              <div class="abt din">¥{{ v.amtCNY }}</div>
+            </div>
+          </div>
         </div>
-        <div class="flexb balData">
-          <div class="bal">
-            <div class="subTitle">估值</div>
-            <div class="num din">1000.0000</div>
-            <div class="abt din">¥6500.00</div>
-          </div>
-          <div class="bal">
-            <div class="subTitle">做市</div>
-            <div class="num din">1000.0000</div>
-            <div class="abt din">¥6500.00</div>
-          </div>
-          <div class="bal">
-            <div class="subTitle">余额</div>
-            <div class="num din">1000.0000</div>
-            <div class="abt din">¥6500.00</div>
-          </div>
-        </div>
-      </div>
+      </template>
     </div>
   </div>
 </template>
@@ -50,11 +54,31 @@
 <script>
 export default {
   name: 'assetsComp',
+  props: {
+    allBals: {
+      type: Array,
+      default: function abs() {
+        return []
+      }
+    }
+  },
   data() {
     return {
+      minNum: 1,
       value: '',
+      sArr: [],
+      hidLess: false,
     }
-  }
+  },
+  watch: {
+    allBals: {
+      handler: function abs(newVal) {
+        this.sArr = newVal
+      },
+      deep: true,
+      immediate: true
+    }
+  },
 }
 </script>
 
