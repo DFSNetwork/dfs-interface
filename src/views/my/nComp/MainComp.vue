@@ -212,7 +212,7 @@ export default {
         const count = parseFloat(token.amount || 0) + parseFloat(token.bal || 0);
         this.$set(token, 'count', parseFloat(count).toFixed(4))
         // 计价币种价格计算
-        const isBaseCoin = this.coinPrices.find(v => v.contract === token.contract && token.currency === v.coin)
+        const isBaseCoin = this.coinPrices.find(v => v.contract === token.contract && token.symbol === v.coin)
         if (isBaseCoin) {
           const tokenCount = parseFloat(token.amount || 0) + parseFloat(token.bal || 0); // 总余额
           const uPrice = isBaseCoin.price || 0; // 对USDT价格

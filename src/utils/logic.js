@@ -338,6 +338,9 @@ export function dealMarketLists(list, topLists) {
     v.symbol1 = sym1[1]; // 币种
     v.decimal1 = sym1[0]; // 精度
     v.price = dealPrice((parseFloat(v.reserve0) / parseFloat(v.reserve1) || 0))
+    v.imgUrl0 = getCoin(v.contract0, v.symbol0.toLowerCase());
+    v.imgUrl1 = getCoin(v.contract1, v.symbol1.toLowerCase());
+
     v.sym0Data = {
       mid: v.mid,
       last_update: v.last_update,

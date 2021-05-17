@@ -45,6 +45,8 @@ import { dealMarketLists } from '@/utils/logic';
 import { get_tag_lp_mids } from '@/utils/minerLogic';
 import { fullScreen } from '@/utils/wallet/fullScreen';
 
+import '@/utils/DfsMineData'
+
 export default {
   name: 'layout',
   components: {
