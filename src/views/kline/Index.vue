@@ -69,8 +69,8 @@ export default {
       }
       if (name === 'index') {
         const query = {
-          in: 'tethertether-USDT',
-          out: 'usdxusdxusdx-USDC'
+          in: `${this.checkedMarket.contract0}-${this.checkedMarket.symbol0}`,
+          out: `${this.checkedMarket.contract1}-${this.checkedMarket.symbol1}`,
         }
         params.query = query;
       }
