@@ -149,7 +149,7 @@ export default {
           } else {
             const has = mkBals[index];
             const bal = parseFloat(has.bal || 0) + parseFloat(mv.bal || 0)
-            mkBals[index].bal = bal;
+            mkBals[index].bal = parseFloat(bal || 0).toFixed(mv.decimal);
           }
         })
       });
