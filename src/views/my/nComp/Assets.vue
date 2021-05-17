@@ -35,17 +35,17 @@
             <div class="bal">
               <div class="subTitle">总计</div>
               <div class="num din">{{ v.count || '0.0000' }}</div>
-              <div class="abt din">¥{{ v.countCNY }}</div>
+              <div class="abt din">¥{{ v.countCNY || '0.00' }}</div>
             </div>
             <div class="bal">
               <div class="subTitle">做市</div>
               <div class="num din">{{ v.bal || '0.0000' }}</div>
-              <div class="abt din">¥{{ v.balCNY }}</div>
+              <div class="abt din">¥{{ v.balCNY || '0.00' }}</div>
             </div>
             <div class="bal">
               <div class="subTitle">余额</div>
               <div class="num din">{{ v.amount || '0.0000' }}</div>
-              <div class="abt din">¥{{ v.amtCNY }}</div>
+              <div class="abt din">¥{{ v.amtCNY || '0.00' }}</div>
             </div>
           </div>
         </div>
