@@ -618,16 +618,16 @@ export function dealHtmlCode(v) {
 
 export function dealRouterArr(marketLists, thisMarket0, thisMarket1) {
   const newArr = marketLists.filter(v => v.contract1 !== 'autopuptoken' && v.contract0 !== 'autopuptoken')
-  const a0 = newArr.filter(v => 
+  const a0 = newArr.filter(v => // 获取含有pay的币种交易对
     (v.contract0 === thisMarket0.contract && v.symbol0 === thisMarket0.symbol) ||
     (v.contract1 === thisMarket0.contract && v.symbol1 === thisMarket0.symbol)
   )
-  const a1 = marketLists.filter(v => 
+  const a1 = marketLists.filter(v => // 获取含有get币种的交易对
     (v.contract0 === thisMarket1.contract && v.symbol0 === thisMarket1.symbol) ||
     (v.contract1 === thisMarket1.contract && v.symbol1 === thisMarket1.symbol)
   )
-  const arr = handleDealSame(a0, a1)
-  const tArr = handleDealArr(arr)
+  const arr = handleDealSame(a0, a1) // 获取可连接 a0和a1数组的交易对
+  const tArr = handleDealArr(arr) // 数组去重
   return tArr;
 }
 // 获取a0 和 a1 中含有相同币种的交易对

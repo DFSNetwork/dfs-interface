@@ -174,15 +174,28 @@ export default {
     // 获取做市池子
     async handleRowsMarket() {
       // this.handleRowsMarketByChain()
-      const {status, result} = await this.$api.get_markets();
-      if (!status) {
-        return
+      let more = true;
+      let next_key = '';
+      let rows = [];
+      while(more) {
+        const params = {
+          code: "defisswapcnt",
+          scope: "defisswapcnt",
+          table: "markets",
+          json: true,
+          limit: 500,
+          lower_bound: next_key,
+        }
+        const {status, result} = await this.$api.get_table_rows(params);
+        if (!status) {
+          more = false;
+          continue
+        }
+        more = result.more;
+        next_key = result.next_key;
+        rows.push(...result.rows);
       }
-      const list = result.rows || [];
-      // 列表处理
-      if (this.chainGet) {
-        return
-      }
+      const list = rows;
       dealMarketLists(list, this.topLists)
     },
      // 获取做市池子 - 链上查询
