@@ -163,8 +163,16 @@ export default {
   }
   .balData{
     .bal{
+      flex: 1;
+      max-width: 230px;
+      overflow: hidden;
+      margin-right: 20px;
+      // &:first-child{
+      //   margin-right: 60px;
+      // }
       &:last-child{
         text-align: right;
+        margin-right: 0;
       }
       .subTitle{
         font-size: 24px;
