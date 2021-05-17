@@ -3,21 +3,24 @@
     <div class="count item">
       <div class="title din">账户资产 (USDT)</div>
       <div>
-        <span class="amt dinBold">1.334</span>
-        <span class="small">≈ 8.91 CNY</span>
+        <span class="amt dinBold">${{ allCount }}</span>
+        <span class="small">≈ {{ allCountCNY }} CNY</span>
       </div>
     </div>
     <div class="tools tip item flexb">
       <div class="flexa" @click="hidLess = !hidLess">
         <div class="select">
-          <img src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/checked.png" alt="">
+          <img class="hideImg" v-if="hidLess"
+            src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/checked.png" alt="">
         </div>
         <div>隐藏小额资产</div>
         <img class="tips" src="">
       </div>
       <div class="flexa">
         <img class="searchImg" src="">
-        <van-field class="searchIpt" v-model="value" placeholder="搜索币种" />
+        <van-field class="searchIpt" v-model="search"
+          @input="handleSearch"
+          placeholder="搜索币种" />
       </div>
     </div>
     <!-- 币种列表 -->
@@ -30,9 +33,9 @@
           </div>
           <div class="flexb balData">
             <div class="bal">
-              <div class="subTitle">估值</div>
+              <div class="subTitle">总计</div>
               <div class="num din">{{ v.count || '0.0000' }}</div>
-              <div class="abt din">¥{{ v.tokenCNY }}</div>
+              <div class="abt din">¥{{ v.countCNY }}</div>
             </div>
             <div class="bal">
               <div class="subTitle">做市</div>
@@ -60,12 +63,20 @@ export default {
       default: function abs() {
         return []
       }
-    }
+    },
+    allCountCNY: {
+      type: String,
+      default: '0.00'
+    },
+    allCount: {
+      type: String,
+      default: '0.00'
+    },
   },
   data() {
     return {
       minNum: 1,
-      value: '',
+      search: '',
       sArr: [],
       hidLess: false,
     }
@@ -79,6 +90,15 @@ export default {
       immediate: true
     }
   },
+  methods: {
+    handleSearch() {
+      if (!this.search) {
+        this.sArr = this.allBals;
+        return
+      }
+      this.sArr = this.allBals.filter(v => v.symbol.indexOf(this.search.toUpperCase()) !== -1)
+    }
+  }
 }
 </script>
 
@@ -109,6 +129,9 @@ export default {
       border-radius: 50%;
       border: 1px solid $color-border;
       margin-right: 10px;
+      .hideImg{
+        width: 100%;
+      }
     }
     .tips{
       width: 32px;
@@ -121,6 +144,9 @@ export default {
     .searchIpt{
       padding: 0 8px;
       width: 150px;
+      /deep/ .van-field__control{
+        text-align: center;
+      }
     }
   }
 

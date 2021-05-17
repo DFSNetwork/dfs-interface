@@ -5,8 +5,8 @@
         <span>总资产 (USDT)</span>
       </div>
       <div class="din">
-        <span class="amt">1.2345</span>
-        <span class="small dinReg">≈ 9.91 CNY</span>
+        <span class="amt">${{ allCount }}</span>
+        <span class="small dinReg">≈ {{ allCountCNY }} CNY</span>
       </div>
 
       <div class="tools flexb">
@@ -17,8 +17,8 @@
     </div>
 
     <div class="subView">
-      <Assets v-if="act === 0" :allBals="allBals"/>
-      <Markets v-else-if="act === 1" />
+      <Assets v-if="act === 0" :allBals="allBals" :allCountCNY="allCountCNY" :allCount="allCount"/>
+      <Markets v-else-if="act === 1" :liqs="liqs"/>
       <More v-else />
     </div>
   </div>
@@ -45,7 +45,6 @@ export default {
       marketBals: [], // 做市对应币种余额
 
       allBals: [], // 全部的Bals列表
-      showBals: [], // 展示的Bals列表
     }
   },
   computed: {
@@ -55,6 +54,20 @@ export default {
       mkFilterConf: state => state.config.mkFilterConf,
       coinPrices: state => state.sys.coinPrices,
     }),
+    allCount() {
+      let count = 0;
+      this.allBals.forEach(v => {
+        count = parseFloat(count || 0) + parseFloat(v.countUsdt || 0)
+      })
+      return count.toFixed(4)
+    },
+    allCountCNY() {
+      let count = 0;
+      this.allBals.forEach(v => {
+        count = parseFloat(count || 0) + parseFloat(v.countCNY || 0)
+      })
+      return count.toFixed(4)
+    }
   },
   watch: {
     account: {
@@ -108,7 +121,7 @@ export default {
         return
       }
       const rows = result.rows || []
-      this.markets = rows;
+      this.liqs = rows;
       this.handleDealLiqs()
     },
     // 做市流动性处理
@@ -116,7 +129,7 @@ export default {
       if (!this.marketLists.length) {
         return
       }
-      const rows = this.markets;
+      const rows = this.liqs;
       const mkBals = [];
       rows.forEach(v => {
         const market = this.marketLists.find(vv => vv.mid === v.mid);
@@ -125,8 +138,8 @@ export default {
         }
         market.token = v.token;
         const nowMarket = this.handleGetNowMarket(market)
-        v.nowMarket0 = nowMarket.getNum1;
-        v.nowMarket1 = nowMarket.getNum2;
+        this.$set(v, 'nowMarket0', nowMarket.getNum1)
+        this.$set(v, 'nowMarket1', nowMarket.getNum2)
 
         const balArr = this.handleDealMksBals(market, v);
         balArr.forEach(mv => {
@@ -142,8 +155,7 @@ export default {
       });
       this.markets = rows;
       this.marketBals = mkBals;
-      // this.handleDealBals()
-      // console.log(this.markets, mkBals)
+      this.handleDealBals()
     },
     // 获取用户做市余额
     handleGetNowMarket(item) {
@@ -197,12 +209,36 @@ export default {
     // 获取币种对USDT的估值
     handleGetTokenAmt(allBals) {
       allBals.forEach(token => {
+        const count = parseFloat(token.amount || 0) + parseFloat(token.bal || 0);
+        this.$set(token, 'count', parseFloat(count).toFixed(4))
+        // 计价币种价格计算
+        const isBaseCoin = this.coinPrices.find(v => v.contract === token.contract && token.currency === v.coin)
+        if (isBaseCoin) {
+          const tokenCount = parseFloat(token.amount || 0) + parseFloat(token.bal || 0); // 总余额
+          const uPrice = isBaseCoin.price || 0; // 对USDT价格
+          const amtUsdt = parseFloat(token.amount || 0) * uPrice; // 余额估值 USDT
+          this.$set(token, 'amtUsdt', parseFloat(amtUsdt).toFixed(2))
+          const balUsdt = parseFloat(token.bal || 0) * uPrice; // 做市余额估值 USN
+          this.$set(token, 'balUsdt', parseFloat(balUsdt).toFixed(2))
+          const countUsdt = uPrice * tokenCount;
+          this.$set(token, 'countUsdt', parseFloat(countUsdt).toFixed(2))
+
+          const price = isBaseCoin.CNY || 0; // 对CNY价格
+          const amtCNY = parseFloat(token.amount || 0) * price;
+          this.$set(token, 'amtCNY', parseFloat(amtCNY).toFixed(2))
+          const balCNY = parseFloat(token.bal || 0) * price;
+          this.$set(token, 'balCNY', parseFloat(balCNY).toFixed(2))
+          const countCNY = price * tokenCount;
+          this.$set(token, 'countCNY', parseFloat(countCNY).toFixed(2))
+          return
+        } 
+        // 非计价币种价格计算
         let fltArrToken = this.marketLists.filter(v => {
           const hasToken = (v.contract0 === token.contract && v.symbol0 === token.symbol)
             || (v.contract1 === token.contract && v.symbol1 === token.symbol)
           const hasPrice = this.coinPrices.find(vv => 
             (v.contract0 === vv.contract && v.symbol0 === vv.coin)
-            || (v.contract1 === vv.contract && v.vv === token.coin))
+            || (v.contract1 === vv.contract && v.symbol1 === token.coin))
           return hasToken && hasPrice
         })
         if (!fltArrToken.length) {
@@ -216,21 +252,39 @@ export default {
           return bR - aR;
         })
         const pMarket = fltArrToken[0];
-        const tokenA = token.contract === pMarket.contract0 ? pMarket.reserve0 : pMarket.reserve1;
-        const tokenB = token.contract === pMarket.contract0 ? pMarket.reserve1 : pMarket.reserve0;
+        const isA = token.contract === pMarket.contract0
+        const tokenA = isA ? pMarket.reserve0 : pMarket.reserve1;
+        const tokenB = isA ? pMarket.reserve1 : pMarket.reserve0;
         const price = parseFloat(tokenB) / parseFloat(tokenA)
-        this.$set(token, 'price', price)
-        const amtCNY = parseFloat(token.amount || 0) * price;
+        const tokenBPrice = this.coinPrices.find(v => 
+          isA ? v.contract === pMarket.contract1 && pMarket.symbol1 === v.coin
+              : v.contract === pMarket.contract0 && pMarket.symbol0 === v.coin
+        )
+        if (!tokenBPrice) {
+          return
+        }
+        const tbUprice = tokenBPrice.price || 0;
+        const tbCNYprice = tokenBPrice.CNY || 0;
+
+        const tokenCount = parseFloat(token.amount || 0) + parseFloat(token.bal || 0); // 总余额
+        const uPrice = tbUprice * (price || 0); // 对USDT价格
+        const amtUsdt = parseFloat(token.amount || 0) * uPrice; // 余额估值 USDT
+        this.$set(token, 'amtUsdt', parseFloat(amtUsdt).toFixed(2))
+        const balUsdt = parseFloat(token.bal || 0) * uPrice; // 做市余额估值 USN
+        this.$set(token, 'balUsdt', parseFloat(balUsdt).toFixed(2))
+        const countUsdt = uPrice * tokenCount;
+        this.$set(token, 'countUsdt', parseFloat(countUsdt).toFixed(2))
+
+        const cnyPrice = tbCNYprice * (price || 0); // 对CNY价格
+        const amtCNY = parseFloat(token.amount || 0) * cnyPrice;
         this.$set(token, 'amtCNY', parseFloat(amtCNY).toFixed(2))
-        const balCNY = parseFloat(token.bal || 0) * price;
+        const balCNY = parseFloat(token.bal || 0) * cnyPrice;
         this.$set(token, 'balCNY', parseFloat(balCNY).toFixed(2))
-        const tokenCNY = amtCNY + balCNY;
-        this.$set(token, 'tokenCNY', parseFloat(tokenCNY).toFixed(2))
-        const count = parseFloat(token.amount || 0) + parseFloat(token.bal || 0);
-        this.$set(token, 'count', parseFloat(count).toFixed(4))
+        const countCNY = cnyPrice * tokenCount;
+        this.$set(token, 'countCNY', parseFloat(countCNY).toFixed(2))
       })
       const sortArr = allBals.sort((a, b) => {
-        return parseFloat(b.tokenCNY || 0) - parseFloat(a.tokenCNY || 0)
+        return parseFloat(b.countCNY || 0) - parseFloat(a.countCNY || 0)
       })
       return sortArr;
     }

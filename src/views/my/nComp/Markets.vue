@@ -12,7 +12,7 @@
     </div>
 
     <div class="lists">
-      <div class="item">
+      <div class="item" v-for="(v, i) in liqs" :key="i">
         <div class="coin din flexa">
           <img class="logo" src="https://ndi.340wan.com/eos/usdxusdxusdx-usdc.png">
           <span>DFS</span>
@@ -25,40 +25,11 @@
         <div class="info dinReg">
           <div class="flexb">
             <span class="label">我的做市</span>
-            <span>64821.1157 DFS / 3734.8389 USDT</span>
+            <span>{{ v.nowMarket0 }} DFS / {{ v.nowMarket1 }} USDT</span>
           </div>
           <div class="flexb">
             <span class="label">做市本金</span>
-            <span>64821.1157 DFS / 3734.8389 USDT</span>
-          </div>
-          <div class="flexb">
-            <span class="label">做市盈亏</span>
-            <span>+2838.383 DFS / -388.938 USDT</span>
-          </div>
-          <div class="flexb">
-            <span class="label">做市时长</span>
-            <span>3天0时0分0秒</span>
-          </div>
-        </div>
-      </div>
-      <div class="item">
-        <div class="coin din flexa">
-          <img class="logo" src="https://ndi.340wan.com/eos/usdxusdxusdx-usdc.png">
-          <span>DFS</span>
-
-          <img class="add" src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/add.svg">
-
-          <img class="logo" src="https://ndi.340wan.com/eos/usdxusdxusdx-usdc.png">
-          <span>USDT</span>
-        </div>
-        <div class="info dinReg">
-          <div class="flexb">
-            <span class="label">我的做市</span>
-            <span>64821.1157 DFS / 3734.8389 USDT</span>
-          </div>
-          <div class="flexb">
-            <span class="label">做市本金</span>
-            <span>64821.1157 DFS / 3734.8389 USDT</span>
+            <span>{{ v.bal0 }} / {{ v.bal1 }}</span>
           </div>
           <div class="flexb">
             <span class="label">做市盈亏</span>
@@ -75,8 +46,57 @@
 </template>
 
 <script>
+import moment from 'moment';
+import { mapState } from 'vuex';
+import { sellToken, getV3PoolsClass } from '@/utils/logic';
+import { toFixed, accSub, accMul, accDiv, getMarketTimeLp, toLocalTime } from '@/utils/public';
 export default {
   name: 'marketsComp',
+  props: {
+    liqs: {
+      type: Array,
+      default: function abs() {
+        return []
+      }
+    },
+  },
+  data() {
+    return {
+      timer: null,
+      showArr: [],
+    }
+  },
+  computed: {
+    ...mapState({
+      account: state => state.app.account,
+      marketLists: state => state.sys.marketLists,
+      mkFilterConf: state => state.config.mkFilterConf,
+      coinPrices: state => state.sys.coinPrices,
+    }),
+  },
+  watch: {
+    liqs: {
+      handler: function als() {
+        this.handleDeal()
+      },
+      deep: true,
+      immediate: true
+    }
+  },
+  methods: {
+    handleDeal() {
+      clearTimeout(this.timer)
+      this.timer = setTimeout(() => {
+        this.handleDeal()
+      }, 1000);
+      console.log(this.liqs)
+      this.liqs.forEach(v => {
+        const sT = toLocalTime(`${v.start}.000+0000`);
+        const mTime = getMarketTimeLp(sT)
+        console.log(mTime)
+      })
+    }
+  }
 }
 </script>
 
