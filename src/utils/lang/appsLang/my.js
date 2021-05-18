@@ -46,6 +46,8 @@ export default {
       bal: '余额',
       liqsReward: '做市收益',
       oneKeys: '一键领取',
+      search: '搜索币种',
+      dfsEcology: 'DFS生态'
     }
   },
   'en': {
@@ -93,6 +95,8 @@ export default {
       bal:'Balance',
       liqsReward:'Reward',
       oneKeys:'Claim',
+      search:'Search currency',
+      dfsEcology:'DFS ecology'
     }
   }
 }

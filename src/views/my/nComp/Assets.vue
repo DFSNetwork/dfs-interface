@@ -20,7 +20,7 @@
         <img class="searchImg" src="">
         <van-field class="searchIpt" v-model="search"
           @input="handleSearch"
-          placeholder="搜索币种" />
+          :placeholder="$t('my.search')" />
       </div>
     </div>
     <!-- 币种列表 -->
