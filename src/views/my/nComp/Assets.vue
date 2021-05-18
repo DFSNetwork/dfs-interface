@@ -1,7 +1,7 @@
 <template>
   <div class="assetsComp">
     <div class="count item">
-      <div class="title din">账户资产 (USDT)</div>
+      <div class="title din">{{ $t('my.accAssets') }} (USDT)</div>
       <div>
         <span class="amt dinBold">${{ allCount }}</span>
         <span class="small">≈ {{ allCountCNY }} CNY</span>
@@ -13,7 +13,7 @@
           <img class="hideImg" v-if="hidLess"
             src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/checked.png" alt="">
         </div>
-        <div>隐藏小额资产</div>
+        <div>{{ $t('my.hideMinAssets') }}</div>
         <img class="tips" src="">
       </div>
       <div class="flexa">
@@ -33,17 +33,17 @@
           </div>
           <div class="flexb balData">
             <div class="bal">
-              <div class="subTitle">总计</div>
+              <div class="subTitle">{{ $t('my.count') }}</div>
               <div class="num din">{{ v.count || '0.0000' }}</div>
               <div class="abt din">¥{{ v.countCNY || '0.00' }}</div>
             </div>
             <div class="bal">
-              <div class="subTitle">做市</div>
+              <div class="subTitle">{{ $t('my.liqs') }}</div>
               <div class="num din">{{ v.bal || '0.0000' }}</div>
               <div class="abt din">¥{{ v.balCNY || '0.00' }}</div>
             </div>
             <div class="bal">
-              <div class="subTitle">余额</div>
+              <div class="subTitle">{{ $t('my.bal') }}</div>
               <div class="num din">{{ v.amount || '0.0000' }}</div>
               <div class="abt din">¥{{ v.amtCNY || '0.00' }}</div>
             </div>
@@ -78,7 +78,7 @@ export default {
       minNum: 1,
       search: '',
       sArr: [],
-      hidLess: false,
+      hidLess: true,
     }
   },
   watch: {

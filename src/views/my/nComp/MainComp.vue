@@ -2,17 +2,17 @@
   <div class="mainComp">
     <div class="totalCount">
       <div class="amtTitle flexa dinReg">
-        <span>总资产 (USDT)</span>
+        <span>{{ $t('my.countAssets') }} (USDT)</span>
       </div>
-      <div class="din">
+      <div class="din number">
         <span class="amt">${{ allCount }}</span>
         <span class="small dinReg">≈ {{ allCountCNY }} CNY</span>
       </div>
 
       <div class="tools flexb">
-        <span :class="{'act': act === 0}" @click="act = 0">资产管理</span>
-        <span :class="{'act': act === 1}" @click="act = 1">做市管理</span>
-        <span :class="{'act': act === 2}" @click="act = 2">更多服务</span>
+        <span :class="{'act': act === 0}" @click="act = 0">{{ $t('my.assManage') }}</span>
+        <span :class="{'act': act === 1}" @click="act = 1">{{ $t('my.liqsManage') }}</span>
+        <span :class="{'act': act === 2}" @click="act = 2">{{ $t('my.moreServer') }}</span>
       </div>
     </div>
 
@@ -305,6 +305,10 @@ export default {
   z-index: 0;
   .amtTitle{
     margin-bottom: 15px;
+    height: 40px;
+  }
+  .number{
+    height: 60px;
   }
   .amt{
     font-size: 48px;
@@ -316,6 +320,7 @@ export default {
   .tools{
     margin-top: 20px;
     font-size: 32px;
+    height: 48px;
     color: rgba(#FFF, .8);
     position: relative;
     &>span{

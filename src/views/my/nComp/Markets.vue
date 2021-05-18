@@ -2,13 +2,13 @@
   <div class="marketsComp">
     <div class="item claimDiv flexb">
       <div class="cnt">
-        <div class="title">做市收益(DFS)</div>
+        <div class="title">{{ $t('my.liqsReward') }}(DFS)</div>
         <div>
           <span class="num dinBold">{{ countMine }}</span>
           <span class="small">≈ {{ countMineCNY }} CNY</span>
         </div>
       </div>
-      <div class="claimBtn flexc" @click="handleClaim">一键领取</div>
+      <div class="claimBtn flexc" @click="handleClaim">{{ $t('my.oneKeys') }}</div>
     </div>
 
     <div class="lists">
@@ -22,15 +22,15 @@
         </div>
         <div class="info dinReg">
           <div class="flexb">
-            <span class="label">我的做市</span>
+            <span class="label">{{ $t('market.myMarkets') }}</span>
             <span>{{ v.nowMarket0 }} {{ v.symbol0 }} / {{ v.nowMarket1 }} {{ v.symbol1 }}</span>
           </div>
           <div class="flexb">
-            <span class="label">做市本金</span>
+            <span class="label">{{ $t('market.capital') }}</span>
             <span>{{ v.bal0 }} / {{ v.bal1 }}</span>
           </div>
           <div class="flexb" v-if="v.rdType">
-            <span class="label">做市盈亏</span>
+            <span class="label">{{ $t('market.marketReward') }}</span>
             <span v-if="!v.rdType.ex">
               <span :class="{
                 'green': parseFloat(v.rdType.t0 || 0) > 0,
@@ -53,8 +53,15 @@
             </span>
           </div>
           <div class="flexb" v-if="v.timer">
-            <span class="label">做市时长</span>
-            <span>{{ v.timer.days }}天{{ v.timer.hours }}时{{ v.timer.minutes }}分{{ v.timer.seconds }}秒</span>
+            <span class="label">{{ $t('market.marketTime') }}</span>
+            <span>
+              {{ $t('market.timer', {
+                days: v.timer.days,
+                hours: v.timer.hours,
+                mins: v.timer.minutes,
+                secs: v.timer.seconds,
+              }) }}
+            </span>
           </div>
         </div>
       </div>
