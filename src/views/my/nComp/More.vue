@@ -52,8 +52,6 @@
       </div>
     </div>
 
-
-
     <!-- 游戏中心 -->
     <div class="tools">
       <div class="title">{{ $t('sys.apps') }}</div>
@@ -113,7 +111,7 @@
 
     <!-- 社区项目 -->
     <div class="tools">
-      <div class="title">DFS生态</div>
+      <div class="title">{{ $t('my.dfsEcology') }}</div>
       <div class="lists flexa">
         <div class="list" @click="handleToProject('diary')">
           <img class="icon" src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/notice.png" alt="">

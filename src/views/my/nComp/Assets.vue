@@ -26,7 +26,7 @@
     <!-- 币种列表 -->
     <div class="coinLists">
       <template v-for="(v, i) in sArr">
-        <div class="item" v-if="!(parseFloat(v.count || 0) < minNum && hidLess)" :key="i">
+        <div class="item" v-if="!(parseFloat(v.countUsdt || 0) < minNum && hidLess)" :key="i">
           <div class="coin flexa">
             <img class="logo" :src="v.imgUrl" :onerror="$errorImg">
             <span>{{ v.symbol }}</span>
@@ -84,7 +84,7 @@ export default {
   watch: {
     allBals: {
       handler: function abs(newVal) {
-        this.sArr = newVal
+        this.handleSearch()
       },
       deep: true,
       immediate: true

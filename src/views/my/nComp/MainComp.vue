@@ -252,7 +252,7 @@ export default {
           return bR - aR;
         })
         const pMarket = fltArrToken[0];
-        const isA = token.contract === pMarket.contract0
+        const isA = token.contract === pMarket.contract0 && token.symbol === pMarket.symbol0;
         const tokenA = isA ? pMarket.reserve0 : pMarket.reserve1;
         const tokenB = isA ? pMarket.reserve1 : pMarket.reserve0;
         const price = parseFloat(tokenB) / parseFloat(tokenA)
