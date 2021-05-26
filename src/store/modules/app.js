@@ -29,7 +29,7 @@ const app = {
     minScreen: false,
     accInfo: {
       avatar: "https://cdn.jsdelivr.net/gh/defis-net/material2/coin/tagtokenmain-tag.png",
-      cover: "https://cdn.jsdelivr.net/gh/defis-net/material/accBanner/banner0.png",
+      cover: "https://cdn.jsdelivr.net/gh/defis-net/material/accBanner/banner1.png",
       desc: "",
       nick: "",
       sex: 2,

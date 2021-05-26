@@ -438,7 +438,7 @@ export default {
 .pddexTab{
   font-size: 32px;
   color: #999;
-  margin: 15px 30px 5px;
+  margin: 30px 30px 5px;
   height: 70px;
   position: relative;
   border: 1px solid rgba(220,220,220,.3);

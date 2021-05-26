@@ -1,6 +1,6 @@
 <template>
   <div class="accInfo">
-    <img class="accBgImg" :src="accInfo.cover">
+    <img class="accBgImg" :src="accInfo.cover || 'https://cdn.jsdelivr.net/gh/defis-net/material/accBanner/banner1.png'">
     <div class="info flexa">
       <div class="headDiv flexc">
         <img class="headImg" :src="accInfo.avatar">
