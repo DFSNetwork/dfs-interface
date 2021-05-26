@@ -1010,10 +1010,9 @@ export default {
   .tabC{
     background:rgba(255,255,255,1);
     border-radius: 12px;
-    border:2px solid rgba(224,224,224,1);
-    // padding: 32px 26px;
+    box-shadow: 2px 2px 6px 4px rgba(243,243,243,1);
     .tabD{
-      padding: 8px 26px 32px;
+      padding: 8px 18px 32px;
     }
   }
   .sym0Data{
@@ -1198,6 +1197,9 @@ export default {
   }
 }
 .linkTo{
+  margin-top: 30px;
+  padding-top: 30px;
+  border-top: 1px solid $color-border;
   font-size: 27px;
   &>span{
     flex: 1;
@@ -1229,7 +1231,7 @@ export default {
   padding: 20px 26px;
   background:rgba(255,255,255,1);
   border-radius: 12px;
-  border:2px solid rgba(224,224,224,1);
+  box-shadow: 2px 2px 6px 4px rgba(243,243,243,1);
   color: #333;
   .marketNow{
     margin-left: 20px;

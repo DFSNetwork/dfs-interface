@@ -342,12 +342,12 @@ export default {
 
 <style lang="scss" scoped>
 .marketMain{
-  border: 1px solid rgba(224,224,224,1);
+  box-shadow: 0px 2px 6px 4px rgba(243,243,243,1);
   border-radius: 12px;
   font-size: 28px;
   .symbolInfo{
     padding: 34px 30px;
-    margin: 5px 22px 20px;
+    margin: 5px 18px 20px;
     border: 1px solid #eee;
     box-sizing: border-box;
     border-radius: 12px;
@@ -374,7 +374,7 @@ export default {
   .poolsInfo{
     border: 1px solid #eee;
     padding: 30px;
-    margin: 20px 20px;
+    margin: 20px 18px;
     border-radius: 12px;
     text-align: left;
     .item{

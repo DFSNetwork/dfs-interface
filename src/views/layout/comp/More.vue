@@ -1,10 +1,9 @@
 <template>
   <!-- more -->
-  <el-drawer
+  <van-popup
+    position="right"
     class="drawerCss"
-    :show-close="false"
-    :visible.sync="showNav"
-    direction="ltr">
+    v-model="showNav">
     <div class="morePop">
       <div class="acc flexb">
         <div>
@@ -19,29 +18,25 @@
       </div>
       <!-- list -->
       <div class="lists">
-        <div class="title flexb" @click="handleToBP">
-          <div class="flexa">
-            <img class="titleImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/coin/minedfstoken-dfs.png">
-            <span>{{ $t('more.aboutDfs') }}</span>
-          </div>
-          <img class="right" src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/about_right.svg" alt="">
+        <div class="list switch flexb">
+          <span>免CPU操作</span>
+          <van-switch class="vanSwitch"
+            :value="cpuSwitch" @input="handleSetCpu"
+            size="24px"
+            active-color="#FFF" inactive-color="#eee" />
         </div>
         <div class="list flexa" @click="handleShowComp('silderSet')">
-          <img class="listImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/swap_set.svg">
+          <img class="listImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/swap-set.png">
           <span>{{ $t('dex.TradeSet') }}</span>
         </div>
         <div class="list flexa" @click="handleShowNode">
-          <img class="listImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/node_set.svg">
+          <img class="listImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/node-set.png">
           <span>{{ $t('node.nodeSet') }}</span>
         </div>
         <div class="list flexa" @click="handleTo('createMarket')">
           <img class="listImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/create_set.svg">
           <span>{{ $t('dex.addMarket') }}</span>
         </div>
-        <!-- <div class="list flexa" @click="handleShowComp('invi')">
-          <img class="listImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/invi_set.svg">
-          <span>{{ $t('invi.invitation') }}</span>
-        </div> -->
         <div class="list flexa" @click="handleToPro('docs')">
           <img class="listImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/tutorial_set.svg">
           <span>{{ $t('more.faq') }}</span>
@@ -50,47 +45,56 @@
           <img class="listImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/safe_set.svg">
           <span>{{ $t('public.warnTip') }}</span>
         </div>
+        <div class="list flexa" @click="handleShowComp('lang')">
+          <img class="listImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/lang-set.png">
+          <span>语言设置</span>
+        </div>
+      </div>
+
+      <div class="telUs">
+        <div class="subTi">联系我们</div>
+        <div class="flexb item">
+          <a href="https://github.com/defis-net" target="_blank">
+            <img src="https://cdn.jsdelivr.net/gh/defis-net/material2/telUs/GitHub.png">
+          </a>
+          <a href="https://bihu.com/people/1511717747" target="_blank">
+            <img src="https://cdn.jsdelivr.net/gh/defis-net/material2/telUs/Bihu.png">
+          </a>
+          <a href="https://twitter.com/DFSnetworks" target="_blank">
+            <img src="https://cdn.jsdelivr.net/gh/defis-net/material2/telUs/Twitter.png">
+          </a>
+        </div>
+        <div class="flexb item">
+          <a href="https://t.me/dfsnet" target="_blank">
+            <img src="https://cdn.jsdelivr.net/gh/defis-net/material2/telUs/Telegram.png">
+          </a>
+          <a v-clipboard:copy="'dfsfarmer'"
+            v-clipboard:success="handleCopy"
+            v-clipboard:error="handleCopyError">
+            <img src="https://cdn.jsdelivr.net/gh/defis-net/material2/telUs/WeChat.png">
+          </a>
+          <a href="https://dfsofficial.medium.com/" target="_blank">
+            <img src="https://cdn.jsdelivr.net/gh/defis-net/material2/telUs/medium.png">
+          </a>
+        </div>
       </div>
 
       <!-- 切换语言 -->
-      <div class="lang flexb" @click="handleChangeLang()">
+      <!-- <div class="lang flexb" @click="handleChangeLang()">
         <span v-if="language === 'zh-CN'">{{ $t('public.switchLang') }}</span>
         <span v-else>{{ $t('public.switchLang') }}</span>
         <img class="langImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/lang.svg">
-      </div>
+      </div> -->
       <!-- versions -->
-      <div class="flexa version">
+      <!-- <div class="flexa version">
         <span class="flexc" @click="handleToV1('v1')">V1</span>
         <span class="flexc" @click="handleToV1('v2')">V2</span>
         <span class="flexc" @click="handleToV1('v3')">V3</span>
         <span class="flexc" @click="handleToV1('v4')">V4</span>
         <span class="flexc" @click="handleToV1('v5')">V5</span>
-      </div>
-      <!-- 合作 -->
-      <div class="flexb par">
-        <a href="https://github.com/defis-net" target="_blank">
-          <img src="https://cdn.jsdelivr.net/gh/defis-net/material/par/GitHub_icon.svg" alt="">
-        </a>
-        <a href="https://bihu.com/people/1511717747" target="_blank">
-          <img src="https://cdn.jsdelivr.net/gh/defis-net/material/par/bihu_icon.svg" alt="">
-        </a>
-        <a href="https://twitter.com/DFSnetworks" target="_blank">
-          <img src="https://cdn.jsdelivr.net/gh/defis-net/material/par/twitter_icon.svg" alt="">
-        </a>
-        <a href="https://t.me/dfsnet" target="_blank">
-          <img src="https://cdn.jsdelivr.net/gh/defis-net/material/par/telegram_icon.svg" alt="">
-        </a>
-        <a v-clipboard:copy="'dfsfarmer'"
-          v-clipboard:success="handleCopy"
-          v-clipboard:error="handleCopyError">
-          <img src="https://cdn.jsdelivr.net/gh/defis-net/material/par/WeChat_icon.svg" alt="">
-        </a>
-        <a href="https://dfsofficial.medium.com/" target="_blank">
-          <img src="https://cdn.jsdelivr.net/gh/defis-net/material/par/medium_icon.svg" alt="">
-        </a>
-      </div>
+      </div> -->
     </div>
-  </el-drawer>
+  </van-popup>
 </template>
 
 <script>
@@ -103,17 +107,23 @@ export default {
   data() {
     return {
       showNav: false,
+      cpuSwitch: false,
     }
+  },
+  mounted() {
+    this.cpuSwitch = this.freeCpu;
   },
   computed: {
     ...mapState({
       language: state => state.app.language,
       scatter: state => state.app.scatter,
+      freeCpu: state => state.app.freeCpu,
     }),
   },
   methods: {
-    handleToBP() {
-      location.href = 'https://defis.network/'
+    handleSetCpu(checked) {
+      this.cpuSwitch = checked;
+      this.$store.dispatch('setFreeCpu', checked)
     },
     handleChangeLang() {
       let type;
@@ -204,7 +214,7 @@ export default {
     color: #EB6765;
   }
   .acc{
-    padding: 30px 60px 30px 30px;
+    padding: 30px 60px 0px 30px;
     text-align: left;
     .login{
       font-size: 50px;
@@ -214,7 +224,7 @@ export default {
     }
   }
   .lists{
-    margin: 0 30px 30px;
+    // margin: 0 30px 30px;
     .title{
       color: #FFF;
       background: #57DBBF;
@@ -233,13 +243,28 @@ export default {
       height: 80px;
       padding-right: 30px;
       box-sizing: border-box;
-      margin-bottom: 10px;
-      &:last-child{
-        margin-bottom: 0px;
-      }
+      margin: 30px 30px;
+      font-size: 32px;
+      font-weight: 500;
       .listImg{
-        width: 33px;
-        margin-right: 10px;
+        width: 32px;
+        margin-right: 30px;
+      }
+    }
+    .switch{
+      background: rgba(#29D4B0, .9);
+      padding: 30px;
+      height: 104px;
+      border-radius: 12px;
+      color: #FFF;
+      .vanSwitch{
+        border: 1px solid #FFF;
+        /deep/ .van-switch__node{
+          background: #67DEC5;
+          box-shadow: none;
+          border: 1px solid #FFF;
+          box-sizing: border-box;
+        }
       }
     }
   }
@@ -261,25 +286,24 @@ export default {
       }
     }
   }
-  .par{
-    padding: 10px 30px;
-    img{
-      width: 72px;
+  .telUs{
+    background: #EEFBF8;
+    color: $color-main;
+    text-align: left;
+    margin: 28px;
+    border-radius: 12px;
+    padding: 28px;
+    .item{
+      margin-top: 30px;
+      img{
+        width: 60px;
+      }
     }
   }
 }
 
 .drawerCss{
-  /deep/ .el-drawer{
-    width: 550px !important;
-  }
-  /deep/ .el-drawer__header{
-    margin-bottom: 0;
-    padding: 0;
-  }
-  /deep/ .el-drawer__body,
-  /deep/ .el-drawer{
-    outline: none !important;
-  }
+  width: 480px;
+  height: 100vh;
 }
 </style>

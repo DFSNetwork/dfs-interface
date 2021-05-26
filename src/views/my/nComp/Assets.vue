@@ -83,7 +83,7 @@ export default {
   },
   watch: {
     allBals: {
-      handler: function abs(newVal) {
+      handler: function abs() {
         this.handleSearch()
       },
       deep: true,

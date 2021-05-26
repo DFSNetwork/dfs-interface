@@ -73,6 +73,7 @@ export default {
 
 <style lang="scss" scoped>
 .dfsInfo{
+  box-shadow: 2px 2px 6px 4px rgba(243,243,243,1);
   margin: 28px;
   background: #FFF;
   border-radius: 16px;

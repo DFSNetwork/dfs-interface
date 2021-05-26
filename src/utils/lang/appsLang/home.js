@@ -50,9 +50,9 @@ export default {
       newPrice:'Price',
       rate24: 'Change',
       vol24: '24H Volume',
-      oChain:'Cross deposit and withdrawal',
+      oChain:'Deposit',
       oChainTip:'Support ETH, BTC',
-      onkey:'Dep & With',
+      onkey:'Deposit',
 
       vote:'Votes',
       mine:'Mining',

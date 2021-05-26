@@ -24,16 +24,10 @@
           <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/vote_icon.png">
           <div>{{ $t('home.vote') }}</div>
         </div>
-        <div class="list" @click="handleTo('dfsMine')">
+        <div class="list" @click="handleTo('mineHomeDfs')">
           <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/mining_icon.png">
           <div>{{ $t('home.mine') }}</div>
         </div>
-        <!-- https://usdtcross.starteos.io/  兑换USDT -->
-        <!-- <div class="list" @click="handleToPro('starteos')">
-          <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/exchange.png">
-          <div>{{ $t('home.exchange') }}</div>
-        </div> -->
-
         <div class="list" @click="handleToPro('suggestions')">
           <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/fundation_icon.png">
           <div>{{ $t('home.issues') }}</div>
@@ -44,7 +38,7 @@
           <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/financial_icon.png">
           <div>{{ $t('home.financial') }}</div>
         </div>
-        <div class="list" @click="handleTo('dss')">
+        <div class="list" @click="handleTo('dssHomeDfs')">
           <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/dss_icon.png">
           <div>DFS DSS</div>
         </div>
@@ -105,7 +99,7 @@ export default {
   margin: 28px;
   background: #FFF;
   border-radius: 8px;
-  // border: 1px solid $color-border;
+  box-shadow: 2px 2px 6px 4px rgba(243,243,243,1);
   padding: 18px;
   position: relative;
   .info{
@@ -143,7 +137,7 @@ export default {
   background: #FFF;
   padding: 22px 18px;
   border-radius: 8px;
-  // border: 1px solid $color-border;
+  box-shadow: 2px 2px 6px 4px rgba(243,243,243,1);
   .lists{
     margin-bottom: 28px;
     text-align: center;

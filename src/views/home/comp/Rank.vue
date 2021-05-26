@@ -46,7 +46,7 @@
           </div>
         </div>
         <div>
-          <span class="changeBtn din"
+          <span class="changeBtn din flexc"
           :class="{
             'red_p': parseFloat(v.priceRate) < 0,
           }">{{ v.priceRate }}</span>
@@ -141,9 +141,9 @@ export default {
 .rank{
   font-size: 28px;
   margin: 28px;
-  border-radius: 8px;
+  border-radius: 12px;
   background: #FFF;
-  // border: 1px solid $color-border;
+  box-shadow: 2px 2px 6px 4px rgba(243,243,243,1);
   .subTab{
     border-bottom: 1px solid $color-border;
     box-sizing: border-box;
@@ -210,10 +210,13 @@ export default {
       .changeVol,
       .changeBtn{
         background: #5AAF90;
-        padding: 12px 18px;
+        padding: 12px 0;
+        width: 130px;
+        display: inline-block;
         font-size: 24px;
         color: #FFF;
         border-radius: 4px;
+        text-align: center;
         &.red_p{
           background:#FF4D4D;
           // color: #FF4D4D;

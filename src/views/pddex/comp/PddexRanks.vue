@@ -3,7 +3,7 @@
     <div class="rankTabs">
       <van-tabs v-model="coinName"
         animated
-        class="subTab"
+        class="subTab dinReg"
         title-inactive-color="#999"
         title-active-color="#29D4B0"
         color="#29D4B0">
@@ -526,15 +526,15 @@ export default {
     .rate{
       font-size: 24px;
       background: #999;
-      border-radius: 4px;
+      border-radius: 6px;
       color: #FFF;
       height: 50px;
       width: 116px;
       &.green{
-        background: #5AAF90;
+        background: rgba(#5AAF90, .95);
       }
       &.red{
-        background: #FF4D4D;
+        background: rgba(#FF4D4D, .95);
       }
     }
     .rankItem{

@@ -36,8 +36,13 @@ const app = {
     },
     account: {},
     accFollow: [],
+    freeCpu: localStorage.getItem('freeCpu') ? JSON.parse(localStorage.getItem('freeCpu')) : false,
   },
   mutations: {
+    SET_FREECPU: (state, freeCpu) =>  {
+      state.freeCpu = freeCpu;
+      localStorage.setItem('freeCpu', JSON.stringify(freeCpu))
+    },
     SET_ACCINFO: (state, accInfo) => {
       state.accInfo = accInfo;
     },
@@ -77,6 +82,9 @@ const app = {
     },
   },
   actions: {
+    setFreeCpu({ commit }, freeCpu) {
+      commit('SET_FREECPU', freeCpu);
+    },
     setAccInfo({ commit }, accInfo) {
       commit('SET_ACCINFO', accInfo);
     },

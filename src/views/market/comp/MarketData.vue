@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div :class="`tipDiv marketReward ${handleGetClass(thisMarket.mid)}`" v-if="Number(token)"
+    <div :class="`tipDiv marketReward`" v-if="Number(token)"
      @click="handleTo('dfsMinePool')">
       <div class="flexb">
         <div class="flexa symbolInfo">
@@ -381,7 +381,7 @@ export default {
   margin-left: 10px;
 }
 .tipDiv{
-  border: 1px solid #e3e3e3;
+  box-shadow: 2px 2px 6px 4px rgba(243,243,243,1);
   margin-top: 40px;
   border-radius: 10px;
   padding: 20px 20px;
