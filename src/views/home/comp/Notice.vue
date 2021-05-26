@@ -62,7 +62,7 @@ export default {
   data() {
     return {
       voices: [{
-        title: this.$t('home.homeUi'),
+        title: this.$t('home.homeUi1'),
       }],
       top3: [[{}, {}, {}], [{}, {}, {}]],
       hotArr: [451, 722, 17, 894, 665, 332]
