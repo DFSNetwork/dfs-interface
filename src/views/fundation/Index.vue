@@ -1,11 +1,11 @@
 <template>
   <div class="fundation">
-    <van-notice-bar v-if="voices.length" color="#29D4B0" mode="closeable" background="#29D4B01A"
+    <!-- <van-notice-bar v-if="voices.length" color="#29D4B0" mode="closeable" background="#29D4B01A"
       left-icon="volume-o">
         <span class="noticeSpan" v-for="(data, index) in voices" :key="index">
           {{ data }}
         </span>
-    </van-notice-bar>
+    </van-notice-bar> -->
     <van-swipe class="banner" :autoplay="3000" indicator-color="white">
       <van-swipe-item v-for="(item, index) in images" :key="index" @click="handleTo(item.routeName, item.link)">
         <img class="bgImg" :src="item.image" />

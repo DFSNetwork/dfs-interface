@@ -10,7 +10,7 @@
       <!-- <van-swipe-item @click="handleToObj('trade')">
         <img class="bannerImg"
           src="@/assets/banner/trade.jpeg">
-      </van-swipe-item> -->
+      </van-swipe-item>
       <van-swipe-item>
         <img class="bannerImg" v-if="language === 'zh-CN'"
           src="https://cdn.jsdelivr.net/gh/defis-net/material2/banner/dfsMine.png">

@@ -32,7 +32,7 @@ const constantRouter = [
         path: '/swap',
         name: 'index',
         component: () => import(/* webpackChunkName: "home" */ '@/views/index/Index.vue'),
-        meta: { title: 'DeFis-Network' },
+        meta: { title: 'DeFis-Network', noFooter: true, noHeader: true, },
       },
       {
         path: '/swap/history/:mid',
@@ -44,7 +44,7 @@ const constantRouter = [
         path: '/market/:mid',
         name: 'market',
         component: () => import(/* webpackChunkName: "home" */ '@/views/index/Index.vue'),
-        meta: { title: 'DeFis-Network' },
+        meta: { title: 'DeFis-Network', noFooter: true, noHeader: true, },
       },
       {
         path: '/market-list',
@@ -122,7 +122,7 @@ const constantRouter = [
         path: '/fundation',
         name: 'fundation',
         component: () => import(/* webpackChunkName: "home" */ '@/views/fundation/Index.vue'),
-        meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true },
+        meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noHeader: true, },
       },
       { // 节点挖矿
         path: '/node-pools',
@@ -140,7 +140,7 @@ const constantRouter = [
         path: '/my-center',
         name: 'myCenter',
         component: () => import(/* webpackChunkName: "home" */ '@/views/my/Index.vue'),
-        meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true },
+        meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noHeader: true },
       },
       { // 编辑资料
         path: '/my-center/set-edit',
@@ -257,14 +257,8 @@ const constantRouter = [
             path: 'ranks',
             name: 'pddex',
             component: () => import(/* webpackChunkName: "home" */ '@/views/pddex/comp/PddexRanks'),
-            meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true },
+            meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noHeader: true },
           },
-          // {
-          //   path: 'trade/:symbol',
-          //   name: 'pddexTrade',
-          //   component: () => import(/* webpackChunkName: "pddexTrade" */ '@/views/pddex/trade/Index'),
-          //   meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noHeader: true },
-          // },
           {
             path: 'order',
             name: 'pddexOrder',
@@ -281,7 +275,7 @@ const constantRouter = [
             path: 'trade/:symbol',
             name: 'pddexTrade',
             component: () => import(/* webpackChunkName: "home" */ '@/views/index/Index.vue'),
-            meta: { title: 'DeFis-Network' },
+            meta: { title: 'DeFis-Network', noFooter: true, noHeader: true, },
           },
         ]
       },

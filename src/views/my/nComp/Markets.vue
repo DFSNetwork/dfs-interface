@@ -1,59 +1,95 @@
 <template>
   <div class="marketsComp">
-    <div class="item claimDiv flexb">
-      <div class="cnt">
-        <div class="title">{{ $t('my.liqsReward') }}(DFS)</div>
-        <div>
-          <span class="num dinBold">{{ countMine }}</span>
-          <span class="small">≈ {{ countMineCNY }} CNY</span>
-        </div>
+    <div class="count item">
+      <div class="title din flexa">
+        <span>总估值</span>
+        <span v-if="countByU">(USDT)</span>
+        <span v-else>(EOS)</span>
+        <img class="eye" v-if="!hideAss" @click="hideAss = !hideAss"
+          src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/eye.png">
+        <img class="eye hideeye" v-else  @click="hideAss = !hideAss"
+          src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/hide.png">
       </div>
-      <div class="claimBtn flexc" @click="handleClaim">{{ $t('my.oneKeys') }}</div>
+      <div class="flexend" v-if="!hideAss">
+        <span class="amt dinBold" v-if="countByU">{{ allCountUsdt }}</span>
+        <span class="amt dinBold" v-else>{{ allCountEos }}</span>
+        <span class="small flexa">
+          <span>≈ ¥{{ allCountCNY }}</span>
+          <img class="exCount"  @click="countByU = !countByU"
+            src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/switch.png">
+        </span>
+      </div>
+      <div class="flexa" v-else>
+        <span class="amt dinBold">********</span>
+        <img class="exCount" @click="countByU = !countByU"
+            src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/switch.png">
+      </div>
     </div>
 
     <div class="lists">
       <div class="item" v-for="(v, i) in showArr" :key="i">
-        <div class="coin din flexa">
-          <img class="logo" :src="v.imgUrl0" :onerror="$errorImg">
-          <span>{{ v.symbol0 }}</span>
-          <img class="add" src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/add.svg">
-          <img class="logo" :src="v.imgUrl1" :onerror="$errorImg">
-          <span>{{ v.symbol1 }}</span>
+        <div class="flexb">
+          <div class="coin din flexa">
+            <img class="logo" :src="v.imgUrl0" :onerror="$errorImg">
+            <span>{{ v.symbol0 }}</span>
+            <img class="add" src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/add.svg">
+            <img class="logo" :src="v.imgUrl1" :onerror="$errorImg">
+            <span>{{ v.symbol1 }}</span>
+          </div>
+          <div class="flexa">
+            <div class="deposit flexc btn" @click="handleAdd(v)">存入</div>
+            <div class="withdraw flexc btn" @click="handleWith(v)">取回</div>
+          </div>
         </div>
         <div class="info dinReg">
-          <div class="flexb">
-            <span class="label">{{ $t('market.myMarkets') }}</span>
+          <div class="flexa">
+            <span class="label">{{ $t('market.myMarkets') }}：</span>
             <span>{{ v.nowMarket0 }} {{ v.symbol0 }} / {{ v.nowMarket1 }} {{ v.symbol1 }}</span>
           </div>
-          <div class="flexb">
-            <span class="label">{{ $t('market.capital') }}</span>
+          <div class="flexa">
+            <span class="label">{{ $t('market.capital') }}：</span>
             <span>{{ v.bal0 }} / {{ v.bal1 }}</span>
           </div>
-          <div class="flexb" v-if="v.rdType">
-            <span class="label">{{ $t('market.marketReward') }}</span>
-            <span v-if="!v.rdType.ex">
+          <div class="flexa" v-if="v.rdType">
+            <span class="label">{{ $t('market.marketReward') }}：</span>
+            <div v-if="v.showRdType === 0">
+              <span v-if="!v.rdType.ex">
+                <span :class="{
+                  'green': parseFloat(v.rdType.t0 || 0) > 0,
+                  'red': parseFloat(v.rdType.t0 || 0) < 0,
+                  }">{{ v.rdType.t0 }} {{ v.symbol0 }}</span> / 
+                <span :class="{
+                  'green': parseFloat(v.rdType.t1 || 0) > 0,
+                  'red': parseFloat(v.rdType.t1 || 0) < 0,
+                  }">{{ v.rdType.t1 }} {{ v.symbol1 }}</span>
+              </span>
+              <span v-else>
+                <span :class="{
+                  'green': parseFloat(v.rdType.t1 || 0) > 0,
+                  'red': parseFloat(v.rdType.t1 || 0) < 0,
+                  }">{{ v.rdType.t1 }} {{ v.symbol1 }}</span> / 
+                <span :class="{
+                  'green': parseFloat(v.rdType.t0 || 0) > 0,
+                  'red': parseFloat(v.rdType.t0 || 0) < 0,
+                  }">{{ v.rdType.t0 }} {{ v.symbol0 }}</span>
+              </span>
+            </div>
+            <div v-else-if="v.showRdType === 1">
               <span :class="{
-                'green': parseFloat(v.rdType.t0 || 0) > 0,
-                'red': parseFloat(v.rdType.t0 || 0) < 0,
-                }">{{ v.rdType.t0 }} {{ v.symbol0 }}</span> / 
+                'green': parseFloat(v.rdType.rewardA || 0) > 0,
+                'red': parseFloat(v.rdType.rewardA || 0) < 0,
+                }">{{ v.rdType.rewardA }} {{ v.symbol0 }}</span>
+            </div>
+            <div v-else>
               <span :class="{
-                'green': parseFloat(v.rdType.t1 || 0) > 0,
-                'red': parseFloat(v.rdType.t1 || 0) < 0,
-                }">{{ v.rdType.t1 }} {{ v.symbol1 }}</span>
-            </span>
-            <span v-else>
-              <span :class="{
-                'green': parseFloat(v.rdType.t1 || 0) > 0,
-                'red': parseFloat(v.rdType.t1 || 0) < 0,
-                }">{{ v.rdType.t1 }} {{ v.symbol1 }}</span> / 
-              <span :class="{
-                'green': parseFloat(v.rdType.t0 || 0) > 0,
-                'red': parseFloat(v.rdType.t0 || 0) < 0,
-                }">{{ v.rdType.t0 }} {{ v.symbol0 }}</span>
-            </span>
+                'green': parseFloat(v.rdType.rewardB || 0) > 0,
+                'red': parseFloat(v.rdType.rewardB || 0) < 0,
+                }">{{ v.rdType.rewardB }} {{ v.symbol1 }}</span>
+            </div>
+            <img @click.stop="handleChangeRewardType(v)" class="qusTip" src="https://cdn.jsdelivr.net/gh/defis-net/material/dex/price_switch_icon_green_left.svg" alt="">
           </div>
-          <div class="flexb" v-if="v.timer">
-            <span class="label">{{ $t('market.marketTime') }}</span>
+          <div class="flexa" v-if="v.timer">
+            <span class="label">{{ $t('market.marketTime') }}：</span>
             <span>
               {{ $t('market.timer', {
                 days: v.timer.days,
@@ -66,22 +102,48 @@
         </div>
       </div>
     </div>
+
+     <!-- 加入做市 -->
+    <van-popup
+      get-container="body"
+      class="popup_p"
+      v-model="showAdd">
+      <AddMarket v-if="showAdd"
+        :thisMarket="menageMarket"
+        @listenClose="handleClose"/>
+    </van-popup>
+    <!-- 取回做市 -->
+    <van-popup
+      get-container="body"
+      class="popup_p"
+      v-model="showRemove">
+      <Withdraw v-if="showRemove"
+        :thisMarket="menageMarket"
+        @listenClose="handleClose"/>
+    </van-popup>
   </div>
 </template>
 
 <script>
-import { DApp } from '@/utils/wallet';
-import moment from 'moment';
 import { mapState } from 'vuex';
-// import { sellToken, getV3PoolsClass } from '@/utils/logic';
-import { toFixed, getMarketTimeLp, toLocalTime } from '@/utils/public';
-import { getBals } from '@/utils/DfsMineData'
-import { getReward } from '@/views/dfsMine/dfsMine'
+import { toFixed, accDiv, getMarketTimeLp, toLocalTime } from '@/utils/public';
+
+import AddMarket from '@/views/market/popup/AddMarket'
+import Withdraw from '@/views/market/comp/Withdraw'
 
 export default {
   name: 'marketsComp',
+  components: {
+    AddMarket, Withdraw,
+  },
   props: {
     liqs: {
+      type: Array,
+      default: function abs() {
+        return []
+      }
+    },
+    allBals: {
       type: Array,
       default: function abs() {
         return []
@@ -96,6 +158,13 @@ export default {
       mineArr: [], // 挖矿数据
       rwTimer: null,
       minReward: 0.0001,
+
+      menageMarket: {},
+      showAdd: false,
+      showRemove: false,
+
+      countByU: true,
+      hideAss: false,
     }
   },
   beforeDestroy() {
@@ -110,19 +179,27 @@ export default {
       coinPrices: state => state.sys.coinPrices,
       rankInfoV3: state => state.sys.rankInfoV3,
     }),
-    countMine() {
+    allCountUsdt() {
       let count = 0;
-      this.showArr.forEach(v => {
-        count = parseFloat(count || 0) + parseFloat(v.showReward || 0)
+      this.allBals.forEach(v => {
+        count = parseFloat(count || 0) + parseFloat(v.balUsdt || 0)
       })
       return count.toFixed(4)
     },
-    countMineCNY() {
-      let price = this.coinPrices.find(v => v.coin === 'DFS') || {};
-      price = price.CNY;
-      const cny = parseFloat(price || 0) * parseFloat(this.countMine || 0)
-      return cny.toFixed(2)
-    }
+    allCountEos() {
+      let count = 0;
+      this.allBals.forEach(v => {
+        count = parseFloat(count || 0) + parseFloat(v.balEos || 0)
+      })
+      return count.toFixed(4)
+    },
+    allCountCNY() {
+      let count = 0;
+      this.allBals.forEach(v => {
+        count = parseFloat(count || 0) + parseFloat(v.balCNY || 0)
+      })
+      return count.toFixed(4)
+    },
   },
   watch: {
     liqs: {
@@ -142,6 +219,12 @@ export default {
     }
   },
   methods: {
+    handleChangeRewardType(v) {
+      let n = v.showRdType;
+      n = n + 1;
+      n = n % 3
+      this.$set(v, 'showRdType', n)
+    },
     handleDeal() {
       clearTimeout(this.timer)
       this.timer = setTimeout(() => {
@@ -159,7 +242,7 @@ export default {
         const sT = toLocalTime(`${v.start}.000+0000`);
         const mTime = getMarketTimeLp(sT)
         this.$set(v, 'timer', mTime);
-        // 处理收益
+        // 处理收益 - 正常双币种
         const reward0 = parseFloat(v.nowMarket0 || 0) - parseFloat(v.bal0 || 0)
         const reward1 = parseFloat(v.nowMarket1 || 0) - parseFloat(v.bal1 || 0)
         const t0 = parseFloat(reward0 || 0) > 0 ? `+${ parseFloat(reward0 || 0).toFixed(4) }`
@@ -167,18 +250,36 @@ export default {
         const t1 = parseFloat(reward1 || 0) > 0 ? `+${ parseFloat(reward1 || 0).toFixed(4) }`
                                                 : parseFloat(reward1 || 0).toFixed(4);
         const ex = parseFloat(reward0 || 0) < parseFloat(reward1 || 0)
+        // 处理收益 - 收益tokenA
+        const priceA = parseFloat(v.nowMarket0 || 0) / parseFloat(v.nowMarket1 || 0);
+        let rewardA = parseFloat(reward0) + priceA * parseFloat(reward1)
+        const decimalA = v.decimal0 > 4 ? 4 : v.decimal0 ;
+        rewardA = toFixed(rewardA, decimalA)
+        if (Number(rewardA) > 0) {
+          rewardA = `+${rewardA}`
+        }
+        // 处理收益 - 收益tokenB
+        const priceB = parseFloat(v.nowMarket1 || 0) / parseFloat(v.nowMarket0 || 0);
+        let rewardB = parseFloat(reward1) + priceB * parseFloat(reward0)
+        const decimalB = v.decimal1 > 4 ? 4 : v.decimal1 ;
+        rewardB = toFixed(rewardB, decimalB)
+        if (Number(rewardB) > 0) {
+          rewardB = `+${rewardB}`
+        }
         this.$set(v, 'rdType', {
           t0,
           t1,
           ex,
+          rewardA,
+          rewardB,
         });
-        // 计算收益
-        const reward = this.handleGetReward(v)
-        this.$set(v, 'reward', reward);
+        v.showRdType = v.showRdType || 0;
+
+        v.sym0Rate = toFixed(accDiv(parseFloat(v.reserve1 || 0), parseFloat(v.reserve0 || 0)), v.decimal1)
+        v.sym1Rate = toFixed(accDiv(parseFloat(v.reserve0 || 0), parseFloat(v.reserve1 || 0)), v.decimal0)
         dealArr.push(v)
       })
       this.showArr = dealArr;
-      this.handleRunReward()
     },
     // 获取挖矿数据
     async handleGetMine() {
@@ -217,131 +318,17 @@ export default {
         }
       })
     },
-    // 计算挖矿收益
-    handleGetReward(v) {
-      // if (!this.mineArr.length || this.marketLists.mid) {
-      //   return 
-      // }
-      const has = this.mineArr.find(vv => vv.mid === v.mid);
-      let reward = 0
-      if (!has) {
-        return reward
-      }
-      const {allBal, swapBal} = getBals()
-      let lastTime = toLocalTime(`${has.last_drip}.000+0000`);
-      has.lastTime = moment(lastTime).valueOf();
-      if (v.contract0 === 'tethertether' || v.contract1 === 'tethertether') {
-        const num = v.contract0 === 'tethertether' ? parseFloat(v.nowMarket0) : parseFloat(v.nowMarket1)
-        const reward0 = getReward({
-          poolBal: allBal.usdtPoolsBal,
-          swapBal: swapBal.usdtSwapBal
-        }, {
-          lastTime: has.lastTime,
-          num
-        })
-        reward = parseFloat(reward || 0) + parseFloat(reward0 || 0);
-      }
-      if (v.contract0 === 'eosio.token' || v.contract1 === 'eosio.token') {
-        const num = v.contract0 === 'eosio.token' ? parseFloat(v.nowMarket0) : parseFloat(v.nowMarket1)
-        const reward0 = getReward({
-          poolBal: allBal.eosPoolsBal,
-          swapBal: swapBal.eosSwapBal
-        }, {
-          lastTime: has.lastTime,
-          num
-        })
-        reward = parseFloat(reward || 0) + parseFloat(reward0 || 0);
-      }
-      if (v.contract0 === 'minedfstoken' || v.contract1 === 'minedfstoken') {
-        const num = v.contract0 === 'minedfstoken' ? parseFloat(v.nowMarket0) : parseFloat(v.nowMarket1)
-        const reward0 = getReward({
-          poolBal: allBal.dfsPoolsBal,
-          swapBal: swapBal.dfsSwapBal
-        }, {
-          lastTime: has.lastTime,
-          num
-        })
-        reward = parseFloat(reward || 0) + parseFloat(reward0 || 0);
-      }
-      // console.log(v.mid, reward)
-      return reward
+    handleClose() {
+      this.showAdd = false;
+      this.showRemove = false;
     },
-    // 挖矿收益数据滚动
-    handleRunReward() {
-      clearInterval(this.rwTimer)
-      this.rwTimer = setInterval(() => {
-        this.handleRun()
-      }, 50);
-      this.handleRun()
+    handleWith(v) {
+      this.menageMarket = v;
+      this.showRemove = true;
     },
-    handleRun() {
-      this.showArr.forEach(v => {
-        if (!parseFloat(v.reward || 0)) {
-          return
-        }
-        const reward = v.reward;
-        let showReward = v.showReward || reward;
-        let tReward = v.tReward || showReward;
-        const t = (reward - showReward) / 20;
-
-        tReward = Number(tReward) + Number(t);
-        showReward = toFixed(tReward, 8)
-        this.$set(v, 'showReward', showReward)
-        this.$set(v, 'tReward', tReward)
-      })
-    },
-    handleClaim() {
-      if (!this.account.name) {
-        return
-      }
-      const formName = this.account.name;
-      const permission = this.account.permissions;
-      const actions = [];
-      this.showArr.forEach(item => {
-        if (!item.reward || Number(item.reward) < Number(this.minReward)) {
-          return
-        }
-        actions.push({
-          account: 'miningpool11',
-          name: 'claim2',
-          authorization: [{
-            actor: formName, // 转账者
-            permission,
-          }],
-          data: {
-            user: formName,
-            mid: item.mid,
-          }
-        })
-      })
-      if (!actions.length) {
-        return
-      }
-      const params = {
-        actions
-      }
-      DApp.toTransaction(params, (err) => {
-        this.loading = false;
-        if (err && err.code === 402) {
-          this.$emit('listenUpdate', true)
-          return;
-        }
-        if (err) {
-          this.$toast({
-            type: 'fail',
-            message: err.message,
-          })
-          return;
-        }
-        this.$toast({
-          type: 'success',
-          message: 'Success'
-        })
-        this.getMine = false;
-        setTimeout(() => {
-          this.handleGetMine();
-        }, 2000);
-      })
+    handleAdd(v) {
+      this.menageMarket = v;
+      this.showAdd = true;
     },
   }
 }
@@ -351,13 +338,45 @@ export default {
 .marketsComp{
   font-size: 28px;
   text-align: left;
-  .claimBtn{
-    height: 90px;
-    font-size: 32px;
-    border-radius: 12px;
+
+  .count{
+    .title{
+      margin-bottom: 10px;
+    }
+    .amt{
+      font-size: 40px;
+    }
+    .small{
+      font-size: 24px;
+      margin-left: 15px;
+    }
+    .exCount{
+      width: 32px;
+      margin-left: 20px;
+    }
+    .eye{
+      margin-top: 5px;
+      margin-left: 15px;
+      width: 32px;
+      display: block;
+    }
+    .hideeye{
+      margin-top: 10px;
+    }
+  }
+  .btn{
+    height: 60px;
+    font-size: 24px;
+    border-radius: 30px;
     background: $color-main;
     color: #FFF;
-    padding: 0 36px;
+    // padding: 0 36px;
+    width: 120px;
+    margin-bottom: 10px;
+    &.withdraw{
+      margin-left: 15px;
+      background: #D83D51;
+    }
   }
   .item{
     padding: 24px;
@@ -379,12 +398,13 @@ export default {
     .item{
       .coin{
         color: #000;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
       }
       .logo{
-        min-width: 60px;
-        width: 60px;
-        margin-right: 15px;
+        min-width: 52px;
+        width: 52px;
+        height: 52px;
+        margin-right: 9px;
       }
       .add{
         margin: 0 15px;
@@ -402,6 +422,10 @@ export default {
         }
         .red{
           color: #FF4D4D;
+        }
+        .qusTip{
+          margin-left: 9px;
+          width: 32px;
         }
       }
     }

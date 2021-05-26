@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="nSwap">
     <div class="tabView">
       <div class="tabC">
         <tabs />

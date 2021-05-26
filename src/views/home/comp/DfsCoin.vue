@@ -1,6 +1,9 @@
 <template>
   <div class="dfsCoin">
-
+    <div class="title flexb">
+      <span>大丰收币种</span>
+      <img src="" alt="">
+    </div>
   </div>
 </template>
 

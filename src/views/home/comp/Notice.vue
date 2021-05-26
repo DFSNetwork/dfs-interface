@@ -103,6 +103,7 @@ export default {
 .notice{
   margin: 28px;
   // border: 1px solid $color-border;
+  box-shadow: 2px 2px 6px 4px rgba(243,243,243,1);
   border-radius: 8px;
   background: #FFF;
   .noticeBar{

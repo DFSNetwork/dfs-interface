@@ -1,24 +1,12 @@
 <template>
   <div class="mainComp">
     <div class="totalCount">
-      <div class="amtTitle flexa dinReg">
-        <span>{{ $t('my.countAssets') }} (USDT)</span>
-      </div>
-      <div class="din number">
-        <span class="amt">${{ allCount }}</span>
-        <span class="small dinReg">≈ {{ allCountCNY }} CNY</span>
-      </div>
-
-      <div class="tools flexb">
-        <span :class="{'act': act === 0}" @click="act = 0">{{ $t('my.assManage') }}</span>
-        <span :class="{'act': act === 1}" @click="act = 1">{{ $t('my.liqsManage') }}</span>
-        <span :class="{'act': act === 2}" @click="act = 2">{{ $t('my.moreServer') }}</span>
-      </div>
+      <AccInfo :act="act" @listenAct="handlAct"/>
     </div>
 
     <div class="subView">
       <Assets v-if="act === 0" :allBals="allBals" :allCountCNY="allCountCNY" :allCount="allCount"/>
-      <Markets v-else-if="act === 1" :liqs="liqs"/>
+      <Markets v-else-if="act === 1" :liqs="liqs" :allBals="allBals"/>
       <More v-else />
     </div>
   </div>
@@ -28,12 +16,14 @@
 import { mapState } from 'vuex';
 import { sellToken } from '@/utils/logic';
 import { getCoin } from '@/utils/public';
+import AccInfo from '@/views/my/nComp/AccInfo';
 import Assets from '@/views/my/nComp/Assets';
 import Markets from '@/views/my/nComp/Markets';
 import More from '@/views/my/nComp/More'
 export default {
   name: 'mainComp',
   components: {
+    AccInfo,
     Assets, Markets, More,
   },
   data() {
@@ -74,6 +64,8 @@ export default {
       handler: function at() {
         this.handleGetAllAssets()
         this.handleGetMarkets()
+
+        this.handleGetDss()
       },
       immediate: true,
       deep: true,
@@ -88,6 +80,9 @@ export default {
     }
   },
   methods: {
+    handlAct(act) {
+      this.act = act;
+    },
     // 获取账户余额
     async handleGetAllAssets() {
       const name = this.account.name;
@@ -100,7 +95,6 @@ export default {
       }
       const bals = result.balances || [];
       this.bals = bals;
-      // console.log('this.bals', this.bals)
       this.handleDealBals()
     },
     // 获取做市流动池
@@ -155,6 +149,7 @@ export default {
       });
       this.markets = rows;
       this.marketBals = mkBals;
+      // console.log(this.marketBals)
       this.handleDealBals()
     },
     // 获取用户做市余额
@@ -177,6 +172,28 @@ export default {
       sym1.bal = liq.nowMarket1;
       return [sym0, sym1]
     },
+    // 获取DFS DSS余额
+    async handleGetDss() {
+      const name = this.account.name;
+      if (!name) {
+        return
+      }
+      const params = {
+        "code": "dfsdsrsystem",
+        "scope": "dfsdsrsystem",
+        "table": "holders",
+        "lower_bound": ` ${name}`,
+        "upper_bound": ` ${name}`,
+        "json": true,
+      }
+      const { status, result } = await this.$api.get_table_rows(params);
+      console.log(result)
+      if (!status || !result.rows.length) {
+        return
+      }
+    },
+    // 获取TAG DSS余额
+    // 获取YFC DSS余额
     // 做市 & 余额整合
     handleDealBals() {
       if (!this.bals.length && !this.marketBals.length) {
@@ -211,17 +228,20 @@ export default {
       allBals.forEach(token => {
         const count = parseFloat(token.amount || 0) + parseFloat(token.bal || 0);
         this.$set(token, 'count', parseFloat(count).toFixed(4))
+        // 获取EOS的价格
+        const EosPrice = this.coinPrices.find(v => 'EOS' === v.coin) || {}
+        const eosPriceU = EosPrice.price || 0;
         // 计价币种价格计算
         const isBaseCoin = this.coinPrices.find(v => v.contract === token.contract && token.symbol === v.coin)
         if (isBaseCoin) {
           const tokenCount = parseFloat(token.amount || 0) + parseFloat(token.bal || 0); // 总余额
           const uPrice = isBaseCoin.price || 0; // 对USDT价格
           const amtUsdt = parseFloat(token.amount || 0) * uPrice; // 余额估值 USDT
-          this.$set(token, 'amtUsdt', parseFloat(amtUsdt).toFixed(2))
+          this.$set(token, 'amtUsdt', parseFloat(amtUsdt).toFixed(4))
           const balUsdt = parseFloat(token.bal || 0) * uPrice; // 做市余额估值 USN
-          this.$set(token, 'balUsdt', parseFloat(balUsdt).toFixed(2))
+          this.$set(token, 'balUsdt', parseFloat(balUsdt).toFixed(4))
           const countUsdt = uPrice * tokenCount;
-          this.$set(token, 'countUsdt', parseFloat(countUsdt).toFixed(2))
+          this.$set(token, 'countUsdt', parseFloat(countUsdt).toFixed(4))
 
           const price = isBaseCoin.CNY || 0; // 对CNY价格
           const amtCNY = parseFloat(token.amount || 0) * price;
@@ -230,8 +250,16 @@ export default {
           this.$set(token, 'balCNY', parseFloat(balCNY).toFixed(2))
           const countCNY = price * tokenCount;
           this.$set(token, 'countCNY', parseFloat(countCNY).toFixed(2))
+
+          const priceEos = (isBaseCoin.price || 0) / (eosPriceU); // 对EOS价格
+          const amtEos = parseFloat(token.amount || 0) * priceEos;
+          this.$set(token, 'amtEos', parseFloat(amtEos).toFixed(4))
+          const balEos = parseFloat(token.bal || 0) * priceEos;
+          this.$set(token, 'balEos', parseFloat(balEos).toFixed(4))
+          const countEos = priceEos * tokenCount;
+          this.$set(token, 'countEos', parseFloat(countEos).toFixed(4))
           return
-        } 
+        }
         // 非计价币种价格计算
         let fltArrToken = this.marketLists.filter(v => {
           const hasToken = (v.contract0 === token.contract && v.symbol0 === token.symbol)
@@ -269,11 +297,11 @@ export default {
         const tokenCount = parseFloat(token.amount || 0) + parseFloat(token.bal || 0); // 总余额
         const uPrice = tbUprice * (price || 0); // 对USDT价格
         const amtUsdt = parseFloat(token.amount || 0) * uPrice; // 余额估值 USDT
-        this.$set(token, 'amtUsdt', parseFloat(amtUsdt).toFixed(2))
+        this.$set(token, 'amtUsdt', parseFloat(amtUsdt).toFixed(4))
         const balUsdt = parseFloat(token.bal || 0) * uPrice; // 做市余额估值 USN
-        this.$set(token, 'balUsdt', parseFloat(balUsdt).toFixed(2))
+        this.$set(token, 'balUsdt', parseFloat(balUsdt).toFixed(4))
         const countUsdt = uPrice * tokenCount;
-        this.$set(token, 'countUsdt', parseFloat(countUsdt).toFixed(2))
+        this.$set(token, 'countUsdt', parseFloat(countUsdt).toFixed(4))
 
         const cnyPrice = tbCNYprice * (price || 0); // 对CNY价格
         const amtCNY = parseFloat(token.amount || 0) * cnyPrice;
@@ -282,6 +310,14 @@ export default {
         this.$set(token, 'balCNY', parseFloat(balCNY).toFixed(2))
         const countCNY = cnyPrice * tokenCount;
         this.$set(token, 'countCNY', parseFloat(countCNY).toFixed(2))
+
+        const eosPrice = tbUprice * (price || 0) / (eosPriceU); // 对USDT价格
+        const amtEos = parseFloat(token.amount || 0) * eosPrice; // 余额估值 USDT
+        this.$set(token, 'amtEos', parseFloat(amtEos).toFixed(4))
+        const balEos = parseFloat(token.bal || 0) * eosPrice; // 做市余额估值 USN
+        this.$set(token, 'balEos', parseFloat(balEos).toFixed(4))
+        const countEos = eosPrice * tokenCount;
+        this.$set(token, 'countEos', parseFloat(countEos).toFixed(4))
       })
       const sortArr = allBals.sort((a, b) => {
         return parseFloat(b.countCNY || 0) - parseFloat(a.countCNY || 0)
@@ -296,9 +332,9 @@ export default {
 .totalCount{
   color: #FFF;
   height: 420px;
-  background: linear-gradient(to right bottom, #49D7C4, #28C5A3);
+  // background: linear-gradient(to right bottom, #49D7C4, #28C5A3);
   font-size: 28px;
-  padding: 38px 30px;
+  // padding: 38px 30px;
   text-align: left;
   box-sizing: border-box;
   position: relative;
@@ -345,7 +381,7 @@ export default {
 }
 .subView{
   margin: 30px;
-  margin-top: -165px;
+  margin-top: -110px;
   position: relative;
   box-shadow: 0px 4px 8px 0px rgba(226,226,226,0.5);
   z-index: 1;
