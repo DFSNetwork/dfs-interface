@@ -1,11 +1,13 @@
 <template>
   <div class="swap">
     <Tabs />
-    <van-collapse v-model="activeNames">
+    <van-collapse v-model="activeNames" accordion>
       <van-collapse-item name="1">内容</van-collapse-item>
-      <van-collapse-item title="标题2" name="2">内容</van-collapse-item>
-      <van-collapse-item title="标题3" name="3">内容</van-collapse-item>
+      <van-collapse-item name="2">内容</van-collapse-item>
+      <van-collapse-item name="3">内容</van-collapse-item>
     </van-collapse>
+    <span @click="handleClose">close</span>
+    <span @click="handleShow">open</span>
   </div>
 </template>
 
@@ -19,8 +21,16 @@ export default {
   },
   data() {
     return {
-      activeNames: []
+      activeNames: ''
     }
+  },
+  methods: {
+    handleClose() {
+      this.activeNames = ''
+    },
+    handleShow() {
+      this.activeNames = '1'
+    },
   }
 }
 </script>
