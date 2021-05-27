@@ -495,6 +495,20 @@ const constantRouter = [
       },
     ],
   },
+  // 新版Swap路由兑换
+  {
+    path: '/swap-new',
+    component: Layout,
+    redirect: '/',
+    children: [
+      {
+        path: '/',
+        name: 'swapNew',
+        component: () => import(/* webpackChunkName: "home" */ '@/views/swap/Index.vue'),
+        meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noTab: true, noHeader: true, },
+      },
+    ],
+  },
 ]
 
 export default new Router({
