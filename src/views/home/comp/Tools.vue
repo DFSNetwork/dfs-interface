@@ -16,7 +16,7 @@
     <div class="appLists">
       <div class="lists flexb">
         <div class="list" @click="handleTo('invite')">
-          <img class="hot" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/new.png">
+          <!-- <img class="hot" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/new.png"> -->
           <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/invite_icon.png">
           <div>{{ $t('invite.myFarm') }}</div>
         </div>
@@ -47,7 +47,7 @@
           <div>USDX</div>
         </div>
         <div class="list" @click="handleToPro('record')">
-          <img class="hot" src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/hot.png">
+          <!-- <img class="hot" src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/hot.png"> -->
           <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/note_icon.png">
           <div>{{ $t('home.diary') }}</div>
         </div>

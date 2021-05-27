@@ -6,7 +6,7 @@
     <MyFooter />
     <!-- <DfsInfo /> -->
     <Rank />
-    <DfsCoin />
+    <!-- <DfsCoin /> -->
     <div class="fullBtn" v-if="canFull" @click="handleFullScreen">
       <img v-if="fullScreen" src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/min.png">
       <img v-else src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/full.png">
@@ -23,7 +23,7 @@ import Notice from '@/views/home/comp/Notice';
 import Tools from '@/views/home/comp/Tools';
 import Rank from '@/views/home/comp/Rank';
 import MyFooter from '@/components/Footer';
-import DfsCoin from '@/views/home/comp/DfsCoin'
+// import DfsCoin from '@/views/home/comp/DfsCoin'
 // import DfsInfo from '@/views/home/comp/DfsInfo';
 
 import { dealAreaArr } from '@/views/pddex/comp/appLogic';
@@ -36,7 +36,7 @@ export default {
     Tools,
     Rank,
     MyFooter,
-    DfsCoin,
+    // DfsCoin,
     // DfsInfo,
   },
   data() {

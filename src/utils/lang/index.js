@@ -18,6 +18,7 @@ import home from './appsLang/home'
 import invite from './appsLang/invite'
 import dfsMine from './appsLang/dfsMine'
 import my from './appsLang/my'
+import upRecord from './appsLang/upRecord'
 
 Vue.use(VueI18n);
 
@@ -35,6 +36,7 @@ const messages = {
     ...invite['zh-CN'],
     ...dfsMine['zh-CN'],
     ...my['zh-CN'],
+    ...upRecord['zh-CN'],
     ...sys['zh-CN']
   },
   en: { // 英文包
@@ -50,6 +52,7 @@ const messages = {
     ...invite['en'],
     ...dfsMine['en'],
     ...my['en'],
+    ...upRecord['en'],
     ...sys['en']
   },
 };

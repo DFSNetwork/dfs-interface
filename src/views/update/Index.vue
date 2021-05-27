@@ -1,6 +1,6 @@
 <template>
   <div class="update">
-    <div class="title">大丰收日志</div>
+    <div class="title">{{ $t('upRecord.title') }}</div>
     <V1 />
   </div>
 </template>

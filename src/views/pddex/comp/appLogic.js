@@ -306,6 +306,9 @@ function regExchange(coin, v) {
   if (tCoin === 'DFS' && v.contract0 === 'minedfstoken' && v.sym0 === '4,DFS') {
     return true
   }
+  if (tCoin === 'DFG' && v.contract0 === 'dfxtokenmain' && v.sym0 === '4,DFG') {
+    return true
+  }
   return false
 }
 // 处理币种APY

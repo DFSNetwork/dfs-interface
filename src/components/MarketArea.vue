@@ -96,6 +96,9 @@ export default {
         tab: 'TAG',
         contract: 'tagtokenmain',
       }, {
+        tab: 'DFG',
+        contract: 'dfxtokenmain',
+      }, {
         tab: '其他',
         contract: '',
       }],
@@ -180,7 +183,7 @@ export default {
       if (!this.area) {
         return this.handleDealSelf(arr)
       }
-      if (this.area === 6) {
+      if (this.area === this.areaLists.length - 1) {
         return this.handleDealOther(arr)
       }
       const area = this.areaLists[this.area];

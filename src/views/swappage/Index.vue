@@ -52,7 +52,6 @@
                   @input="handleInBy('get')"
                   @focus="handleFocus('get')"
                   @blur="handleBlur('get')"></el-input>
-                  <!-- <span v-if="showMax1" @click="handleClickBalan('get')" class="max flexc">Max</span> -->
               </div>
             </div>
           </div>
@@ -148,20 +147,6 @@
             </span>
             <span class="din">{{fees}} {{ thisMarket0.symbol }}</span>
           </div>
-          <!-- <div class="flexb" v-if="Number(reward)">
-            <span class="flex">
-              <span class="tip">{{ $t('mine.mineBonus') }}</span>
-              <el-popover 
-                class="flexc"
-                popper-class="mypopper"
-                placement="top-start"
-                trigger="click">
-                <div class="qusTip">{{ $t('dex.qusTip4') }}</div>
-                <span slot="reference" class="flexc ml10"><img width="100%" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/tips_icon_btn.svg" alt=""></span>
-              </el-popover>
-            </span>
-            <span class="din">{{ reward }} DFS</span>
-          </div> -->
           <div class="flexb fee">
             <div>
               <span class="flexa" v-if="isMoreRouter" @click="showMoreRouter = true">
@@ -512,6 +497,7 @@ export default {
 
       const tArr2 = dealRouterArr(this.filterMkLists, this.thisMarket0, this.thisMarket1)
       SwapRouterFilter.init(tArr2, this, this.thisMarket0, this.thisMarket1)
+      // console.log(tArr.length, tArr2.length)
     },
     handleToProject(type) {
       if (type === 'dtoken') {

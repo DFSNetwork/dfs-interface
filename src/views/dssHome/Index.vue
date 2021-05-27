@@ -52,7 +52,7 @@ export default {
         location.href = "https://yfc.one/vault"
         return
       }
-      this.$router.push({
+      this.$router.replace({
         name
       })
     }

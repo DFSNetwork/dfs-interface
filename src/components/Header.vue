@@ -10,8 +10,11 @@
       </div>
 
       <div class="flexa">
-        <img class="svgIcon" @click="handleTo('update')"
-          src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/up-record.png">
+        <span class="record" @click="handleSetLocal">
+          <img class="svgIcon" @click="handleTo('update')"
+            src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/up-record.png">
+          <div class="desc" v-if="localVes !== rdVes"></div>
+        </span>
         <img class="svgIcon"  @click="handleShowNav"
           src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/menu.png">
       </div>
@@ -34,9 +37,15 @@ export default {
       ani: false,
       aniTimer: null,
       showEgg: false,
+      rdVes: 1,
+      localVes: parseInt(localStorage.getItem('rdVs') || 0),
     }
   },
   methods: {
+    handleSetLocal() {
+      this.localVes = this.rdVes
+      localStorage.setItem('rdVs', this.rdVes)
+    },
     handleToIndex() {
       clearTimeout(this.aniTimer)
       this.ani = true;
@@ -119,6 +128,18 @@ export default {
     .svgIcon{
       width: 80px;
       margin-left: 15px;
+    }
+    .record{
+      position: relative;
+      .desc{
+        position: absolute;
+        background: #EB0000;
+        width: 12px;
+        height: 12px;
+        border-radius: 7px;
+        top: 15px;
+        right: 15px;
+      }
     }
   }
 }

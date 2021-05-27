@@ -92,18 +92,20 @@ export default {
   height: 106px;
   &.swap{
     background-image: url('https://cdn.jsdelivr.net/gh/defis-net/material2/icon/swap.png');
-    background-size: 100%;
+    background-size: 101%;
     background-repeat: no-repeat;
   }
   &.pddex{
     background-image: url('https://cdn.jsdelivr.net/gh/defis-net/material2/icon/pddex.png');
-    background-size: 100%;
+    background-size: 101%;
     background-repeat: no-repeat;
+    background-position: 0px -1px;
   }
   &.market{
     background-image: url('https://cdn.jsdelivr.net/gh/defis-net/material2/icon/market.png');
-    background-size: 100%;
+    background-size: 101%;
     background-repeat: no-repeat;
+    background-position: -1px 0;
   }
   &>span{
     flex: 1;

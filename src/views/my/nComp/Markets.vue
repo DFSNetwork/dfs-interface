@@ -2,7 +2,7 @@
   <div class="marketsComp">
     <div class="count item">
       <div class="title din flexa">
-        <span>总估值</span>
+        <span>{{ $t('my.totalValue') }}</span>
         <span v-if="countByU">(USDT)</span>
         <span v-else>(EOS)</span>
         <img class="eye" v-if="!hideAss" @click="hideAss = !hideAss"
@@ -27,6 +27,10 @@
     </div>
 
     <div class="lists">
+      <div class="noData" v-if="!showArr.length">
+        <img src="https://cdn.jsdelivr.net/gh/defis-net/material/noData/noOrder.png">
+        <div>{{ $t('my.noLiqData') }}</div>
+      </div>
       <div class="item" v-for="(v, i) in showArr" :key="i">
         <div class="flexb">
           <div class="coin din flexa">
@@ -37,8 +41,8 @@
             <span>{{ v.symbol1 }}</span>
           </div>
           <div class="flexa">
-            <div class="deposit flexc btn" @click="handleAdd(v)">存入</div>
-            <div class="withdraw flexc btn" @click="handleWith(v)">取回</div>
+            <div class="deposit flexc btn" @click="handleAdd(v)">{{ $t('more.add') }}</div>
+            <div class="withdraw flexc btn" @click="handleWith(v)">{{ $t('more.remove') }}</div>
           </div>
         </div>
         <div class="info dinReg">
@@ -395,6 +399,15 @@ export default {
     }
   }
   .lists{
+    .noData{
+      padding: 50px 0;
+      text-align: center;
+      font-size: 24px;
+      color: #999;
+      img{
+        width: 400px;
+      }
+    }
     .item{
       .coin{
         color: #000;

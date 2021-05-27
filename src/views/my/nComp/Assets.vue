@@ -34,8 +34,8 @@
         <div>{{ $t('my.hideMinAssets') }}</div>
         <img class="tips" src="">
       </div>
-      <div class="flexa">
-        <img class="searchImg" src="">
+      <div class="flexa searchDiv">
+        <img class="searchImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/search.png">
         <van-field class="searchIpt" v-model="search"
           @input="handleSearch"
           :placeholder="$t('my.search')" />
@@ -43,6 +43,7 @@
     </div>
     <!-- 币种列表 -->
     <div class="coinLists">
+      <div class="noDate" v-if="!sArr.length">{{ $t('public.noData') }}</div>
       <template v-for="(v, i) in sArr">
         <div class="item flexb" v-if="!(parseFloat(v.countUsdt || 0) < minNum && hidLess)" :key="i">
           <div class="coin flexa">
@@ -50,7 +51,7 @@
             <div>
               <div>{{ v.symbol }}</div>
               <div class="flexa about">
-                <span class="label">估值</span>
+                <span class="label">{{ $t('my.value') }}</span>
                 <div v-if="!hideAss">
                   <div class="num dinReg" v-if="countByU">{{ parseFloat(v.countUsdt || 0).toFixed(2) }} USD</div>
                   <div class="num dinReg" v-else>{{ parseFloat(v.countEos || 0).toFixed(2) }} EOS</div>
@@ -161,6 +162,12 @@ export default {
 .assetsComp{
   font-size: 28px;
   text-align: left;
+  .noDate{
+    padding: 50px 0;
+    font-size: 24px;
+    color: #999;
+    text-align: center;
+  }
   .item{
     padding: 34px 24px;
     border-bottom: 1px solid $color-border;
@@ -207,12 +214,17 @@ export default {
       width: 32px;
       margin-left: 10px;
     }
+    .searchDiv{
+      border: 1px solid $color-border;
+      padding: 4px 18px;
+      border-radius: 40px;
+    }
     .searchImg{
-      width: 32px;
-      margin-right: 10px;
+      width: 28px;
+      // margin-right: 10px;
     }
     .searchIpt{
-      padding: 0 8px;
+      padding: 0 0px;
       width: 150px;
       /deep/ .van-field__control{
         text-align: center;
@@ -223,7 +235,7 @@ export default {
   .coin{
     font-size: 30px;
     font-weight: 500;
-    flex: 3;
+    flex: 4;
     .logo{
       width: 60px;
       height: 60px;
@@ -243,7 +255,7 @@ export default {
     }
   }
   .bals{
-    flex: 2;
+    flex: 3;
     &>div{
       margin-bottom: 9px;
       &:last-child{
@@ -257,6 +269,8 @@ export default {
     }
     .num{
       font-size: 30px;
+      max-width: 200px;
+      overflow: hidden;
     }
   }
 }

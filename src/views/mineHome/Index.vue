@@ -52,7 +52,7 @@ export default {
         location.href = "https://usdx.gitee.io/"
         return
       }
-      this.$router.push({
+      this.$router.replace({
         name
       })
     }

@@ -18,12 +18,19 @@
       </div>
       <!-- list -->
       <div class="lists">
-        <div class="list switch flexb">
+        <!-- <div class="list switch flexb">
           <span>免CPU操作</span>
           <van-switch class="vanSwitch"
             :value="cpuSwitch" @input="handleSetCpu"
             size="24px"
             active-color="#FFF" inactive-color="#eee" />
+        </div> -->
+        <div class="list flexb wel" @click="handleToAbout">
+          <div class="flexa">
+            <img class="dfslogo" src="https://cdn.jsdelivr.net/gh/defis-net/material2/coin/minedfstoken-dfs.png">
+            <span>{{ $t('more.aboutDfs') }}</span>
+          </div>
+          <img class="right_to" src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/about_right.svg" alt="">
         </div>
         <div class="list flexa" @click="handleShowComp('silderSet')">
           <img class="listImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/swap-set.png">
@@ -45,14 +52,20 @@
           <img class="listImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/safe_set.svg">
           <span>{{ $t('public.warnTip') }}</span>
         </div>
-        <div class="list flexa" @click="handleShowComp('lang')">
-          <img class="listImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/lang-set.png">
-          <span>语言设置</span>
+        <div class="list lang flexb">
+          <div class="flexc" :class="{'act': language === 'zh-CN'}" @click="handleChangeLang('zh-CN')">
+            <img src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/lang-zh.png">
+            <span>简体中文</span>
+          </div>
+          <div class="flexc" :class="{'act': language === 'en'}" @click="handleChangeLang('en')">
+            <img src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/lang-en.png">
+            <span>English</span>
+          </div>
         </div>
       </div>
 
       <div class="telUs">
-        <div class="subTi">联系我们</div>
+        <!-- <div class="subTi">联系我们</div> -->
         <div class="flexb item">
           <a href="https://github.com/defis-net" target="_blank">
             <img src="https://cdn.jsdelivr.net/gh/defis-net/material2/telUs/GitHub.png">
@@ -121,14 +134,15 @@ export default {
     }),
   },
   methods: {
+    handleToAbout() {
+      location.href = "https://defis.network/"
+    },
     handleSetCpu(checked) {
       this.cpuSwitch = checked;
       this.$store.dispatch('setFreeCpu', checked)
     },
-    handleChangeLang() {
-      let type;
-      this.language === 'en' ? type = 'zh-CN' : type = 'en'
-      this.showNav = false;
+    handleChangeLang(lang) {
+      let type = lang;
       this.$i18n.locale = type;
       this.$store.dispatch('setLanguage', type);
     },
@@ -246,9 +260,25 @@ export default {
       margin: 30px 30px;
       font-size: 32px;
       font-weight: 500;
+      &.wel{
+        height: 102px;
+        background: $color-main;
+        color: #FFF;
+        margin: 30px 15px;
+        border-radius: 20px 20px 0px 0px;
+        padding: 0 26px;
+      }
       .listImg{
         width: 32px;
         margin-right: 30px;
+        margin-left: 10px;
+      }
+      .dfslogo{
+        width: 54px;
+        margin-right: 15px;
+      }
+      .right_to{
+        width: 20px;
       }
     }
     .switch{
@@ -269,9 +299,25 @@ export default {
     }
   }
   .lang{
-    color: #39C8C1;
-    padding: 30px;
+    height: 84px;
+    color: #333;
+    border-radius: 20px;
     background: rgba(#57DBBF, .08);
+    padding-right: 0 !important;
+    &>div{
+      font-size: 24px;
+      box-sizing: border-box;
+      flex: 1;
+      height: 80px;
+    }
+    .act{
+      border: 1px solid $color-main;
+      border-radius: 20px;
+    }
+    img{
+      width: 38px;
+      margin-right: 10px;
+    }
   }
   .version{
     font-size: 30px;
@@ -295,6 +341,9 @@ export default {
     padding: 28px;
     .item{
       margin-top: 30px;
+      &:first-child{
+        margin-top: 0px;
+      }
       img{
         width: 60px;
       }

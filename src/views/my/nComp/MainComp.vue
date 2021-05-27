@@ -4,7 +4,7 @@
       <AccInfo :act="act" @listenAct="handlAct"/>
     </div>
 
-    <div class="subView">
+    <div class="subView" :class="{'en': language == 'en'}">
       <Assets v-if="act === 0" :allBals="allBals" :allCountCNY="allCountCNY" :allCount="allCount"/>
       <Markets v-else-if="act === 1" :liqs="liqs" :allBals="allBals"/>
       <More v-else />
@@ -33,6 +33,7 @@ export default {
       liqs: [], // 做市资金 - 未处理
       markets: [], // 做市资金
       marketBals: [], // 做市对应币种余额
+      dssBals: [], // DSS余额， DFS、TAG、YFC
 
       allBals: [], // 全部的Bals列表
     }
@@ -43,6 +44,7 @@ export default {
       marketLists: state => state.sys.marketLists,
       mkFilterConf: state => state.config.mkFilterConf,
       coinPrices: state => state.sys.coinPrices,
+      language:  state => state.app.language,
     }),
     allCount() {
       let count = 0;
@@ -65,7 +67,9 @@ export default {
         this.handleGetAllAssets()
         this.handleGetMarkets()
 
-        this.handleGetDss()
+        this.handleGetDss('DFS')
+        this.handleGetDss('YFC')
+        this.handleGetDss('TAG')
       },
       immediate: true,
       deep: true,
@@ -173,7 +177,7 @@ export default {
       return [sym0, sym1]
     },
     // 获取DFS DSS余额
-    async handleGetDss() {
+    async handleGetDss(type) {
       const name = this.account.name;
       if (!name) {
         return
@@ -186,11 +190,47 @@ export default {
         "upper_bound": ` ${name}`,
         "json": true,
       }
+      if (type === 'TAG') {
+        params.code = 'dss.tag';
+        params.scope = 'dss.tag';
+      } else if (type === 'YFC') {
+        params.code = 'yfcdsssystem';
+        params.scope = 'yfcdsssystem';
+      }
       const { status, result } = await this.$api.get_table_rows(params);
-      console.log(result)
       if (!status || !result.rows.length) {
         return
       }
+      let row = result.rows[0];
+      if (type === 'DFS') {
+        row = Object.assign({}, row, {
+          symbol: 'DFS',
+          contract: 'minedfstoken',
+          decimals: 4,
+          dss: row.bal.split(' ')[0],
+        })
+      } else if (type === 'YFC') {
+        row = Object.assign({}, row, {
+          symbol: 'YFC',
+          contract: 'yfctokenmain',
+          decimals: 8,
+          dss: row.bal.split(' ')[0],
+        })
+      } else if (type === 'TAG') {
+        row = Object.assign({}, row, {
+          symbol: 'TAG',
+          contract: 'tagtokenmain',
+          decimals: 8,
+          dss: row.bal.split(' ')[0],
+        })
+      }
+      const hasIndex = this.dssBals.findIndex(v => v.coin === 'DFS')
+      if (hasIndex === -1) {
+        this.dssBals.push(row)
+      } else {
+        this.dssBals.splice(hasIndex, 1, row)
+      }
+      this.handleDealBals();
     },
     // 获取TAG DSS余额
     // 获取YFC DSS余额
@@ -221,6 +261,16 @@ export default {
         }
         arr[index].bal = v.bal;
       })
+      this.dssBals.forEach(v => {
+        const index = arr.findIndex(vv => vv.contract === v.contract && vv.symbol === v.symbol);
+        if (index === -1) {
+          arr.push(Object.assign({}, v, {
+            bal: null,
+          }))
+          return
+        }
+        arr[index].dss = v.dss;
+      })
       this.allBals = this.handleGetTokenAmt(arr);
     },
     // 获取币种对USDT的估值
@@ -234,12 +284,14 @@ export default {
         // 计价币种价格计算
         const isBaseCoin = this.coinPrices.find(v => v.contract === token.contract && token.symbol === v.coin)
         if (isBaseCoin) {
-          const tokenCount = parseFloat(token.amount || 0) + parseFloat(token.bal || 0); // 总余额
+          const tokenCount = parseFloat(token.amount || 0) + parseFloat(token.bal || 0) +  parseFloat(token.dss || 0); // 总余额
           const uPrice = isBaseCoin.price || 0; // 对USDT价格
           const amtUsdt = parseFloat(token.amount || 0) * uPrice; // 余额估值 USDT
           this.$set(token, 'amtUsdt', parseFloat(amtUsdt).toFixed(4))
           const balUsdt = parseFloat(token.bal || 0) * uPrice; // 做市余额估值 USN
           this.$set(token, 'balUsdt', parseFloat(balUsdt).toFixed(4))
+          const dssUsdt = parseFloat(token.dss || 0) * uPrice; // 做市余额估值 USN
+          this.$set(token, 'dssUsdt', parseFloat(dssUsdt).toFixed(4))
           const countUsdt = uPrice * tokenCount;
           this.$set(token, 'countUsdt', parseFloat(countUsdt).toFixed(4))
 
@@ -248,6 +300,8 @@ export default {
           this.$set(token, 'amtCNY', parseFloat(amtCNY).toFixed(2))
           const balCNY = parseFloat(token.bal || 0) * price;
           this.$set(token, 'balCNY', parseFloat(balCNY).toFixed(2))
+          const dssCNY = parseFloat(token.dss || 0) * price;
+          this.$set(token, 'dssCNY', parseFloat(dssCNY).toFixed(2))
           const countCNY = price * tokenCount;
           this.$set(token, 'countCNY', parseFloat(countCNY).toFixed(2))
 
@@ -256,6 +310,8 @@ export default {
           this.$set(token, 'amtEos', parseFloat(amtEos).toFixed(4))
           const balEos = parseFloat(token.bal || 0) * priceEos;
           this.$set(token, 'balEos', parseFloat(balEos).toFixed(4))
+          const dssEos = parseFloat(token.dss || 0) * priceEos;
+          this.$set(token, 'dssEos', parseFloat(dssEos).toFixed(4))
           const countEos = priceEos * tokenCount;
           this.$set(token, 'countEos', parseFloat(countEos).toFixed(4))
           return
@@ -294,12 +350,14 @@ export default {
         const tbUprice = tokenBPrice.price || 0;
         const tbCNYprice = tokenBPrice.CNY || 0;
 
-        const tokenCount = parseFloat(token.amount || 0) + parseFloat(token.bal || 0); // 总余额
+        const tokenCount = parseFloat(token.amount || 0) + parseFloat(token.bal || 0) + parseFloat(token.dss || 0); // 总余额
         const uPrice = tbUprice * (price || 0); // 对USDT价格
         const amtUsdt = parseFloat(token.amount || 0) * uPrice; // 余额估值 USDT
         this.$set(token, 'amtUsdt', parseFloat(amtUsdt).toFixed(4))
         const balUsdt = parseFloat(token.bal || 0) * uPrice; // 做市余额估值 USN
         this.$set(token, 'balUsdt', parseFloat(balUsdt).toFixed(4))
+        const dssUsdt = parseFloat(token.dss || 0) * uPrice; // 做市余额估值 USN
+        this.$set(token, 'dssUsdt', parseFloat(dssUsdt).toFixed(4))
         const countUsdt = uPrice * tokenCount;
         this.$set(token, 'countUsdt', parseFloat(countUsdt).toFixed(4))
 
@@ -308,6 +366,8 @@ export default {
         this.$set(token, 'amtCNY', parseFloat(amtCNY).toFixed(2))
         const balCNY = parseFloat(token.bal || 0) * cnyPrice;
         this.$set(token, 'balCNY', parseFloat(balCNY).toFixed(2))
+        const dssCNY = parseFloat(token.dss || 0) * cnyPrice;
+        this.$set(token, 'dssCNY', parseFloat(dssCNY).toFixed(2))
         const countCNY = cnyPrice * tokenCount;
         this.$set(token, 'countCNY', parseFloat(countCNY).toFixed(2))
 
@@ -316,6 +376,8 @@ export default {
         this.$set(token, 'amtEos', parseFloat(amtEos).toFixed(4))
         const balEos = parseFloat(token.bal || 0) * eosPrice; // 做市余额估值 USN
         this.$set(token, 'balEos', parseFloat(balEos).toFixed(4))
+        const dssEos = parseFloat(token.dss || 0) * eosPrice; // 做市余额估值 USN
+        this.$set(token, 'dssEos', parseFloat(dssEos).toFixed(4))
         const countEos = eosPrice * tokenCount;
         this.$set(token, 'countEos', parseFloat(countEos).toFixed(4))
       })
@@ -388,5 +450,8 @@ export default {
   background: #FFF;
   border-radius: 12px;
   // padding: 28px;
+  &.en{
+    margin-top: -115px;
+  }
 }
 </style>

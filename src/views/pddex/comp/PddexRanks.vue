@@ -178,7 +178,7 @@ export default {
       swapTradeLists: {},
       errorCoinImg: 'this.src="https://ndi.340wan.com/eos/eosio.token-eos.png"',
       allMarket: localStorage.getItem('allMarket') ? JSON.parse(localStorage.getItem('allMarket')) :{},
-      areaLists: ['USDT', 'USDC', 'EOS', 'DFS', 'TAG'],
+      areaLists: ['USDT', 'USDC', 'EOS', 'DFS', 'TAG', 'DFG'],
       cdAreaLists: [],
 
       // 排序
