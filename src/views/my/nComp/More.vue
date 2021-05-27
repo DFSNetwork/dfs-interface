@@ -164,6 +164,9 @@ export default {
       if (name === 'dfc') {
         location.href = 'https://dfsdefi.com/#/mine'
       }
+      if (name === 'dfg') {
+        location.href = 'https://dfxasc.gitee.io/'
+      }
     }
   }
 }
