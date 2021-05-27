@@ -2,6 +2,8 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Layout from '@/views/layout/Index';
+import MineHome from '@/views/mineHome/Index.vue'
+import DssHome from '@/views/dssHome/Index.vue'
 
 Vue.use(Router);
 
@@ -30,7 +32,7 @@ const constantRouter = [
         path: '/swap',
         name: 'index',
         component: () => import(/* webpackChunkName: "home" */ '@/views/index/Index.vue'),
-        meta: { title: 'DeFis-Network' },
+        meta: { title: 'DeFis-Network', noFooter: true, noHeader: true, },
       },
       {
         path: '/swap/history/:mid',
@@ -42,7 +44,7 @@ const constantRouter = [
         path: '/market/:mid',
         name: 'market',
         component: () => import(/* webpackChunkName: "home" */ '@/views/index/Index.vue'),
-        meta: { title: 'DeFis-Network' },
+        meta: { title: 'DeFis-Network', noFooter: true, noHeader: true, },
       },
       {
         path: '/market-list',
@@ -120,7 +122,7 @@ const constantRouter = [
         path: '/fundation',
         name: 'fundation',
         component: () => import(/* webpackChunkName: "home" */ '@/views/fundation/Index.vue'),
-        meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true },
+        meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noHeader: true, },
       },
       { // 节点挖矿
         path: '/node-pools',
@@ -255,14 +257,8 @@ const constantRouter = [
             path: 'ranks',
             name: 'pddex',
             component: () => import(/* webpackChunkName: "home" */ '@/views/pddex/comp/PddexRanks'),
-            meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true },
+            meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noHeader: true },
           },
-          // {
-          //   path: 'trade/:symbol',
-          //   name: 'pddexTrade',
-          //   component: () => import(/* webpackChunkName: "pddexTrade" */ '@/views/pddex/trade/Index'),
-          //   meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noHeader: true },
-          // },
           {
             path: 'order',
             name: 'pddexOrder',
@@ -279,7 +275,7 @@ const constantRouter = [
             path: 'trade/:symbol',
             name: 'pddexTrade',
             component: () => import(/* webpackChunkName: "home" */ '@/views/index/Index.vue'),
-            meta: { title: 'DeFis-Network' },
+            meta: { title: 'DeFis-Network', noFooter: true, noHeader: true, },
           },
         ]
       },
@@ -428,6 +424,74 @@ const constantRouter = [
         name: 'dfsMinePool',
         component: () => import(/* webpackChunkName: "home" */ '@/views/dfsMine/childView/PoolMarket'),
         meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noTab: true },
+      },
+    ],
+  },
+  // 更新日志
+  {
+    path: '/update',
+    component: Layout,
+    redirect: '/',
+    children: [
+      {
+        path: '/',
+        name: 'update',
+        component: () => import(/* webpackChunkName: "home" */ '@/views/update/Index'),
+        meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noTab: true },
+      },
+    ],
+  },
+  // 矿池首页
+  {
+    path: '/mine-home',
+    component: Layout,
+    redirect: '/',
+    children: [
+      {
+        path: '/',
+        name: 'mine-home',
+        component: MineHome,
+        children: [
+          {
+            path: 'dfs',
+            name: 'mineHomeDfs',
+            component: () => import(/* webpackChunkName: "home" */ '@/views/dfsMine/Index'),
+            meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noTab: true, noHeader: true, },
+          },
+          {
+            path: 'tag',
+            name: 'mineHomeTag',
+            component: () => import(/* webpackChunkName: "home" */ '@/views/nodePools/Index.vue'),
+            meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noTab: true, noHeader: true, },
+          },
+        ]
+      },
+    ],
+  },
+  // DSS首页
+  {
+    path: '/dss-home',
+    component: Layout,
+    redirect: '/',
+    children: [
+      {
+        path: '/',
+        name: 'dss-home',
+        component: DssHome,
+        children: [
+          {
+            path: 'dfs',
+            name: 'dssHomeDfs',
+            component: () => import(/* webpackChunkName: "home" */ '@/views/dsr/Index.vue'),
+            meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noTab: true, noHeader: true, },
+          },
+          {
+            path: 'tag',
+            name: 'dssHomeTag',
+            component: () => import(/* webpackChunkName: "home" */ '@/views/dssForTag/Index'),
+            meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noTab: true, noHeader: true, },
+          },
+        ]
       },
     ],
   },

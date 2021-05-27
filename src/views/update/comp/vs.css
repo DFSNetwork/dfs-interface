@@ -1,0 +1,21 @@
+.vs{
+  margin-bottom: 60px;
+}
+.vs .star{
+  width: 40px;
+  margin-right: 24px;
+}
+.vs .title{
+  font-size: 36px;
+  line-height: 50px;
+  margin-bottom: 20px;
+}
+.vs .content{
+  font-size: 36px;
+  color: #333;
+  line-height: 50px;
+}
+.vs .time{
+  font-size: 32px;
+  margin-top: 15px;
+}

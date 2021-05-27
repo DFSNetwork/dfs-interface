@@ -22,122 +22,58 @@
         </div>
       </div>
     </div>
-    <div class="tools">
-      <div class="title">{{ $t('sys.voteAndGen') }}</div>
-      <div class="lists flexa">
-        <div class="list" @click="handleTo('vote')">
-          <img class="icon" src="https://cdn.jsdelivr.net/gh/defis-net/material2/coin/minedfstoken-dfs.png" alt="">
-          <div>{{ $t('sys.coinVote', {coin: 'DFS'}) }}</div>
-        </div>
-        <div class="list">
-          <van-popover v-model="showGovern" trigger="click" @click.stop="''">
-            <div class="myPopover">
-              <div class="item flexc" @click="handleTo('voteForTag')">{{ $t('sys.coinPool', {coin: 'TAG'}) }}</div>
-              <div class="item flexc" @click="handleTo('sysParams')">{{ $t('sys.vote2') }}</div>
-            </div>
-            <template #reference>
-              <img class="icon" src="https://cdn.jsdelivr.net/gh/defis-net/material2/coin/tagtokenmain-tag.png" alt="">
-              <div>{{ $t('sys.coinVote', {coin: 'TAG'}) }}</div>
-            </template>
-          </van-popover>
-        </div>
-        <div class="list" @click="handleToProject('usdxVote')">
-          <img class="icon" src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/usdx.png" alt="">
-          <div>{{ $t('sys.usdxSys') }}</div>
-        </div>
-        <div class="list" @click="handleTo('nodeVote')">
-          <img class="icon" src="https://cdn.jsdelivr.net/gh/defis-net/material2/coin/eosio.token-eos.svg" alt="">
-          <div>{{ $t('sys.eosNode') }}</div>
-        </div>
-      </div>
-    </div>
-
     <!-- 游戏中心 -->
     <div class="tools">
-      <div class="title">{{ $t('sys.apps') }}</div>
+      <div class="title">常用应用</div>
       <div class="lists flexa">
-        <div class="list" @click="handleToProject('dtoken')">
-          <img class="icon" src="https://cdn.jsdelivr.net/gh/defis-net/material2/coin/dcap.png" alt="">
-          <div>{{ $t('sys.dcap') }}</div>
-          <!-- <img class="beta" src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/beta.png" alt=""> -->
-        </div>
-        <div class="list" @click="handleTo('dfsMine')">
+        <div class="list" @click="handleTo('mineHomeDfs')">
           <img class="icon" src="https://cdn.jsdelivr.net/gh/defis-net/material2/coin/minedfstoken-dfs.png" alt="">
           <div>{{ $t('sys.coinPool', {coin: 'DFS'}) }}</div>
         </div>
-        <div class="list" @click="handleTo('nodePools')">
+        <div class="list" @click="handleTo('mineHomeTag')">
           <img class="icon" src="https://cdn.jsdelivr.net/gh/defis-net/material2/coin/tagtokenmain-tag.png" alt="">
           <div>{{ $t('sys.coinPool', {coin: 'TAG'}) }}</div>
         </div>
-        <div class="list" @click="handleToProject('usdx')">
-          <img class="icon" src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/usdx.png" alt="">
-          <div>{{ $t('sys.coinPool', {coin: 'USDX'}) }}</div>
+        <div class="list" @click="handleTo('dssHomeDfs')">
+          <img class="icon" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/dss.png" alt="">
+          <div>DSS</div>
         </div>
-      </div>
-      <div class="lists flexa">
-        <div class="list" @click="handleTo('farms')">
-          <img class="icon" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/yfcFarm.png" alt="">
-          <div>{{ $t('sys.farm') }}</div>
-        </div>
-        <div class="list">
-          <van-popover v-model="showDss" placement="top" trigger="click" @click.stop="''">
-            <div class="myPopover">
-              <div class="item flexc" @click="handleTo('dss')">DFS DSS</div>
-              <div class="item flexc" @click="handleToProject('yfcDss')">YFC DSS</div>
-              <div class="item flexc" @click="handleTo('dssForTag')">TAG DSS</div>
-            </div>
-            <template #reference>
-              <img class="icon" src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/dss.png" alt="">
-              <div>DSS</div>
-            </template>
-          </van-popover>
-        </div>
-        <div class="list" @click="handleTo('total')">
-          <img class="icon" src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/top21.png" alt="">
-          <div>TOP21</div>
-        </div>
-        <div class="list" @click="handleTo('coinViews', {mid: 39})">
-          <img class="icon" src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/coinView.png" alt="">
-          <div>{{ $t('sys.coinViews') }}</div>
-        </div>
-      </div>
-      <div class="lists flexa">
-        <div class="list" @click="handleTo('fundation')">
-          <img class="icon" src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/fundation.png" alt="">
-          <div>{{ $t('sys.fundation') }}</div>
+        <div class="list" @click="handleToProject('dtoken')">
+          <img class="icon" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/Graph@2x.png" alt="">
+          <div>{{ $t('sys.dcap') }}</div>
         </div>
       </div>
     </div>
 
     <!-- 社区项目 -->
     <div class="tools">
-      <div class="title">{{ $t('my.dfsEcology') }}</div>
+      <div class="title">社区项目</div>
       <div class="lists flexa">
         <div class="list" @click="handleToProject('diary')">
-          <img class="icon" src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/notice.png" alt="">
+          <img class="icon" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/note.png" alt="">
           <div>{{ $t('sys.diary') }}</div>
-          <img class="beta hot" src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/hot.png" alt="">
+          <!-- <img class="beta hot" src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/hot.png" alt=""> -->
         </div>
-        <div class="list" @click="handleToProject('eosdefi')">
-          <img class="icon" src="https://cdn.jsdelivr.net/gh/defis-net/material2/coin/eosio.token-eos.svg" alt="">
-          <div>EOS DeFis</div>
-        </div>
-        <div class="list" @click="handleToProject('totalData')">
-          <img class="icon" src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/total.png" alt="">
-          <div>{{ $t('sys.dataTotal') }}</div>
+        <div class="list" @click="handleToProject('dfc')">
+          <img class="icon" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/dfc1.png" alt="">
+          <div>{{ $t('my.windmill') }}</div>
         </div>
         <div class="list" @click="handleToProject('kline')">
-          <img class="icon" src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/kline.png" alt="">
+          <img class="icon" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/kline.png" alt="">
           <div>{{ $t('sys.kline') }}</div>
+        </div>
+        <div class="list" @click="handleToProject('eosdefi')">
+          <img class="icon" src="https://cdn.jsdelivr.net/gh/defis-net/material2/coin/djftokenmain-djf.png" alt="">
+          <div>DJF</div>
         </div>
       </div>
       <div class="lists flexa">
-        <div class="list" @click="handleToProject('help')">
-          <img class="icon" src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/helper.png" alt="">
-          <div>{{ $t('sys.helper') }}</div>
+        <div class="list" @click="handleToProject('usdx')">
+          <img class="icon biger" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/usdx.png" alt="">
+          <div>USDX</div>
         </div>
         <div class="list" @click="handleToProject('dfg')">
-          <img class="icon" src="https://cdn.jsdelivr.net/gh/defis-net/material2/coin/dfxtokenmain-dfg.png" alt="">
+          <img class="icon biger" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/dfg.png" alt="">
           <div>DFG</div>
         </div>
       </div>
@@ -225,6 +161,9 @@ export default {
       if (name === 'diary') {
         location.href = 'https://dfsfans.io/'
       }
+      if (name === 'dfc') {
+        location.href = 'https://dfsdefi.com/#/mine'
+      }
     }
   }
 }
@@ -280,6 +219,11 @@ export default {
           display: block;
           &.big{
             width: 44px;
+          }
+          &.biger{
+            width: 50px;
+            height: 50px;
+            margin-bottom: 10px;
           }
         }
       }

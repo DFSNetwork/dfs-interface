@@ -1,11 +1,11 @@
 <template>
   <div class="fundation">
-    <van-notice-bar v-if="voices.length" color="#29D4B0" mode="closeable" background="#29D4B01A"
+    <!-- <van-notice-bar v-if="voices.length" color="#29D4B0" mode="closeable" background="#29D4B01A"
       left-icon="volume-o">
         <span class="noticeSpan" v-for="(data, index) in voices" :key="index">
           {{ data }}
         </span>
-    </van-notice-bar>
+    </van-notice-bar> -->
     <van-swipe class="banner" :autoplay="3000" indicator-color="white">
       <van-swipe-item v-for="(item, index) in images" :key="index" @click="handleTo(item.routeName, item.link)">
         <img class="bgImg" :src="item.image" />
@@ -61,24 +61,8 @@ export default {
   data() {
     return {
       images: [{
-        image: 'https://cdn.jsdelivr.net/gh/defis-net/material2/banner/usdx.png',
-        routeName: 'fundation',
-        link: 'https://usdx.gitee.io/'
-      }, {
-        image: 'https://cdn.jsdelivr.net/gh/defis-net/material2/banner/2021.jpg',
-        routeName: 'fundation'
-      }, {
         image: 'https://cdn.jsdelivr.net/gh/defis-net/material/fundation/banner4.png',
         routeName: 'fundation'
-      }, {
-        image: 'https://cdn.jsdelivr.net/gh/defis-net/material/fundation/banner1_1.png',
-        routeName: 'nodeVote'
-      }, {
-        image: 'https://cdn.jsdelivr.net/gh/defis-net/material/fundation/banner2.png',
-        routeName: 'nodePools'
-      }, {
-        image: 'https://cdn.jsdelivr.net/gh/defis-net/material/fundation/banner3_1.png',
-        routeName: 'financial'
       }],
       page: 1,
       pagesize: 20,

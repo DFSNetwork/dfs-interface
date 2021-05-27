@@ -3,31 +3,33 @@
     <div class="banner">
       <img class="bannerImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/banner/tagDss.png" alt="">
     </div>
-    <div class="dataInfo">
-      <div class="flexb floatDiv">
-        <div class="left">
-          <div class="dinBold">{{ lockDfs }} TAG</div>
-          <div class="tip bonus">
-            <span>{{ $t('dsr.totalNum') }}</span>
+    <div class="mt40">
+      <div class="dataInfo">
+        <div class="flexb floatDiv">
+          <div class="left">
+            <div class="dinBold">{{ lockDfs }} TAG</div>
+            <div class="tip bonus">
+              <span>{{ $t('dsr.totalNum') }}</span>
+            </div>
+          </div>
+          <div class="right">
+            <div class="dinBold">{{ yearApr }}%</div>
+            <div class="tip bonus">
+              <span>{{ $t('dsr.nowApy') }}</span>
+            </div>
           </div>
         </div>
-        <div class="right">
-          <div class="dinBold">{{ yearApr }}%</div>
-          <div class="tip bonus">
-            <span>{{ $t('dsr.nowApy') }}</span>
+        <div class="miningInfo flexb" v-loading="loading">
+          <div class="miningData">
+            <div class="num dinBold">{{ ableUse }} TAG</div>
+            <div class="tip">{{ $t('dsr.allInve') }}</div>
           </div>
-        </div>
-      </div>
-      <div class="miningInfo flexb" v-loading="loading">
-        <div class="miningData">
-          <div class="num dinBold">{{ ableUse }} TAG</div>
-          <div class="tip">{{ $t('dsr.allInve') }}</div>
-        </div>
-        <div class="miningData">
-          <div class="num dinBold">{{ ableClaimNum }} TAG</div>
-          <div class="tip">
-            <span>{{ $t('dsr.poolBal') }}</span>
-            <span>({{ `${timeObj.hours}:${timeObj.minutes}:${timeObj.seconds}` }})</span>
+          <div class="miningData">
+            <div class="num dinBold">{{ ableClaimNum }} TAG</div>
+            <div class="tip">
+              <span>{{ $t('dsr.poolBal') }}</span>
+              <span>({{ `${timeObj.hours}:${timeObj.minutes}:${timeObj.seconds}` }})</span>
+            </div>
           </div>
         </div>
       </div>
@@ -223,11 +225,18 @@ export default {
     font-weight: 300;
   }
 }
+.mt40{
+  margin-top: -40px;
+  background: #FFF;
+  position: relative;
+  padding-top: 40px;
+  border-radius: 40px 40px 0 0 ;
+}
 .dataInfo{
   box-shadow: 0px 4px 8px 4px rgba(227,227,227,0.5);
   border-radius: 20px 20px 0px 0px;
   padding: 28px 28px;
-  margin: -40px 32px 20px;
+  margin: 0 32px 20px;
   background: #FFF;
   position: relative;
   color: #333;

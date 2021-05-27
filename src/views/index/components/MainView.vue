@@ -71,6 +71,7 @@ export default {
 @import url('../../../assets/css/animal.scss');
 .mainView{
   margin: 0 30px;
+  padding-top: 30px;
   &.noMg{
     margin: 0;
   }

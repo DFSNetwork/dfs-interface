@@ -14,7 +14,7 @@
           :autoplay="3000"
           :show-indicators="false"
         >
-          <van-swipe-item v-for="(item, i) in voices" :key="i">{{item.title}}</van-swipe-item>
+          <van-swipe-item v-for="(item, i) in voices" :key="i">{{ $t(`${item.title}`) }}</van-swipe-item>
         </van-swipe>
     </van-notice-bar>
 
@@ -62,7 +62,7 @@ export default {
   data() {
     return {
       voices: [{
-        title: this.$t('home.homeUi'),
+        title: 'home.homeUi1',
       }],
       top3: [[{}, {}, {}], [{}, {}, {}]],
       hotArr: [451, 722, 17, 894, 665, 332]
@@ -103,6 +103,7 @@ export default {
 .notice{
   margin: 28px;
   // border: 1px solid $color-border;
+  box-shadow: 2px 2px 6px 4px rgba(243,243,243,1);
   border-radius: 8px;
   background: #FFF;
   .noticeBar{

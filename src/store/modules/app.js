@@ -29,15 +29,20 @@ const app = {
     minScreen: false,
     accInfo: {
       avatar: "https://cdn.jsdelivr.net/gh/defis-net/material2/coin/tagtokenmain-tag.png",
-      cover: "https://cdn.jsdelivr.net/gh/defis-net/material/accBanner/banner0.png",
+      cover: "https://cdn.jsdelivr.net/gh/defis-net/material/accBanner/banner1.png",
       desc: "",
       nick: "",
       sex: 2,
     },
     account: {},
     accFollow: [],
+    freeCpu: localStorage.getItem('freeCpu') ? JSON.parse(localStorage.getItem('freeCpu')) : false,
   },
   mutations: {
+    SET_FREECPU: (state, freeCpu) =>  {
+      state.freeCpu = freeCpu;
+      localStorage.setItem('freeCpu', JSON.stringify(freeCpu))
+    },
     SET_ACCINFO: (state, accInfo) => {
       state.accInfo = accInfo;
     },
@@ -77,6 +82,9 @@ const app = {
     },
   },
   actions: {
+    setFreeCpu({ commit }, freeCpu) {
+      commit('SET_FREECPU', freeCpu);
+    },
     setAccInfo({ commit }, accInfo) {
       commit('SET_ACCINFO', accInfo);
     },

@@ -47,7 +47,11 @@ export default {
       liqsReward: '做市收益',
       oneKeys: '一键领取',
       search: '搜索币种',
-      dfsEcology: 'DFS生态'
+      dfsEcology: 'DFS生态',
+      value: '估值',
+      totalValue: '总估值',
+      noLiqData: '暂无做市数据',
+      windmill: '大风车',
     }
   },
   'en': {
@@ -89,14 +93,18 @@ export default {
       liqsManage:'Market',
       moreServer:'More',
       accAssets:'Assets',
-      hideMinAssets:'Hide small assets',
+      hideMinAssets:'Value≥0.01 USD',
       count:'Total',
-      liqs:'market making',
-      bal:'Balance',
+      liqs:'Liq.',
+      bal:'Bal.',
       liqsReward:'Reward',
       oneKeys:'Claim',
-      search:'Search currency',
-      dfsEcology:'DFS ecology'
+      search:'Search',
+      dfsEcology:'DFS ecology',
+      value: 'Value',
+      totalValue:'Total Value',
+      noLiqData:'No Liquidity data yet',
+      windmill: 'Windmill',
     }
   }
 }

@@ -1,7 +1,7 @@
 <template>
   <div class="footer">
     <div v-if="$route.name !== 'home'">
-      <div v-if="isEx" class="" @click="clickOnDFSInfoData">
+      <!-- <div v-if="isEx" class="" @click="clickOnDFSInfoData">
         <span>
           <span>24H{{ $t('footer.swapNum') }}: </span>
           <span>{{ newDfsSwapData.total_volume ? newDfsSwapData.total_volume : "0.00" }}</span>
@@ -27,7 +27,7 @@
         <span v-else>${{ poolsUsdt }}</span>
         <img v-if="isEx" class="exchange" src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/price_switch_icon_btn_left.svg" alt="">
         <img v-else class="exchange" src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/price_switch_icon_btn_right.svg" alt="">
-      </div>
+      </div> -->
 
       <div class="safe tip">
         <span>{{ $t('public.safeRecord1') }}</span>

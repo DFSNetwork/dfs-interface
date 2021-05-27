@@ -1,13 +1,17 @@
 <template>
   <div class="">
+    <div class="pddexTab flexb">
+      <span class="flexc" :class="{'act': active === 0}" @click="active = 0">{{ $t('pddex.follow') }}</span>
+      <span class="flexc" :class="{'act': active === 1}" @click="active = 1">{{ $t('pddex.all') }}</span>
+    </div>
     <div class="rankTabs">
       <van-tabs v-model="coinName"
+        v-if="active === 1"
         animated
         class="subTab"
         title-inactive-color="#999"
         title-active-color="#29D4B0"
         color="#29D4B0">
-        <van-tab name="follow" :title="$t('pddex.follow')"></van-tab>
         <van-tab v-for="(a, i) in areaLists" :key="`area${i}`" :name="a" :title="a"></van-tab>
       </van-tabs>
       <div class="subTitle flexb">
@@ -53,14 +57,14 @@
         :success-text="$t('pddex.refreshSuccess')"
         @refresh="onRefresh"
       >
-        <div class="rankList" v-if="coinName === 'follow'">
+        <div class="rankList" v-if="active === 0">
           <div class="loading_p flexc" v-if="!getLike"><van-loading type="spinner" color="#29D4B0"/></div>
           <div class="noDate tip" v-if="!followList.length && getLike">
             <img class="noDataPng" src="https://cdn.jsdelivr.net/gh/defis-net/material/noData/noStar.png" alt="">
             <div>{{ $t('pddex.noFollow') }}</div>
-            <div class="toFollow flexc" @click="coinName = 'USDT'">{{ $t('pddex.add') }}</div>
+            <div class="toFollow flexc" @click="active = 1">{{ $t('pddex.add') }}</div>
           </div>
-          <div class="rankItem flexb dinReg" v-for="(v, index) in followList" :key="`${coinName}-${index}`" @click="handleToTrade(v)">
+          <div class="rankItem flexb dinReg" v-for="(v, index) in followList" :key="`${active}-${index}`" @click="handleToTrade(v)">
             <div class="name flexa">
               <img class="coinUrl" :src="v.sym1Data.imgUrl" :onerror="errorCoinImg">
               <div>
@@ -71,7 +75,7 @@
                 <div class="tip smallTip">
                   <span v-if="sortPools">{{ $t('pddex.pools') }} {{ v.poolsNum }}</span>
                   <span v-else-if="sortApy">
-                    <span>{{ $t('pddex.apys1') }} {{ parseFloat(v.apy).toFixed(2) }}%</span>
+                    <span>{{ $t('pddex.apys1') }} {{ v.countApy }}%</span>
                     <span class="green_p" @click.stop="handleShowApy(v)">详情＞</span>
                   </span>
                   <span v-else>{{ $t('pddex.amt1') }} {{ parseFloat(v.volume24H) }}</span>
@@ -102,7 +106,7 @@
             <img class="noDataPng" src="https://cdn.jsdelivr.net/gh/defis-net/material/noData/noStar.png" alt="">
             <div>{{ $t('public.noData') }}</div>
           </div>
-          <div class="rankItem flexb dinReg" v-for="(v, index) in cdAreaLists" :key="`${coinName}-${index}`" @click="handleToTrade(v)">
+          <div class="rankItem flexb dinReg" v-for="(v, index) in cdAreaLists" :key="`${active}-${index}`" @click="handleToTrade(v)">
             <div class="name flexa">
               <img class="coinUrl" :src="v.sym1Data.imgUrl" :onerror="errorCoinImg">
               <div>
@@ -113,7 +117,7 @@
                 <div class="tip smallTip">
                   <span v-if="sortPools">{{ $t('pddex.pools') }} {{ v.poolsNum }}</span>
                   <span v-else-if="sortApy">
-                    <span>{{ $t('pddex.apys1') }} {{ v.apy }}%</span>
+                    <span>{{ $t('pddex.apys1') }} {{ v.countApy }}%</span>
                     <span class="green_p" @click.stop="handleShowApy(v)">详情＞</span>
                   </span>
                   <span v-else>{{ $t('pddex.amt1') }} {{ parseFloat(v.volume24H) }}</span>
@@ -164,7 +168,8 @@ export default {
   },
   data() {
     return {
-      coinName: 'follow',
+      coinName: 'USDT',
+      active: 0,
       followList: [], // 关注展示列表
       tradeRankList: [], // 成交量排行
       tradeList: [],
@@ -173,7 +178,7 @@ export default {
       swapTradeLists: {},
       errorCoinImg: 'this.src="https://ndi.340wan.com/eos/eosio.token-eos.png"',
       allMarket: localStorage.getItem('allMarket') ? JSON.parse(localStorage.getItem('allMarket')) :{},
-      areaLists: ['USDT', 'USDC', 'EOS', 'DFS', 'TAG'],
+      areaLists: ['USDT', 'USDC', 'EOS', 'DFS', 'TAG', 'DFG'],
       cdAreaLists: [],
 
       // 排序
@@ -251,15 +256,15 @@ export default {
     },
     // 显示年化
     handleShowApy(v) {
-      this.countApy = v.apy;
-      this.aprInfo = v.apy_detail;
+      this.countApy = v.countApy;
+      this.aprInfo = v;
       this.showApyDetail = true
     },
     // 处理排序
     handleDealSort() {
       const area = this.coinName;
       let arr = JSON.parse(JSON.stringify(this.allMarket[area] || []));
-      if (this.coinName === 'follow') {
+      if (this.active === 0) {
         this.handleDealLike()
         arr = JSON.parse(JSON.stringify(this.followList || []));
       }
@@ -274,8 +279,8 @@ export default {
         })
       } else if (this.sortApy) {
         tArr = arr.sort((a, b) => {
-          return this.sortApy === 2 ? parseFloat(a.apy) - parseFloat(b.apy)
-                                     : parseFloat(b.apy) - parseFloat(a.apy)
+          return this.sortApy === 2 ? parseFloat(a.countApy) - parseFloat(b.countApy)
+                                     : parseFloat(b.countApy) - parseFloat(a.countApy)
         })
       } else if (this.sortPools) {
         tArr = arr.sort((a, b) => {
@@ -293,7 +298,7 @@ export default {
                                      : parseFloat(b.price) - parseFloat(a.price)
         })
       } 
-      this.coinName === 'follow' ? this.followList = tArr : this.cdAreaLists = tArr;
+      this.active === 0 ? this.followList = tArr : this.cdAreaLists = tArr;
     },
     handleSortVol() {
       let t = (this.sortVol + 1) % 3;
@@ -353,12 +358,11 @@ export default {
       }
       const rows = result.rows;
       if (!rows.length) {
-        if (this.coinName === 'follow') {
-          this.coinName = 'USDT';
+        if (this.active === 0) {
+          this.active = 1;
         }
         return
       }
-      this.coinName === 'follow';
       this.likeArr = rows;
       this.handleDealLike()
     },
@@ -408,7 +412,7 @@ export default {
       const lists = {}
       keys.forEach(key => {
         let coin = key.split('_markets')[0].toUpperCase()
-        if (coin === 'BTC' || coin.toLowerCase() === 'display_limit') {
+        if (coin === 'BTC') {
           return
         }
         coin = coin === 'BTC' ? coin = 'PBTC' : coin;
@@ -434,7 +438,7 @@ export default {
 .pddexTab{
   font-size: 32px;
   color: #999;
-  margin: 15px 30px 5px;
+  margin: 30px 30px 5px;
   height: 70px;
   position: relative;
   border: 1px solid rgba(220,220,220,.3);

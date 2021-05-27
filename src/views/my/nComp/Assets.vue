@@ -1,10 +1,28 @@
 <template>
   <div class="assetsComp">
     <div class="count item">
-      <div class="title din">{{ $t('my.accAssets') }} (USDT)</div>
-      <div>
-        <span class="amt dinBold">${{ allCount }}</span>
-        <span class="small">≈ {{ allCountCNY }} CNY</span>
+      <div class="title din flexa">
+        <span>{{ $t('my.accAssets') }}</span>
+        <span v-if="countByU">(USDT)</span>
+        <span v-else>(EOS)</span>
+        <img class="eye" v-if="!hideAss" @click="hideAss = !hideAss"
+          src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/eye.png">
+        <img class="eye hideeye" v-else  @click="hideAss = !hideAss"
+          src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/hide.png">
+      </div>
+      <div class="flexend" v-if="!hideAss">
+        <span class="amt dinBold" v-if="countByU">{{ allCount }}</span>
+        <span class="amt dinBold" v-else>{{ allCountEos }}</span>
+        <span class="small flexa">
+          <span>≈ ¥{{ allCountCNY }}</span>
+          <img class="exCount"  @click="countByU = !countByU"
+            src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/switch.png">
+        </span>
+      </div>
+      <div class="flexa" v-else>
+        <span class="amt dinBold">********</span>
+        <img class="exCount" @click="countByU = !countByU"
+            src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/switch.png">
       </div>
     </div>
     <div class="tools tip item flexb">
@@ -16,8 +34,8 @@
         <div>{{ $t('my.hideMinAssets') }}</div>
         <img class="tips" src="">
       </div>
-      <div class="flexa">
-        <img class="searchImg" src="">
+      <div class="flexa searchDiv">
+        <img class="searchImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/search.png">
         <van-field class="searchIpt" v-model="search"
           @input="handleSearch"
           :placeholder="$t('my.search')" />
@@ -25,27 +43,51 @@
     </div>
     <!-- 币种列表 -->
     <div class="coinLists">
+      <div class="noDate" v-if="!sArr.length">{{ $t('public.noData') }}</div>
       <template v-for="(v, i) in sArr">
-        <div class="item" v-if="!(parseFloat(v.countUsdt || 0) < minNum && hidLess)" :key="i">
+        <div class="item flexb" v-if="!(parseFloat(v.countUsdt || 0) < minNum && hidLess)" :key="i">
           <div class="coin flexa">
             <img class="logo" :src="v.imgUrl" :onerror="$errorImg">
-            <span>{{ v.symbol }}</span>
+            <div>
+              <div>{{ v.symbol }}</div>
+              <div class="flexa about">
+                <span class="label">{{ $t('my.value') }}</span>
+                <div v-if="!hideAss">
+                  <div class="num dinReg" v-if="countByU">{{ parseFloat(v.countUsdt || 0).toFixed(2) }} USD</div>
+                  <div class="num dinReg" v-else>{{ parseFloat(v.countEos || 0).toFixed(2) }} EOS</div>
+                </div>
+                <span v-else class="num dinReg">****</span>
+              </div>
+            </div>
           </div>
-          <div class="flexb balData">
-            <div class="bal">
-              <div class="subTitle">{{ $t('my.count') }}</div>
-              <div class="num din">{{ v.count || '0.0000' }}</div>
-              <div class="abt din">¥{{ v.countCNY || '0.00' }}</div>
+          <div class="bals" v-if="!hideAss">
+            <div class="flexa">
+              <span class="label">{{ $t('my.bal') }}：</span>
+              <span class="num dinReg">{{ v.amount || '0.0000' }}</span>
             </div>
-            <div class="bal">
-              <div class="subTitle">{{ $t('my.liqs') }}</div>
-              <div class="num din">{{ v.bal || '0.0000' }}</div>
-              <div class="abt din">¥{{ v.balCNY || '0.00' }}</div>
+            <div class="flexa">
+              <span class="label">{{ $t('my.liqs') }}：</span>
+              <span class="num dinReg">{{ v.bal || '0.0000' }}</span>
             </div>
-            <div class="bal">
-              <div class="subTitle">{{ $t('my.bal') }}</div>
-              <div class="num din">{{ v.amount || '0.0000' }}</div>
-              <div class="abt din">¥{{ v.amtCNY || '0.00' }}</div>
+            <div class="flexa"
+              v-if="v.symbol === 'DFS' || v.symbol === 'TAG' || v.symbol === 'YFC'">
+              <span class="label">DSS：</span>
+              <span class="num dinReg">{{ v.dss || '0.0000' }}</span>
+            </div>
+          </div>
+          <div class="bals" v-else>
+            <div class="flexa">
+              <span class="label">{{ $t('my.bal') }}：</span>
+              <span class="num dinReg">****</span>
+            </div>
+            <div class="flexa">
+              <span class="label">{{ $t('my.liqs') }}：</span>
+              <span class="num dinReg">****</span>
+            </div>
+            <div class="flexa"
+              v-if="v.symbol === 'DFS' || v.symbol === 'TAG' || v.symbol === 'YFC'">
+              <span class="label">DSS：</span>
+              <span class="num dinReg">****</span>
             </div>
           </div>
         </div>
@@ -68,10 +110,6 @@ export default {
       type: String,
       default: '0.00'
     },
-    allCount: {
-      type: String,
-      default: '0.00'
-    },
   },
   data() {
     return {
@@ -79,11 +117,29 @@ export default {
       search: '',
       sArr: [],
       hidLess: true,
+      countByU: true,
+      hideAss: false,
     }
+  },
+  computed: {
+    allCount() {
+      let count = 0;
+      this.allBals.forEach(v => {
+        count = parseFloat(count || 0) + parseFloat(v.countUsdt || 0)
+      })
+      return count.toFixed(4)
+    },
+    allCountEos() {
+      let count = 0;
+      this.allBals.forEach(v => {
+        count = parseFloat(count || 0) + parseFloat(v.countEos || 0)
+      })
+      return count.toFixed(4)
+    },
   },
   watch: {
     allBals: {
-      handler: function abs(newVal) {
+      handler: function abs() {
         this.handleSearch()
       },
       deep: true,
@@ -106,11 +162,18 @@ export default {
 .assetsComp{
   font-size: 28px;
   text-align: left;
+  .noDate{
+    padding: 50px 0;
+    font-size: 24px;
+    color: #999;
+    text-align: center;
+  }
   .item{
-    padding: 24px;
+    padding: 34px 24px;
     border-bottom: 1px solid $color-border;
   }
   .count{
+    padding: 24px 24px;
     .title{
       margin-bottom: 10px;
     }
@@ -121,8 +184,22 @@ export default {
       font-size: 24px;
       margin-left: 15px;
     }
+    .exCount{
+      width: 32px;
+      margin-left: 20px;
+    }
+    .eye{
+      margin-top: 5px;
+      margin-left: 15px;
+      width: 32px;
+      display: block;
+    }
+    .hideeye{
+      margin-top: 10px;
+    }
   }
   .tools{
+    padding: 20px 24px;
     .select{
       width: 36px;
       height: 36px;
@@ -137,12 +214,17 @@ export default {
       width: 32px;
       margin-left: 10px;
     }
+    .searchDiv{
+      border: 1px solid $color-border;
+      padding: 4px 18px;
+      border-radius: 40px;
+    }
     .searchImg{
-      width: 32px;
-      margin-right: 10px;
+      width: 28px;
+      // margin-right: 10px;
     }
     .searchIpt{
-      padding: 0 8px;
+      padding: 0 0px;
       width: 150px;
       /deep/ .van-field__control{
         text-align: center;
@@ -153,40 +235,42 @@ export default {
   .coin{
     font-size: 30px;
     font-weight: 500;
-    margin-bottom: 15px;
+    flex: 4;
     .logo{
       width: 60px;
       height: 60px;
       border-radius: 50%;
-      margin-right: 10px;
+      margin-right: 15px;
     }
-  }
-  .balData{
-    .bal{
-      flex: 1;
-      max-width: 230px;
-      overflow: hidden;
-      margin-right: 20px;
-      // &:first-child{
-      //   margin-right: 60px;
-      // }
-      &:last-child{
-        text-align: right;
-        margin-right: 0;
-      }
-      .subTitle{
+    .about{
+      margin-top: 9px;
+      .label{
         font-size: 24px;
-        color: #999;
-        margin-bottom: 6px;
+        color: #666666;
+        margin-right: 10px;
       }
       .num{
-        font-size: 32px;
-        margin-bottom: 6px;
+        font-size: 30px;
       }
-      .abt{
-        font-size: 24px;
-        font-weight: 300;
+    }
+  }
+  .bals{
+    flex: 3;
+    &>div{
+      margin-bottom: 9px;
+      &:last-child{
+        margin-bottom: 0;
       }
+    }
+    .label{
+      font-size: 24px;
+      color: #666666;
+      margin-right: 10px;
+    }
+    .num{
+      font-size: 30px;
+      max-width: 200px;
+      overflow: hidden;
     }
   }
 }
