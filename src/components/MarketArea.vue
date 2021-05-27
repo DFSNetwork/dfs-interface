@@ -1,6 +1,6 @@
 <template>
   <div class="newMarkets">
-    <div class="title">选择市场</div>
+    <div class="title">{{ $t('pools.chooseMarket') }}</div>
     <div class="area">
       <van-tabs color="#29D4B0"
         v-if="type === 'other'"
@@ -10,7 +10,7 @@
       </van-tabs>
       <div class="search flexa">
         <img class="searchImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/search.png" alt="">
-        <van-field v-model="search" placeholder="搜索市场名称.."/>
+        <van-field v-model="search" :placeholder="$t('sys.searchMarket')"/>
       </div>
       <div class="lists" v-if="type === 'other'">
         <div class="list flexb" v-for="(v, i) in searchArr" :key="`list${i}`"
@@ -24,7 +24,7 @@
           </div>
           <div class="price din">{{ v.price || '0.000000' }}</div>
         </div>
-        <div v-if="!search" class="searchMore flexc">更多代币请搜索查询</div>
+        <div v-if="!search" class="searchMore flexc">{{ $t('sys.searchMore') }}</div>
       </div>
       <div class="lists" v-else>
         <div class="list flexb" v-for="(v, i) in searchArr" :key="`list${i}`"
@@ -37,7 +37,7 @@
           </div>
           <div class="price din"></div>
         </div>
-        <div v-if="!search" class="searchMore flexc">更多代币请搜索查询</div>
+        <div v-if="!search" class="searchMore flexc">{{ $t('sys.searchMore') }}</div>
       </div>
     </div>
   </div>
@@ -78,7 +78,7 @@ export default {
       search: '',
       area: 1,
       areaLists: [{
-        tab: '自选',
+        tab: this.$t('pddex.follow'),
         contract: '',
       }, {
         tab: 'USDT',
