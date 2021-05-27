@@ -10,7 +10,7 @@
       </van-tabs>
       <div class="search flexa">
         <img class="searchImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/search.png" alt="">
-        <van-field v-model="search" :placeholder="$t('sys.searchMarket')"/>
+        <van-field v-model="search" :placeholder="$t('sys.searchMarket1')"/>
       </div>
       <div class="lists" v-if="type === 'other'">
         <div class="list flexb" v-for="(v, i) in searchArr" :key="`list${i}`"

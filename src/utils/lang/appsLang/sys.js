@@ -34,7 +34,7 @@ export default {
       coinViews: '代币观察',
       fundation: '乐捐系统',
       helper: '大丰收助手',
-      searchMarket: '搜索市场名称',
+      searchMarket1: '搜索市场名称',
       searchMore: '更多代币请搜索查询',
     }
   },
@@ -72,7 +72,7 @@ export default {
       coinViews:'Tokens',
       fundation:'Fundation',
       helper:'Assistant',
-      searchMarket:'Search market name',
+      searchMarket1:'Search market name',
       searchMore:'Please search for more tokens',
     }
   }
