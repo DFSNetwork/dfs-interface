@@ -75,7 +75,7 @@
                 <div class="tip smallTip">
                   <span v-if="sortPools">{{ $t('pddex.pools') }} {{ v.poolsNum }}</span>
                   <span v-else-if="sortApy">
-                    <span>{{ $t('pddex.apys1') }} {{ parseFloat(v.apy).toFixed(2) }}%</span>
+                    <span>{{ $t('pddex.apys1') }} {{ v.countApy }}%</span>
                     <span class="green_p" @click.stop="handleShowApy(v)">详情＞</span>
                   </span>
                   <span v-else>{{ $t('pddex.amt1') }} {{ parseFloat(v.volume24H) }}</span>
@@ -117,7 +117,7 @@
                 <div class="tip smallTip">
                   <span v-if="sortPools">{{ $t('pddex.pools') }} {{ v.poolsNum }}</span>
                   <span v-else-if="sortApy">
-                    <span>{{ $t('pddex.apys1') }} {{ v.apy }}%</span>
+                    <span>{{ $t('pddex.apys1') }} {{ v.countApy }}%</span>
                     <span class="green_p" @click.stop="handleShowApy(v)">详情＞</span>
                   </span>
                   <span v-else>{{ $t('pddex.amt1') }} {{ parseFloat(v.volume24H) }}</span>
@@ -168,8 +168,8 @@ export default {
   },
   data() {
     return {
-      active: 0,
       coinName: 'USDT',
+      active: 0,
       followList: [], // 关注展示列表
       tradeRankList: [], // 成交量排行
       tradeList: [],
@@ -256,8 +256,8 @@ export default {
     },
     // 显示年化
     handleShowApy(v) {
-      this.countApy = v.apy;
-      this.aprInfo = v.apy_detail;
+      this.countApy = v.countApy;
+      this.aprInfo = v;
       this.showApyDetail = true
     },
     // 处理排序
@@ -279,8 +279,8 @@ export default {
         })
       } else if (this.sortApy) {
         tArr = arr.sort((a, b) => {
-          return this.sortApy === 2 ? parseFloat(a.apy) - parseFloat(b.apy)
-                                     : parseFloat(b.apy) - parseFloat(a.apy)
+          return this.sortApy === 2 ? parseFloat(a.countApy) - parseFloat(b.countApy)
+                                     : parseFloat(b.countApy) - parseFloat(a.countApy)
         })
       } else if (this.sortPools) {
         tArr = arr.sort((a, b) => {
@@ -412,7 +412,7 @@ export default {
       const lists = {}
       keys.forEach(key => {
         let coin = key.split('_markets')[0].toUpperCase()
-        if (coin === 'BTC' || coin.toLowerCase() === 'display_limit') {
+        if (coin === 'BTC') {
           return
         }
         coin = coin === 'BTC' ? coin = 'PBTC' : coin;
@@ -438,7 +438,7 @@ export default {
 .pddexTab{
   font-size: 32px;
   color: #999;
-  margin: 15px 30px 5px;
+  margin: 30px 30px 5px;
   height: 70px;
   position: relative;
   border: 1px solid rgba(220,220,220,.3);
