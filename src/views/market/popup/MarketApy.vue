@@ -2,32 +2,32 @@
   <div class="marketApy">
     <div class="title">{{ $t('apy.title') }}</div>
     <div class="table">
-      <div class="flexa" v-if="parseFloat(aprInfo.feesApy || 0)">
+      <div class="flexa" v-if="parseFloat(aprInfo.feesApy || 0) > 0.01">
         <span>{{ $t('info.markerFeesApr') }}：</span>
         <span>{{ `${parseFloat(aprInfo.feesApy || 0).toFixed(2)}%` }}</span>
       </div>
-      <div class="flexa" v-if="parseFloat(aprInfo.dfsApy || 0)">
+      <div class="flexa" v-if="parseFloat(aprInfo.dfsApy || 0) > 0.01">
         <span>{{ $t('info.dfsMineApr') }}：</span>
         <span>{{ `${parseFloat(aprInfo.dfsApy || 0).toFixed(2)}%` }}</span>
       </div>
       
-      <div class="flexa" v-if="parseFloat(aprInfo.feesApr || 0)">
+      <div class="flexa" v-if="parseFloat(aprInfo.feesApr || 0) > 0.01">
         <span>{{ $t('info.markerFeesApr') }}：</span>
         <span>{{ `${parseFloat(aprInfo.feesApr || 0).toFixed(2)}%` }}</span>
       </div>
-      <div class="flexa" v-if="parseFloat(aprInfo.aprV3 || 0)">
+      <div class="flexa" v-if="parseFloat(aprInfo.aprV3 || 0) > 0.01">
         <span>{{ $t('info.dfsMineApr') }}：</span>
         <span>{{ `${parseFloat(aprInfo.aprV3 || 0).toFixed(2)}%` }}</span>
       </div>
-      <div class="flexa" v-if="aprInfo.lpApy && parseFloat(aprInfo.lpApy.pddApy)">
+      <div class="flexa" v-if="aprInfo.lpApy && parseFloat(aprInfo.lpApy.pddApy || 0) > 0.01">
         <span>{{ $t('apy.pddApy') }}：</span>
         <span>{{ `${parseFloat(aprInfo.lpApy.pddApy || 0).toFixed(2)}%` }}</span>
       </div>
-      <div class="flexa" v-if="parseFloat(aprInfo.tagLpApy)">
+      <div class="flexa" v-if="parseFloat(aprInfo.tagLpApy || 0) > 0.01">
         <span>{{ $t('apy.tagLpApy') }}：</span>
         <span>{{ `${parseFloat(aprInfo.tagLpApy).toFixed(2)}%` }}</span>
       </div>
-      <div class="flexa" v-if="parseFloat(aprInfo.usdcApy)">
+      <div class="flexa" v-if="parseFloat(aprInfo.usdcApy || 0) > 0.01">
         <span>{{ $t('apy.usdcLpApy') }}：</span>
         <span>{{ `${parseFloat(aprInfo.usdcApy).toFixed(2)}%` }}</span>
       </div>

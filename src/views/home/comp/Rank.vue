@@ -103,7 +103,7 @@ export default {
       } else {
         nMarkets = this.dealArr(nMarkets);
         nMarkets.sort((a, b) => {
-          return parseFloat(b.countApy || 0) - parseFloat(a.countApy || 0)
+          return parseFloat(b.apy || 0) - parseFloat(a.apy || 0)
         })
       }
       const rankArr = nMarkets.slice(0, 10);
