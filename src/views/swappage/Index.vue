@@ -813,7 +813,7 @@ export default {
         setTimeout(() => {
           this.handleInBy(this.tradeInfo.type, 'first')
           this.handleBalanTimer();
-        }, 200);
+        }, 1500);
         this.$message({
           message: this.$t('public.success'),
           type: 'success'
