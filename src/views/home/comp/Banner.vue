@@ -7,16 +7,13 @@
         <img class="bannerImg" v-else
           src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/banner1-en.png">
       </van-swipe-item>
-      <!-- <van-swipe-item @click="handleToObj('trade')">
-        <img class="bannerImg"
-          src="@/assets/banner/trade.jpeg">
-      </van-swipe-item>
+
       <van-swipe-item>
         <img class="bannerImg" v-if="language === 'zh-CN'"
-          src="https://cdn.jsdelivr.net/gh/defis-net/material2/banner/dfsMine.png">
+          src="@/assets/banner/zh-61.png">
         <img class="bannerImg" v-else
-          src="https://cdn.jsdelivr.net/gh/defis-net/material2/banner/dfsMine-en.png">
-      </van-swipe-item> -->
+          src="@/assets/banner/en-61.png">
+      </van-swipe-item>
     </van-swipe>
   </div>
 </template>
@@ -42,9 +39,17 @@ export default {
 
 <style lang="scss" scoped>
 .banner{
-  margin: 10px 28px 28px;
+  background: #FFF;
+  border-radius: 20px;
+  overflow: hidden;
+  padding: 10px 0;
+  /deep/ .van-swipe-item{
+    width: 100%;
+    padding: 0 28px;
+    box-sizing: border-box;
+  }
   .bannerImg{
-    border-radius: 8px;
+    border-radius: 20px;
     width: 100%;
     max-height: 280px;
     display: block;

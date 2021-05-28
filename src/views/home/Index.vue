@@ -142,8 +142,8 @@ export default {
 
 <style lang="scss" scoped>
 .home{
-  // background: linear-gradient(to bottom, #FFF, #fafafa 80px , #F6F6F6);
-  background: #FFF;
+  // background: linear-gradient(to bottom, #FFF, #FFF 180px , #F9F9F9);
+  background: #F9F9F9;
   min-height: 100vh;
   padding-bottom: 30px;
   .fullBtn{

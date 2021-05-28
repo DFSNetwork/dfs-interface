@@ -96,12 +96,12 @@ export default {
 }
 .quick{
   font-size: 32px;
-  margin: 28px;
+  padding: 24px 28px;
   background: #FFF;
-  border-radius: 8px;
-  box-shadow: 2px 2px 6px 4px rgba(243,243,243,1);
-  padding: 18px;
+  border-radius: 10px;
   position: relative;
+  margin-bottom: 20px;
+  color: #333;
   .info{
     position: relative;
     z-index: 1;
@@ -111,7 +111,7 @@ export default {
     font-weight: 300;
   }
   .name{
-    font-weight: 500;
+    font-weight: bold;
     margin-bottom: 8px;
   }
   .btn{
@@ -132,12 +132,12 @@ export default {
   }
 }
 .appLists{
-  margin: 28px;
-  font-size: 26px;
+  font-size: 24px;
   background: #FFF;
-  padding: 22px 18px;
-  border-radius: 8px;
-  box-shadow: 2px 2px 6px 4px rgba(243,243,243,1);
+  padding: 22px 10px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  color: #333;
   .lists{
     margin-bottom: 28px;
     text-align: center;
@@ -147,7 +147,7 @@ export default {
   }
   .list{
     flex: 1;
-    font-size: 27px;
+    font-size: 24px;
     position: relative;
     .iconImg{
       width: 60px;
