@@ -185,7 +185,7 @@ export default {
           scope: "defisswapcnt",
           table: "markets",
           json: true,
-          limit: 500,
+          limit: 200,
           lower_bound: next_key,
         }
         const {status, result} = await this.$api.get_table_rows(params);
