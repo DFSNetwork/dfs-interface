@@ -1,23 +1,21 @@
 <template>
   <div class="swap">
-    <Tabs />
-    <van-collapse v-model="activeNames" accordion>
-      <van-collapse-item name="1">内容</van-collapse-item>
-      <van-collapse-item name="2">内容</van-collapse-item>
-      <van-collapse-item name="3">内容</van-collapse-item>
-    </van-collapse>
-    <span @click="handleClose">close</span>
-    <span @click="handleShow">open</span>
+    <div class="box">
+      <Tabs />
+      <SwapInfo />
+    </div>
   </div>
 </template>
 
 <script>
 import Tabs from '../index/components/Tabs';
+import SwapInfo from '@/views/swap/comp/SwapInfo';
 
 export default {
   name: 'newSwap',
   components: {
     Tabs,
+    SwapInfo,
   },
   data() {
     return {
@@ -38,5 +36,9 @@ export default {
 <style lang="scss" scoped>
 .swap{
   margin: 20px 30px;
+  .box{
+    box-shadow: 2px 2px 6px 4px rgba(243,243,243,1);
+    border-radius: 20px;
+  }
 }
 </style>
