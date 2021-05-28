@@ -42,7 +42,7 @@
       </span>
     </div>
     <div class="flexb rate">
-      <span class="tip dinReg">24H额：{{ (checkedMarket.volume24H || 0) }}</span>
+      <span class="tip dinReg">24H额：{{ handleDealNum(checkedMarket.volume24H || 0) }}</span>
       <span class="green dinBold"
         :class="{'green': parseFloat(checkedMarket.price_change_rate) > 0,
                  'red': parseFloat(checkedMarket.price_change_rate) < 0}">
@@ -97,6 +97,7 @@ import { mapState } from 'vuex';
 import { DApp } from '@/utils/wallet';
 import MarketApy from '@/views/market/popup/MarketApy'
 import AboutMarket from '@/views/market/popup/AboutMarket'
+import { dealNum } from '@/utils/public'
 
 export default {
   props: {
@@ -150,6 +151,9 @@ export default {
     },
   },
   methods: {
+    handleDealNum(num) {
+      return dealNum(num)
+    },
     handleTo(name) {
       this.$router.push({
         name,

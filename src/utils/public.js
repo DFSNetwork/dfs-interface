@@ -453,7 +453,7 @@ export function dealNum(num) {
   if (t > 1000000) {
     t = `${(t / 1000000).toFixed(2)}M`
   } else if (t > 10000) {
-    t = `${(t / 10000).toFixed(2)}K`
+    t = `${(t / 1000).toFixed(2)}K`
   }
   return t
 }
