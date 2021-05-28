@@ -106,7 +106,7 @@ export default {
       totalValue:'Total Value',
       noLiqData:'No Liquidity data yet',
       windmill: 'Windmill',
-      clear:'Clear cache'
+      clear:'Clear Web Cache'
     }
   }
 }
