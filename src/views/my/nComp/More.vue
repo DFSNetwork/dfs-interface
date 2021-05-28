@@ -2,7 +2,9 @@
   <div class="accCenterTools">
     <!-- 应用功能 -->
     <div class="tools">
-      <div class="title">{{ $t('sys.dataAndServer') }}</div>
+      <div class="title">
+        <span @dblclick="handleClear">{{ $t('sys.dataAndServer') }}</span>
+      </div>
       <div class="lists flexa">
         <div class="list" @click="handleTo('history', {mid: 39})">
           <img class="icon big" src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/swapHis.png" alt="">
@@ -91,6 +93,26 @@ export default {
     }
   },
   methods: {
+    handleClear() {
+      localStorage.removeItem('marketLists')
+      localStorage.removeItem('filterMkLists')
+      localStorage.removeItem('marketLists1')
+      localStorage.removeItem('filterMkLists1')
+      localStorage.removeItem('pddexMarketLists')
+      localStorage.removeItem('coinPrices')
+      localStorage.removeItem('WALLET')
+      localStorage.removeItem('ImgJson')
+      localStorage.removeItem('poolsTagBal')
+      localStorage.removeItem('tagLpMids')
+      localStorage.removeItem('dfsPrice')
+      localStorage.removeItem('damping')
+      localStorage.removeItem('counter')
+      localStorage.removeItem('feesApr')
+      localStorage.removeItem('allMarket')
+      localStorage.removeItem('swapMarkets')
+      // localStorage.removeItem('proConfig')
+      location.reload()
+    },
     handleClick() {
       this.showGovern = false;
     },
