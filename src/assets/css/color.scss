@@ -196,9 +196,10 @@ input::-webkit-input-placeholder {
 }
 .newMarket{
   width: 70%;
-  top: 0px;
-  bottom: 0px;
-  transform: translate(0, 0);
+  // top: 0px;
+  // bottom: 0px;
+  // transform: translate(0, 0);
+  height: 100vh;
   max-width: 550px;
   border-radius: 0px;
 }

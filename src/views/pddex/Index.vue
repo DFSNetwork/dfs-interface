@@ -26,7 +26,7 @@ export default {
   },
   mounted() {
     this.handleGetMarkets()
-    this.handleGetPddexMarketList();
+    // this.handleGetPddexMarketList();
     DApp.scatterInit(this, () => {
     })
   },

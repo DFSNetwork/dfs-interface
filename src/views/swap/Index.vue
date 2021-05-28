@@ -10,6 +10,8 @@
 <script>
 import Tabs from '../index/components/Tabs';
 import SwapInfo from '@/views/swap/comp/SwapInfo';
+// import { getBaseMarkets } from './swap_deal';
+// import { SwapRouter } from './swap_router';
 
 export default {
   name: 'newSwap',
@@ -21,6 +23,23 @@ export default {
     return {
       activeNames: ''
     }
+  },
+  mounted() {
+    // const baseArr = getBaseMarkets([{
+    //   contract: 'dfxsynthetic',
+    //   symbol: 'YEOS'
+    // }, {
+    //   contract: 'dfxsynthetic',
+    //   symbol: 'YBTC'
+    // }])
+    // console.log(baseArr)
+    // SwapRouter.init(baseArr, this, {
+    //   contract: 'dfxsynthetic',
+    //   symbol: 'YEOS'
+    // }, {
+    //   contract: 'dfxsynthetic',
+    //   symbol: 'YBTC'
+    // })
   },
   methods: {
     handleClose() {

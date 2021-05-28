@@ -1257,13 +1257,4 @@ export default {
     }
   }
 }
-.newMarket{
-  // margin-top: 15vh;
-  width: 70%;
-  top: 0px;
-  bottom: 0px;
-  transform: translate(0, 0);
-  max-width: 550px;
-  border-radius: 0px;
-}
 </style>

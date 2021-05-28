@@ -18,7 +18,8 @@
           </div>
         </div>
         <div class="iptDiv dinBold">
-          <van-field class="ipt" v-model="pay" placeholder="0.0" />
+          <van-field class="ipt" v-model="pay" placeholder="0.0"
+            @input="handleGetAmtOut('pay')"/>
         </div>
       </div>
     </div>
@@ -49,7 +50,8 @@
           </div>
         </div>
         <div class="iptDiv dinBold">
-          <van-field class="ipt" v-model="get" placeholder="0.0" />
+          <van-field class="ipt" v-model="get" placeholder="0.0"
+            @input="handleGetAmtOut('get')"/>
         </div>
       </div>
     </div>
@@ -58,8 +60,8 @@
     <div class="price flexb">
       <span class="tip">兑换比率</span>
       <span class="flexend din">
-        <span v-if="!priceEX">1 {{ tokenB.symbol }} = 100.0000 {{ tokenA.symbol }}</span>
-        <span v-else>1 {{ tokenA.symbol }} = 0.0010 {{ tokenB.symbol }}</span>
+        <span v-if="!priceEX">1 {{ tokenB.symbol }} = {{ outPrice }} {{ tokenA.symbol }}</span>
+        <span v-else>1 {{ tokenA.symbol }} = {{ inPrice }} {{ tokenB.symbol }}</span>
         <span class="flexa" @click="priceEX = !priceEX">
           <img class="iconImg small" v-if="priceEX" src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/price_switch_icon_btn_left.svg" alt="">
           <img class="iconImg small" v-else src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/price_switch_icon_btn_right.svg" alt="">
@@ -89,6 +91,10 @@
 import { mapState } from 'vuex';
 import MarketArea from '@/components/MarketArea';
 
+import { getBaseMarkets, getAmtOut } from '../swap_deal';
+import { SwapRouter } from '../swap_router';
+import { toFixed } from '@/utils/public'
+
 export default {
   name: 'swapInfo',
   components: {
@@ -117,12 +123,16 @@ export default {
       },
       balA: '0.0000',
       balB: '0.0000',
+      inPrice: '0.0000',
+      outPrice: '0.0000',
 
       // 输入信息
       pay: '',
       get: '',
       showType: 'start', // end | start
     }
+  },
+  mounted() {
   },
   computed: {
     ...mapState({
@@ -134,14 +144,75 @@ export default {
       rSwitch: state => state.app.rSwitch,
     }),
   },
+  watch: {
+    marketLists: {
+      handler: function mls(newVal) {
+        if (!newVal.length) {
+          return
+        }
+        this.handleGetSwapMarkets();
+      },
+      deep: true,
+      immediate: true,
+    },
+    account: {
+      handler: function mls(newVal) {
+        if (!newVal.name) {
+          return
+        }
+        this.handleGetBal();
+        this.handleGetBal('next');
+      },
+      deep: true,
+      immediate: true,
+    }
+  },
   methods: {
+    // 初始化Swap数
+    handleGetSwapMarkets() {
+      const baseArr = getBaseMarkets([this.tokenA, this.tokenB])
+      SwapRouter.init(baseArr, this, this.tokenA, this.tokenB, () => {
+        this.handleGetAmtOut('pay')
+      })
+    },
+    // 获取输出数量
+    handleGetAmtOut(type) {
+      const inData = {
+        get: this.get || '1',
+        pay: this.pay || '1',
+        type,
+        tokenA: this.tokenA,
+        tokenB: this.tokenB,
+        rSwitch: this.rSwitch,
+      }
+      const out = getAmtOut(SwapRouter, inData)
+      if (!out.quantity_out) {
+        this.pay = '';
+        this.get = '';
+        return
+      }
+      this.inPrice = toFixed(out.swapInPrice, Number(this.tokenB.decimal) + 2)
+      this.outPrice = toFixed(out.swapOutPrice, Number(this.tokenA.decimal) + 2)
+      if (!parseFloat(this.pay || 0) || !parseFloat(this.get || 0)) {
+        return
+      }
+      if (type === 'pay') {
+        this.get = out.quantity_out.split(' ')[0]
+      } else {
+        this.pay = out.quantity_out.split(' ')[0]
+      }
+    },
+
+    // 关闭弹窗
     handleClose() {
       this.showMarketList = false;
     },
+    // 打开币种帅选
     handleShowDrawer(type) {
       this.showType = type;
       this.showMarketList = true
     },
+    // 切换币种
     handleMarketChange(item, type) {
       if (type === 'start') {
         this.tokenA = item;
@@ -151,6 +222,44 @@ export default {
       this.pay = '';
       this.get = '';
       this.showMarketList = false;
+    },
+
+    // 用户信息
+    async handleGetBal(next) {
+      const name = this.account.name;
+      if (!name) {
+        return
+      }
+      const params = {
+        code: this.tokenA.contract,
+        symbol: this.tokenA.symbol,
+        decimal: this.tokenA.decimal,
+        account: `${name}`
+      };
+      if (next) {
+        params.code = this.tokenB.contract;
+        params.symbol = this.tokenB.symbol;
+        params.decimal = this.tokenB.decimal;
+      }
+      const {status, result} = await this.$api.get_currency_balance(params);
+      console.log(result)
+      if (!status) {
+        return
+      }
+      const bal = result.split(' ')[0]
+      if (next) {
+        if (params.symbol !== this.tokenB.symbol || params.code !== this.tokenB.contract) {
+          this.handleGetBal(next)
+          return
+        }
+        this.balB = bal;
+        return;
+      }
+      if (params.symbol !== this.tokenA.symbol || params.code !== this.tokenA.contract) {
+        this.handleGetBal()
+        return
+      }
+      this.balA = bal;
     }
   }
 }
@@ -158,7 +267,7 @@ export default {
 
 <style lang="scss" scoped>
 .swapInfo{
-  padding: 20px;
+  padding: 10px 20px 20px;
   font-size: 24px;
   text-align: left;
   .tokenInfo{
@@ -254,12 +363,4 @@ export default {
   }
 }
 
-.newMarket{
-  width: 70%;
-  top: 0px;
-  bottom: 0px;
-  transform: translate(0, 0);
-  max-width: 550px;
-  border-radius: 0px;
-}
 </style>
