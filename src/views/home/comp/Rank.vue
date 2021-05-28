@@ -26,15 +26,15 @@
               <span>{{ v.symbol1 }}</span>
               <span class="small tip">/{{ v.symbol0 }}</span>
             </div>
-            <div v-if="coinName === 'deep'" class="symPools tip">{{ $t('pddex.pools') }} {{ (v.poolsNum) }}</div>
+            <div v-if="coinName === 'deep'" class="symPools tip">{{ $t('pddex.pools') }} {{ handleDealNum(v.poolsNum) }}</div>
             <div v-else-if="coinName === 'apy'" class="symPools tip">{{ $t('pddex.apys1') }} {{ v.apy }}%</div>
             <div v-else class="symPools tip">{{ $t('pddex.amt1') }} ${{ parseInt(v.volume24HToUsdt) }}</div>
           </div>
         </div>
-        <div class="dinReg">
+        <div class="dinBold">
           <div class="num "
             >{{ v.price }}</div>
-          <div>
+          <div class="dinReg">
             <div class="tip smallTip" v-if="language === 'en'">
               <span>$</span>
               <span>{{ v.aboutPriceU }}</span>
@@ -58,6 +58,7 @@
 
 <script>
 import { mapState } from 'vuex';
+import { dealNum } from '@/utils/public'
 export default {
   name: 'homeRank',
   data() {
@@ -88,6 +89,9 @@ export default {
     }
   },
   methods: {
+    handleDealNum(num) {
+      return dealNum(num)
+    },
     handleDealRank() {
       let nMarkets = JSON.parse(JSON.stringify(this.marketLists))
       if (this.coinName === 'deep') {
@@ -140,13 +144,24 @@ export default {
 <style lang="scss" scoped>
 .rank{
   font-size: 28px;
-  margin: 28px;
-  border-radius: 12px;
+  border-radius: 10px;
   background: #FFF;
-  box-shadow: 2px 2px 6px 4px rgba(243,243,243,1);
+  padding: 0 34px;
   .subTab{
-    border-bottom: 1px solid $color-border;
+    position: relative;
     box-sizing: border-box;
+    height: 91px;
+    &::after{
+      content: '';
+      width: 100%;
+      position: absolute;
+      border: 1px solid $color-border;
+      left: 0;
+      bottom: 3px;
+    }
+    /deep/ .van-tab--active{
+      font-weight: bold;
+    }
     /deep/ .van-tabs__nav{
       padding-bottom: 0;
       .van-tab{
@@ -161,24 +176,28 @@ export default {
     }
   }
   .lists{
-    padding: 0 18px 10px;
+    padding: 0 0 10px;
     .tools{
-      height: 60px;
+      padding: 23px 0 0px;
       font-size: 20px;
       &>span{
-        flex: 1;
+        flex: 3;
         text-align: right;
-        max-width: 150px;
-        min-width: 150px;
+        // max-width: 150px;
+        // min-width: 150px;
+        text-align: left;
         &:first-child{
-          flex: 2;
-          text-align: left;
+          flex: 5;
           max-width: 500px;
+        }
+        &:last-child{
+          text-align: right;
         }
       }
     }
     .list{
-      height: 90px;
+      // height: 90px;
+      padding: 23px 0;
       .symCoin{
         width: 44px;
         height: 44px;
@@ -186,14 +205,17 @@ export default {
         margin-right: 15px;
       }
       &>div{
-        flex: 1;
+        flex: 3;
         text-align: right;
-        max-width: 150px;
-        min-width: 150px;
+        // max-width: 150px;
+        // min-width: 150px;
+        text-align: left;
         &:first-child{
-          flex: 2;
-          text-align: left;
+          flex: 5;
           max-width: 500px;
+        }
+        &:last-child{
+          text-align: right;
         }
       }
       .symName{
@@ -204,22 +226,21 @@ export default {
       }
       .symPools,
       .smallTip{
-        font-size: 20px;
+        font-size: 24px;
         margin-top: 4px;
       }
       .changeVol,
       .changeBtn{
-        background: #5AAF90;
+        background: #01B796;
         padding: 12px 0;
         width: 130px;
         display: inline-block;
-        font-size: 24px;
+        font-size: 28px;
         color: #FFF;
-        border-radius: 4px;
+        border-radius: 10px;
         text-align: center;
         &.red_p{
-          background:#FF4D4D;
-          // color: #FF4D4D;
+          background:#E54F5D;
           color: #FFF !important;
         }
       }

@@ -1,34 +1,6 @@
 <template>
-  <div class="footer">
+  <div class="footer" :class="{'mt0': $route.name === 'home'}">
     <div v-if="$route.name !== 'home'">
-      <!-- <div v-if="isEx" class="" @click="clickOnDFSInfoData">
-        <span>
-          <span>24H{{ $t('footer.swapNum') }}: </span>
-          <span>{{ newDfsSwapData.total_volume ? newDfsSwapData.total_volume : "0.00" }}</span>
-        </span>
-        <span class="ml20">
-          <span class="">24H{{ $t('sys.tradeNum') }}: </span>
-          <span>{{ tradeUserNum }}{{ $t('sys.users') }}/{{ newDfsSwapData.order_number ? newDfsSwapData.order_number : 0 }}{{ $t('sys.orders') }}</span>
-        </span>
-      </div>
-      <div v-else class="" @click="clickOnDFSInfoData">
-        <span>
-          <span class="">24H{{ $t('footer.swapNum') }}: </span>
-          <span>${{ newDfsSwapData.total_volume_usdt ? newDfsSwapData.total_volume_usdt : "0.00" }}</span>
-        </span>
-        <span class="ml20">
-          <span class="">24H{{ $t('sys.tradeNum') }}: </span>
-          <span>{{ tradeUserNum }}{{ $t('sys.users') }}/{{ newDfsSwapData.order_number ? newDfsSwapData.order_number : 0 }}{{ $t('sys.orders') }}</span>
-        </span>
-      </div>
-      <div class="poolsNum flexc" @click="isEx = !isEx">
-        <span>{{ $t('footer.tlv') }}: </span>
-        <span v-if="isEx">{{ poolsEos }}</span>
-        <span v-else>${{ poolsUsdt }}</span>
-        <img v-if="isEx" class="exchange" src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/price_switch_icon_btn_left.svg" alt="">
-        <img v-else class="exchange" src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/price_switch_icon_btn_right.svg" alt="">
-      </div> -->
-
       <div class="safe tip">
         <span>{{ $t('public.safeRecord1') }}</span>
         <span class="who" @click="handleToShowReport('slotMist')"> {{ $t('public.safeRecord2') }}</span> &
@@ -240,8 +212,11 @@ export default {
 }
 .footer{
   font-size: 26px;
-  margin-top: 30px;
   color: #333;
+  margin-top: 30px;
+  &.mt0{
+    margin-top: 0;
+  }
   .poolsNum{
     margin-top: 8px;
     &>span{

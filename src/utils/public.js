@@ -448,6 +448,16 @@ export function dealPrice(price) {
   return Number(price).toFixed(getPriceLen())
 }
 
+export function dealNum(num) {
+  let t = parseFloat(num);
+  if (t > 1000000) {
+    t = `${(t / 1000000).toFixed(2)}M`
+  } else if (t > 10000) {
+    t = `${(t / 10000).toFixed(2)}K`
+  }
+  return t
+}
+
 // 返回币种图片地址
 export function getCoin(contract, coin) {
   // console.log(cdnImgJson)

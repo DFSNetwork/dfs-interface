@@ -35,7 +35,7 @@
             <img class="sortCoin" v-else src="https://cdn.jsdelivr.net/gh/defis-net/material2/pddex/sort_up.png" alt="">
           </span>
         </div>
-        <div class="rateDiv">
+        <div class="rateDivS">
           <span class="flexa" @click="handleSortPrice">
             <span>{{ $t('pddex.newPrice') }}</span>
             <img class="sortCoin noMargin" v-if="sortPrice === 0" src="https://cdn.jsdelivr.net/gh/defis-net/material2/pddex/sort_default.png" alt="">
@@ -68,32 +68,32 @@
             <div class="name flexa">
               <img class="coinUrl" :src="v.sym1Data.imgUrl" :onerror="errorCoinImg">
               <div>
-                <div>
+                <div class="din">
                   <span>{{ v.symbol1 }}</span>
                   <span class="small">/{{ v.symbol0 }}</span>
                 </div>
                 <div class="tip smallTip">
-                  <span v-if="sortPools">{{ $t('pddex.pools') }} {{ v.poolsNum }}</span>
+                  <span v-if="sortPools">{{ $t('pddex.pools') }} {{ handleDealNum(v.poolsNum) }}</span>
                   <span v-else-if="sortApy">
                     <span>{{ $t('pddex.apys1') }} {{ parseFloat(v.apy).toFixed(2) }}%</span>
                     <span class="green_p" @click.stop="handleShowApy(v)">详情＞</span>
                   </span>
-                  <span v-else>{{ $t('pddex.amt1') }} {{ parseFloat(v.volume24H) }}</span>
+                  <span v-else>{{ $t('pddex.amt1') }} {{ handleDealNum(v.volume24H) }}</span>
                 </div>
               </div>
             </div>
-            <div class="priceDiv">
+            <div class="priceDiv dinBold">
               <div>{{ v.price || '-' }}</div>
-              <div class="tip smallTip" v-if="language === 'en'">
+              <div class="tip smallTip dinReg" v-if="language === 'en'">
                 <span>$</span>
                 <span>{{ v.aboutPriceU }}</span>
               </div>
-              <div class="tip smallTip" v-else>
+              <div class="tip smallTip dinReg" v-else>
                 <span>¥</span>
                 <span>{{ v.aboutPriceCNY }}</span>
               </div>
             </div>
-            <div class="rateDiv">
+            <div class="rateDiv din">
               <span class="rate flexc"
                 :class="{'green': parseFloat(v.price_change_rate) > 0,
                         'red': parseFloat(v.price_change_rate) < 0}">
@@ -110,32 +110,32 @@
             <div class="name flexa">
               <img class="coinUrl" :src="v.sym1Data.imgUrl" :onerror="errorCoinImg">
               <div>
-                <div>
+                <div class="din">
                   <span>{{ v.symbol1 }}</span>
                   <span class="small">/{{ v.symbol0 }}</span>
                 </div>
                 <div class="tip smallTip">
-                  <span v-if="sortPools">{{ $t('pddex.pools') }} {{ v.poolsNum }}</span>
+                  <span v-if="sortPools">{{ $t('pddex.pools') }} {{ handleDealNum(v.poolsNum) }}</span>
                   <span v-else-if="sortApy">
                     <span>{{ $t('pddex.apys1') }} {{ v.apy }}%</span>
                     <span class="green_p" @click.stop="handleShowApy(v)">详情＞</span>
                   </span>
-                  <span v-else>{{ $t('pddex.amt1') }} {{ parseFloat(v.volume24H) }}</span>
+                  <span v-else>{{ $t('pddex.amt1') }} {{ handleDealNum(v.volume24H) }}</span>
                 </div>
               </div>
             </div>
-            <div class="priceDiv">
+            <div class="priceDiv dinBold">
               <div>{{ v.price || '-' }}</div>
-              <div class="tip smallTip" v-if="language === 'en'">
+              <div class="tip smallTip dinReg" v-if="language === 'en'">
                 <span>$</span>
                 <span>{{ v.aboutPriceU }}</span>
               </div>
-              <div class="tip smallTip" v-else>
+              <div class="tip smallTip dinReg" v-else>
                 <span>¥</span>
                 <span>{{ v.aboutPriceCNY }}</span>
               </div>
             </div>
-            <div class="rateDiv">
+            <div class="rateDiv din">
               <span class="rate flexc"
                 :class="{'green': parseFloat(v.price_change_rate) > 0,
                         'red': parseFloat(v.price_change_rate) < 0}">
@@ -159,7 +159,7 @@
 import { mapState } from 'vuex';
 import { dealAreaArr } from '@/views/pddex/comp/appLogic';
 import MarketApy from '@/views/market/popup/MarketApy'
-// import moment from 'moment';
+import { dealNum } from '@/utils/public'
 
 export default {
   name: 'pddexTab',
@@ -430,6 +430,9 @@ export default {
       }
       this.cdAreaLists = this.allMarket[coin];
     },
+    handleDealNum(num) {
+      return dealNum(num)
+    }
   }
 }
 </script>
@@ -438,7 +441,7 @@ export default {
 .pddexTab{
   font-size: 32px;
   color: #999;
-  margin: 15px 30px 5px;
+  margin: 15px 28px 5px;
   height: 70px;
   position: relative;
   border: 1px solid rgba(220,220,220,.3);
@@ -464,7 +467,6 @@ export default {
     border-top: 0px solid #e3e3e3 !important;
     padding: 0 30px;
     font-size: 24px;
-    background: #F9F9F9;
     margin-top: 8px;
     font-weight: 300;
 
@@ -477,22 +479,39 @@ export default {
     }
   }
   .subTab{
-    height: 50px;
+    height: 76px;
+    position: relative;
+    margin: 0 28px;
+    box-sizing: border-box;
+    &::after{
+      content: '';
+      width: 100%;
+      position: absolute;
+      border-bottom: 1px solid $color-border;
+      left: 0;
+      bottom: 1px;
+    }
+    /deep/ .van-tab--active{
+      font-weight: 500;
+    }
     /deep/ .van-tabs__wrap{
       height: auto;
     }
     /deep/ .van-tabs__nav{
-      padding-bottom: 0;
+      padding: 0;
+      height: auto;
+      font-size: 26px;
+      justify-content: space-between;
       .van-tab{
-        height: 50px;
+        height: 76px;
+        padding: 0;
+        flex: none;
       }
       .van-tabs__line{
         height: 4px;
         width: 36px;
-        bottom: 0;
+        bottom: 4px;
       }
-      height: auto;
-      font-size: 26px;
     }
   }
   .rankList{
@@ -524,32 +543,31 @@ export default {
     }
     .priceDiv{
       .tip{
-        font-size: 20px;
+        font-size: 24px;
       }
     }
     .rate{
-      font-size: 24px;
+      font-size: 28px;
       background: #999;
-      border-radius: 4px;
+      border-radius: 10px;
       color: #FFF;
-      height: 50px;
-      width: 116px;
+      height: 60px;
+      width: 140px;
       &.green{
-        background: #5AAF90;
+        background: #01B796;
       }
       &.red{
-        background: #FF4D4D;
+        background: #E54F5D;
       }
     }
     .rankItem{
-      height: 100px;
+      height: 110px;
       background: #FFF;
       margin: 0 30px;
       color: #333;
     }
   }
   .rankItem,.subTitle{
-    // border-top: 1px solid #eee;
     &>div{
       flex: 1;
       &:first-child{
@@ -558,19 +576,24 @@ export default {
       &:nth-child(2){
         max-width: 180px;
         min-width: 180px;
-        text-align: right;
+        text-align: left;
       }
       &:last-child{
-        max-width: 180px;
-        min-width: 180px;
+        max-width: 160px;
+        min-width: 160px;
         text-align: right;
       }
       .coinUrl{
         width: 42px;
         height: 42px;
         border-radius: 30px;
-        margin-right: 8px;
+        margin-right: 12px;
       }
+    }
+    .rateDivS{
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
     }
     .rateDiv{
       display: flex;
@@ -578,7 +601,6 @@ export default {
       justify-content: flex-end;
     }
     .name{
-      // font-size: 30px;
       font-weight: 500;
       position: relative;
       .small{

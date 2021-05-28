@@ -73,17 +73,17 @@ export default {
 
 <style lang="scss" scoped>
 .dfsInfo{
-  box-shadow: 2px 2px 6px 4px rgba(243,243,243,1);
-  margin: 28px;
+  // margin: 28px;
   background: #FFF;
-  border-radius: 16px;
-  padding: 22px;
+  border-radius: 10px;
+  padding: 26px 30px;
   font-size: 24px;
   text-align: left;
+  margin-bottom: 20px;
   .title{
     font-size: 32px;
-    font-weight: 500;
-    margin-bottom: 18px;
+    font-weight: bold;
+    margin-bottom: 25px;
     .exImg{
       margin-left: 15px;
       width: 30px;
@@ -99,7 +99,6 @@ export default {
       margin-right: 0px;
     }
     .subTitle{
-      font-weight: 300;
       padding-left: 18px;
       position: relative;
       &::before{

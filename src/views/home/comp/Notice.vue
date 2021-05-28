@@ -26,16 +26,16 @@
               <span>{{ v.symbol1 }}/{{ v.symbol0 }}</span>
               <span class="smallChange dinReg"
                 :class="{
-                  'green_p': parseFloat(v.priceRate) >= 0,
-                  'red_p': parseFloat(v.priceRate) < 0,
+                  'green': parseFloat(v.priceRate) >= 0,
+                  'red': parseFloat(v.priceRate) < 0,
                 }">
                 <span>{{ v.priceRate }}</span>
               </span>
             </div>
             <div class="num dinBold"
               :class="{
-                'green_p': parseFloat(v.priceRate) >= 0,
-                'red_p': parseFloat(v.priceRate) < 0,
+                'green': parseFloat(v.priceRate) >= 0,
+                'red': parseFloat(v.priceRate) < 0,
               }">
               <span>{{ parseFloat(v.price || 0).toFixed(4) }}</span>
             </div>
@@ -101,13 +101,12 @@ export default {
 
 <style lang="scss" scoped>
 .notice{
-  margin: 28px;
-  // border: 1px solid $color-border;
-  box-shadow: 2px 2px 6px 4px rgba(243,243,243,1);
-  border-radius: 8px;
+  padding: 0 28px 0;
+  border-radius: 20px;
   background: #FFF;
+  margin-bottom: 20px;
   .noticeBar{
-    padding: 0 20px;
+    padding: 0 0px;
     border-bottom: 1px solid $color-border;
     font-size: 24px;
     .nImg{
@@ -121,19 +120,20 @@ export default {
   }
   .lists{
     font-size: 24px;
-    padding: 20px 20px 10px;
+    padding: 20px 0px 10px;
     text-align: left;
     .my-swipe{
       width: 100%;
       padding-bottom: 20px;
       /deep/ .van-swipe__indicators{
-        bottom: 0px;
+        bottom: 5px;
       }
     }
     .symInfo{
       padding-right: 10px;
       max-width: 35%;
       position: relative;
+      padding-bottom: 10px;
       &:last-child{
         padding-right: 0;
       }
@@ -144,6 +144,12 @@ export default {
       .num{
         font-size: 40px;
         margin: 8px 0 6px;
+      }
+      .red{
+        color: #E62E2E;
+      }
+      .green{
+        color: #3FB387;
       }
       .aboutPrice{
         font-size: 26px;
