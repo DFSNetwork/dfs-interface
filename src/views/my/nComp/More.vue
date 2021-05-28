@@ -2,8 +2,9 @@
   <div class="accCenterTools">
     <!-- 应用功能 -->
     <div class="tools">
-      <div class="title">
+      <div class="title flexb">
         <span @dblclick="handleClear">{{ $t('sys.dataAndServer') }}</span>
+        <span class="tip" @click="handleClear">{{ $t('my.clear') }}</span>
       </div>
       <div class="lists flexa">
         <div class="list" @click="handleTo('history', {mid: 39})">
@@ -94,23 +95,7 @@ export default {
   },
   methods: {
     handleClear() {
-      localStorage.removeItem('marketLists')
-      localStorage.removeItem('filterMkLists')
-      localStorage.removeItem('marketLists1')
-      localStorage.removeItem('filterMkLists1')
-      localStorage.removeItem('pddexMarketLists')
-      localStorage.removeItem('coinPrices')
-      localStorage.removeItem('WALLET')
-      localStorage.removeItem('ImgJson')
-      localStorage.removeItem('poolsTagBal')
-      localStorage.removeItem('tagLpMids')
-      localStorage.removeItem('dfsPrice')
-      localStorage.removeItem('damping')
-      localStorage.removeItem('counter')
-      localStorage.removeItem('feesApr')
-      localStorage.removeItem('allMarket')
-      localStorage.removeItem('swapMarkets')
-      // localStorage.removeItem('proConfig')
+      localStorage.clear();
       location.reload()
     },
     handleClick() {
@@ -209,6 +194,9 @@ export default {
       font-size: 32px;
       text-align: left;
       font-weight: 500;
+      .tip{
+        font-size: 26px;
+      }
     }
     .lists{
       margin-top: 30px;
