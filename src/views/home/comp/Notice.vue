@@ -146,7 +146,7 @@ export default {
         margin: 8px 0 6px;
       }
       .red{
-        color: #E62E2E;
+        color: #E54F5D;
       }
       .green{
         color: #3FB387;
