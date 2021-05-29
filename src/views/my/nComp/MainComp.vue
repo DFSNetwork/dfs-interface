@@ -158,9 +158,12 @@ export default {
     },
     // 获取用户做市余额
     handleGetNowMarket(item) {
+      const ex = item.exchangeSym;
+      const r0 = parseFloat(item.reserve0);
+      const r1 = parseFloat(item.reserve1);
       const inData = {
-        poolSym0: item.reserve0.split(' ')[0],
-        poolSym1: item.reserve1.split(' ')[0],
+        poolSym0: !ex ? r0 : r1,
+        poolSym1: ex ? r0 : r1,
         poolToken: item.liquidity_token,
         sellToken: `${item.token}`
       }
