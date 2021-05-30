@@ -6,7 +6,7 @@
 
     <div class="subView" :class="{'en': language == 'en'}">
       <Assets v-if="act === 0" :allBals="allBals" :allCountCNY="allCountCNY" :allCount="allCount"/>
-      <Markets v-else-if="act === 1" :liqs="liqs" :allBals="allBals"/>
+      <Markets v-else-if="act === 1" :liqs="markets" :allBals="allBals"/>
       <More v-else />
     </div>
   </div>
@@ -127,7 +127,7 @@ export default {
       if (!this.marketLists.length) {
         return
       }
-      const rows = this.liqs;
+      const rows = JSON.parse(JSON.stringify(this.liqs));
       const mkBals = [];
       rows.forEach(v => {
         const market = this.marketLists.find(vv => vv.mid === v.mid);
@@ -138,6 +138,11 @@ export default {
         const nowMarket = this.handleGetNowMarket(market)
         this.$set(v, 'nowMarket0', nowMarket.getNum1)
         this.$set(v, 'nowMarket1', nowMarket.getNum2)
+        if (market.exchangeSym) {
+          const t = v.bal1;
+          this.$set(v, 'bal1', v.bal0)
+          this.$set(v, 'bal0', t)
+        }
 
         const balArr = this.handleDealMksBals(market, v);
         balArr.forEach(mv => {
@@ -158,9 +163,11 @@ export default {
     },
     // 获取用户做市余额
     handleGetNowMarket(item) {
+      const r0 = parseFloat(item.reserve0);
+      const r1 = parseFloat(item.reserve1);
       const inData = {
-        poolSym0: item.reserve0.split(' ')[0],
-        poolSym1: item.reserve1.split(' ')[0],
+        poolSym0: r0,
+        poolSym1: r1,
         poolToken: item.liquidity_token,
         sellToken: `${item.token}`
       }

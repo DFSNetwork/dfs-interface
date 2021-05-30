@@ -20,13 +20,11 @@ export default {
     return {
       dfsLists: [],
       allMarket: {},
-      pddexList: [],
       iArr: ['USDT', 'USDC', 'EOS', 'DFS', 'TAG']
     }
   },
   mounted() {
     this.handleGetMarkets()
-    // this.handleGetPddexMarketList();
     DApp.scatterInit(this, () => {
     })
   },
@@ -48,31 +46,6 @@ export default {
   methods: {
     handleUpdate() {
       this.handleGetMarkets()
-    },
-    // 获取ppdex支持交易对 配对pid
-    async handleGetPddexMarketList() {
-      const params = {
-        code: this.baseConfig.pddex,
-        scope: this.baseConfig.pddex,
-        table: 'pairs',
-        json: true,
-        limit: 1000
-      }
-      const {status, result} = await this.$api.get_table_rows(params);
-      if (!status) {
-        return
-      }
-      const lists = result.rows || [];
-      lists.forEach(v => {
-        const sym0Arr = v.sym0.split(',')
-        const sym1Arr = v.sym1.split(',')
-        this.$set(v, 'symbol0', sym0Arr[1])
-        this.$set(v, 'decimal0', sym0Arr[0])
-        this.$set(v, 'symbol1', sym1Arr[1])
-        this.$set(v, 'decimal1', sym1Arr[0])
-      })
-      this.pddexList = lists;
-      this.handleDealAllMarket()
     },
     // 获取行情数据
     async handleGetMarkets() {
@@ -97,26 +70,12 @@ export default {
     // 处理 allMarket 对应pid
     handleDealAllMarket() {
       const keys = Object.keys(this.allMarket) || []
-      if (!keys.length || !this.pddexList.length) {
+      if (!keys.length) {
         return
       }
       let allMarket = []
       this.iArr.forEach(key => {
         allMarket.push(...this.allMarket[key])
-      })
-      // keys.forEach(key => {
-      //   allMarket.push(...this.allMarket[key])
-      // })
-      allMarket.forEach(v => {
-        const has = this.pddexList.find(vv => {
-          return (vv.contract0 === v.contract0 && vv.symbol0 === v.symbol0 && vv.contract1 === v.contract1 && vv.symbol1 === v.symbol1)
-              || (vv.contract0 === v.contract1 && vv.symbol0 === v.symbol1 && vv.contract1 === v.contract0 && vv.symbol1 === v.symbol0)
-        })
-        if (!has) {
-          return
-        }
-        this.$set(v, 'pid', has.pid)
-        this.$set(v, 'unikey', has.unikey)
       })
       this.$store.dispatch('setPddexMarketLists', allMarket)
     },

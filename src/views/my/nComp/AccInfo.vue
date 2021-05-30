@@ -102,7 +102,8 @@ export default {
   }
   .info{
     position: relative;
-    padding: 46px 28px 0;
+    padding: 5px 28px 0;
+    height: 200px;
     color: #FFF;
     text-align: left;
     .headDiv{

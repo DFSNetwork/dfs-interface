@@ -2,7 +2,10 @@
   <div class="accCenterTools">
     <!-- 应用功能 -->
     <div class="tools">
-      <div class="title">{{ $t('sys.dataAndServer') }}</div>
+      <div class="title flexb">
+        <span @dblclick="handleClear">{{ $t('sys.dataAndServer') }}</span>
+        <span class="tip" @click="handleClear">{{ $t('my.clear') }}</span>
+      </div>
       <div class="lists flexa">
         <div class="list" @click="handleTo('history', {mid: 39})">
           <img class="icon big" src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/swapHis.png" alt="">
@@ -91,6 +94,10 @@ export default {
     }
   },
   methods: {
+    handleClear() {
+      localStorage.clear();
+      location.reload()
+    },
     handleClick() {
       this.showGovern = false;
     },
@@ -187,6 +194,9 @@ export default {
       font-size: 32px;
       text-align: left;
       font-weight: 500;
+      .tip{
+        font-size: 26px;
+      }
     }
     .lists{
       margin-top: 30px;

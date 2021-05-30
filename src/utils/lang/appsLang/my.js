@@ -52,6 +52,7 @@ export default {
       totalValue: '总估值',
       noLiqData: '暂无做市数据',
       windmill: '大风车',
+      clear: '清除页面缓存'
     }
   },
   'en': {
@@ -105,6 +106,7 @@ export default {
       totalValue:'Total Value',
       noLiqData:'No Liquidity data yet',
       windmill: 'Windmill',
+      clear:'Clear Web Cache'
     }
   }
 }
