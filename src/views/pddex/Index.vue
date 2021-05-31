@@ -20,7 +20,6 @@ export default {
     return {
       dfsLists: [],
       allMarket: {},
-      iArr: ['USDT', 'USDC', 'EOS', 'DFS', 'TAG']
     }
   },
   mounted() {
@@ -32,6 +31,7 @@ export default {
     ...mapState({
       baseConfig: state => state.sys.baseConfig, // 基础配置 - 默认为{}
       marketLists: state => state.sys.marketLists, // 生产环境
+      iArr: state => state.config.iArr, // 生产环境
     })
   },
   watch: {

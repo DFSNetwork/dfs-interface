@@ -54,6 +54,8 @@ const config = {
     boxMids: [], // 设置Box的做市Mid
     marketLists: localStorage.getItem('pddexMarketLists') ? JSON.parse(localStorage.getItem('pddexMarketLists')) : [], // pddex使用的做市列表 - 整合DFS 和 BOX
     hotLists: [],
+    // 计价币数组
+    iArr: ['USDT', 'USDC', 'EOS', 'DFS', 'TAG', 'DFG'],
   },
   mutations: {
     SET_LpMineList: (state, lpMineList) => {

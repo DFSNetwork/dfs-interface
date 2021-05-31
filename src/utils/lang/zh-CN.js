@@ -321,6 +321,7 @@ export default {
     timeApy: 'TIME年化',
     tagLpApy: 'TAG年化',
     usdcLpApy: 'USDC年化',
+    dfgLpApy: 'DFG年化',
     exchange24: '24H兑换量',
   },
   vote: {

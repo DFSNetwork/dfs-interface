@@ -320,6 +320,7 @@ export default {
     timeApy: 'TIME APR',
     tagLpApy: 'TAG APR',
     usdcLpApy: 'USDC APR',
+    dfgLpApy: 'DFG APR',
     exchange24: '24H Volume',
   },
   vote: {

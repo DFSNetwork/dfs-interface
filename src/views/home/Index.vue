@@ -42,7 +42,6 @@ export default {
   data() {
     return {
       allMarket: {},
-      iArr: ['USDT', 'USDC', 'EOS', 'DFS', 'TAG'],
       canFull: false,
       fullScreen: parseInt(localStorage.getItem('setFullScreen') || 0),
     }
@@ -56,6 +55,7 @@ export default {
     ...mapState({
       baseConfig: state => state.sys.baseConfig, // 基础配置 - 默认为{}
       coinPrices: state => state.sys.coinPrices,
+      iArr: state => state.config.iArr, // 生产环境
     })
   },
   methods: {
