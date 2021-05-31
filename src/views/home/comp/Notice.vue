@@ -21,7 +21,9 @@
     <div class="flexb lists">
       <van-swipe class="my-swipe" :autoplay="6000" indicator-color="#29d4b0">
         <van-swipe-item class="flexb" v-for="(top, index) in top3" :key="`top${index}`">
-          <div class="symInfo" v-for="(v, i) in top" :key="`sym-${i}`">
+          <div class="symInfo" v-for="(v, i) in top"
+            @click="handleTo(v)"
+            :key="`sym-${i}`">
             <div class="coin din">
               <span>{{ v.symbol1 }}/{{ v.symbol0 }}</span>
               <span class="smallChange dinReg"
@@ -65,7 +67,7 @@ export default {
         title: 'home.homeUi1',
       }],
       top3: [[{}, {}, {}], [{}, {}, {}]],
-      hotArr: [451, 722, 17, 894, 665, 332]
+      hotArr: [451, 722, 17, 894, 1035, 665]
     }
   },
   computed: {
@@ -96,6 +98,18 @@ export default {
       immediate: true,
     }
   },
+  methods: {
+    handleTo(v) {
+      const query = {
+        in: `${v.contract0}-${v.symbol0}`,
+        out: `${v.contract1}-${v.symbol1}`,
+      }
+      this.$router.push({
+        name: 'index',
+        query,
+      })
+    },
+  }
 }
 </script>
 
