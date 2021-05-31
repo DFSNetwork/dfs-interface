@@ -86,7 +86,7 @@ function filterMks(baseMks) {
  * } inData 
  */
 export function getAmtOut(SwapRouter, inData) {
-  console.log('inData', inData)
+  // console.log('inData', inData)
   if (!Number(inData.pay || 0) && !Number(inData.get || 0)) {
     const outData = {
       type: inData.type,
@@ -96,7 +96,7 @@ export function getAmtOut(SwapRouter, inData) {
   const tokenAstr = `${inData.tokenA.contract}:${inData.tokenA.symbol}`;
   const tokenBstr = `${inData.tokenB.contract}:${inData.tokenB.symbol}`;
   let path = SwapRouter.get_paths(tokenAstr, tokenBstr, inData.type)
-  console.log('path', path)
+  // console.log('path', path)
   if (!inData.rSwitch) {
     const fPathArr = path[0].split('-');
     if (fPathArr.length === 1) {
@@ -114,6 +114,6 @@ export function getAmtOut(SwapRouter, inData) {
     params.push(inData.type)
   }
   const res = SwapRouter.get_amounts_out(...params)
-  console.log(res)
+  // console.log(res)
   return res
 }

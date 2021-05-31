@@ -90,7 +90,6 @@ export default {
         if (!newArr.length) {
           return
         }
-        // SwapRouter.init(newArr, this)
       },
       deep: true,
       immediate: true,

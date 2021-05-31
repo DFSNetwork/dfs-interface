@@ -22,6 +22,7 @@ class swapRouter {
     const token0 = `${market0.contract}:${market0.symbol}`;
     const token1 = `${market1.contract}:${market1.symbol}`;
     if ((this.token0 === token0 && this.token1 === token1)) {
+      cb()
       return
     }
     this.token0 = token0;
@@ -180,9 +181,9 @@ class swapRouter {
     const _pathsArr = [];
 
     for (let i = 0; i < this.paths.length; i++) {
-      // if (_pathsArr.length === 10) {
-      //   break
-      // }
+      if (_pathsArr.length === 10) {
+        break
+      }
       let path = this.paths[i];
       let tks = path.split("-");
       if ((tks[0] === newTokenA && tks[tks.length - 1] === newTokenB)) {

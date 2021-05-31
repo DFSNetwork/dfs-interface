@@ -110,6 +110,14 @@ $color-red: #ff6871;
     border-radius: 20px !important;
   }
 }
+.myLoading{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  background: rgba(#fff, .8);
+}
 
 .poolslv1{
   border: 1px solid #B56DD9 !important;

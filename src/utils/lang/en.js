@@ -139,6 +139,9 @@ export default {
     nearSeven:'Only the last 7 days',
     exchangePrice:'Exchange Price',
     exchangeTime:'Exchange Time',
+    bestRouter:'The *Tong system will match you with the best price conversion path to ensure that you can still get more tokens after deducting the handling fee',
+    nowRouterPath:'This path exchange',
+    moreFees:'*Multi-path redemption, multiple fees will be paid',
   },
   createMarket: {
     selectHas: 'Select existing token',

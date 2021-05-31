@@ -469,7 +469,7 @@ export default {
   // padding: 0 20px;
   // background: #FFF;
   .mg40{
-    margin: 0 30px 32px;
+    margin: 30px 30px 32px;
     border-radius: 12px;
     box-shadow: 2px 2px 6px 4px rgba(243,243,243,1);
     overflow: hidden;

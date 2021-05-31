@@ -162,6 +162,10 @@ export function GetUrlPara() {
 export function toLocalTime(time) {
   return moment(time).format('YYYY-MM-DD HH:mm:ss')
 }
+export function timeToParse(time) {
+  return moment(time).valueOf()
+}
+
 
 // 柯里化函数 - 多数据等待计算
 function newArr(length) {

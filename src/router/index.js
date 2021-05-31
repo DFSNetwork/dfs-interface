@@ -31,7 +31,7 @@ const constantRouter = [
       {
         path: '/swap',
         name: 'index',
-        component: () => import(/* webpackChunkName: "home" */ '@/views/index/Index.vue'),
+        component: () => import(/* webpackChunkName: "home" */ '@/views/swap/Index.vue'),
         meta: { title: 'DeFis-Network', noFooter: true, noHeader: true, },
       },
       {
@@ -43,7 +43,7 @@ const constantRouter = [
       {
         path: '/market/:mid',
         name: 'market',
-        component: () => import(/* webpackChunkName: "home" */ '@/views/index/Index.vue'),
+        component: () => import(/* webpackChunkName: "home" */ '@/views/market/Index.vue'),
         meta: { title: 'DeFis-Network', noFooter: true, noHeader: true, },
       },
       {
@@ -274,7 +274,7 @@ const constantRouter = [
           {
             path: 'trade/:symbol',
             name: 'pddexTrade',
-            component: () => import(/* webpackChunkName: "home" */ '@/views/index/Index.vue'),
+            component: () => import(/* webpackChunkName: "home" */ '@/views/pddex/trade/IndexComp'),
             meta: { title: 'DeFis-Network', noFooter: true, noHeader: true, },
           },
         ]
@@ -506,6 +506,12 @@ const constantRouter = [
         name: 'swapNew',
         component: () => import(/* webpackChunkName: "home" */ '@/views/swap/Index.vue'),
         meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noTab: true, noHeader: true, },
+      },
+      {
+        path: '/market-new/:mid',
+        name: 'market',
+        component: () => import(/* webpackChunkName: "home" */ '@/views/market/Index.vue'),
+        meta: { title: 'DeFis-Network', noFooter: true, noHeader: true, },
       },
     ],
   },

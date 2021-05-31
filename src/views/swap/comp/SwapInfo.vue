@@ -1,10 +1,10 @@
 <template>
   <div class="swapInfo">
     <!-- TokenA 信息 -->
-    <div class="tokenInfo">
+    <div class="tokenInfo" :class="{'focus': payFocus}">
       <div class="flexb bal">
-        <span>余额: {{ balA }} {{ tokenA.symbol }}</span>
-        <span>支付</span>
+        <span @click="handleMax('pay')">{{ $t('public.balance') }}: {{ balA }} {{ tokenA.symbol }}</span>
+        <span>{{ $t('dex.pay') }}</span>
       </div>
       <div class="flexb token">
         <div class="flexa" @click="handleShowDrawer('start')">
@@ -19,6 +19,9 @@
         </div>
         <div class="iptDiv dinBold">
           <van-field class="ipt" v-model="pay" placeholder="0.0"
+            type="number"
+            @focus="handleFocus('pay')"
+            @blur="handleBlur('pay')"
             @input="handleGetAmtOut('pay')"/>
         </div>
       </div>
@@ -26,17 +29,17 @@
 
     <!-- 上下币种切换 -->
     <div class="exchange">
-      <div class="border flexc" :class="{'payFocus': payFocus, 'getFocus': getFocus}">
-        <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/dex/switch_down.svg">
-        <!-- <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/dex/switch_up.svg"> -->
+      <div class="border flexc" :class="{'payFocus': payFocus, 'getFocus': getFocus}" @click="handleExchange">
+        <img class="iconImg" v-if="!direction" src="https://cdn.jsdelivr.net/gh/defis-net/material/dex/switch_down.svg">
+        <img class="iconImg" v-else src="https://cdn.jsdelivr.net/gh/defis-net/material/dex/switch_up.svg">
       </div>
     </div>
 
     <!-- TokenB 信息 -->
-    <div class="tokenInfo">
+    <div class="tokenInfo" :class="{'focus': getFocus}">
       <div class="flexb bal">
-        <span>余额: {{ balB }} {{ tokenB.symbol }}</span>
-        <span>获取</span>
+        <span @click="handleMax('get')">{{ $t('public.balance') }}: {{ balB }} {{ tokenB.symbol }}</span>
+        <span>{{ $t('dex.obtain') }}</span>
       </div>
       <div class="flexb token">
         <div class="flexa" @click="handleShowDrawer('end')">
@@ -51,14 +54,16 @@
         </div>
         <div class="iptDiv dinBold">
           <van-field class="ipt" v-model="get" placeholder="0.0"
+            type="number"
+            @focus="handleFocus('get')"
+            @blur="handleBlur('get')"
             @input="handleGetAmtOut('get')"/>
         </div>
       </div>
     </div>
-
     <!-- 当前价格 -->
     <div class="price flexb">
-      <span class="tip">兑换比率</span>
+      <span class="tip">{{ $t('dex.rate') }}</span>
       <span class="flexend din">
         <span v-if="!priceEX">1 {{ tokenB.symbol }} = {{ outPrice }} {{ tokenA.symbol }}</span>
         <span v-else>1 {{ tokenA.symbol }} = {{ inPrice }} {{ tokenB.symbol }}</span>
@@ -70,11 +75,18 @@
     </div>
 
     <!-- 交易按钮 -->
-    <div class="btnDiv">
-      <div class="btn flexc">兑换</div>
+    <div class="btnDiv flexb">
+      <div class="postion">
+        <div class="myLoading flexc" v-if="loading"><van-loading type="spinner" color="#29D4B0"/></div>
+        <div class="btn flexc" @click="handleSwap">{{ $t('tab.dex') }}</div>
+      </div>
+      <div class="dtokens" v-if="isDtokens" @click="handleToProject('dtoken')">
+        <img :src="dtokenData.imgUrl">
+        <div>{{ $t('sys.dAndW') }}</div>
+      </div>
     </div>
 
-
+    <!-- 币种列表 -->
     <van-popup
       class="newMarket"
       v-model="showMarketList"
@@ -88,12 +100,13 @@
 </template>
 
 <script>
+import { DApp } from '@/utils/wallet'
 import { mapState } from 'vuex';
 import MarketArea from '@/components/MarketArea';
 
 import { getBaseMarkets, getAmtOut } from '../swap_deal';
 import { SwapRouter } from '../swap_router';
-import { toFixed } from '@/utils/public'
+import { toFixed, accDiv, accSub, accMul, GetUrlPara } from '@/utils/public'
 
 export default {
   name: 'swapInfo',
@@ -107,6 +120,8 @@ export default {
       payFocus: false,
       getFocus: false,
       showMarketList: false,
+      direction: false,
+      loading: false,
 
       // 数据信息
       tokenA: {
@@ -116,10 +131,10 @@ export default {
         imgUrl: 'https://cdn.jsdelivr.net/gh/defis-net/material2/coin/eosio.token-eos.svg',
       },
       tokenB: {
-        contract: 'minedfstoken',
-        symbol: 'DFS',
+        contract: 'tethertether',
+        symbol: 'USDT',
         decimal: '4',
-        imgUrl: 'https://cdn.jsdelivr.net/gh/defis-net/material2/coin/minedfstoken-dfs.png',
+        imgUrl: 'https://ndi.340wan.com/eos/tethertether-usdt.png',
       },
       balA: '0.0000',
       balB: '0.0000',
@@ -130,9 +145,23 @@ export default {
       pay: '',
       get: '',
       showType: 'start', // end | start
+
+      // action 参数
+      mids: '',
+      minOut: '0.0000',
+      priceRate: '0.00',
+      hasMids: '',
+      bestPath: '',
+
+      // 定时器
+      balTimer: null,
     }
   },
   mounted() {
+    this.handleGetUrlInAndOut()
+  },
+  beforeDestroy() {
+    clearTimeout(this.balTimer);
   },
   computed: {
     ...mapState({
@@ -143,6 +172,24 @@ export default {
       marketLists: state => state.sys.marketLists,
       rSwitch: state => state.app.rSwitch,
     }),
+    isDtokens() {
+      if (this.tokenA.contract === 'asset.dtoken' && this.tokenA.symbol === 'ETH') {
+        return this.tokenA
+      }
+      if (this.tokenB.contract === 'asset.dtoken' && this.tokenB.symbol === 'ETH') {
+        return this.tokenB
+      }
+      return false
+    },
+    dtokenData() {
+      if (this.tokenA.contract === 'asset.dtoken' && this.tokenA.symbol === 'ETH') {
+        return this.tokenA
+      }
+      if (this.tokenB.contract === 'asset.dtoken' && this.tokenB.symbol === 'ETH') {
+        return this.tokenB
+      }
+      return {}
+    },
   },
   watch: {
     marketLists: {
@@ -160,23 +207,77 @@ export default {
         if (!newVal.name) {
           return
         }
-        this.handleGetBal();
-        this.handleGetBal('next');
+        this.handleBalanTimer();
       },
       deep: true,
       immediate: true,
     }
   },
   methods: {
+    // 获取路径币种
+    handleGetUrlInAndOut() {
+      const urlData = GetUrlPara();
+      if (urlData.in && urlData.out) {
+        try {
+          const inData = urlData.in.split('-');
+          const sym0 = {
+            contract: inData[0],
+            decimal: "4",
+            symbol: inData[1].toUpperCase(),
+          }
+          this.tokenA = this.handleGetToken(sym0);
+          const outData = urlData.out.split('-');
+          const sym1 = {
+            contract: outData[0],
+            decimal: "4",
+            symbol: outData[1].toUpperCase(),
+          }
+          this.tokenB = this.handleGetToken(sym1);
+        } catch (error) {
+          console.log(error)
+        }
+      } else {
+        const localData = localStorage.getItem('swapMarkets') ? JSON.parse(localStorage.getItem('swapMarkets')) : null;
+        // console.log(localData)
+        if (localData) {
+          this.tokenA = localData.thisMarket0;
+          this.tokenB = localData.thisMarket1;
+        }
+      }
+      this.handleGetSwapMarkets();
+    },
+    // 获取Token信息
+    handleGetToken(coin) {
+      let mk = coin;
+      this.marketLists.forEach(v => {
+        if (v.contract0 === coin.contract && v.symbol0 === coin.symbol) {
+          mk = v.sym0Data;
+        } else if (v.contract1 === coin.contract && v.symbol1 === coin.symbol) {
+          mk = v.sym1Data;
+        }
+      })
+      return mk
+    },
+
     // 初始化Swap数
     handleGetSwapMarkets() {
       const baseArr = getBaseMarkets([this.tokenA, this.tokenB])
       SwapRouter.init(baseArr, this, this.tokenA, this.tokenB, () => {
         this.handleGetAmtOut('pay')
+        this.handleSetLocal()
       })
     },
     // 获取输出数量
     handleGetAmtOut(type) {
+      if (type === 'pay') {
+        if (!parseFloat(this.pay || 0)) {
+          this.get = ''
+        }
+      } else {
+        if (!parseFloat(this.get || 0)) {
+          this.pay = ''
+        }
+      }
       const inData = {
         get: this.get || '1',
         pay: this.pay || '1',
@@ -186,14 +287,29 @@ export default {
         rSwitch: this.rSwitch,
       }
       const out = getAmtOut(SwapRouter, inData)
-      if (!out.quantity_out) {
+      if (!out || !out.quantity_out) {
         this.pay = '';
         this.get = '';
+        this.$emit('listenTradeInfo', {
+          show: '',
+        })
         return
       }
       this.inPrice = toFixed(out.swapInPrice, Number(this.tokenB.decimal) + 2)
       this.outPrice = toFixed(out.swapOutPrice, Number(this.tokenA.decimal) + 2)
-      if (!parseFloat(this.pay || 0) || !parseFloat(this.get || 0)) {
+
+      // 有该交易对
+      this.hasMids = out.hasMids;
+      // 最优兑换路径
+      this.bestPath = out.bestPath;
+      // 兑换路径 - mids
+      this.mids = out.mid;
+
+      if (!parseFloat(this.pay || 0) && !parseFloat(this.get || 0)) {
+        this.$emit('listenTradeInfo', {
+          show: '',
+          hasMids: out.hasMids,
+        })
         return
       }
       if (type === 'pay') {
@@ -201,8 +317,41 @@ export default {
       } else {
         this.pay = out.quantity_out.split(' ')[0]
       }
+      // 最小获取
+      const minOut = (100 - this.slipPoint) * this.get / 100;
+      this.minOut = toFixed(minOut, 4)
+      // 价格滑点
+      let priceRate = accDiv(out.swapInPrice, out.price);
+          priceRate = accSub(1, priceRate)
+          priceRate = accMul(priceRate, 100)
+      if (Number(priceRate) < 0) {
+        priceRate = '0.00000000';
+      }
+      priceRate = toFixed(priceRate, 2)
+      this.priceRate = priceRate;
+      // 手续费
+      let fees = this.pay * 0.003;
+          fees = `${toFixed(fees, 4)} ${this.tokenA.symbol}`;
+      this.$emit('listenTradeInfo', {
+        show: '1',
+        minOut: this.minOut,
+        priceRate,
+        fees,
+        bestPath: out.bestPath,
+        hasMids: out.hasMids,
+      })
     },
 
+    // 保存本次切换币种信息
+    handleSetLocal() {
+      const info = {
+        thisMarket0: this.tokenA,
+        thisMarket1: this.tokenB,
+        thisCoinsPath: this.bestPath,
+        thisMidsPath: this.hasMids + '',
+      }
+      localStorage.setItem('swapMarkets', JSON.stringify(info))
+    },
     // 关闭弹窗
     handleClose() {
       this.showMarketList = false;
@@ -222,9 +371,74 @@ export default {
       this.pay = '';
       this.get = '';
       this.showMarketList = false;
+      this.handleGetSwapMarkets()
+      this.handleBalanTimer();
+    },
+    // 上下币种切换
+    handleExchange() {
+      this.direction = !this.direction;
+      const t = this.tokenA;
+      this.tokenA = this.tokenB;
+      this.tokenB = t;
+      this.pay = '';
+      this.get = '';
+      const b = this.balA;
+      this.balA = this.balB;
+      this.balB = b;
+      this.handleGetSwapMarkets();
+    },
+    // 最大值
+    handleMax(bType) {
+      if (bType === 'pay') {
+        this.pay = this.balA;
+      } else {
+        this.get = this.balB;
+      }
+      this.handleGetAmtOut(bType)
+    },
+    // 输入框操作
+    handleFocus(iType) {
+      if (iType === 'pay') {
+        this.payFocus = true;
+        this.getFocus = false;
+      } else {
+        this.payFocus = false;
+        this.getFocus = true;
+      }
+      let n = iType === 'pay' ? this.pay : this.get;
+      n = parseFloat(n || 0)
+      if (!n) {
+        n = ''
+      }
+      iType === 'pay' ? this.pay = n : this.get = n;
+    },
+    handleBlur(iType) {
+      this.payFocus = false;
+      this.getFocus = false;
+      let n = iType === 'pay' ? this.pay : this.get;
+      const decimal = iType === 'pay' ? this.tokenA.decimal : this.tokenB.decimal;
+      n = parseFloat(n || 0)
+      let tn = toFixed(n, decimal)
+      if (!n) {
+        tn = '';
+      }
+      iType === 'pay' ? this.pay = tn : this.get = tn;
+    },
+    handleToProject(type) {
+      if (type === 'dtoken') {
+        location.href = 'https://dtoken.gitee.io/'
+      }
     },
 
     // 用户信息
+    handleBalanTimer() {
+      clearTimeout(this.balTimer);
+      this.balTimer = setTimeout(() => {
+        this.handleBalanTimer()
+      }, 20 * 1000);
+      this.handleGetBal()
+      this.handleGetBal('next')
+    },
     async handleGetBal(next) {
       const name = this.account.name;
       if (!name) {
@@ -242,7 +456,6 @@ export default {
         params.decimal = this.tokenB.decimal;
       }
       const {status, result} = await this.$api.get_currency_balance(params);
-      console.log(result)
       if (!status) {
         return
       }
@@ -260,6 +473,70 @@ export default {
         return
       }
       this.balA = bal;
+    },
+    // swap 验证
+    handleReg() {
+      if (!Number(this.pay || 0)) {
+        return false;
+      }
+      const balance = Number(this.balA);
+      if (Number(this.pay) > balance) {
+        this.$toast.fail(this.$t('public.balanLow'))
+        return false;
+      }
+      if (Number(this.slipPoint || 5) < Number(this.priceRate) || !parseFloat(this.minOut)) {
+        this.$toast.fail(this.$t('dex.heightSlip'))
+        return false;
+      }
+      return true
+    },
+    // 执行swap
+    handleSwap() {
+      if (this.loading) {
+        return
+      }
+      if (!this.handleReg()) {
+        return
+      }
+      this.loading = true;
+
+      const path = this.mids
+
+      const tradeCoin = this.tokenA.symbol;
+      const minOutDecimal = this.tokenB.decimal;
+      const params = {
+        code: this.tokenA.contract,
+        toAccount: this.baseConfig.toAccountSwap,
+        memo: `swap:${path}:${accMul(toFixed(this.minOut, minOutDecimal), (10 ** minOutDecimal))}`,
+        quantity: `${this.pay} ${tradeCoin}`
+      }
+      const inviAcc = localStorage.getItem('inviAcc') ? JSON.parse(localStorage.getItem('inviAcc')) : '';
+      if (inviAcc) {
+        params.memo = `${params.memo}:${inviAcc.id}`
+      } else {
+        params.memo = `${params.memo}:2`
+      }
+      DApp.transfer(params, (err) => {
+        this.loading = false;
+        if (err && err.code === 402) {
+          return;
+        }
+        if (err) {
+          this.$toast({
+            type: 'fail',
+            message: err.message,
+          })
+          return;
+        }
+        this.pay = '';
+        this.get = '';
+
+        setTimeout(() => {
+          this.handleGetAmtOut('pay')
+          this.handleBalanTimer();
+        }, 1500);
+        this.$toast.success(this.$t('public.success'));
+      })
     }
   }
 }
@@ -274,6 +551,9 @@ export default {
     border: 1px solid $color-border;
     border-radius: 20px;
     padding: 36px 20px;
+    &.focus{
+      border: 1px solid $color-main;
+    }
     .bal{
       margin-bottom: 15px;
     }
@@ -288,7 +568,7 @@ export default {
         font-size: 28px;
       }
       .selectImg{
-        width: 28px;
+        width: 21px;
         margin-left: 9px;
       }
       .iptDiv{
@@ -350,6 +630,10 @@ export default {
     margin: 20px 0 20px;
     font-size: 32px;
     font-weight: 500;
+    .postion{
+      position: relative;
+      flex: 1;
+    }
     .btn{
       flex: 1;
       height: 88px;
@@ -358,6 +642,14 @@ export default {
       color: #fff;
       &:active{
         background:rgba(2,198,152,1);
+      }
+    }
+    .dtokens{
+      margin-left: 30px;
+      font-size: 24px;
+      text-align: center;
+      img{
+        width: 44px;
       }
     }
   }

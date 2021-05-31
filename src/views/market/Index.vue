@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div class="markets">
     <div class="marketMain">
       <Tabs />
       <div class="infoData">
@@ -142,8 +142,6 @@ import Withdraw from './comp/Withdraw'
 // 公用方法
 import { getYfcReward,
   toFixed, accDiv } from '@/utils/public';
-import { perDayRewardV3 } from '@/utils/logic';
-// import { dealApy } from '@/views/pddex/comp/appLogic.js'
 
 export default {
   name: 'market',
@@ -192,19 +190,6 @@ export default {
       baseConfig: state => state.sys.baseConfig,
       marketLists: state => state.sys.marketLists,
     }),
-    // 每万每日挖矿
-    perDayRewardV3() {
-      const rewardV3 = perDayRewardV3(this.thisMarket.mid)
-      return rewardV3
-    },
-    // aprInfo() {
-    //   const market = this.thisMarket;
-    //   const aprInfo = dealApy(market)
-    //   return aprInfo;
-    // },
-    // countApy() {
-    //   return parseFloat(this.aprInfo.countApy || 0).toFixed(2)
-    // },
   },
   watch: {
     marketLists: {
@@ -341,6 +326,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.markets{
+  padding: 30px;
+}
 .marketMain{
   box-shadow: 0px 2px 6px 4px rgba(243,243,243,1);
   border-radius: 12px;

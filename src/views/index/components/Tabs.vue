@@ -1,6 +1,6 @@
 <template>
   <div class="tabs tip flexb" :class="{
-    'swap': act === 1,
+    'swap2': act === 1,
     'pddex': act === 3,
     'market': act === 2,
   }">
@@ -90,7 +90,7 @@ export default {
   font-size: 33px;
   // width: 690px;
   height: 106px;
-  &.swap{
+  &.swap2{
     background-image: url('https://cdn.jsdelivr.net/gh/defis-net/material2/icon/swap.png');
     background-size: 101%;
     background-repeat: no-repeat;
@@ -112,16 +112,6 @@ export default {
     height: 100%;
     text-align: center;
     color: #333333;
-    // &:first-child{
-    //   background-image: url('https://cdn.jsdelivr.net/gh/defis-net/material2/icon/swap.png');
-    //   background-size: cover;
-    //   background-repeat: no-repeat;
-    // }
-    // &:last-child{
-    //   background-image: url('https://cdn.jsdelivr.net/gh/defis-net/material/svg/market_un.svg');
-    //   background-size: cover;
-    //   background-repeat: no-repeat;
-    // }
     .tabName{
       height: 96px;
     }

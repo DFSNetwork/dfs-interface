@@ -9,17 +9,17 @@
         <div class="title">{{ $t('dex.TradeSet') }}</div>
         <div class="item">
           <div class="subTitle flexb">
-            <span>多路径兑换</span>
+            <span>{{ $t('dex.moreRoute') }}</span>
             <van-switch class="switch"
               :value="rSwitch" fon active-color="#29D4B0" @input="handleCheckSwitch" />
           </div>
           <div class="tip">
-            *通系统将为您匹配价格最优的兑换路径，确保在扣除手续费后，依然能获得更多代币
+            {{ $t('dex.bestRouter') }}
           </div>
         </div>
         <div class="item">
           <div class="subTitle flexb">
-            <span>滑点设置</span>
+            <span>{{ $t('dex.slipSet') }}</span>
           </div>
           <div class="tip">
             *{{ $t('dex.slipTip') }}

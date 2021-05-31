@@ -140,6 +140,9 @@ export default {
     nearSeven: '仅最近7日',
     exchangePrice: '兑换价格',
     exchangeTime: '兑换时间',
+    bestRouter: '*通系统将为您匹配价格最优的兑换路径，确保在扣除手续费后，依然能获得更多代币',
+    nowRouterPath: '本次路径兑换',
+    moreFees: '*多路径兑换，将支付多笔手续费',
   },
   createMarket: {
     selectHas: '选择已有币种', // Select existing token
