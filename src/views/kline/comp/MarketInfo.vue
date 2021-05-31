@@ -42,7 +42,7 @@
       </span>
     </div>
     <div class="flexb rate">
-      <span class="tip dinReg">24H额：{{ handleDealNum(checkedMarket.volume24H || 0) }}</span>
+      <span class="tip dinReg">24H额：{{ handleDealNum(checkedMarket.volume24H || 0) }} {{ checkedMarket.symbol0 }}</span>
       <span class="green dinBold"
         :class="{'green': parseFloat(checkedMarket.price_change_rate) > 0,
                  'red': parseFloat(checkedMarket.price_change_rate) < 0}">
