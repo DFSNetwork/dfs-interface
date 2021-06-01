@@ -130,47 +130,56 @@ export default {
       rate = accMul(rate, 100);
       return toFixed(rate, 2)
     },
-    handleGetList() {
-      const params = {
-        "code": "dss.tag",
-        "scope": "dss.tag",
-        "table": "holders",
-        "index_position": 2,
-        "key_type": "i64",
-        "limit": 2000,
-        // "lower_bound": ` ${this.inviAcc}`,
-        // "upper_bound": ` ${this.inviAcc}`,
-        "json": true,
-      }
-      EosModel.getTableRows(params, (res) => {
-        this.loading = false;
-        if (!res.rows.length) {
-          this.allMinersList = []
-          return
+    async handleGetList() {
+      let more = true;
+      let next = '';
+      let lists = [];
+      while(more) {
+        const params = {
+          "code": "dss.tag",
+          "scope": "dss.tag",
+          "table": "holders",
+          "index_position": 2,
+          "key_type": "i64",
+          "limit": 200,
+          "json": true,
+          lower_bound: next,
         }
-        const allList = res.rows;
-        const buff = [0, 0.05, 0.1, 0.2, 0.5]
-        allList.forEach((v) => {
-          const tBuff = buff[Number(v.pool)] * 100;
-          this.$set(v, 'buff', tBuff.toFixed(2));
-          let accApr = accMul(5, buff[Number(v.pool)]);
-          accApr = accAdd(5, accApr);
-          this.$set(v, 'accApr', accApr);
-          const inTime = toLocalTime(`${v.last_drip}.000+0000`)
-          this.$set(v, 'inTime', inTime);
-          const releaseTime = toLocalTime(`${v.release_time}.000+0000`)
-          this.$set(v, 'releaseTime', releaseTime);
-          this.$set(v, 'balance', v.bal.split(' ')[0]);
-          const endT = countdown(releaseTime);
-          this.$set(v, 'isRelease', endT.total < 0);
-          const rate = this.handleRate(v)
-          this.$set(v, 'rate', rate)
-          const yearApr = this.handleYearApr(v)
-          this.$set(v, 'yearApr', yearApr)
-        })
-        this.allMinersList = allList.reverse();
-        this.handleGetPageArr();
+        const {status, result} = await this.$api.get_table_rows(params);
+        if (!status) {
+          more = false;
+          break
+        }
+        more = result.more;
+        next = result.next_key
+        lists.push(...result.rows);
+      }
+      this.getMinersList = false;
+      if (!lists.length) {
+        this.allMinersList = []
+        return
+      }
+      const buff = [0, 0.05, 0.1, 0.2, 0.5]
+      lists.forEach((v) => {
+        const tBuff = buff[Number(v.pool)] * 100;
+        this.$set(v, 'buff', tBuff.toFixed(2));
+        let accApr = accMul(5, buff[Number(v.pool)]);
+        accApr = accAdd(5, accApr);
+        this.$set(v, 'accApr', accApr);
+        const inTime = toLocalTime(`${v.last_drip}.000+0000`)
+        this.$set(v, 'inTime', inTime);
+        const releaseTime = toLocalTime(`${v.release_time}.000+0000`)
+        this.$set(v, 'releaseTime', releaseTime);
+        this.$set(v, 'balance', v.bal.split(' ')[0]);
+        const endT = countdown(releaseTime);
+        this.$set(v, 'isRelease', endT.total < 0);
+        const rate = this.handleRate(v)
+        this.$set(v, 'rate', rate)
+        const yearApr = this.handleYearApr(v)
+        this.$set(v, 'yearApr', yearApr)
       })
+      this.allMinersList = lists.reverse();
+      this.handleGetPageArr();
     },
     handleYearApr(item) {
       let apr = Math.pow(this.args.aprs, 86400 * 365) - 1
