@@ -29,7 +29,7 @@ export function get_table_rows(params) {
 // 获取24H数据 - 多数据
 export function get_swap_summary() {
   return new Promise((resolve, reject) => {
-    axios.get('https://api.defis.network/dfs/swap/summary').then((res) => {
+    axios.get('https://api.defis.network/dfs/swap/summary2').then((res) => {
       let result = Object.assign(res.data, {});
       resolve({ status: res.status === 200, result });
     }, err => {

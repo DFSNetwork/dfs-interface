@@ -114,7 +114,7 @@ export function get_fundation(params) {
 export function get_summary() {
   // https://api.defis.network/history/fundation?page=1&limit=15
   return new Promise((resolve, reject) => {
-    axios.get('https://api.defis.network/fundation/summary').then((res) => {
+    axios.get('https://api.defis.network/dfs/fundation/summary').then((res) => {
       let result = Object.assign(res.data, {});
       resolve({ status: res.status === 200, result });
     }, err => {
@@ -125,7 +125,7 @@ export function get_summary() {
 // 获取最新 ｜ 最贵 ｜ 最热 留言数据
 export function get_new_fundation(params) {
   return new Promise((resolve, reject) => {
-    axios.get('https://api.defis.network/fundation/new', {params}).then((res) => {
+    axios.get('https://api.defis.network/dfs/fundation/new', {params}).then((res) => {
       let result = Object.assign(res.data, {});
       resolve({ status: res.status === 200, result });
     }, err => {
@@ -135,7 +135,7 @@ export function get_new_fundation(params) {
 }
 export function get_mvd_fundation(params) {
   return new Promise((resolve, reject) => {
-    axios.get('https://api.defis.network/fundation/mvd', {params}).then((res) => {
+    axios.get('https://api.defis.network/dfs/fundation/mvd', {params}).then((res) => {
       let result = Object.assign(res.data, {});
       resolve({ status: res.status === 200, result });
     }, err => {
@@ -145,7 +145,7 @@ export function get_mvd_fundation(params) {
 }
 export function get_hot_fundation(params) {
   return new Promise((resolve, reject) => {
-    axios.get('https://api.defis.network/fundation/hot', {params}).then((res) => {
+    axios.get('https://api.defis.network/dfs/fundation/hot', {params}).then((res) => {
       let result = Object.assign(res.data, {});
       resolve({ status: res.status === 200, result });
     }, err => {
@@ -156,7 +156,7 @@ export function get_hot_fundation(params) {
 
 export function get_reply_fundation(params) {
   return new Promise((resolve, reject) => {
-    axios.get('https://api.defis.network/fundation/reply', {params}).then((res) => {
+    axios.get('https://api.defis.network/dfs/fundation/reply', {params}).then((res) => {
       let result = Object.assign(res.data, {});
       resolve({ status: res.status === 200, result });
     }, err => {
@@ -167,7 +167,7 @@ export function get_reply_fundation(params) {
 // 获取乐捐记录
 export async function get_acc_fund_lists(params) {
   return new Promise((resolve, reject) => {
-    axios.get('https://api.defis.network/fundation/i', {params}).then((res) => {
+    axios.get('https://api.defis.network/dfs/fundation/i', {params}).then((res) => {
       let result = Object.assign(res.data, {});
       // console.log(result)
       resolve({ status: res.status === 200, result });
@@ -278,7 +278,7 @@ export function get_acc_visit(user) {
     const params = {
       user,
     }
-    axios.get('https://api.defis.network/social/summary', {params}).then((res) => {
+    axios.get('https://api.defis.network/dfs/social/summary', {params}).then((res) => {
       let result = Object.assign(res.data, {});
       resolve({ status: res.status === 200, result });
     }, err => {
@@ -293,7 +293,7 @@ export function acc_visit_other(visitor, user) {
       user,
       visitor,
     }
-    axios.get('https://api.defis.network/social/visit', {params}).then((res) => {
+    axios.get('https://api.defis.network/dfs/social/visit', {params}).then((res) => {
       let result = Object.assign(res.data, {});
       resolve({ status: res.status === 200, result });
     }, err => {
@@ -328,7 +328,7 @@ export function get_kline_data2(params) {
 // 获取今日最新最热最贵3条置顶数据
 export function get_top3_fundation(params) {
   return new Promise((resolve, reject) => {
-    axios.get('https://api.defis.network/fundation/top3', {params}).then((res) => {
+    axios.get('https://api.defis.network/dfs/fundation/top3', {params}).then((res) => {
       let result = Object.assign(res.data, {});
       resolve({ status: res.status === 200, result });
     }, err => {
@@ -341,7 +341,7 @@ export function get_top3_fundation(params) {
 export function get_voices() {
   return new Promise((resolve, reject) => {
     // https://api.defis.network/static/swap/voices
-    axios.get('https://api.defis.network/static/swap/voices').then((res) => {
+    axios.get('https://api.defis.network/dfs/swap/voices').then((res) => {
       let result = Object.assign(res.data, {});
       resolve({ status: res.status === 200, result });
     }, err => {
@@ -353,7 +353,7 @@ export function get_voices() {
 // 获取bp评价列表
 export function get_bp_scores(params) {
   return new Promise((resolve, reject) => {
-    axios.get('https://api.defis.network/fundation/bp', {params}).then((res) => {
+    axios.get('https://api.defis.network/dfs/fundation/bp', {params}).then((res) => {
       let result = Object.assign(res.data, {});
       resolve({ status: res.status === 200, result });
     }, err => {
@@ -376,7 +376,7 @@ export function get_bp_info(params) {
       });
       return
     }
-    axios.get('https://api.defis.network/bp/bps', {params}).then((res) => {
+    axios.get('https://api.defis.network/dfs/bp/bps', {params}).then((res) => {
       let result = Object.assign(res.data, {});
       store.dispatch('setNodeListsTamp', moment().valueOf())
       resolve({ status: res.status === 200, result });
