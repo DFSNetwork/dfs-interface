@@ -114,7 +114,7 @@ export function get_fundation(params) {
 export function get_summary() {
   // https://api.defis.network/history/fundation?page=1&limit=15
   return new Promise((resolve, reject) => {
-    axios.get('https://api.defis.network/dfs/fundation/summary').then((res) => {
+    axios.get('https://api.defis.network/dfs/fundation/summarys').then((res) => {
       let result = Object.assign(res.data, {});
       resolve({ status: res.status === 200, result });
     }, err => {
