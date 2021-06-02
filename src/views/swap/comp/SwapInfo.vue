@@ -122,6 +122,7 @@ export default {
       showMarketList: false,
       direction: false,
       loading: false,
+      nearIpt: 'pay',
 
       // 数据信息
       tokenA: {
@@ -263,12 +264,17 @@ export default {
     handleGetSwapMarkets() {
       const baseArr = getBaseMarkets([this.tokenA, this.tokenB])
       SwapRouter.init(baseArr, this, this.tokenA, this.tokenB, () => {
-        this.handleGetAmtOut('pay')
+        this.handleGetAmtOut(this.nearIpt)
         this.handleSetLocal()
       })
     },
+    handleReverse(string) {
+      const arr = string.split('-')
+      return arr.reverse().join('-')
+    },
     // 获取输出数量
     handleGetAmtOut(type) {
+      this.nearIpt = type
       if (type === 'pay') {
         if (!parseFloat(this.pay || 0)) {
           this.get = ''
@@ -286,10 +292,10 @@ export default {
         tokenB: this.tokenB,
         rSwitch: this.rSwitch,
       }
+      console.log(inData)
       const out = getAmtOut(SwapRouter, inData)
+      console.log(out)
       if (!out || !out.quantity_out) {
-        this.pay = '';
-        this.get = '';
         this.$emit('listenTradeInfo', {
           show: '',
         })
@@ -299,11 +305,11 @@ export default {
       this.outPrice = toFixed(out.swapOutPrice, Number(this.tokenA.decimal) + 2)
 
       // 有该交易对
-      this.hasMids = out.hasMids;
+      this.hasMids = type === 'buy' ? out.hasMids : this.handleReverse(out.hasMids);
       // 最优兑换路径
-      this.bestPath = out.bestPath;
+      this.bestPath = type === 'buy' ? out.bestPath : this.handleReverse(out.bestPath);
       // 兑换路径 - mids
-      this.mids = out.mid;
+      this.mids = type === 'buy' ? out.mid : this.handleReverse(out.mid);
 
       if (!parseFloat(this.pay || 0) && !parseFloat(this.get || 0)) {
         this.$emit('listenTradeInfo', {
@@ -337,8 +343,8 @@ export default {
         minOut: this.minOut,
         priceRate,
         fees,
-        bestPath: out.bestPath,
-        hasMids: out.hasMids,
+        bestPath: this.bestPath,
+        hasMids: this.hasMids,
       })
     },
 
