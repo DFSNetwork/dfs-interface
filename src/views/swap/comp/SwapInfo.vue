@@ -292,9 +292,7 @@ export default {
         tokenB: this.tokenB,
         rSwitch: this.rSwitch,
       }
-      console.log(inData)
       const out = getAmtOut(SwapRouter, inData)
-      console.log(out)
       if (!out || !out.quantity_out) {
         this.$emit('listenTradeInfo', {
           show: '',
