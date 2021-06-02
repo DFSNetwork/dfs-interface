@@ -82,6 +82,7 @@ export default {
       scatter: state => state.app.scatter,
       baseConfig: state => state.sys.baseConfig, // 基础配置 - 默认为{}
       mkFilterConf: state => state.config.mkFilterConf, // 基础配置 - 默认为{}
+      marketLists: state => state.sys.marketLists,
     }),
     showAcc() {
       const showAcc = !this.$route.meta.noAcc;
@@ -174,8 +175,33 @@ export default {
       this.handleRowsMarket();
     },
     // 获取做市池子
+    handleRowsMarket1() {
+      let i = 0;
+      const max = 8;
+      const limit = 200;
+      for (i; i < max; i++) {
+        const start = i * limit + 1;
+        const end = (i + 1) * limit;
+        this.handleGet(start, end)
+      }
+    },
+    async handleGet(start, end) {
+      const params = {
+        code: "defisswapcnt",
+        scope: "defisswapcnt",
+        table: "markets",
+        json: true,
+        limit: 200,
+        lower_bound: start,
+        upper_bound: end,
+      }
+      const {status, result} = await this.$api.get_table_rows(params);
+      if (!status) {
+        return
+      }
+      this.handleMerge(result.rows)
+    },
     async handleRowsMarket() {
-      // this.handleRowsMarketByChain()
       let more = true;
       let next_key = '';
       let rows = [];
@@ -195,12 +221,22 @@ export default {
         }
         more = result.more;
         next_key = result.next_key;
-        rows.push(...result.rows);
+        this.handleMerge(result.rows)
       }
-      const list = rows;
-      dealMarketLists(list, this.topLists)
     },
-     // 获取做市池子 - 链上查询
+    handleMerge(newArr) {
+      const nMks = JSON.parse(JSON.stringify(this.marketLists));
+      newArr.forEach(v => {
+        const hasIndex = nMks.findIndex(vv => vv.mid === v.mid);
+        if (hasIndex === -1) {
+          nMks.push(v)
+          return
+        }
+        nMks.splice(hasIndex, 1, v)
+      })
+      dealMarketLists(nMks, this.topLists)
+    },
+    // 获取做市池子 - 链上查询
     async handleRowsMarketByChain() {
       let more = true;
       let next_key = '';

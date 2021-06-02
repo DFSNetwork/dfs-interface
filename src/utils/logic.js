@@ -261,12 +261,13 @@ export function dealMarketLists(list, topLists) {
   const mkFlt = store.state.config.mkFilterConf;
   const priceObj = getFilterPrice(list)
   // EOS/USDT 价格
-  let eos_market = list.find(v => v.mid === 17);
-  let eos_price = parseFloat(eos_market.reserve1) / parseFloat(eos_market.reserve0);
+  const prices = store.state.sys.coinPrices;
+  const EosPrice = prices.find(v => v.coin === 'EOS') || {}
+  let eos_price = EosPrice.price || 0
   // EOS/TAG 价格
-  let tag_market = list.find(v => v.mid === 602);
-  let tag_price = parseFloat(tag_market.reserve1) / parseFloat(tag_market.reserve0);
-  // console.log(tag_price, eos_price)
+  const TagPrice = prices.find(v => v.coin === 'TAG') || {}
+  let tag_price = TagPrice.price || 0
+  console.log(tag_price, eos_price)
   list.forEach((item) => {
     let v = item;
     if (v.contract0 === 'bgbgbgbgbgbg' || v.contract0 === 'betdicetoken' || v.contract0 === 'sportbetsbet'
@@ -275,17 +276,17 @@ export function dealMarketLists(list, topLists) {
      || v.contract1 === 'betasharetkn' || v.contract1 === 'betacorecash' || v.contract1 === 'betkingtoken') {
       return
     }
+    delete v.last_update;
+    delete v.price0_cumulative_last;
+    delete v.price1_cumulative_last;
+    delete v.price1_last;
+    delete v.price0_last;
     if (v.contract1 === 'eosio.token' && v.sym1 === '4,EOS') {
       const newList = {
         contract0: v.contract1,
         contract1: v.contract0,
-        last_update: v.last_update,
         liquidity_token: v.liquidity_token,
         mid: v.mid,
-        price0_cumulative_last: v.price1_cumulative_last,
-        price0_last: v.price1_last,
-        price1_cumulative_last: v.price0_cumulative_last,
-        price1_last: v.price0_last,
         reserve0: v.reserve1,
         reserve1: v.reserve0,
         sym0: v.sym1,
@@ -297,13 +298,8 @@ export function dealMarketLists(list, topLists) {
       const newList = {
         contract0: v.contract1,
         contract1: v.contract0,
-        last_update: v.last_update,
         liquidity_token: v.liquidity_token,
         mid: v.mid,
-        price0_cumulative_last: v.price1_cumulative_last,
-        price0_last: v.price1_last,
-        price1_cumulative_last: v.price0_cumulative_last,
-        price1_last: v.price0_last,
         reserve0: v.reserve1,
         reserve1: v.reserve0,
         sym0: v.sym1,
@@ -316,13 +312,8 @@ export function dealMarketLists(list, topLists) {
       const newList = {
         contract0: v.contract1,
         contract1: v.contract0,
-        last_update: v.last_update,
         liquidity_token: v.liquidity_token,
         mid: v.mid,
-        price0_cumulative_last: v.price1_cumulative_last,
-        price0_last: v.price1_last,
-        price1_cumulative_last: v.price0_cumulative_last,
-        price1_last: v.price0_last,
         reserve0: v.reserve1,
         reserve1: v.reserve0,
         sym0: v.sym1,
@@ -343,10 +334,7 @@ export function dealMarketLists(list, topLists) {
 
     v.sym0Data = {
       mid: v.mid,
-      last_update: v.last_update,
       liquidity_token: v.liquidity_token,
-      price_cumulative_last: v.price0_cumulative_last,
-      price_last: v.price0_last,
       contract: v.contract0,
       decimal: v.decimal0,
       reserve: v.reserve0,
@@ -356,10 +344,7 @@ export function dealMarketLists(list, topLists) {
     }
     v.sym1Data = {
       mid: v.mid,
-      last_update: v.last_update,
       liquidity_token: v.liquidity_token,
-      price_cumulative_last: v.price1_cumulative_last,
-      price_last: v.price1_last,
       contract: v.contract1,
       decimal: v.decimal1,
       reserve: v.reserve1,
