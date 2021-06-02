@@ -29,7 +29,7 @@ export function get_table_rows(params) {
 // 获取24H数据 - 多数据
 export function get_swap_summary() {
   return new Promise((resolve, reject) => {
-    axios.get('https://api.defis.network/basic/swap/summary').then((res) => {
+    axios.get('https://api.defis.network/dfs/swap/summary').then((res) => {
       let result = Object.assign(res.data, {});
       resolve({ status: res.status === 200, result });
     }, err => {
@@ -40,7 +40,7 @@ export function get_swap_summary() {
 // 获取24H数据 - 基础数据
 export function get_swap_counter() {
   return new Promise((resolve, reject) => {
-    axios.get('https://api.defis.network/basic/swap/counter').then((res) => {
+    axios.get('https://api.defis.network/dfs/swap/counter').then((res) => {
       let result = Object.assign(res.data, {});
       resolve({ status: res.status === 200, result });
     }, err => {
@@ -107,7 +107,7 @@ export function get_info(host) {
 // 获取markets压缩数据
 export function get_markets() {
   return new Promise((resolve, reject) => {
-    axios.get('https://api.defis.network/common/markets').then((res) => {
+    axios.get('https://api.defis.network/dfs/common/markets').then((res) => {
       var deflated = res.data;
       var inflated = unZip(deflated)
       const result = {
@@ -123,7 +123,7 @@ export function get_markets() {
 // 获取常用币种价格
 export function get_price() {
   return new Promise((resolve, reject) => {
-    axios.get('https://api.defis.network/common/get_price').then((res) => {
+    axios.get('https://api.defis.network/dfs/common/get_price').then((res) => {
       const result = res.data;
       resolve({ status: res.status === 200, result });
     }, err => {
@@ -165,7 +165,7 @@ export function get_currency_balance(params) {
 export function get_market_info(params) {
   return new Promise((resolve, reject) => {
     // axios.get('http://localhost:8101/apy/apy-by-mid', {params}).then((res) => {
-    axios.get('https://api.defis.network/apy/apy-by-mid', {params}).then((res) => {
+    axios.get('https://api.defis.network/dfs/apy/apy-by-mid', {params}).then((res) => {
       const result = res.data;
       resolve({ status: res.status === 200, result });
     }, err => {

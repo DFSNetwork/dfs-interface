@@ -101,7 +101,7 @@ export function getBpTags() {
 // 获取PDDEX行情列表
 export function getPddexMarkets() {
   return new Promise((resolve, reject) => {
-    axios.get('https://api.defis.network/apy/tops2').then((res) => {
+    axios.get('https://api.defis.network/dfs/apy/tops2').then((res) => {
     // axios.get('http://localhost:8101/apy/tops2').then((res) => {
       let result = unZip(res.data)
       result = Object.assign(JSON.parse(result), {});
