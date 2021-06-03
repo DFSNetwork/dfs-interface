@@ -267,7 +267,7 @@ export function dealMarketLists(list, topLists) {
   // EOS/TAG 价格
   const TagPrice = prices.find(v => v.coin === 'TAG') || {}
   let tag_price = TagPrice.price || 0
-  console.log(tag_price, eos_price)
+  // console.log(tag_price, eos_price, prices)
   list.forEach((item) => {
     let v = item;
     if (v.contract0 === 'bgbgbgbgbgbg' || v.contract0 === 'betdicetoken' || v.contract0 === 'sportbetsbet'

@@ -38,11 +38,18 @@ export default {
     return {
       priceTimer: null,
       yfcTimer: null,
+      localVersion: '0.0.1',
     }
   },
   watch: {
   },
   created() {
+    const localVers = localStorage.getItem('localVersion');
+    if (localVers !== this.localVersion) {
+      localStorage.clear();
+      localStorage.setItem('localVersion', this.localVersion);
+      location.reload()
+    }
     this.handleSetLang();
     this.handleResize();
   },

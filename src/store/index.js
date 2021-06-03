@@ -8,7 +8,17 @@ import getters from './getters';
 
 Vue.use(Vuex);
 
-const store = new Vuex.Store({
+// const store = new Vuex.Store({
+//   modules: {
+//     app,
+//     sys,
+//     config,
+//     mine,
+//   },
+//   getters,
+// });
+
+export default new Vuex.Store({
   modules: {
     app,
     sys,
@@ -16,6 +26,4 @@ const store = new Vuex.Store({
     mine,
   },
   getters,
-});
-
-export default store;
+})

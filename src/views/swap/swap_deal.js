@@ -23,7 +23,7 @@ const baseCoin = [{
 // 获取基础交易对列表
 export function getBaseMarkets(swapCoin = []) {
   const baseMks = [];
-  const tBase = baseCoin;
+  const tBase = JSON.parse(JSON.stringify(baseCoin));
   swapCoin.forEach(v => {
     const has = tBase.find(vv => vv.contract === v.contract && vv.symbol === v.symbol);
     if (has) {
@@ -31,8 +31,8 @@ export function getBaseMarkets(swapCoin = []) {
     }
     tBase.push(v)
   })
-  baseCoin.forEach((v, i) => {
-    const arr = baseCoin.slice(i + 1, baseCoin.length)
+  tBase.forEach((v, i) => {
+    const arr = tBase.slice(i + 1, tBase.length)
     const cArr = concatArr(v, arr)
     baseMks.push(...cArr)
   })
