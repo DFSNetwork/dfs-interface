@@ -89,7 +89,7 @@ export function boxMidsAndOrder() {
 // 获取节点tag标签
 export function getBpTags() {
   return new Promise((resolve, reject) => {
-    axios.get('https://api.defis.network/bp/recommends').then((res) => {
+    axios.get('https://api.defis.network/dfs/bp/recommends').then((res) => {
       let result = Object.assign(res.data, {});
       resolve({ status: res.status === 200, result });
     }, err => {
@@ -101,7 +101,7 @@ export function getBpTags() {
 // 获取PDDEX行情列表
 export function getPddexMarkets() {
   return new Promise((resolve, reject) => {
-    axios.get('https://api.defis.network/apy/tops2').then((res) => {
+    axios.get('https://api.defis.network/dfs/apy/tops2').then((res) => {
     // axios.get('http://localhost:8101/apy/tops2').then((res) => {
       let result = unZip(res.data)
       result = Object.assign(JSON.parse(result), {});
@@ -116,7 +116,7 @@ export function getPddexMarkets() {
 // 获取USDT价格 https://api.defis.network/static/market/usdtprice
 export function getUsdtPrice() {
   return new Promise((resolve, reject) => {
-    axios.get('https://api.defis.network/static/market/usdtprice').then((res) => {
+    axios.get('https://api.defis.network/dfs/market/usdtprice').then((res) => {
       let result = Object.assign(res.data, {});
       console.log(result)
       const price = result.usdtprice || 6.5;
