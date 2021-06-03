@@ -303,11 +303,11 @@ export default {
       this.outPrice = toFixed(out.swapOutPrice, Number(this.tokenA.decimal) + 2)
 
       // 有该交易对
-      this.hasMids = type === 'buy' ? out.hasMids : this.handleReverse(out.hasMids);
+      this.hasMids = type === 'pay' ? out.hasMids : this.handleReverse(out.hasMids);
       // 最优兑换路径
-      this.bestPath = type === 'buy' ? out.bestPath : this.handleReverse(out.bestPath);
+      this.bestPath = type === 'pay' ? out.bestPath : this.handleReverse(out.bestPath);
       // 兑换路径 - mids
-      this.mids = type === 'buy' ? out.mid : this.handleReverse(out.mid);
+      this.mids = type === 'pay' ? out.mid : this.handleReverse(out.mid);
 
       if (!parseFloat(this.pay || 0) && !parseFloat(this.get || 0)) {
         this.$emit('listenTradeInfo', {
