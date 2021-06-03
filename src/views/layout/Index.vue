@@ -211,7 +211,7 @@ export default {
           scope: "defisswapcnt",
           table: "markets",
           json: true,
-          limit: 200,
+          limit: 1000,
           lower_bound: next_key,
         }
         const {status, result} = await this.$api.get_table_rows(params);
@@ -221,8 +221,10 @@ export default {
         }
         more = result.more;
         next_key = result.next_key;
-        this.handleMerge(result.rows)
+        // this.handleMerge(result.rows)
+        rows.push(...result.rows)
       }
+      dealMarketLists(rows, this.topLists)
     },
     handleMerge(newArr) {
       const nMks = JSON.parse(JSON.stringify(this.marketLists));
