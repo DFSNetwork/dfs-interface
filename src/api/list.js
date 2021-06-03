@@ -107,7 +107,9 @@ export function get_info(host) {
 // 获取markets压缩数据
 export function get_markets() {
   return new Promise((resolve, reject) => {
-    axios.get('https://api.defis.network/dfs/common/markets').then((res) => {
+    axios.get('https://api.defis.network/dfs/common/markets', {
+      timeout: 5000,
+    }).then((res) => {
       var deflated = res.data;
       var inflated = unZip(deflated)
       const result = {

@@ -227,12 +227,16 @@ export default {
       // dealMarketLists(rows, this.topLists)
     },
     async handleRowsMarket() {
-      const {status, result} = await this.$api.get_markets()
-      if (!status) {
+      try {
+        const {status, result} = await this.$api.get_markets()
+        if (!status) {
+          this.handleRowsMarket2()
+          return
+        }
+        dealMarketLists(result.rows, this.topLists)
+      } catch (error) {
         this.handleRowsMarket2()
-        return
       }
-      dealMarketLists(result.rows, this.topLists)
     },
     handleMerge(newArr) {
       const nMks = JSON.parse(JSON.stringify(this.marketLists));
