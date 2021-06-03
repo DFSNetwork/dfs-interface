@@ -48,7 +48,6 @@
 <script>
 import { mapState } from 'vuex';
 import moment from 'moment';
-import { EosModel } from '@/utils/eos';
 import { toFixed, accAdd, accSub, accMul, accDiv, toLocalTime, countdown, dealAccountHide } from '@/utils/public';
 // import Mock from 'mockjs';
 import MyDeposit from '../dialog/MyDeposit';
