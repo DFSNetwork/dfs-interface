@@ -9,7 +9,8 @@
       <div class="list" v-for="(v, i) in minersArr" :key="i">
         <div class="flexb">
           <span class="name">{{ v.miner }}</span>
-          <span class="reward din">{{ $t('mine.earnings') }}：{{ v.showReward || '0.00000000' }} DFS</span>
+          <span class="reward din" v-if="hasMine">{{ $t('mine.earnings') }}：{{ v.showReward || '0.00000000' }} DFS</span>
+          <span class="reward din" v-else>{{ $t('mine.earnings') }}：0.00000000 DFS</span>
         </div>
         <div class="flexb liq">
           <span>{{ $t('dex.pools') }}</span>
@@ -54,6 +55,10 @@ export default {
       default: function sbl() {
         return {}
       }
+    },
+    hasMine: {
+      type: Boolean,
+      default: false
     },
   },
   data() {
@@ -195,6 +200,9 @@ export default {
     // 秒级定时器
     handleRunReward() {
       clearTimeout(this.secTimer)
+      if (!this.hasMine) {
+        return
+      }
       this.secTimer = setTimeout(() => {
         this.handleRunReward()
       }, 1000);

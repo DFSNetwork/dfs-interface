@@ -9,6 +9,7 @@ export default {
       reservoir: '蓄水池',
       sec: '秒',
       coinPool: '{coin}池子',
+      unMine: '该矿池排名在TOP30之外，暂无挖矿收益。',
 
       speedRules: '流速规则',
       speedRules1: '每日基础发行量：3600 DFS',
@@ -33,6 +34,7 @@ export default {
        reservoir:'Reservoir',
        sec:'Sec',
        coinPool:'{coin} pool',
+       unMine:'The mining pool ranks outside the TOP30',
 
        speedRules:'Flow rate rules',
        speedRules1:'Daily basic circulation: 3600 DFS',

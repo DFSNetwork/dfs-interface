@@ -5,7 +5,12 @@
       <img class="selectImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/select.png">
     </div>
 
-    <RewardInfo :total="accMiner.showReward" @listenUpdate="handleClaim"/>
+    <div class="unMine flexb" v-if="!hasMine">
+      <span>{{ $t('dfsMine.unMine') }}</span>
+      <span class="toVote" @click="handleTo('vote')">{{ $t('vote.toVote') }}</span>
+    </div>
+
+    <RewardInfo v-else :total="accMiner.showReward" @listenUpdate="handleClaim"/>
     <div class="marketInfo">
       <div class="coinInfo flexb">
         <div class="flexa">
@@ -34,9 +39,7 @@
       </div>
     </div>
 
-    <MinerLists :allBal="allBal" :swapBal="swapBal"/>
-
-
+    <MinerLists :hasMine="hasMine" :allBal="allBal" :swapBal="swapBal"/>
 
     <!-- 弹窗组件 -->
     <van-popup
@@ -113,7 +116,12 @@ export default {
     ...mapState({
       account: state => state.app.account,
       marketLists: state => state.sys.marketLists,
+      rankInfoV3: state => state.sys.rankInfoV3,
     }),
+    hasMine() {
+      const has = this.rankInfoV3.find(v => v.mid === this.thisMarket.mid)
+      return !!has
+    }
   },
   watch: {
     '$route': {
@@ -159,6 +167,11 @@ export default {
     }
   },
   methods: {
+    handleTo(name) {
+      this.$router.push({
+        name
+      })
+    },
     async handleGetApy() {
       const params = {
         mid: this.$route.params.mid
@@ -285,6 +298,9 @@ export default {
     },
     handleRunReward() {
       clearTimeout(this.secTimer)
+      if (!this.hasMine) {
+        return
+      }
       this.secTimer = setTimeout(() => {
         this.handleRunReward()
       }, 1000);
@@ -454,6 +470,17 @@ export default {
     .liq{
       color: #000;
     }
+  }
+}
+.unMine{
+  font-size: 26px;
+  color: #f5a623;
+  background: rgba(254,183,94,.1);
+  height: 80px;
+  border-radius: 20px;
+  padding: 0 20px;
+  .toVote{
+    color: #e9574f;
   }
 }
 </style>

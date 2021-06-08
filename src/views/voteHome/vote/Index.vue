@@ -1,8 +1,5 @@
 <template>
   <div class="voteMain">
-    <!-- <div class="banner">
-      <img class="bgImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/banner/bpVote.png" alt="">
-    </div> -->
     <div class="accVoteNum_p">
       <div class="mainTitle flexb">
         <span class="act">{{ $t('vote.vote') }}</span>
@@ -150,12 +147,14 @@ export default {
         "id": 4,
         "bonus": 3,
         "refund_delay_sec": 31104000
-      }]
+      }],
+
+      page: 1,
+      pageSize: 30,
     }
   },
   computed: {
     ...mapState({
-      // dsrPools: state => state.sys.dsrPools,
       scatter: state => state.app.scatter,
       marketLists: state => state.sys.marketLists,
     }),
@@ -171,7 +170,6 @@ export default {
           return
         }
         this.allList = this.handleDealMarket(newVal);
-        // this.allList = newVal;
         this.listLoading = false;
         this.handlerDealMlVote();
         this.handleSearch();
@@ -189,7 +187,6 @@ export default {
       handler: function listen(newVal) {
         if (newVal.identity) {
           this.handleGetMyVotes();
-          // this.handleGetAccVoteNum()
         }
       },
       deep: true,
@@ -262,45 +259,59 @@ export default {
         }, 800);
       })
     },
-    handleGetVotes() {
-      const params = {
-        "code": "dfspoolsvote",
-        "scope": "dfspoolsvote",
-        "table": "pools",
-        "json": true,
-        limit: 10000
+    async handleGetVotes() {
+      let more = true;
+      let next = '';
+      let arr = [];
+      while(more) {
+        const params = {
+          "code": "dfspoolsvote",
+          "scope": "dfspoolsvote",
+          "table": "pools",
+          "json": true,
+          limit: 200,
+          lower_bound: next
+        }
+        const {status, result} = await this.$api.get_table_rows(params);
+        if (!status) {
+          more = false;
+          continue
+        }
+        more = result.more;
+        next = result.next_key;
+        arr.push(...result.rows)
       }
-      EosModel.getTableRows(params, (res) => {
-        // console.log('get')
-        const rows = res.rows || [];
-        this.voteList = rows;
-        // console.log(rows)
-        this.handlerDealMlVote()
-      })
+      this.voteList = arr;
+      this.handlerDealMlVote()
     },
     handlerDealMlVote() {
       if (!this.allList.length) {
-        // console.log('this.allList.length ---  ', this.allList.length)
         return
       }
       let allVote = 0;
-      this.voteList.forEach(v => {
+      const voteList = JSON.parse(JSON.stringify(this.voteList));
+      const allList = JSON.parse(JSON.stringify(this.allList));
+      voteList.forEach(v => {
         allVote = parseInt(Number(v.total_votes) / 10000) + Number(allVote);
       })
-      this.voteList.forEach(v => {
-        const marketIndex = this.allList.findIndex(vv => vv.mid === v.mid);
-        if (!this.allList[marketIndex]) {
-          // console.log(marketIndex)
+      voteList.forEach(v => {
+        const marketIndex = allList.findIndex(vv => vv.mid === v.mid);
+        if (!allList[marketIndex]) {
           return
         }
         const total_votes = parseInt(Number(v.total_votes) / 10000)
-        this.$set(this.allList[marketIndex], 'total_votes', total_votes)
+        this.$set(allList[marketIndex], 'total_votes', total_votes)
         const rate =  total_votes / allVote * 100
-        this.$set(this.allList[marketIndex], 'votesRate', rate.toFixed(2))
+        this.$set(allList[marketIndex], 'votesRate', rate.toFixed(2))
       })
 
-      this.allList = this.allList.sort((a, b) => {
-        return (b.total_votes || 0) - (a.total_votes || 0);
+      this.myVoteList.forEach(mid => {
+        const marketIndex = allList.findIndex(vv => vv.mid === mid);
+        this.$set(allList[marketIndex], 'isChecked', true)
+      })
+
+      this.allList = allList.sort((a, b) => {
+        return parseInt(b.total_votes || 0) - parseInt(a.total_votes || 0);
       })
     },
     handleToDetail(item) {
@@ -318,18 +329,7 @@ export default {
       }
       this.search = '';
       this.act = index;
-      this.handleCancel();
-      if (index === 1) {
-        this.searchList = this.allList;
-        return
-      }
-      if (index === 2) {
-        this.handleGetRank()
-        return
-      }
-      if (index === 3) {
-        this.handleGetMyVote()
-      }
+      this.handleSearch()
     },
     handleGetRank() {
       this.handleSort()
@@ -353,7 +353,7 @@ export default {
       this.hisLoading = true;
       this.handleGetMyVotes()
     },
-    handleGetMyVotes() {
+    async handleGetMyVotes() {
       const params = {
         "code": "dfspoolsvote",
         "scope": "dfspoolsvote",
@@ -363,17 +363,16 @@ export default {
         upper_bound: ` ${this.scatter.identity.accounts[0].name}`, // 11.bank
         limit: 10000
       }
-      EosModel.getTableRows(params, (res) => {
-        this.hisLoading = false;
-        this.dssGet = true;
-        // console.log('get')
-        const rows = res.rows || [];
-        if (!rows.length) {
-          return
-        }
-        this.myVoteList = rows[0].last_vote;
-        this.accNum = parseInt((rows[0].vote_power || 0) / 10000);
-      })
+      const {status, result} = await this.$api.get_table_rows(params);
+      this.hisLoading = false;
+      this.dssGet = true;
+      if (!status || !result.rows.length) {
+        return
+      }
+      const rows = result.rows || [];
+      this.myVoteList = rows[0].last_vote;
+      this.accNum = parseInt((rows[0].vote_power || 0) / 10000);
+      this.handlerDealMlVote()
     },
     handleDealMyVote() {
       const newArr = [];
@@ -412,6 +411,7 @@ export default {
           return;
         }
         if (this.act === 3) {
+          this.handleGetMyVote()
           return
         }
         this.searchList = this.allList;
