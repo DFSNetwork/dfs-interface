@@ -10,7 +10,7 @@
         <span>矿池</span>
       </div>
       <div class="flexc item" :class="{'act': act === 2}" @click="handleAct(2)">
-        <img class="tokenLogo" src="https://usdx.gitee.io/static/img/logo-new.26a61580.png">
+        <img class="tokenLogo" src="https://usdx.defis.network/static/img/logo-new.26a61580.png">
         <span>矿池</span>
       </div>
     </div>
@@ -49,7 +49,7 @@ export default {
       if (act === 1) {
         name = 'mineHomeTag';
       } else if(act === 2) {
-        location.href = "https://usdx.gitee.io/"
+        location.href = "https://usdx.defis.network"
         return
       }
       this.$router.replace({

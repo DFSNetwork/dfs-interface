@@ -28,21 +28,12 @@
       :show-close="false"
       :visible.sync="showApps">
       <div @click="showApps = false">
-        <!-- <div class="proClass">
-          <div class="create flexc" @click="handleTo('fundation')">
-            <span>{{ $t('fundation.nav') }}</span>
-          </div>
-          <div class="create flexc" @click="handleToProject('pddex')">PDDEX</div>
-          <div class="create flexc" @click="handleToProject('yfcGuns')">YFC {{ $t('farms.yfcGun') }}</div>
-        </div> -->
         <div class="proClass">
           <div class="create flexc" @click="handleTo('farms')">{{ $t('farms.Lobby') }}</div>
           <div class="create flexc" @click="handleTo('total')">TOP21 {{ $t('info.info') }}</div>
           <div class="create flexc" @click="handleTo('coinViews', {mid: 39})">{{ $t('farms.coinView') }}</div>
         </div>
         <div class="proClass">
-          <!-- <div class="create flexc" @click="handleToProject('pdd')">PDD {{ $t('farms.pdd') }}</div> -->
-          <!-- <div class="create flexc" @click="handleToProject('time')">TIME {{ $t('farms.time') }}</div> -->
           <div class="create flexc" @click="handleToProject('eosdefi')">EOS DeFis</div>
         </div>
       </div>
@@ -173,10 +164,6 @@ export default {
       this.$router.push({name: 'vote'})
     },
     handleToProject(name) {
-      if (name === 'pddex') {
-        location.href = 'https://pddex.gitee.io/'
-        return
-      }
       if (name === 'pdd') {
         location.href = 'https://pddfarm.defis.network/'
         return;
@@ -186,12 +173,10 @@ export default {
         return
       }
       if (name === 'yfcGuns') {
-        // location.href = 'https://yfcone.gitee.io'
         location.href = 'https://yfc.one/guns'
         return
       }
       if (name === 'yfcDss') {
-        // location.href = 'https://yfcone.gitee.io'
         location.href = 'https://yfc.one/vault'
         return
       }
@@ -204,10 +189,10 @@ export default {
         return
       }
       if (name === 'usdx') {
-        location.href = 'https://usdx.gitee.io/'
+        location.href = 'https://usdx.defis.network'
       }
       if (name === 'usdxVote') {
-        location.href = 'https://usdx.gitee.io/govern/usdc'
+        location.href = 'https://usdx.defis.network/govern/usdc'
       }
     }
   },

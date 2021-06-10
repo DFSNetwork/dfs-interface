@@ -163,15 +163,11 @@ export default {
         return
       }
       if (name === 'usdxVote') {
-        location.href = 'https://usdx.gitee.io/govern/usdc'
+        location.href = 'https://usdx.defis.networkgovern/usdc'
         return
       }
       if (name === 'usdx') {
-        location.href = 'https://usdx.gitee.io/'
-        return
-      }
-      if (name === 'pddex') {
-        location.href = 'https://pddex.gitee.io/'
+        location.href = 'https://usdx.defis.network'
         return
       }
       if (name === 'pdd') {
@@ -183,12 +179,10 @@ export default {
         return
       }
       if (name === 'yfcGuns') {
-        // location.href = 'https://yfcone.gitee.io'
         location.href = 'https://yfc.one/guns'
         return
       }
       if (name === 'yfcDss') {
-        // location.href = 'https://yfcone.gitee.io'
         location.href = 'https://yfc.one/vault'
         return
       }
@@ -207,7 +201,7 @@ export default {
         location.href = 'https://dfs.defiview.io/kline'
       }
       if (name === 'dtoken') {
-        location.href = 'https://dtoken.gitee.io/'
+        location.href = 'https://dtoken.netlify.app/'
       }
       if (name === 'help') {
         location.href = 'https://dfsdefi.com/'

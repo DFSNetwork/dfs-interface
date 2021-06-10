@@ -76,7 +76,7 @@
           <div>USDX</div>
         </div>
         <div class="list" @click="handleToProject('dfg')">
-          <img class="icon biger" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/dfg.png" alt="">
+          <img class="icon biger" src="https://cdn.jsdelivr.net/gh/defis-net/material2/coin/dfxtokenmain-dfg.png" alt="">
           <div>DFG</div>
         </div>
       </div>
@@ -116,15 +116,11 @@ export default {
         return
       }
       if (name === 'usdxVote') {
-        location.href = 'https://usdx.gitee.io/govern/usdc'
+        location.href = 'https://usdx.defis.network/govern/usdc'
         return
       }
       if (name === 'usdx') {
-        location.href = 'https://usdx.gitee.io/'
-        return
-      }
-      if (name === 'pddex') {
-        location.href = 'https://pddex.gitee.io/'
+        location.href = 'https://usdx.defis.network/'
         return
       }
       if (name === 'pdd') {
@@ -136,12 +132,10 @@ export default {
         return
       }
       if (name === 'yfcGuns') {
-        // location.href = 'https://yfcone.gitee.io'
         location.href = 'https://yfc.one/guns'
         return
       }
       if (name === 'yfcDss') {
-        // location.href = 'https://yfcone.gitee.io'
         location.href = 'https://yfc.one/vault'
         return
       }
@@ -160,7 +154,7 @@ export default {
         location.href = 'https://dfs.defiview.io/kline'
       }
       if (name === 'dtoken') {
-        location.href = 'https://dtoken.gitee.io/'
+        location.href = 'https://dtoken.netlify.app/'
       }
       if (name === 'help') {
         location.href = 'https://dfsdefi.com/'
@@ -172,7 +166,7 @@ export default {
         location.href = 'https://dfsdefi.com/#/mine'
       }
       if (name === 'dfg') {
-        location.href = 'https://dfxasc.gitee.io/'
+        location.href = 'https://dfgasc.netlify.app'
       }
     }
   }

@@ -430,7 +430,7 @@ export default {
     },
     handleToProject(type) {
       if (type === 'dtoken') {
-        location.href = 'https://dtoken.gitee.io/'
+        location.href = 'https://dtoken.netlify.app/'
       }
     },
 

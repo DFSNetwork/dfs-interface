@@ -67,7 +67,7 @@ export default {
     },
     handleToPro(name) {
       if (name === 'dcap') {
-        location.href = 'https://dtoken.gitee.io/convert/'
+        location.href = 'https://dtoken.netlify.app/convert/'
         return
       }
       if (name === 'record') {
@@ -75,7 +75,7 @@ export default {
         return
       }
       if (name === 'usdx') {
-        location.href = 'https://usdx.gitee.io/'
+        location.href = 'https://usdx.defis.network/'
         return
       }
       if (name === 'suggestions') {

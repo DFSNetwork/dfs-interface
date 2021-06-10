@@ -72,11 +72,11 @@ export default {
     },
     handleToProject(name) {
       if (name === 'usdx') {
-        location.href = 'https://usdx.gitee.io/govern/usdc'
+        location.href = 'https://usdx.defis.network/govern/usdc'
         return
       }
       if (name === 'dcap') {
-        location.href = 'https://dtoken.gitee.io/govern/traders'
+        location.href = 'https://dtoken.netlify.app/govern/traders'
         // return
       }
     }

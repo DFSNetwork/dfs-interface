@@ -71,12 +71,6 @@ export default {
         name
       })
     },
-    handleToPro(pro) {
-      if(pro === 'pddex') {
-        // location.href = 'https://pddex.defis.network/'
-        location.href = 'https://pddex.gitee.io/'
-      }
-    }
   }
 }
 </script>
