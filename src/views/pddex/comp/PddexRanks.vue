@@ -240,6 +240,7 @@ export default {
     account: {
       handler: function at(newVal) {
         if (!newVal.name) {
+          this.active = 1;
           return
         }
         this.handleGetLikes();
@@ -349,6 +350,7 @@ export default {
     // 获取关注列表
     async handleGetLikes() {
       if (!this.account.name) {
+        this.active = 1;
         return
       }
       const {status, result} = await this.$api.get_acc_follow();
