@@ -1,6 +1,6 @@
 <template>
   <div class="chartDiv" >
-    <div class="title">市场详情</div>
+    <!-- <div class="title">市场详情</div> -->
     <MarketInfo :checkedMarket="checkedMarket"/>
     <div class="kline">
       <div class="kTitle flexa">价格K线</div>
@@ -97,6 +97,7 @@ export default {
           return v.symbol1 === arr[1].toUpperCase() && v.symbol0 === arr[3].toUpperCase()
               && v.contract1 === arr[0] && v.contract0 === arr[2] 
         })
+        console.log(this.marketLists)
         if (checkedMarket) {
           this.checkedMarket = checkedMarket;
         }
@@ -121,9 +122,10 @@ export default {
   }
   .kline{
     .kTitle{
-      background: #F5F5F5;
+      background: #FFF;
+      color: #333;
       font-size: 30px;
-      height: 80px;
+      // height: 80px;
       padding-left: 28px;
     }
   }

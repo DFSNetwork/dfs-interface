@@ -5,16 +5,8 @@
         <div class="token flexa">
           <img class="coinImg" :src="checkedMarket.imgUrl1 || errorCoinImg" :onerror="errorCoinImg">
           <div class="">
-            <div class="tokenName">{{ checkedMarket.symbol1 }}</div>
+            <div class="tokenName din">{{ checkedMarket.symbol1 }}/{{ checkedMarket.symbol0 }}</div>
             <div class="tokenContract tip">{{ checkedMarket.contract1 }}</div>
-          </div>
-        </div>
-        <img class="add" src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/add.svg" alt="">
-        <div class="token flexa">
-          <img class="coinImg" :src="checkedMarket.imgUrl0 || errorCoinImg" :onerror="errorCoinImg">
-          <div class="">
-            <div class="tokenName">{{ checkedMarket.symbol0 }}</div>
-            <div class="tokenContract tip">{{ checkedMarket.contract0 }}</div>
           </div>
         </div>
       </div>
@@ -23,7 +15,37 @@
         <img v-else @click="handleAddLike" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/star-un.png">
       </div>
     </div>
-    <div class="flexb dinBold price">
+    <!-- 交易对信息 -->
+    <div class="mksInfo flexb din">
+      <div>
+        <div class="mksRate">{{ checkedMarket.priceRate }}</div>
+        <div class="abtPrice">¥{{ checkedMarket.aboutPriceCNY }}</div>
+        <div class="abtPrice">${{ checkedMarket.aboutPriceU }}</div>
+      </div>
+      <div>
+        <div class="subInfo flexa">
+          <div class="infoItem">
+            <div class="label">24H最高价</div>
+            <div>2.6523</div>
+          </div>
+          <div class="infoItem">
+            <div class="label">成交量(EOS)</div>
+            <div>2.6523</div>
+          </div>
+        </div>
+        <div class="subInfo flexa">
+          <div class="infoItem">
+            <div class="label">24H最低价</div>
+            <div>2.6523</div>
+          </div>
+          <div class="infoItem">
+            <div class="label">手续费(EOS)</div>
+            <div>2.6523</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="flexb dinBold price">
       <div class="flexa">
         <span v-if="!isExPrice">1 {{ checkedMarket.symbol1 }} ≈ {{ checkedMarket.price }} {{ checkedMarket.symbol0 }}</span>
         <span v-else>1 {{ checkedMarket.symbol0 }} ≈ {{ exPrice }} {{ checkedMarket.symbol1 }}</span>
@@ -48,10 +70,10 @@
                  'red': parseFloat(checkedMarket.price_change_rate) < 0}">
         {{ checkedMarket.priceRate || '-' }}
       </span>
-    </div>
+    </div> -->
 
     <!-- 详细数据 -->
-    <div class="bg">
+    <!-- <div class="bg">
       <div class="item">
         <div class="subTitle">做市年化收益</div>
         <div class="num flexa">
@@ -72,7 +94,7 @@
         <span>成为做市商可赚取交易手续费</span>
         <img class="qusImg" @click="showAboutMarket = true" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/tips_icon_btn.svg" alt="">
       </div>
-    </div>
+    </div> -->
 
     <!-- 年化详情 -->
     <el-dialog
@@ -141,6 +163,7 @@ export default {
   watch: {
     account: {
       handler: function acc(newVal) {
+        console.log(this.checkedMarket)
         if (!newVal.name) {
           return
         }
@@ -264,9 +287,9 @@ export default {
 
 <style lang="scss" scoped>
 .marketInfo{
-  padding: 40px 28px;
+  padding: 20px 28px 20px;
   .info{
-    margin-bottom: 27px;
+    margin-bottom: 10px;
   }
   .coin{
     flex: 1;
@@ -283,6 +306,7 @@ export default {
     }
     .tokenName{
       font-size: 28px;
+      color: #333;
     }
     .tokenContract{
       font-size: 24px;
@@ -351,6 +375,29 @@ export default {
     /deep/ .el-dialog{
       width: 620px;
     }
+  }
+}
+
+.mksRate{
+  font-size: 52px;
+  font-weight: bold;
+  color: #5AAF90;
+}
+.abtPrice{
+  font-size: 30px;
+  margin-top: 6px;
+}
+.subInfo{
+  font-size: 24px;
+  margin-bottom: 10px;
+  .infoItem{
+    &:last-child{
+      margin-left: 70px;
+    }
+  }
+  .label{
+    color: #A6A6A6;
+    margin-bottom: 6px;
   }
 }
 </style>
