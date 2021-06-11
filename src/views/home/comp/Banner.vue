@@ -9,10 +9,8 @@
       </van-swipe-item>
 
       <van-swipe-item>
-        <img class="bannerImg" v-if="language === 'zh-CN'"
-          src="@/assets/banner/zh-61.png">
-        <img class="bannerImg" v-else
-          src="@/assets/banner/en-61.png">
+        <img class="bannerImg"
+          src="@/assets/banner/M.png">
       </van-swipe-item>
     </van-swipe>
   </div>
