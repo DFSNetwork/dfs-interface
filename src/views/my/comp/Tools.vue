@@ -163,7 +163,7 @@ export default {
         return
       }
       if (name === 'usdxVote') {
-        location.href = 'https://usdx.defis.networkgovern/usdc'
+        location.href = 'https://usdx.defis.network/govern/usdc'
         return
       }
       if (name === 'usdx') {
