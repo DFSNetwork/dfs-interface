@@ -203,8 +203,6 @@ export default {
     },
     async handleRowsMarket2() {
       let more = true;
-      let next_key = '';
-      let rows = [];
       while(more) {
         const params = {
           code: "defisswapcnt",
@@ -212,7 +210,6 @@ export default {
           table: "markets",
           json: true,
           limit: -1,
-          // lower_bound: next_key,
         }
         const {status, result} = await this.$api.get_table_rows(params);
         if (!status) {
@@ -220,9 +217,16 @@ export default {
           continue
         }
         more = result.more;
-        next_key = result.next_key;
-        this.handleMerge(result.rows)
-        // rows.push(...result.rows)
+        const filter_markets = result.rows.filter(v => {
+            if (['sars.run', 'smalldogedex', 'eosdogdogeos', 'okkkkkkkkkkk'].includes(v.contract0)) {
+                return false
+            }
+            if (['sars.run', 'smalldogedex', 'eosdogdogeos', 'okkkkkkkkkkk'].includes(v.contract1)) {
+                return false
+            }
+            return true
+        })
+        this.handleMerge(filter_markets)
       }
       // dealMarketLists(rows, this.topLists)
     },
@@ -272,7 +276,7 @@ export default {
         const rows = result.rows || [];
         lists.push(...rows)
         more = result.more;
-        next_key= result.next_key;
+        next_key = result.next_key;
       }
       this.chainGet = true;
       dealMarketLists(lists, this.topLists)

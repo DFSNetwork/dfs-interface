@@ -149,7 +149,7 @@ export function dealToken(inData) {
   }
   // EOS价格
   let eosPrice = inData.poolSym1 / inData.poolSym0;
-      eosPrice = toFixed(eosPrice, 8);
+      eosPrice = parseFloat(eosPrice || 0)
   if (Number(payNum1)) {
     payNum2 = payNum1 * eosPrice;
   } else {
