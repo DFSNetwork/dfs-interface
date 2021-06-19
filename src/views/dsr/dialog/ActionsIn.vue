@@ -65,7 +65,9 @@
       append-to-body
       :show-close="false"
       :visible="showSure">
-      <ActionsInSure :params="sureData" @listenClose="handleClose" @listenSure="handleTransfer"/>
+      <ActionsInSure :params="sureData"
+        v-if="showSure"
+        @listenClose="handleClose" @listenSure="handleTransfer"/>
     </el-dialog>
   </div>
 </template>

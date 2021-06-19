@@ -59,6 +59,7 @@ export default {
   error: {
     insufficient: '{res}资源不足', // Insufficient {res} resources
     cancel: '操作已取消', // Operation cancelled
+    timeout: '交易超时，请重试或更换节点',
   },
   invi: {
     invitation: '邀请设置', // invitation
