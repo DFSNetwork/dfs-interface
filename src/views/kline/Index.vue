@@ -3,10 +3,10 @@
     <!-- <div class="title">市场详情</div> -->
     <MarketInfo :checkedMarket="checkedMarket"/>
     <div class="kline">
-      <div class="kTitle flexa">价格K线</div>
+      <div class="kTitle flexa">{{ $t('kline.klinePrice') }}</div>
       <ChardingView :checkedMarket="checkedMarket"/>
     </div>
-    <MinerLists :checkedMarket="checkedMarket"/>
+    <TokenInfo :checkedMarket="checkedMarket"/>
 
     <div class="nullDiv"></div>
     <div class="btnDiv flexb">
@@ -21,6 +21,7 @@ import { mapState } from 'vuex';
 import ChardingView from './ChardingView';
 import MarketInfo from './comp/MarketInfo';
 import MinerLists from './comp/MinerLists';
+import TokenInfo from './comp/TokenInfo';
 
 export default {
   name: 'kLine',
@@ -28,6 +29,7 @@ export default {
     ChardingView,
     MarketInfo,
     MinerLists,
+    TokenInfo,
   },
   data() {
     return {
@@ -97,7 +99,7 @@ export default {
           return v.symbol1 === arr[1].toUpperCase() && v.symbol0 === arr[3].toUpperCase()
               && v.contract1 === arr[0] && v.contract0 === arr[2] 
         })
-        console.log(this.marketLists)
+        // console.log(this.marketLists)
         if (checkedMarket) {
           this.checkedMarket = checkedMarket;
         }
@@ -125,7 +127,7 @@ export default {
       background: #FFF;
       color: #333;
       font-size: 30px;
-      // height: 80px;
+      font-weight: 500;
       padding-left: 28px;
     }
   }

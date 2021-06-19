@@ -1,8 +1,11 @@
 <template>
   <div class="minerLists">
     <div class="title flexb">
-      <span>{{ $t('mine.minersList') }}</span>
-      <span class="num">{{ $t('mine.totalMiners') }}：{{ allListsLen }}</span>
+      <span class="num">{{ $t('kline.countMks') }}: {{ allListsLen }}</span>
+      <span class="flexa">
+        <span>{{ $t('kline.rdTips') }}</span>
+        <img class="tipImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/tips_icon_btn.svg">
+      </span>
     </div>
     <div class="lists">
       <div class="list" v-for="(v, i) in showLists" :key="i">
@@ -159,13 +162,11 @@ export default {
 .minerLists{
   color: #333;
   .title{
-    background: #F5F5F5;
-    font-size: 30px;
-    height: 80px;
-    padding: 0 28px;
-    .num{
-      font-size: 24px;
-      color: #999;
+    font-size: 28px;
+    padding: 10px 28px;
+    .tipImg{
+      width: 30px;
+      margin-left: 9px;
     }
   }
 }

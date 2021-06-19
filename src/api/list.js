@@ -175,3 +175,14 @@ export function get_market_info(params) {
     })
   })
 }
+// 获取交易对最新交易记录
+export function get_swap_lasters(params) {
+  return new Promise((resolve, reject) => {
+    axios.get('https://api.defis.network/dfs/swap/marketlog', {params}).then((res) => {
+      const result = res.data;
+      resolve({ status: res.status === 200, result });
+    }, err => {
+      reject(err)
+    })
+  })
+}

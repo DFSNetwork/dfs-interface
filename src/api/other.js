@@ -18,6 +18,17 @@ export function getJson() {
     })
   })
 }
+export function getJsonByToken() {
+  return new Promise((resolve, reject) => {
+    axios.get(`/static/test/tokenInfo.json`).then((res) => {
+    // axios.get(`https://www.defis.network/coin-info/tokenInfo.json`).then((res) => {
+      let result = res.data;
+      resolve({ status: res.status === 200, result });
+    }, err => {
+      reject(err)
+    })
+  })
+}
 
 export function dfsdata() {
   return new Promise((resolve, reject) => {

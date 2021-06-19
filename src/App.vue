@@ -56,6 +56,7 @@ export default {
   mounted(){
     this.handleEnvReLoad();
     this.handleEnvSet();
+    this.handleGetTokensInfo()
     EosModel.scatterInit(this, () => {
       this.handleLogin()
       DApp.scatterInit(this, () => {
@@ -400,6 +401,14 @@ export default {
         return
       }
       this.$store.dispatch('setUsdcPools', rows)
+    },
+    async handleGetTokensInfo() {
+      const {status, result} = await this.$api.getJsonByToken()
+      if (!status) {
+        return
+      }
+      console.log(result)
+      this.$store.dispatch('setTokenInfo', result)
     }
   },
 }

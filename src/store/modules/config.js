@@ -56,8 +56,13 @@ const config = {
     hotLists: [],
     // 计价币数组
     iArr: ['USDT', 'USDC', 'EOS', 'DFS', 'TAG', 'DFG'],
+    tokenInfo: localStorage.getItem('tokenInfo') ? JSON.parse(localStorage.getItem('tokenInfo')) : [],
   },
   mutations: {
+    SET_tokenInfo: (state, tokenInfo) => {
+      state.tokenInfo = tokenInfo;
+      localStorage.setItem('tokenInfo', JSON.stringify(tokenInfo))
+    },
     SET_LpMineList: (state, lpMineList) => {
       state.lpMineList = lpMineList;
       state.tampList = Math.random() * 1000;
@@ -82,6 +87,9 @@ const config = {
     },
   },
   actions: {
+    setTokenInfo({ commit }, tokenInfo) {
+      commit('SET_tokenInfo', tokenInfo);
+    },
     setLpMineList({ commit }, baseConfig) {
       commit('SET_LpMineList', baseConfig);
     },

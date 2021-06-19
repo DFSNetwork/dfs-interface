@@ -18,83 +18,35 @@
     <!-- 交易对信息 -->
     <div class="mksInfo flexb din">
       <div>
-        <div class="mksRate">{{ checkedMarket.priceRate }}</div>
-        <div class="abtPrice">¥{{ checkedMarket.aboutPriceCNY }}</div>
-        <div class="abtPrice">${{ checkedMarket.aboutPriceU }}</div>
+        <div class="mksRate" :class="{
+          'red': parseFloat(checkedMarket.priceRate || 0) < 0
+        }">{{ checkedMarket.priceRate }}</div>
+        <div class="abtPrice tip" v-if="language === 'zh-CN'">¥{{ checkedMarket.aboutPriceCNY }}</div>
+        <div class="abtPrice tip" v-else>${{ checkedMarket.aboutPriceU }}</div>
       </div>
       <div>
-        <div class="subInfo flexa">
+        <div class="subInfo flexb">
           <div class="infoItem">
-            <div class="label">24H最高价</div>
-            <div>2.6523</div>
+            <div class="label">{{ $t('kline.lasterPrice') }}({{ checkedMarket.symbol0 }})</div>
+            <div>{{ checkedMarket.price }}</div>
           </div>
           <div class="infoItem">
-            <div class="label">成交量(EOS)</div>
-            <div>2.6523</div>
+            <div class="label">{{ $t('kline.vol') }}({{ checkedMarket.symbol0 }})</div>
+            <div>{{ checkedMarket.volume24HToUsdt | numToCnt }}</div>
           </div>
         </div>
-        <div class="subInfo flexa">
+        <div class="subInfo flexb">
           <div class="infoItem">
-            <div class="label">24H最低价</div>
-            <div>2.6523</div>
+            <div class="label">{{ $t('kline.apy') }}</div>
+            <div>{{ checkedMarket.apy }}%</div>
           </div>
           <div class="infoItem">
-            <div class="label">手续费(EOS)</div>
-            <div>2.6523</div>
+            <div class="label">{{ $t('kline.fees') }}({{ checkedMarket.symbol0 }})</div>
+            <div>{{ handleGetFees(checkedMarket.volume24HToUsdt) | numToCnt }}</div>
           </div>
         </div>
       </div>
     </div>
-    <!-- <div class="flexb dinBold price">
-      <div class="flexa">
-        <span v-if="!isExPrice">1 {{ checkedMarket.symbol1 }} ≈ {{ checkedMarket.price }} {{ checkedMarket.symbol0 }}</span>
-        <span v-else>1 {{ checkedMarket.symbol0 }} ≈ {{ exPrice }} {{ checkedMarket.symbol1 }}</span>
-        <span @click="isExPrice = !isExPrice" class="flexa">
-          <img v-if="isExPrice" class="exImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/price_switch_icon_btn_left.svg" alt="">
-          <img v-else class="exImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/price_switch_icon_btn_right.svg" alt="">
-        </span>
-      </div>
-      <span class="tip dinReg" v-if="language === 'en'">
-        <span>$</span>
-        <span>{{ checkedMarket.aboutPriceU }}</span>
-      </span>
-      <span class="tip dinReg" v-else>
-        <span>¥</span>
-        <span>{{ checkedMarket.aboutPriceCNY }}</span>
-      </span>
-    </div>
-    <div class="flexb rate">
-      <span class="tip dinReg">24H额：{{ handleDealNum(checkedMarket.volume24H || 0) }} {{ checkedMarket.symbol0 }}</span>
-      <span class="green dinBold"
-        :class="{'green': parseFloat(checkedMarket.price_change_rate) > 0,
-                 'red': parseFloat(checkedMarket.price_change_rate) < 0}">
-        {{ checkedMarket.priceRate || '-' }}
-      </span>
-    </div> -->
-
-    <!-- 详细数据 -->
-    <!-- <div class="bg">
-      <div class="item">
-        <div class="subTitle">做市年化收益</div>
-        <div class="num flexa">
-          <span>实时收益：{{ checkedMarket.apy }}%</span>
-          <span class="detail" @click="showApyDetail = true">详情></span>
-        </div>
-      </div>
-      <div class="item">
-        <div class="subTitle flexa">
-          <span>流动池数量</span>
-          <span class="detail" @click="handleTo('dfsMinePool')">前往矿池></span>
-        </div>
-        <div class="num flexa dinReg">
-          {{ checkedMarket.reserve1 }} / {{ checkedMarket.reserve0 }}
-        </div>
-      </div>
-      <div class="flexa subTitle">
-        <span>成为做市商可赚取交易手续费</span>
-        <img class="qusImg" @click="showAboutMarket = true" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/tips_icon_btn.svg" alt="">
-      </div>
-    </div> -->
 
     <!-- 年化详情 -->
     <el-dialog
@@ -163,7 +115,6 @@ export default {
   watch: {
     account: {
       handler: function acc(newVal) {
-        console.log(this.checkedMarket)
         if (!newVal.name) {
           return
         }
@@ -174,6 +125,10 @@ export default {
     },
   },
   methods: {
+    handleGetFees(num) {
+      const fees = parseFloat(num || 0) * 0.003;
+      return fees.toFixed(this.checkedMarket.decimal0)
+    },
     handleDealNum(num) {
       return dealNum(num)
     },
@@ -382,6 +337,9 @@ export default {
   font-size: 52px;
   font-weight: bold;
   color: #5AAF90;
+  &.red{
+    color: #e54f5d;
+  }
 }
 .abtPrice{
   font-size: 30px;

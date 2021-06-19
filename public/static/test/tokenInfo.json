@@ -1,0 +1,16 @@
+{
+  "合约-币种": {
+    "project": "中文项目名称",
+    "projectEn": "英文项目名称",
+    "websize": "官网地址",
+    "content": "中文简介",
+    "contentEn": "英文简介"
+  },
+  "eosio.token-eos": {
+    "project": "Exx Oxx Sxx",
+    "projectEn": "Exx Oxx Sxx",
+    "websize": "https://xxxxxxx",
+    "content": "xXXXXXxxxXX xxxx",
+    "contentEn": "xXXXXXxxxXX xxxx"
+  }
+}
