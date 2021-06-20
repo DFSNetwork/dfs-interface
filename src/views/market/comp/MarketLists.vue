@@ -7,7 +7,7 @@
     <div>
       <div class="noData" v-loading="loading" v-if="!dealLists.length">{{ $t('public.noData') }}</div>
       <div v-for="(item, index) in dealLists" :key="index">
-        <MarketData v-if="item.mid !== thisMarket.mid"
+        <MarketData
           :thisMarket="item" :token="item.token" :capital="item.capital" :isList="true"
           :startTime="item.startTime"
           @listenToMarket="handleToMarket"
@@ -105,6 +105,7 @@ export default {
     }),
     dealLists() {
       let dealLists = [];
+      let nowMk = [];
       this.lists.forEach(v => {
         const curr = this.handleGetNowMarket(v)
         const newV = v;
@@ -114,12 +115,16 @@ export default {
         const reserve1 = v.reserve1.split(' ')[0];
         newV.sym0Rate = toFixed(accDiv(reserve1, reserve0), v.decimal1)
         newV.sym1Rate = toFixed(accDiv(reserve0, reserve1), v.decimal0)
+        if (this.thisMarket.mid === v.mid) {
+          nowMk.push(newV)
+          return
+        }
         dealLists.push(newV)
       })
       dealLists = dealLists.sort((a, b) => {
         return parseFloat(b.reserve0) - parseFloat(a.reserve0)
       })
-      return [...dealLists]
+      return [...nowMk, ...dealLists]
     }
   },
   methods: {

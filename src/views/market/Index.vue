@@ -77,10 +77,6 @@
       </div>
     </div>
 
-    <MarketData v-if="Number(token) !== 0" :thisMarket="thisMarket" :token="token"
-      @listenShowRemove="handleShowRemove"
-      @listenShowAdd="handleShowAdd"/>
-
     <MyMarketLists :thisMarket="thisMarket"/>
 
     <!-- 弹窗组件 -->
@@ -136,7 +132,6 @@ import MarketApy from './popup/MarketApy'
 import AddMarket from './popup/AddMarket'
 import MyMarketLists from './comp/MarketLists'
 import AboutMarket from './popup/AboutMarket'
-import MarketData from './comp/MarketData';
 import Withdraw from './comp/Withdraw'
 
 // 公用方法
@@ -152,7 +147,6 @@ export default {
     AddMarket,
     MyMarketLists,
     AboutMarket,
-    MarketData,
     Withdraw,
   },
   data() {
