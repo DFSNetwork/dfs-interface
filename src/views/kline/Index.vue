@@ -20,7 +20,7 @@
 import { mapState } from 'vuex';
 import ChardingView from './ChardingView';
 import MarketInfo from './comp/MarketInfo';
-import MinerLists from './comp/MinerLists';
+// import MinerLists from './comp/MinerLists';
 import TokenInfo from './comp/TokenInfo';
 
 export default {
@@ -28,7 +28,7 @@ export default {
   components: {
     ChardingView,
     MarketInfo,
-    MinerLists,
+    // MinerLists,
     TokenInfo,
   },
   data() {

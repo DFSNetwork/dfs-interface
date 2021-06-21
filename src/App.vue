@@ -407,7 +407,6 @@ export default {
       if (!status) {
         return
       }
-      console.log(result)
       this.$store.dispatch('setTokenInfo', result)
     }
   },

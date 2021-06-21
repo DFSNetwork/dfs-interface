@@ -32,7 +32,7 @@
       </div>
       <div class="item flexb">
         <span>{{ $t('kline.websize') }}</span>
-        <span>{{ tokenAInfo.websize || '-' }}</span>
+        <a class="link" :href="tokenAInfo.websize"><span>{{ tokenAInfo.websize || '-' }}</span></a>
       </div>
     </div>
     <div class="info">
@@ -64,7 +64,7 @@
       </div>
       <div class="item flexb">
         <span>{{ $t('kline.websize') }}</span>
-        <span>{{ tokenBInfo.websize || '-' }}</span>
+        <a class="link" :href="tokenBInfo.websize"><span>{{ tokenBInfo.websize || '-' }}</span></a>
       </div>
     </div>
   </div>
@@ -207,6 +207,9 @@ export default {
   .item{
     height: 100px;
     padding: 0 30px;
+    .link{
+      color: $color-main;
+    }
   }
 }
 </style>
