@@ -9,7 +9,7 @@
       </div>
     </div>
     <div class="item">
-      <div class="label">{{ $t('footer.marketApr') }}</div>
+      <div class="label">{{ $t('dex.exchangePrice') }}</div>
       <div class="flexa" @click="ex = !ex">
         <span class="dinReg" v-if="ex">1 {{ checkedMarket.symbol1 }} = {{ price | numToPrice}} {{ checkedMarket.symbol0 }}</span>
         <span class="dinReg" v-else>1 {{ checkedMarket.symbol0 }} = {{ price1 | numToPrice}} {{ checkedMarket.symbol1 }}</span>
