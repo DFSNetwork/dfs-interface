@@ -37,7 +37,7 @@ export default {
       ani: false,
       aniTimer: null,
       showEgg: false,
-      rdVes: 2,
+      rdVes: 3,
       localVes: parseInt(localStorage.getItem('rdVs') || 0),
     }
   },

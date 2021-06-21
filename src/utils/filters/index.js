@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import moment from 'moment';
 import numeral from 'numeral';
-import { toFixed } from "@/utils/public"
+import { toFixed, getPriceLen } from "@/utils/public"
 
 // 位数分割 128,373,883
 Vue.filter('numeralFormat', (value, p) => {
@@ -53,3 +53,18 @@ Vue.filter('numToShot', value => {
   }
   return num;
 })
+// 数据转换成 K M等
+Vue.filter('numToCnt', value => {
+  let t = parseFloat(value);
+  if (t > 1000000) {
+    t = `${(t / 1000000).toFixed(2)}M`
+  } else if (t > 10000) {
+    t = `${(t / 1000).toFixed(2)}K`
+  }
+  return t
+});
+// 价格位数控制
+Vue.filter('numToPrice', value => {
+  let t = parseFloat(value || 0);
+  return Number(t).toFixed(getPriceLen())
+});
