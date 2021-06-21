@@ -160,7 +160,7 @@ export default {
       this.lists = []
       const params = {
         "code":"defislogsone",
-        "scope": this.scatter.identity.accounts[0].name,
+        "scope": ` ${this.scatter.identity.accounts[0].name}`,
         "table":"liqs2",
         "json":true,
         limit: 1000,
