@@ -22,7 +22,6 @@
         </div>
       </div>
     </van-list>
-    
   </div>
 </template>
 
@@ -73,6 +72,7 @@ export default {
         limit: 30
       }
       const {status, result} = await this.$api.get_swap_lasters(params);
+      console.log(result)
       this.timer = setTimeout(() => {
         this.handleGetLaster()
       }, 10 * 1000);
@@ -82,7 +82,8 @@ export default {
       }
       const rows = result.data || [];
       rows.forEach(v => {
-        const time = toLocalTime(v.create_time)
+        let create_time = v.create_time.replace(/Z$/, '+1600')
+        const time = toLocalTime(create_time)
         v.time = time;
       });
       if (this.page === 1) {
