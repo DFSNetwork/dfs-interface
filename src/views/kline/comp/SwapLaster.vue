@@ -72,7 +72,6 @@ export default {
         limit: 30
       }
       const {status, result} = await this.$api.get_swap_lasters(params);
-      console.log(result)
       this.timer = setTimeout(() => {
         this.handleGetLaster()
       }, 10 * 1000);
