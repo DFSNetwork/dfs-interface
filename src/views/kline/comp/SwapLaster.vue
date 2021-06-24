@@ -81,7 +81,7 @@ export default {
       }
       const rows = result.data || [];
       rows.forEach(v => {
-        let create_time = v.create_time.replace(/Z$/, '+1600')
+        let create_time = v.create_time.replace(/Z$/, '-0800')
         const time = toLocalTime(create_time)
         v.time = time;
       });
