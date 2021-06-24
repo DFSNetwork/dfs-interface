@@ -1,5 +1,5 @@
 import Decimal from 'decimal.js';
-import { DApp } from '@/utils/wallet';
+import { DApp } from '@/utils/wallet/index';
 import moment from 'moment';
 import store from '@/store';
 import {getJson} from './api'
@@ -77,7 +77,7 @@ export function accPow(arg1, arg2) {
 // 登录
 export function login(vThis, cb) {
   DApp.scatterInit(vThis, () => {
-    DApp.login('eos', (res => {
+    DApp.login((res => {
       cb(res)
     }));
   });

@@ -4,6 +4,7 @@ import { JsSignatureProvider } from 'eosjs/dist/eosjs-jssig';
 const fetch = require('node-fetch');
 
 import { get_account, reg_newaccount, pushFreeCpu } from '@/api/list'
+import store from '@/store';
 
 class newWallet {
   constructor() {
@@ -12,21 +13,31 @@ class newWallet {
     this.rpc = null;
     this.signatureProvider = null;
     this.public_key = null;
+    this.vthis = null;
   }
-  init() {
+  scatterInit(vthis, cb) {
+    this.vthis = vthis;
     this.Ecc = Ecc;
     this.rpc = new JsonRpc('https://dfs.tinyhill.dev', { fetch });
+    console.log('init')
+    cb()
   }
-  loginOut() {
+  loginOut(cb) {
     this.Ecc = null;
     this.eos_client = null;
     this.rpc = null;
     this.signatureProvider = null;
     this.public_key = null;
     location.reload()
+    cb()
   }
-  login() {
-
+  login(cb) {
+    // console.log('login')
+    // cb ? cb() : ''
+    this.loginByAcc({
+      account: 'hellodfsdfs2',
+      pwd: 'abcd1234',
+    }, cb)
   }
   async loginByAcc(params, cb) {
     let eos_account = params.account;
@@ -73,6 +84,7 @@ class newWallet {
         permissions: perm_name,
         publicKey: this.public_key,
       }
+      store.dispatch('setAccount', newAccount);
       cb(newAccount)
     } catch (error) {
       console.log(error)
@@ -117,9 +129,32 @@ class newWallet {
       }
     })()
   }
+  transfer(obj, callback) {
+    const formName = store.state.app.account.name;
+    const permission = store.state.app.account.permissions;
+    const params = {
+      actions: [
+        {
+          account: obj.code,
+          name: 'transfer',
+          authorization: [{
+            actor: formName, // 转账者
+            permission,
+          }],
+          data: {
+            from: formName,
+            to: obj.toAccount,
+            quantity: obj.quantity,
+            memo: obj.memo || 'test'
+          }
+        }
+      ]
+    }
+    this.toTransaction(params, callback)
+  }
 
-  // 免CPU操作
-  pushFreeCpu(tx, cb) {
+  // 免CPU操作 
+  toTransaction(tx, cb) {
     (async () => {
       try {
         const txh = {
@@ -272,7 +307,7 @@ class newWallet {
 }
 
 const wallet = new newWallet();
-wallet.init();
+// wallet.init();
 // wallet.loginByAcc({
 //   account: 'hellodfsdfs2',
 //   pwd: 'abcd1234',
