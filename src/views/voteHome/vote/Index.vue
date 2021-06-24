@@ -94,7 +94,7 @@
 </template>
 
 <script>
-import { EosModel } from '@/utils/eos';
+import { DApp } from '@/utils/wallet';
 import { mapState } from 'vuex';
 import { getVotePools } from '@/utils/api';
 import Rank from './comp/Rank';
@@ -155,7 +155,7 @@ export default {
   },
   computed: {
     ...mapState({
-      scatter: state => state.app.scatter,
+      account: state => state.app.account,
       marketLists: state => state.sys.marketLists,
     }),
     checkedLeng() {
@@ -183,9 +183,9 @@ export default {
       },
       deep: true,
     },
-    scatter: {
+    account: {
       handler: function listen(newVal) {
-        if (newVal.identity) {
+        if (newVal.name) {
           this.handleGetMyVotes();
         }
       },
@@ -220,8 +220,8 @@ export default {
       checked.forEach(v => {
         pools.push(Number(v.mid))
       })
-      const formName = this.scatter.identity.accounts[0].name;
-      const permission = this.scatter.identity.accounts[0].authority;
+      const formName = this.account.name;
+      const permission = this.account.permissions;
       const params = {
         actions: [
           {
@@ -238,16 +238,19 @@ export default {
           },
         ]
       }
-      EosModel.toTransaction(params, (res) => {
+      DApp.toTransaction(params, (err) => {
         this.voteLoading = false;
-        if(res.code && JSON.stringify(res.code) !== '{}') {
-          this.$message({
-            message: res.message,
-            type: 'error'
-          });
-          return
+        if (err && err.code == 402) {
+          return;
         }
-        this.$message({
+        if (err) {
+          this.$toast({
+            type: 'fail',
+            message: err.message,
+          })
+          return;
+        }
+        this.$toast({
           message: this.$t('public.success'),
           type: 'success'
         });
@@ -359,8 +362,8 @@ export default {
         "scope": "dfspoolsvote",
         "table": "voters",
         "json": true,
-        lower_bound: ` ${this.scatter.identity.accounts[0].name}`,
-        upper_bound: ` ${this.scatter.identity.accounts[0].name}`, // 11.bank
+        lower_bound: ` ${this.account.name}`,
+        upper_bound: ` ${this.account.name}`, // 11.bank
         limit: 10000
       }
       const {status, result} = await this.$api.get_table_rows(params);

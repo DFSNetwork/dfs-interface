@@ -79,7 +79,6 @@
 <script>
 import moment from 'moment';
 import { mapState } from 'vuex';
-import { EosModel } from '@/utils/eos';
 import { toFixed, accSub, accMul, accDiv, getMarketTime } from '@/utils/public';
 import { sellToken, getV3PoolsClass } from '@/utils/logic';
 import MarketTip from '../popup/MarketTip';
@@ -169,7 +168,7 @@ export default {
     ...mapState({
       // 箭头函数可使代码更简练
       baseConfig: state => state.sys.baseConfig, // 基础配置 - 默认为{}
-      scatter: state => state.app.scatter,
+      account: state => state.app.account,
     }),
     marketReward() {
       if (!this.marketData.length || !Number(this.marketData[0])  || !this.nowMarket.getNum1) {
@@ -317,42 +316,40 @@ export default {
         }, 200);
       }
     },
-    handleGetMarketDataByChain() {
+    async handleGetMarketDataByChain() {
       const params = {
         "code": "defislogsone",
         "json": true,
         "scope": this.thisMarket.mid || this.$route.params.mid,
         "table": "records",
-        "lower_bound": ` ${this.scatter.identity.accounts[0].name}`,
-        "upper_bound": ` ${this.scatter.identity.accounts[0].name}`,
+        "lower_bound": ` ${this.account.name}`,
+        "upper_bound": ` ${this.account.name}`,
       }
-      EosModel.getTableRows(params, (res) => {
-        const list = res.rows || [];
-        this.sTime = '0'
-        this.marketData = [];
-        if (!list.length) {
-          return
-        }
-        // console.log(list)
-        const symbol0 = list[0].bal0.split(' ');
-        const symbol1 = list[0].bal1.split(' ');
-        const newArr = [
-          symbol0[0],
-          symbol1[0]
-        ]
-        
-        const v = this.thisMarket;
-        if (symbol0[1] === v.symbol0) {
-          newArr[0] = symbol0[0];
-          newArr[1] = symbol1[0];
-        } else if (symbol1[1] === v.symbol0) {
-          newArr[0] = symbol1[0];
-          newArr[1] = symbol0[0];
-        }
+      const {status, result} = await this.$api.get_table_rows(params)
+      const list = result.rows || [];
+      this.sTime = '0'
+      this.marketData = [];
+      if (!status || !result.rows.length) {
+        return
+      }
+      const symbol0 = list[0].bal0.split(' ');
+      const symbol1 = list[0].bal1.split(' ');
+      const newArr = [
+        symbol0[0],
+        symbol1[0]
+      ]
+      
+      const v = this.thisMarket;
+      if (symbol0[1] === v.symbol0) {
+        newArr[0] = symbol0[0];
+        newArr[1] = symbol1[0];
+      } else if (symbol1[1] === v.symbol0) {
+        newArr[0] = symbol1[0];
+        newArr[1] = symbol0[0];
+      }
 
-        this.sTime = moment((`${list[0].start}.000+0000`)).valueOf() / 1000 - 8 * 3600
-        this.marketData = newArr;
-      })
+      this.sTime = moment((`${list[0].start}.000+0000`)).valueOf() / 1000 - 8 * 3600
+      this.marketData = newArr;
     },
     handleGetClass(mid) {
       return getV3PoolsClass(mid)

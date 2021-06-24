@@ -79,7 +79,7 @@ export default {
   computed:{
     ...mapState({
       // 箭头函数可使代码更简练
-      scatter: state => state.app.scatter,
+      account: state => state.app.account,
       baseConfig: state => state.sys.baseConfig, // 基础配置 - 默认为{}
       mkFilterConf: state => state.config.mkFilterConf, // 基础配置 - 默认为{}
       marketLists: state => state.sys.marketLists,
@@ -90,10 +90,10 @@ export default {
     }
   },
   watch: {
-    scatter: {
+    account: {
       handler: function sc (newVal) {
-        if (newVal.identity) {
-          get_acc_info(newVal.identity.accounts[0].name)
+        if (newVal.name) {
+          get_acc_info(newVal.name)
           this.$api.get_acc_follow()
         }
       },

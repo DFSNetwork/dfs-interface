@@ -97,7 +97,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import { EosModel } from '@/utils/eos';
+import { DApp } from '@/utils/wallet';
 import { toFixed, getPrice, accMul, accDiv } from '@/utils/public';
 import MarketArea from '@/components/MarketArea';
 import Tabs from '../index/components/Tabs';
@@ -164,7 +164,7 @@ export default {
   computed:{
      ...mapState({
       // 箭头函数可使代码更简练
-      scatter: state => state.app.scatter,
+      account: state => state.app.account,
       baseConfig: state => state.sys.baseConfig, // 基础配置 - 默认为{}
       dfsPrice: state => state.sys.dfsPrice,
       damping: state => state.sys.damping,
@@ -292,22 +292,25 @@ export default {
         memo,
         quantity: `${this.payNum} ${this.thisMarket0.symbol}`
       }
-      EosModel.transfer(params, (res) => {
+      DApp.transfer(params, (err) => {
         this.loading = false;
-        if(res.code && JSON.stringify(res.code) !== '{}') {
-          this.$message({
-            message: res.message,
-            type: 'error'
-          });
-          return
+        if (err && err.code == 402) {
+          return;
         }
-        setTimeout(() => {
-          this.handleBalanTimer();
-        }, 1000);
-        this.$message({
+        if (err) {
+          this.$toast({
+            type: 'fail',
+            message: err.message,
+          })
+          return;
+        }
+        this.$toast({
           message: this.$t('public.success'),
           type: 'success'
         });
+        setTimeout(() => {
+          this.handleBalanTimer();
+        }, 1000);
       })
     },
     // 计算生成总额度 - 固定300%质押率
@@ -397,33 +400,35 @@ export default {
     async handleGetBalance(next) {
       const params = {
         code: this.thisMarket0.contract,
-        coin: this.thisMarket0.symbol,
-        decimal: this.thisMarket0.decimal
+        symbol: this.thisMarket0.symbol,
+        decimal: this.thisMarket0.decimal,
+        account: this.account.name,
       };
       if (next === 'next') {
         params.code = this.thisMarket1.contract;
-        params.coin = this.thisMarket1.symbol;
+        params.symbol = this.thisMarket1.symbol;
         params.decimal = this.thisMarket1.decimal;
       }
       if (next === 'usdt') {
         params.code = 'tethertether';
-        params.coin = 'USDT';
+        params.symbol = 'USDT';
         params.decimal = 4;
         params.account = this.baseConfig.toAccountJin;
       }
-      await EosModel.getCurrencyBalance(params, res => {
-        let balance = toFixed('0.0000000000001', params.decimal);
-        (!res || res.length === 0) ? balance : balance = res.split(' ')[0];
-        if (next === 'next') {
-          this.balanceSym1 = balance;
-          return;
-        }
-        if (next === 'usdt') {
-          this.toAccountUsdtBalan = balance;
-          return;
-        }
-        this.balanceSym0 = balance;
-      })
+      const {status, result} = await this.$api.get_currency_balance(params);
+      if (!status) {
+        return
+      }
+      const balance = result.split(' ')[0];
+      if (next === 'next') {
+        this.balanceSym1 = balance;
+        return;
+      }
+      if (next === 'usdt') {
+        this.toAccountUsdtBalan = balance;
+        return;
+      }
+      this.balanceSym0 = balance;
     },
     handleGetOrder() {
       this.$refs.orderList.handleRowsMint()

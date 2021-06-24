@@ -76,7 +76,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import { EosModel } from '@/utils/eos';
+import { DApp } from '@/utils/wallet';
 import { toFixed } from '@/utils/public';
 
 import MarketList from '@/components/MarketList';
@@ -130,7 +130,7 @@ export default {
   },
   computed: {
     ...mapState({
-      scatter: state => state.app.scatter,
+      account: state => state.app.account,
       filterMkLists: state => state.sys.filterMkLists,
       marketLists: state => state.sys.marketLists,
     }),
@@ -162,9 +162,9 @@ export default {
     }
   },
   watch: {
-    scatter: {
+    account: {
       handler: function listen(newVal) {
-        if (newVal.identity) {
+        if (newVal.name) {
           this.handleBalanTimer();
         }
       },
@@ -246,18 +246,20 @@ export default {
     async handleGetBalance() {
       const params = {
         code: this.thisMarket0.contract,
-        coin: this.thisMarket0.symbol,
-        decimal: this.thisMarket0.decimal
+        symbol: this.thisMarket0.symbol,
+        decimal: this.thisMarket0.decimal,
+        account: this.account.name,
       };
-      await EosModel.getCurrencyBalance(params, res => {
-        let balance = toFixed('0.0000000000001', params.decimal);
-        (!res || res.length === 0) ? balance : balance = res.split(' ')[0];
-        if (params.coin !== this.thisMarket0.symbol || params.code !== this.thisMarket0.contract) {
-          this.handleGetBalance()
-          return
-        }
-        this.bal = balance;
-      })
+      const {status, result} = await this.$api.get_currency_balance(params);
+      if (!status) {
+        return
+      }
+      const balance = result.split(' ')[0];
+      if (params.symbol !== this.thisMarket0.symbol || params.code !== this.thisMarket0.contract) {
+        this.handleGetBalance()
+        return
+      }
+      this.bal = balance;
     },
     // 去捐款
     handleFundation() {
@@ -272,8 +274,8 @@ export default {
         return 
       }
       this.loading = true;
-      const formName = this.scatter.identity.accounts[0].name;
-      const permission = this.scatter.identity.accounts[0].authority;
+      const formName = this.account.name;
+      const permission = this.account.permissions;
 
       const quantity = `${this.payNum} ${this.thisMarket0.symbol}`;
       const transfer = {
@@ -314,20 +316,23 @@ export default {
         }
         params.actions.unshift(replyAction)
       }
-      EosModel.toTransaction(params, (res) => {
+      DApp.toTransaction(params, (err) => {
         this.loading = false;
-        if(res.code && JSON.stringify(res.code) !== '{}') {
-          this.$message({
-            message: res.message,
-            type: 'error'
-          });
-          return
+        if (err && err.code == 402) {
+          return;
         }
-        this.handleClose(true);
-        this.$message({
+        if (err) {
+          this.$toast({
+            type: 'fail',
+            message: err.message,
+          })
+          return;
+        }
+        this.$toast({
           message: this.$t('public.success'),
           type: 'success'
         });
+        this.handleClose(true);
       })
     }
   }

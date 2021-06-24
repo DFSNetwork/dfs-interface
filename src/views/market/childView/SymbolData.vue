@@ -167,7 +167,7 @@
 <script>
 import moment from 'moment';
 import { mapState } from 'vuex';
-import { EosModel } from '@/utils/eos';
+import { DApp } from '@/utils/wallet';
 import { toFixed, accSub, accAdd, accMul, accDiv,
           getMarketTime, dealAccountHide,
          dealMinerData, getYfcReward } from '@/utils/public';
@@ -246,9 +246,9 @@ export default {
       },
       immediate: true
     },
-    scatter: {
+    account: {
       handler: function listen(newVal) {
-        if (newVal.identity) {
+        if (newVal.name) {
           this.handleGetMinersLists('user')
           this.handleGetMarketDataByChain()
           this.handleGetAccToken()
@@ -264,7 +264,7 @@ export default {
           this.thisMarket = this.marketLists.find(v => v.mid === Number(this.$route.params.mid))
           this.handleGetNowMarket()
         }
-        if (this.scatter.identity) {
+        if (this.account.name) {
           this.handleGetMinersLists('user')
           this.handleGetMarketDataByChain()
           this.handleGetAccToken()
@@ -279,7 +279,7 @@ export default {
       // 箭头函数可使代码更简练
       baseConfig: state => state.sys.baseConfig, // 基础配置 - 默认为{}
       damping: state => state.sys.damping,
-      scatter: state => state.app.scatter,
+      account: state => state.app.account,
       dfsPrice: state => state.sys.dfsPrice,
       storeFeesApr: state => state.sys.feesApr,
       lpMid: state => state.config.lpMid,
@@ -441,20 +441,22 @@ export default {
         seconds: '00'
       }
     },
-    handleGetAccToken() {
+    async handleGetAccToken() {
       const params = {
         code: this.baseConfig.toAccountSwap,
         scope: this.$route.params.mid,
         table: 'liquidity',
-        lower_bound: ` ${this.scatter.identity.accounts[0].name}`,
-        upper_bound: ` ${this.scatter.identity.accounts[0].name}`,
+        lower_bound: ` ${this.account.name}`,
+        upper_bound: ` ${this.account.name}`,
         json: true
       }
-      EosModel.getTableRows(params, (res) => {
-        const list = res.rows || [];
-        !list[0] ? this.token = '0' : this.token = `${list[0].token}`;
-        this.handleGetNowMarket()
-      })
+      const {status, result} = await this.$api.get_table_rows(params)
+      if (!status || !result.rows.length) {
+        return
+      }
+      const list = result.rows || [];
+      !list[0] ? this.token = '0' : this.token = `${list[0].token}`;
+      this.handleGetNowMarket()
     },
     handleGetNowMarket() {
       try {
@@ -475,43 +477,40 @@ export default {
         }, 200);
       }
     },
-    handleGetMarketDataByChain() {
+    async handleGetMarketDataByChain() {
       const params = {
         "code": "defislogsone",
         "json": true,
         "scope": this.thisMarket.mid || this.$route.params.mid,
         "table": "records",
-        "lower_bound": ` ${this.scatter.identity.accounts[0].name}`,
-        "upper_bound": ` ${this.scatter.identity.accounts[0].name}`,
+        "lower_bound": ` ${this.account.name}`,
+        "upper_bound": ` ${this.account.name}`,
       }
-      // console.log(this.thisMarket.mid || this.$route.params.mid)
-      EosModel.getTableRows(params, (res) => {
-        // console.log(res)
-        const list = res.rows || [];
-        this.sTime = '0'
-        this.marketData = [];
-        if (!list.length) {
-          return
-        }
-        const symbol0 = list[0].bal0.split(' ');
-        const symbol1 = list[0].bal1.split(' ');
-        const newArr = [
-          symbol0[0],
-          symbol1[0]
-        ]
-        const v = this.thisMarket;
-        if (symbol0[1] === v.symbol0) {
-          newArr[0] = symbol0[0];
-          newArr[1] = symbol1[0];
-        } else if (symbol1[1] === v.symbol0) {
-          newArr[0] = symbol1[0];
-          newArr[1] = symbol0[0];
-        }
+      const {status, result} = await this.$api.get_table_rows(params)
+      const list = result.rows || [];
+      this.sTime = '0'
+      this.marketData = [];
+      if (!status || !result.rows.length) {
+        return
+      }
+      const symbol0 = list[0].bal0.split(' ');
+      const symbol1 = list[0].bal1.split(' ');
+      const newArr = [
+        symbol0[0],
+        symbol1[0]
+      ]
+      const v = this.thisMarket;
+      if (symbol0[1] === v.symbol0) {
+        newArr[0] = symbol0[0];
+        newArr[1] = symbol1[0];
+      } else if (symbol1[1] === v.symbol0) {
+        newArr[0] = symbol1[0];
+        newArr[1] = symbol0[0];
+      }
 
-        this.sTime = moment(`${list[0].start}.000+0000`).valueOf() / 1000 - 8 * 3600
-        this.marketData = newArr;
-        this.handleGetTime();
-      })
+      this.sTime = moment(`${list[0].start}.000+0000`).valueOf() / 1000 - 8 * 3600
+      this.marketData = newArr;
+      this.handleGetTime();
     },
     handleGetClass(mid) {
       return getV3PoolsClass(mid)
@@ -539,8 +538,8 @@ export default {
           lower_bound: key,
         }
         if (type === 'user') {
-          params.lower_bound = ` ${this.scatter.identity.accounts[0].name}`;
-          params.upper_bound = ` ${this.scatter.identity.accounts[0].name}`;
+          params.lower_bound = ` ${this.account.name}`;
+          params.upper_bound = ` ${this.account.name}`;
         }
         const {status, result} = await this.$api.get_table_rows(params)
         if (!status) {
@@ -693,8 +692,8 @@ export default {
         return
       }
       this.claimLoading = true;
-      const formName = this.$store.state.app.scatter.identity.accounts[0].name;
-      const permission = this.$store.state.app.scatter.identity.accounts[0].authority;
+      const formName = this.account.name;
+      const permission = this.account.permissions;
       const params = {
         actions: [
           {
@@ -711,20 +710,23 @@ export default {
           },
         ]
       }
-      EosModel.toTransaction(params, (res) => {
+      DApp.toTransaction(params, (err) => {
         this.claimLoading = false
-        if(res.code && JSON.stringify(res.code) !== '{}') {
-          this.$message({
-            message: res.message,
-            type: 'error'
-          });
-          return
+        if (err && err.code == 402) {
+          return;
         }
-        this.handleGetMinersLists('user')
-        this.$message({
+        if (err) {
+          this.$toast({
+            type: 'fail',
+            message: err.message,
+          })
+          return;
+        }
+        this.$toast({
           message: this.$t('public.success'),
           type: 'success'
         });
+        this.handleGetMinersLists('user')
       })
     },
   },

@@ -63,7 +63,7 @@ export default {
   },
   computed: {
     ...mapState({
-      scatter: state => state.app.scatter,
+      account: state => state.app.account,
       marketLists: state => state.sys.marketLists,
     }),
     reward() {
@@ -119,9 +119,9 @@ export default {
       deep: true,
       immediate: true,
     },
-    scatter: {
+    account: {
       handler: function listen(newVal) {
-        if (newVal.identity) {
+        if (newVal.name) {
           this.handlerGetMarket();
         }
       },
@@ -140,17 +140,16 @@ export default {
       this.$set(this.hisList[index], 'exRate', !this.hisList[index].exRate);
     },
     handlerGetMarket() {
-      if (!this.marketLists.length || !this.scatter || !this.scatter.identity || this.loading) {
+      if (!this.marketLists.length || !this.account || !this.account.name || this.loading) {
         return
       }
       const mid = this.$route.params.mid || 39;
       this.thisMarket = this.marketLists.find(v => v.mid == mid) || {};
-      console.log(mid)
       this.handleGetHistory(mid)
     },
     async handleGetHistory(mid) {
       this.loading = true;
-      const user = this.scatter.identity.accounts[0].name;
+      const user = this.account.name;
       const params = {
         user,
         mid,

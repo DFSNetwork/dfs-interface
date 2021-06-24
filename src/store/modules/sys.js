@@ -2,6 +2,14 @@
 const sys = {
   state: {
     baseConfig: {
+      node: {
+        area: 'production',
+        protocol: 'https',
+        host: 'eos.blockeden.cn', // eospush.tokenpocket.pro
+        port: '443',
+        url: 'https://eos.blockeden.cn', // https://eospush.tokenpocket.pro https://eos.greymass.com
+        chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
+      },
     },
     // 区块链浏览器配置
     blockBrowser: {

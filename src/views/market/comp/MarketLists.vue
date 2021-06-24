@@ -17,30 +17,27 @@
     </div>
 
     <!-- 加入做市 -->
-    <el-dialog
-      class="mkListDia"
-      :show-close="false"
-      :visible.sync="showAdd">
+    <van-popup
+      class="popup_p"
+      v-model="showAdd">
       <AddMarket v-if="showAdd"
         :thisMarket="menageMarket"
         @listenClose="handleClose"/>
-    </el-dialog>
+    </van-popup>
     <!-- 取回做市 -->
-    <el-dialog
-      class="mkListDia"
-      :show-close="false"
-      :visible.sync="showRemove">
+    <van-popup
+      class="popup_p"
+      v-model="showRemove">
       <Withdraw v-if="showRemove"
         :thisMarket="menageMarket"
         @listenClose="handleClose"/>
-    </el-dialog>
+    </van-popup>
   </div>
 </template>
 
 <script>
 import moment from 'moment';
 import { mapState } from 'vuex';
-import { EosModel } from '@/utils/eos';
 import { toFixed, accDiv } from '@/utils/public';
 import { sellToken } from '@/utils/logic';
 import MarketData from './MarketData';
@@ -83,7 +80,7 @@ export default {
       deep: true,
       immediate: true
     },
-    scatter: {
+    account: {
       handler: function mlt() {
         if (!this.getToken) {
           this.handleGetToken()
@@ -98,7 +95,7 @@ export default {
   computed: {
     ...mapState({
       minScreen: state => state.app.minScreen,
-      scatter: state => state.app.scatter,
+      account: state => state.app.account,
       slipPoint: state => state.app.slipPoint,
       baseConfig: state => state.sys.baseConfig,
       marketLists: state => state.sys.marketLists,
@@ -153,42 +150,44 @@ export default {
       this.$emit('listenToMarket', mid)
     },
     async handleGetToken() {
-      if (!this.scatter || !this.scatter.identity || !this.marketLists.length) {
+      if (!this.account || !this.account.name || !this.marketLists.length) {
         return
       }
       this.getToken = true;
       this.lists = []
       const params = {
         "code":"defislogsone",
-        "scope": ` ${this.scatter.identity.accounts[0].name}`,
+        "scope": ` ${this.account.name}`,
         "table":"liqs2",
         "json":true,
         limit: 1000,
       }
-      EosModel.getTableRows(params, (res) => {
-        const list = res.rows || [];
-        this.loading = false;
-        list.forEach((v) => {
-          const item = this.marketLists.find(vv => vv.mid == v.mid)
-          const symbol0 = v.bal0.split(' ');
-          const symbol1 = v.bal1.split(' ');
-          const newArr = [
-            symbol0[0],
-            symbol1[0]
-          ]
-          if (symbol0[1] === item.symbol0) {
-            newArr[0] = symbol0[0];
-            newArr[1] = symbol1[0];
-          } else if (symbol1[1] === item.symbol0) {
-            newArr[0] = symbol1[0];
-            newArr[1] = symbol0[0];
-          }
-          this.lists.push(Object.assign(item, {
-            token: v.token,
-            capital: newArr,
-            startTime: `${moment(`${v.start}.000+0000`).valueOf() / 1000 - 8 * 3600}`
-          }))
-        })
+      const {status, result} = await this.$api.get_table_rows(params)
+      this.loading = false;
+      if (!status || !result.rows.length) {
+        return
+      }
+      const list = result.rows || [];
+      list.forEach((v) => {
+        const item = this.marketLists.find(vv => vv.mid == v.mid)
+        const symbol0 = v.bal0.split(' ');
+        const symbol1 = v.bal1.split(' ');
+        const newArr = [
+          symbol0[0],
+          symbol1[0]
+        ]
+        if (symbol0[1] === item.symbol0) {
+          newArr[0] = symbol0[0];
+          newArr[1] = symbol1[0];
+        } else if (symbol1[1] === item.symbol0) {
+          newArr[0] = symbol1[0];
+          newArr[1] = symbol0[0];
+        }
+        this.lists.push(Object.assign(item, {
+          token: v.token,
+          capital: newArr,
+          startTime: `${moment(`${v.start}.000+0000`).valueOf() / 1000 - 8 * 3600}`
+        }))
       })
     },
     handleGetNowMarket(item) {

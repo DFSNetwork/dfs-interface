@@ -2,14 +2,16 @@
 import ScatterJS from 'scatterjs-core';
 // import ScatterEOS from 'scatterjs-plugin-eosjs2';
 import ScatterEOS from 'scatterjs-plugin-eosjs';
-// import Eos from 'eosjs';
+import Eos from 'eosjs-without-sort'; // 代签不排序
 // import { isTpWallet } from '@/utils/wallet/fullScreen'; // tokenpocket JS
 
 import axios from 'axios';
 import store from '@/store';
 
 ScatterJS.plugins( new ScatterEOS() );
-import { EosModel } from '@/utils/eos';
+
+// import './newWallet'
+// import '../eos2/index';
 
 class ScatterClass {
   constructor() {
@@ -28,56 +30,39 @@ class ScatterClass {
       callback();
       return
     }
-    self.isConnect = !!EosModel.scatter && !!EosModel.scatterEosJs;
-    // console.log(self.isConnect)
-    if (!self.isConnect) {
-      // console.log(self.connectCount)
-      self.connectCount += 1;
-      if (self.connectCount > 10) {
+    const node = store.state.sys.baseConfig.node
+    const networkOpt = {
+      blockchain: 'eos',
+      protocol: node.protocol, // 'https',
+      host: node.host, // 'eos.blockeden.cn',
+      port: node.port, // 443,
+      chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
+    }
+    const network = ScatterJS.Network.fromJson(networkOpt);
+    ScatterJS.connect('DeFis-Network',{network}).then(async connected => {
+      self.isConnect = connected;
+      // console.log(connected)
+      if (!connected) {
+        self.connectCount += 1;
+        if (self.connectCount > 10) {
+          return false;
+        }
+        setTimeout(() => {
+          self.scatterInit(self.vthis, callback);
+        }, 500);
         return false;
       }
-      setTimeout(() => {
-        self.scatterInit(self.vthis, callback);
-      }, 500);
-      return false;
-    }
-    self.scatter = EosModel.scatter;
-    self.eosJs = EosModel.scatterEosJs;
-    // console.log(self.isConnect)
-    // console.log(self.scatter)
-    // console.log(self.eosJs)
-    callback();
-    // const networkOpt = {
-    //   blockchain: 'eos',
-    //   protocol: 'https',
-    //   host: 'eos.blockeden.cn',
-    //   port: 443,
-    //   chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
-    // }
-    // const network = ScatterJS.Network.fromJson(networkOpt);
-    // ScatterJS.connect('DeFis-Network',{network}).then(async connected => {
-    //   self.isConnect = connected;
-    //   // console.log(connected)
-    //   if (!connected) {
-    //     self.connectCount += 1;
-    //     if (self.connectCount > 10) {
-    //       return false;
-    //     }
-    //     setTimeout(() => {
-    //       self.scatterInit(self.vthis, callback);
-    //     }, 500);
-    //     return false;
-    //   }
-    //   self.scatter = ScatterJS.scatter;
-    //   // console.log(self.scatter)
-    //   self.eosJs = ScatterJS.eos(network, Eos, {});
-    //   callback();
-    // });
+      self.scatter = ScatterJS.scatter;
+      // console.log(self.scatter)
+      self.eosJs = ScatterJS.eos(network, Eos, {});
+      callback();
+    });
   }
-  loginOut() {
+  loginOut(cb) {
     const self = this;
     self.scatter.forgetIdentity()
     location.reload()
+    cb()
   }
   // login
   login(callback) {
@@ -96,6 +81,7 @@ class ScatterClass {
         permissions: account.authority,
         publicKey: account.publicKey,
       }
+      store.dispatch('setAccount', newAccount);
       callback(newAccount)
     });
   }
@@ -267,19 +253,24 @@ class ScatterClass {
             message: 'Insufficient RAM resources',
           }
         }
+        // 交易超时
+        if (err.error.code === 3080006) {
+          back = {
+            code: 3080006,
+            message: this.vthis.$t('error.timeout'),
+          }
+        }
         if (err.error.code === 3050003 || err.error.code === 3010010) {
           // 滑点过高导致
           const detail = err.error.details;
           if (detail[0].message.indexOf('INSUFFICIENT_OUTPUT_AMOUNT') !== -1) {
             back = {
               code: 3050003,
-              // message: this.vthis.$t('dex.heightSlip'),
               message: '滑点过高',
             }
           } else if (detail[0].message.indexOf('Invalid packed transaction') !== -1) { // 用户取消操作
             back = {
               code: 402,
-              // message: this.vthis.$t('error.cancel'),
               message: '用户取消',
             }
           } else {

@@ -72,7 +72,7 @@
 <script>
 import Bus from '@/utils/bus';
 import { mapState } from 'vuex';
-import { EosModel } from '@/utils/eos';
+import { DApp } from '@/utils/wallet';
 
 import {get_acc_flow_info, get_acc_info, get_acc_lists,
   get_acc_visit, acc_visit_other} from '@/utils/api';
@@ -108,13 +108,13 @@ export default {
   },
   computed: {
     ...mapState({
-      scatter: state => state.app.scatter,
+      account: state => state.app.account,
     }),
   },
   watch: {
-    scatter: {
+    account: {
       handler: function sc (newVal) {
-        if (newVal.identity) {
+        if (newVal.name) {
           this.handleGetFollowStatus()
           this.handleAccVisit()
         }
@@ -167,7 +167,7 @@ export default {
     },
     // 查询我是否关注
     async handleGetFollowStatus() {
-      const formName = this.scatter.identity.accounts[0].name;
+      const formName = this.account.name;
       const {status, result} = await get_acc_lists(formName, 'followers', this.id);
       if (!status) {
         return;
@@ -207,17 +207,17 @@ export default {
     },
     // 静默接口
     async handleAccVisit() {
-      if (!this.scatter || !this.scatter.identity || !this.id || this.isSend) {
+      if (!this.account || !this.account.name || !this.id || this.isSend) {
         return
       }
       this.isSend = true
       const user = this.id;
-      const formName = this.scatter.identity.accounts[0].name;
+      const formName = this.account.name;
       await acc_visit_other(formName, user);
     },
     handleFollow() {
-      const formName = this.scatter.identity.accounts[0].name;
-      const permission = this.scatter.identity.accounts[0].authority;
+      const formName = this.account.name;
+      const permission = this.account.permissions;
       
       const params = {
         actions: [{
@@ -233,19 +233,22 @@ export default {
           },
         }]
       }
-      EosModel.toTransaction(params, (res) => {
-        if(res.code && JSON.stringify(res.code) !== '{}') {
-          this.$message({
-            message: res.message,
-            type: 'error'
-          });
-          return
+      DApp.toTransaction(params, (err) => {
+        if (err && err.code == 402) {
+          return;
         }
-        this.isFollow = true
-        this.$message({
+        if (err) {
+          this.$toast({
+            type: 'fail',
+            message: err.message,
+          })
+          return;
+        }
+        this.$toast({
           message: '关注成功',
           type: 'success'
         });
+        this.isFollow = true
       })
     },
   }

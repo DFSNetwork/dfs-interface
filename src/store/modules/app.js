@@ -12,13 +12,6 @@ const app = {
     language: localStorage.getItem('language') || 'en',
     // 主题 默认白天
     theme: localStorage.getItem('theme') || 'theme-278EDA',
-    // 钱包账户对象
-    scatter: sessionStorage.getItem('scatter') ? JSON.parse(sessionStorage.getItem('scatter')) : {
-      identity: null,
-      wallet: '',
-      chain: 'eos',
-      online: false, // 账户是否在线
-    },
     // 节点切换参数
     nodeChecked: localStorage.getItem('nodeChecked') ? JSON.parse(localStorage.getItem('nodeChecked')) : {
       eos: {},
@@ -58,10 +51,6 @@ const app = {
       localStorage.setItem('theme', theme);
       // localStorage.removeItem('tradingview.chartproperties');
     },
-    SET_SCATTER: (state, scatter) => {
-      state.scatter = scatter;
-      sessionStorage.setItem('scatter', JSON.stringify(scatter));
-    },
     SET_NODECHECKED: (state, nodeChecked) => {
       state.nodeChecked = nodeChecked;
       localStorage.setItem('nodeChecked', JSON.stringify(nodeChecked));
@@ -96,9 +85,6 @@ const app = {
     },
     setTheme({ commit }, theme) {
       commit('SET_THEME', theme);
-    },
-    setScatter({ commit }, scatter) {
-      commit('SET_SCATTER', scatter);
     },
     setNodeChecked({ commit }, nodeChecked) {
       commit('SET_NODECHECKED', nodeChecked);

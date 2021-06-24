@@ -117,7 +117,6 @@ export default {
   computed: {
     ...mapState({
       // 箭头函数可使代码更简练
-      scatter: state => state.app.scatter,
     }),
   },
   methods: {

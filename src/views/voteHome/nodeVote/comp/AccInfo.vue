@@ -15,7 +15,6 @@
 
 <script>
 import { mapState } from 'vuex';
-// import { EosModel } from '@/utils/eos';
 
 export default {
   name: 'accInfo',
@@ -55,13 +54,13 @@ export default {
   },
   computed: {
     ...mapState({
-      scatter: state => state.app.scatter,
+      account: state => state.app.account,
     }),
   },
   watch: {
-    scatter: {
+    account: {
       handler: function listen(newVal) {
-        if (newVal.identity) {
+        if (newVal.name) {
           this.handleGetAccVoteNum()
         }
       },
@@ -76,7 +75,7 @@ export default {
       })
     },
     async handleGetAccVoteNum() {
-      const name = this.scatter.identity.accounts[0].name;
+      const name = this.account.name;
       const params = {
         "code":"dfspoolsvote",
         "scope": "dfspoolsvote",

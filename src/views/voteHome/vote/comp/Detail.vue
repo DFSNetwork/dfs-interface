@@ -63,7 +63,6 @@
 
 <script>
 import { mapState } from 'vuex';
-import { EosModel } from '@/utils/eos';
 import { toLocalTime } from '@/utils/public';
 export default {
   name: 'voteDetail',
@@ -126,7 +125,7 @@ export default {
         }
       })
     },
-    handleGetList() {
+    async handleGetList() {
       const params = {
         "code": "dfspoolsvote",
         "scope": this.mid,
@@ -134,24 +133,26 @@ export default {
         "json": true,
         limit: 10000
       }
-      EosModel.getTableRows(params, (res) => {
-        this.getMinersList = false;
-        const rows = res.rows || [];
-        let count = 0
-        rows.forEach(v => {
-          const num = parseInt(v.vote_power / 10000)
-          count = num + Number(count);
-          const voteDate = toLocalTime(`${v.vote_time}.000+0000`)
-          this.$set(v, 'voteNum', num)
-          this.$set(v, 'voteDate', voteDate)
-        });
-        let newArr = rows.sort((a, b) => {
-          return b.voteNum - a.voteNum;
-        })
-        this.allVotes = count;
-        this.allMinersList = newArr;
-        this.handleDealPage()
+      const {status, result} = await this.$api.get_table_rows(params)
+      this.getMinersList = false;
+      if (!status || !result.rows.length) {
+        return
+      }
+      const rows = result.rows || [];
+      let count = 0
+      rows.forEach(v => {
+        const num = parseInt(v.vote_power / 10000)
+        count = num + Number(count);
+        const voteDate = toLocalTime(`${v.vote_time}.000+0000`)
+        this.$set(v, 'voteNum', num)
+        this.$set(v, 'voteDate', voteDate)
+      });
+      let newArr = rows.sort((a, b) => {
+        return b.voteNum - a.voteNum;
       })
+      this.allVotes = count;
+      this.allMinersList = newArr;
+      this.handleDealPage()
     },
     handleDealPage() {
       const start = (this.page - 1) * this.pageSize;

@@ -122,7 +122,7 @@ export default {
   },
   computed: {
     ...mapState({
-      scatter: state => state.app.scatter,
+      account: state => state.app.account,
     }),
   },
   methods: {
@@ -159,8 +159,8 @@ export default {
         limit: size,
         id: this.reply.global_action_seq
       }
-      if (this.scatter && this.scatter.identity) {
-        params.user = this.scatter.identity.accounts[0].name;
+      if (this.account && this.account.name) {
+        params.user = this.account.name;
       }
       const {status, result} = await get_reply_fundation(params)
       // console.log(status, result)

@@ -21,7 +21,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import { EosModel } from '@/utils/eos';
+import { DApp } from '@/utils/wallet';
 import moment from 'moment';
 import { toFixed, toLocalTime, accSub, accAdd, accDiv } from '@/utils/public';
 import { dealRewardV3 } from '@/utils/logic';
@@ -53,7 +53,7 @@ export default {
       // baseConfig: state => state.sys.baseConfig, // 基础配置 - 默认为{}
       rankInfoV3: state => state.sys.rankInfoV3, // 交易对权重列表
       damping: state => state.sys.damping,
-      scatter: state => state.app.scatter,
+      account: state => state.app.account,
       dfsPrice: state => state.sys.dfsPrice,
       marketLists: state => state.sys.marketLists,
     }),
@@ -138,16 +138,19 @@ export default {
       const params = {
         actions,
       }
-      EosModel.toTransaction(params, (res) => {
+      DApp.toTransaction(params, (err) => {
         this.claiming = false
-        if(res.code && JSON.stringify(res.code) !== '{}') {
-          this.$message({
-            message: res.message,
-            type: 'error'
-          });
-          return
+        if (err && err.code == 402) {
+          return;
         }
-        this.$message({
+        if (err) {
+          this.$toast({
+            type: 'fail',
+            message: err.message,
+          })
+          return;
+        }
+        this.$toast({
           message: this.$t('public.success'),
           type: 'success'
         });
@@ -158,8 +161,8 @@ export default {
     },
     handleGetActions() {
       const actions = [];
-      const formName = this.scatter.identity.accounts[0].name;
-      const permission = this.scatter.identity.accounts[0].authority;
+      const formName = this.account.name;
+      const permission = this.account.permissions;
       this.lists.forEach(v => {
         if (!v.showReward || Number(this.minReward) > Number(v.showReward)) {
           return
@@ -181,10 +184,10 @@ export default {
       return actions;
     },
     handleGetMiners() {
-      if (!this.$store.state.app.scatter || !this.$store.state.app.scatter.identity) {
+      if (!this.account || !this.account.name) {
         return;
       }
-      const formName = this.$store.state.app.scatter.identity.accounts[0].name;
+      const formName = this.account.name;
       this.lists.forEach((v, index) => {
         const params = {
           code: 'miningpool11',
@@ -194,21 +197,20 @@ export default {
           upper_bound: ` ${formName}`,
           json: true,
         }
-        setTimeout(() => {
-          EosModel.getTableRows(params, (res) => {
-            const rows = res.rows || []
-            if (!rows.length) {
-              this.$set(v, 'minnerData', {})
-              return
-            }
-            const minnerData = rows[0];
-            let lastTime = toLocalTime(`${minnerData.last_drip}.000+0000`);
-            lastTime = moment(lastTime).valueOf();
-            minnerData.lastTime = lastTime;
-            const liq = this.getLiq(minnerData);
-            minnerData.liq = liq;
-            this.$set(v, 'minnerData', minnerData)
-          })
+        setTimeout(async () => {
+          const {status, result} = await this.$api.get_table_rows(params)
+          if (!status || !result.rows.length) {
+            this.$set(v, 'minnerData', {})
+            return
+          }
+          const rows = result.rows || []
+          const minnerData = rows[0];
+          let lastTime = toLocalTime(`${minnerData.last_drip}.000+0000`);
+          lastTime = moment(lastTime).valueOf();
+          minnerData.lastTime = lastTime;
+          const liq = this.getLiq(minnerData);
+          minnerData.liq = liq;
+          this.$set(v, 'minnerData', minnerData)
           this.handleRunReward()
         }, index * 100);
       })

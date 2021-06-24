@@ -53,7 +53,7 @@ export function get_swap_counter() {
 export function get_acc_follow() {
   return new Promise((resolve, reject) => {
     const host = getHost()
-    const name = store.state.app.scatter.identity.accounts[0].name;
+    const name = store.state.app.account.name;
     const params = {
       "code":"dfsusersinfo",
       "scope": ` ${name}`,
@@ -75,7 +75,7 @@ export function get_acc_follow() {
 // 获取全部订单列表
 export function get_all_orders() {
   return new Promise((resolve, reject) => {
-    // const name = store.state.app.scatter.identity.accounts[0].name;
+    // const name = store.state.app.account.name;
     const params = {
       // "code":"dfsusersinfo",
       // "scope": ` ${name}`,
@@ -180,6 +180,55 @@ export function get_swap_lasters(params) {
   return new Promise((resolve, reject) => {
     axios.get('https://api.defis.network/dfs/swap/marketlog', {params}).then((res) => {
       const result = res.data;
+      resolve({ status: res.status === 200, result });
+    }, err => {
+      reject(err)
+    })
+  })
+}
+
+// 获取账户信息
+export function get_account(name) {
+  return new Promise((resolve, reject) => {
+    const host = getHost()
+    const params = {
+      "account_name": `${name}`,
+    }
+    axios.post(`${host}/v1/chain/get_account`, JSON.stringify(params)).then((res) => {
+      let result = Object.assign(res.data, {});
+      console.log(result)
+      resolve({ status: res.status === 200, result });
+    }, err => {
+      reject(err)
+    })
+  })
+}
+
+// 注册账户
+export function reg_newaccount(obj) {
+  return new Promise((resolve, reject) => {
+    const params = {
+      username: obj.account,
+      publickey: obj.publickey
+    }
+    axios.post(`https://api.defis.network/account/newaccount`, JSON.stringify(params)).then((res) => {
+      let result = Object.assign(res.data, {});
+      console.log(result)
+      resolve({ status: res.status === 200, result });
+    }, err => {
+      reject(err)
+    })
+  })
+}
+
+// 免CPU
+export function pushFreeCpu(params) {
+  return new Promise((resolve, reject) => {
+    console.log(JSON.stringify(params))
+    axios.post(`https://api.defis.network/account/pushaction`, params).then((res) => {
+    // axios.post(`http://localhost:8103/common/pushActions`, params).then((res) => {
+      let result = Object.assign(res.data, {});
+      console.log(result)
       resolve({ status: res.status === 200, result });
     }, err => {
       reject(err)

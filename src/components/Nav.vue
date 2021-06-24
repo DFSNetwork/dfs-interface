@@ -25,7 +25,7 @@
           <div class="list" @click="handleToV1('v1')">V1</div>
           <div class="list" @click="handleToV1('v2')">V2</div>
         </div>
-        <div class="list out" v-if="scatter.identity" @click="handleLoginOut">{{ $t('public.loginOut') }}</div>
+        <div class="list out" v-if="account.name" @click="handleLoginOut">{{ $t('public.loginOut') }}</div>
       </div>
     </el-dialog>
   </div>
@@ -34,7 +34,7 @@
 <script>
 import { mapState } from 'vuex'
 import { login } from '@/utils/public';
-import { EosModel } from '@/utils/eos';
+import { DApp } from '@/utils/wallet';
 
 export default {
   data() {
@@ -45,7 +45,7 @@ export default {
   computed: {
     ...mapState({
       language: state => state.app.language,
-      scatter: state => state.app.scatter,
+      account: state => state.app.account,
     })
   },
   methods: {
@@ -84,7 +84,7 @@ export default {
       this.showNav = false;
     },
     handleLoginOut() {
-      EosModel.accountLoginOut(() => {
+      DApp.loginOut(() => {
         location.reload()
       })
     },

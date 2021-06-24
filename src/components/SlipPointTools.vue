@@ -53,7 +53,6 @@
 <script>
 import { mapState } from 'vuex';
 import { toFixed } from '@/utils/public';
-import { EosModel } from '@/utils/eos';
 
 export default {
   data() {
@@ -69,7 +68,6 @@ export default {
   computed: {
     ...mapState({
       language: state => state.app.language,
-      scatter: state => state.app.scatter,
       slipPoint: state => state.app.slipPoint,
       rSwitch: state => state.app.rSwitch,
     })
@@ -111,7 +109,7 @@ export default {
       this.$message.success('Success')
       this.showNav = false
     },
-    handleSureInviArr() {
+    async handleSureInviArr() {
       if (this.loading) {
         return
       }
@@ -129,19 +127,18 @@ export default {
         "upper_bound": ` ${this.inviAcc}`,
         "json": true,
       }
-      EosModel.getTableRows(params, (res) => {
-        this.loading = false;
-        if (!res.rows.length) {
-          localStorage.removeItem('inviAcc');
-          this.$message.error('Invitation code does not exist')
-          return
-        }
-        const inviAcc = res.rows[0];
-        inviAcc.accSet = true;
-        localStorage.setItem('inviAcc', JSON.stringify(inviAcc))
-        this.showNav = false;
-        this.$message.success('Success')
-      })
+      const {status, result} = await this.$api.get_table_rows(params)
+      this.loading = false;
+      if (!status || !result.rows.length) {
+        localStorage.removeItem('inviAcc');
+        this.$message.error('Invitation code does not exist')
+        return
+      }
+      const inviAcc = result.rows[0];
+      inviAcc.accSet = true;
+      localStorage.setItem('inviAcc', JSON.stringify(inviAcc))
+      this.showNav = false;
+      this.$message.success('Success')
     },
     handleSetSlipPoint(num) {
       this.$store.dispatch('setSlipPoint', num)

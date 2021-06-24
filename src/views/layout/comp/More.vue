@@ -7,12 +7,12 @@
     <div class="morePop">
       <div class="acc flexb">
         <div>
-          <div @click="handleLogin" v-if="!scatter || !scatter.identity"
+          <div @click="handleLogin" v-if="!account || !account.name"
             class="login">{{ $t('more.login') }}</div>
-          <div v-else class="login">{{ scatter.identity.accounts[0].name }}</div>
+          <div v-else class="login">{{ account.name }}</div>
           <div class="tip">{{ $t('more.wel') }}</div>
         </div>
-        <img v-if="!scatter || !scatter.identity" @click="handleLogin"
+        <img v-if="!account || !account.name" @click="handleLogin"
           class="right" src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/acc_right.svg" alt="">
         <span v-else class="red exit" @click="handleLoginOut">{{ $t('public.loginOut') }}</span>
       </div>
@@ -111,7 +111,7 @@
 </template>
 
 <script>
-import { EosModel } from '@/utils/eos';
+import { DApp } from '@/utils/wallet';
 import { mapState } from 'vuex'
 import { login } from '@/utils/public';
 
@@ -129,7 +129,7 @@ export default {
   computed: {
     ...mapState({
       language: state => state.app.language,
-      scatter: state => state.app.scatter,
+      account: state => state.app.account,
       freeCpu: state => state.app.freeCpu,
     }),
   },
@@ -187,7 +187,7 @@ export default {
       this.showNav = false;
     },
     handleLoginOut() {
-      EosModel.accountLoginOut(() => {
+      DApp.loginOut(() => {
         location.reload()
       })
     },

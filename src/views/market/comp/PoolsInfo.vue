@@ -33,7 +33,6 @@
 </template>
 
 <script>
-import { EosModel } from '@/utils/eos';
 import { mapState } from 'vuex';
 import { toFixed, accSub, accAdd, accMul } from '@/utils/public';
 import { perDayRewardV3 } from '@/utils/logic'
@@ -102,15 +101,16 @@ export default {
     async handleGetBalance() {
       const params = {
         code: 'eosio.token',
-        coin: 'EOS',
+        symbol: 'EOS',
         decimal: 4,
         account: 'defisswapcnt'
       };
-      await EosModel.getCurrencyBalance(params, res => {
-        let balance = toFixed('0.0000000000001', params.decimal);
-        (!res || res.length === 0) ? balance : balance = res.split(' ')[0];
-        this.lockEos = accMul(balance, 2).toFixed(4);
-      })
+      const {status, result} = await this.$api.get_currency_balance(params);
+      if (!status) {
+        return
+      }
+      const balance = result.split(' ')[0];
+      this.lockEos = accMul(balance, 2).toFixed(4);
     },
     // 获取DFS流通量 - 全局区一次
     async handleGetDfsCurrent() {

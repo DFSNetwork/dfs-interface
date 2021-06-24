@@ -67,7 +67,6 @@ export default {
   },
   computed: {
     ...mapState({
-      scatter: state => state.app.scatter,
       language: state => state.app.language,
     }),
     lang() {

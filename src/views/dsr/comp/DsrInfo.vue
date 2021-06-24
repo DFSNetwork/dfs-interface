@@ -38,7 +38,6 @@
 </template>
 
 <script>
-import { EosModel } from '@/utils/eos';
 import { mapState } from 'vuex';
 import { toFixed, accMul, accDiv, countdown } from '@/utils/public';
 
@@ -114,7 +113,7 @@ export default {
     clearTimeout(this.secTimer)
   },
   methods: {
-    handleNextUpdataTime() {
+    async handleNextUpdataTime() {
       const params = {
         "code": "dfsdsrsystem",
         "scope": "dfsdsrsystem",
@@ -123,16 +122,15 @@ export default {
         "json": true,
         "reverse": true
       }
-      EosModel.getTableRows(params, (res) => {
-        if (!res.rows.length) {
-          return
-        }
-        const rows = res.rows[0]
-        let nextTime = rows.key;
-        nextTime = nextTime + (60 * 60 * 8)
-        this.nextTime = nextTime;
-        this.handleCutDown()
-      })
+      const {status, result} = await this.$api.get_table_rows(params)
+      if (!status || !result.rows.length) {
+        return
+      }
+      const rows = result.rows[0]
+      let nextTime = rows.key;
+      nextTime = nextTime + (60 * 60 * 8)
+      this.nextTime = nextTime;
+      this.handleCutDown()
     },
     handleCutDown() {
       clearTimeout(this.secTimer)
@@ -148,17 +146,16 @@ export default {
     handleTimer() {
       this.handleGetDfsBalance('lock')
       this.handleGetDfsBalance('stock')
-      // this.handleGetDfsBalance('claim')
       clearTimeout(this.timer);
       this.timer = setTimeout(() => {
         this.handleTimer()
       }, 10000)
     },
     // 获取DFS锁定量
-    handleGetDfsBalance(type) {
+    async handleGetDfsBalance(type) {
       const params = {
         code: 'minedfstoken',
-        coin: 'DFS',
+        symbol: 'DFS',
         decimal: 4,
       };
       if (type === 'lock') {
@@ -167,28 +164,22 @@ export default {
       if (type === 'stock') {
         params.account = 'dfsavingpool';
       }
-      // if (type === 'claim') {
-      //   params.account = 'dfsdsrbuffer';
-      // }
-      EosModel.getCurrencyBalance(params, res => {
-        let balance = toFixed('0.0000000000001', params.decimal);
-        (!res || res.length === 0) ? balance : balance = res.split(' ')[0];
-        if (type === 'lock') {
-          this.lockLoading = false;
-          this.lockDfs = balance;
-          this.$emit('listenAllLock', balance)
-          return
-        }
-        if (type === 'stock') {
-          this.stockLoading = false;
-          this.ableUse = balance;
-          return
-        }
-        // if (type === 'claim') {
-        //   this.claimLoading = false;
-        //   this.ableClaimNum = balance;
-        // }
-      })
+      const {status, result} = await this.$api.get_currency_balance(params);
+      if (!status) {
+        return
+      }
+      const balance = result.split(' ')[0];
+      if (type === 'lock') {
+        this.lockLoading = false;
+        this.lockDfs = balance;
+        this.$emit('listenAllLock', balance)
+        return
+      }
+      if (type === 'stock') {
+        this.stockLoading = false;
+        this.ableUse = balance;
+        return
+      }
     },
   },
 }

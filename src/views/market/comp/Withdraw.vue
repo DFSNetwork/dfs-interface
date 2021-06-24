@@ -61,7 +61,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import { EosModel } from '@/utils/eos';
+import { DApp } from '@/utils/wallet';
 
 import { toFixed, accDiv, accMul } from '@/utils/public';
 import { sellToken } from '@/utils/logic';
@@ -101,7 +101,7 @@ export default {
   },
   computed: {
     ...mapState({
-      scatter: state => state.app.scatter,
+      account: state => state.app.account,
       baseConfig: state => state.sys.baseConfig,
       marketLists: state => state.sys.marketLists,
     }),
@@ -138,9 +138,9 @@ export default {
       deep: true,
       immediate: true
     },
-    scatter: {
+    account: {
       handler: function listen(newVal) {
-        if (newVal.identity) {
+        if (newVal.name) {
           this.handleGetAccToken();
         }
       },
@@ -189,13 +189,13 @@ export default {
       return toFixed(n, l)
     },
     regInit() {
-      if (this.scatter.identity && this.marketLists.length) {
+      if (this.account.name && this.marketLists.length) {
         return true;
       }
       return false;
     },
     // 获取账户当前交易对凭证数量
-    handleGetAccToken() {
+    async handleGetAccToken() {
       if (!this.regInit()) {
         return;
       }
@@ -203,14 +203,16 @@ export default {
         code: this.baseConfig.toAccountSwap,
         scope: this.thisMarket.mid,
         table: 'liquidity',
-        lower_bound: ` ${this.scatter.identity.accounts[0].name}`,
-        upper_bound: ` ${this.scatter.identity.accounts[0].name}`,
+        lower_bound: ` ${this.account.name}`,
+        upper_bound: ` ${this.account.name}`,
         json: true
       }
-      EosModel.getTableRows(params, (res) => {
-        const list = res.rows || [];
-        !list[0] ? this.token = '0' : this.token = `${list[0].token}`;
-      })
+      const {status, result} = await this.$api.get_table_rows(params)
+      if (!status || !result.rows.length) {
+        return
+      }
+      const list = result.rows || [];
+      !list[0] ? this.token = '0' : this.token = `${list[0].token}`;
     },
     handleRegSell() {
       if (!Number(this.sToken)) {
@@ -235,8 +237,8 @@ export default {
       }
       this.loading = true;
       const obj = this.thisMarket;
-      const formName = this.scatter.identity.accounts[0].name;
-      const permission = this.scatter.identity.accounts[0].authority;
+      const formName = this.account.name;
+      const permission = this.account.permissions;
       const params = {
         actions: [
           {
@@ -254,24 +256,27 @@ export default {
           },
         ]
       }
-      EosModel.toTransaction(params, (res) => {
+      DApp.toTransaction(params, (err) => {
         this.loading = false
-        if(res.code && JSON.stringify(res.code) !== '{}') {
-          this.$message({
-            message: res.message,
-            type: 'error'
-          });
-          return
+        if (err && err.code == 402) {
+          return;
         }
+        if (err) {
+          this.$toast({
+            type: 'fail',
+            message: err.message,
+          })
+          return;
+        }
+        this.$toast({
+          message: this.$t('public.success'),
+          type: 'success'
+        });
         this.handleClose()
         setTimeout(() => {
           this.handleBalanTimer();
           this.handleGetAccToken();
         }, 1000);
-        this.$message({
-          message: this.$t('public.success'),
-          type: 'success'
-        });
       })
     },
   }

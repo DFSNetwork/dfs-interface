@@ -82,15 +82,15 @@ export default {
   },
   computed: {
     ...mapState({
-      scatter: state => state.app.scatter,
+      account: state => state.app.account,
       accInfo: state => state.app.accInfo,
     }),
   },
   watch: {
-    scatter: {
+    account: {
       handler: function sc (newVal) {
-        if (newVal.identity) {
-          this.id = newVal.identity.accounts[0].name;
+        if (newVal.name) {
+          this.id = newVal.name;
           this.handleGetInfo()
           this.handleGetVisitNum()
         }

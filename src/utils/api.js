@@ -1,8 +1,9 @@
-import { EosModel } from '@/utils/eos';
 import store from '@/store';
 import { getV3Apr } from '@/utils/logic';
 import axios from 'axios';
 import moment from 'moment';
+import { get_table_rows } from '@/api/list'
+
 function getHost() {
   const baseConfig = store.state.sys.baseConfig;
   return baseConfig.node.url;
@@ -21,7 +22,7 @@ export function getJson() {
 }
 
 // 获取投票矿池排名
-export function getVotePools() {
+export async function getVotePools() {
   const params = {
     "code":"dfspoolsvote",
     "scope":"dfspoolsvote",
@@ -31,20 +32,18 @@ export function getVotePools() {
     "key_type": "float64",
     "limit": 100
   }
-  EosModel.getTableRows(params, (res) => {
-    const rows = res.rows || [];
-    if (!rows.length) {
-      return
-    }
-    store.dispatch('setRankTrade', rows)
-    // console.log('setRankTrade', rows)
-    const lists = rows.slice(0, 30);
-    getVoteRankConfV3(lists);
-  })
+  const {status, result} = await get_table_rows(params)
+  if (!status || !result.rows.length) {
+    return
+  }
+  const rows = result.rows || [];
+  store.dispatch('setRankTrade', rows)
+  const lists = rows.slice(0, 30);
+  getVoteRankConfV3(lists);
 }
 
 // 获取矿池排名配置
-export function getVoteRankConfV3(lists) {
+export async function getVoteRankConfV3(lists) {
   const params = {
     "code": "miningpool11",
     "scope": "miningpool11",
@@ -52,21 +51,18 @@ export function getVoteRankConfV3(lists) {
     "table": "poolslots2",
     limit: 30,
   }
-  EosModel.getTableRows(params, (res) => {
-    const rows = res.rows || [];
-    if (!rows.length) {
-      return
-    }
-    // console.log(rows)
-    const rankInfoV3 = [];
-    lists.forEach((v, index) => {
-      const deal = getV3Apr(v.mid, rows[index])
-      const t = Object.assign({}, v, rows[index], deal)
-      rankInfoV3.push(t)
-    })
-    // console.log('rankInfoV3', rankInfoV3)
-    store.dispatch('setRankInfoV3', rankInfoV3)
+  const {status, result} = await get_table_rows(params)
+  if (!status || !result.rows.length) {
+    return
+  }
+  const rows = result.rows || [];
+  const rankInfoV3 = [];
+  lists.forEach((v, index) => {
+    const deal = getV3Apr(v.mid, rows[index])
+    const t = Object.assign({}, v, rows[index], deal)
+    rankInfoV3.push(t)
   })
+  store.dispatch('setRankInfoV3', rankInfoV3)
 }
 
 // 链上查表
@@ -193,7 +189,7 @@ export async function get_farmers_lists() {
 // 获取账户信息
 export function get_acc_info(user) {
   return new Promise((resolve, reject) => {
-    const scatter = store.state.app.scatter;
+    const account = store.state.app.account;
     const params = {
       "code":"dfscommunity",
       "scope":"dfscommunity",
@@ -209,7 +205,7 @@ export function get_acc_info(user) {
         result = {}
       } else {
         result = Object.assign(res.data.rows[0], {});
-        if (scatter && scatter.identity && scatter.identity.accounts[0].name === user) {
+        if (account && account.name && account.name === user) {
           store.dispatch('setAccInfo', result);
         }
       }

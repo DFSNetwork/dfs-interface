@@ -45,7 +45,7 @@ export default {
         }]
       }
       DApp.toTransaction(params, (err) => {
-        if (err && err.code === 402) {
+        if (err && err.code == 402) {
           return;
         }
         if (err) {

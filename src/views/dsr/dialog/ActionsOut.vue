@@ -35,7 +35,8 @@
 </template>
 
 <script>
-import { EosModel } from '@/utils/eos';
+import { DApp } from '@/utils/wallet';
+import { mapState } from 'vuex';
 import { toFixed } from '@/utils/public';
 export default {
   data() {
@@ -61,6 +62,9 @@ export default {
     }
   },
   computed: {
+    ...mapState({
+      account: state => state.app.account,
+    })
   },
   methods: {
     handleFocus() {
@@ -94,8 +98,8 @@ export default {
       if (!this.handleReg()) {
         return
       }
-      const formName = this.$store.state.app.scatter.identity.accounts[0].name;
-      const permission = this.$store.state.app.scatter.identity.accounts[0].authority;
+      const formName = this.account.name;
+      const permission = this.account.permissions;
       const params = {
         actions: [
           {
@@ -113,20 +117,23 @@ export default {
         ]
       }
       this.loading = true;
-      EosModel.toTransaction(params, (res) => {
+      DApp.toTransaction(params, (err) => {
         this.loading = false;
-        if(res.code && JSON.stringify(res.code) !== '{}') {
-          this.$message({
-            message: res.message,
-            type: 'error'
-          });
-          return
+        if (err && err.code == 402) {
+          return;
         }
-        this.$emit('listenClose', true)
-        this.$message({
+        if (err) {
+          this.$toast({
+            type: 'fail',
+            message: err.message,
+          })
+          return;
+        }
+        this.$toast({
           message: this.$t('public.success'),
           type: 'success'
         });
+        this.$emit('listenClose', true)
       })
     }
   },

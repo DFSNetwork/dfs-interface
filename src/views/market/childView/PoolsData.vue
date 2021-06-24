@@ -81,7 +81,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import { EosModel } from '@/utils/eos';
+import { DApp } from '@/utils/wallet';
 import { sellToken } from '@/utils/logic';
 // import moment from 'moment';
 import { toFixed, accSub, accAdd, accDiv, dealMinerData } from '@/utils/public';
@@ -118,7 +118,7 @@ export default {
       // 箭头函数可使代码更简练
       // baseConfig: state => state.sys.baseConfig, // 基础配置 - 默认为{}
       damping: state => state.sys.damping,
-      scatter: state => state.app.scatter,
+      account: state => state.app.account,
       dfsPrice: state => state.sys.dfsPrice,
       rankInfoV3: state => state.sys.rankInfoV3,
       marketLists: state => state.sys.marketLists,
@@ -168,9 +168,9 @@ export default {
       deep: true,
       immediate: true
     },
-    scatter: {
+    account: {
       handler: function sc (newVal) {
-        if (newVal.identity) {
+        if (newVal.name) {
           this.handleGetMiners()
         }
       },
@@ -214,11 +214,11 @@ export default {
       })
     },
     handleGetMiners() {
-      if (!this.$store.state.app.scatter || !this.$store.state.app.scatter.identity) {
+      if (!this.account || !this.account.name) {
         return;
       }
-      const formName = this.$store.state.app.scatter.identity.accounts[0].name;
-      this.lists.forEach((v) => {
+      const formName = this.account.name;
+      this.lists.forEach(async (v) => {
         const params = {
           code: 'miningpool11',
           scope: v.mid,
@@ -227,29 +227,24 @@ export default {
           upper_bound: ` ${formName}`,
           json: true,
         }
-        EosModel.getTableRows(params, (res) => {
-          // console.log(res)
-          const rows = res.rows || []
-          if (!rows.length) {
-            this.$set(v, 'minnerData', {})
-            return
-          }
-          const item = this.marketLists.find(vv => vv.mid === v.mid)
-          const inData = {
-            poolSym0: item.reserve0.split(' ')[0],
-            poolSym1: item.reserve1.split(' ')[0],
-            poolToken: item.liquidity_token,
-            sellToken: `${rows[0].token}`
-          }
-          const nowMarket = sellToken(inData);
-          // console.log(nowMarket)
-          rows[0].liq_bal0 = `${parseFloat(nowMarket.getNum1).toFixed(item.decimal0)} ${item.symbol0}`
-          rows[0].liq_bal1 = `${parseFloat(nowMarket.getNum2).toFixed(item.decimal1)} ${item.symbol1}`
-
-          const minnerData = dealMinerData(rows[0], v)
-
-          this.$set(v, 'minnerData', minnerData)
-        })
+        const {status, result} = await this.$api.get_table_rows(params)
+        if (!status || !result.rows.length) {
+          this.$set(v, 'minnerData', {})
+          return
+        }
+        const rows = result.rows || []
+        const item = this.marketLists.find(vv => vv.mid === v.mid)
+        const inData = {
+          poolSym0: item.reserve0.split(' ')[0],
+          poolSym1: item.reserve1.split(' ')[0],
+          poolToken: item.liquidity_token,
+          sellToken: `${rows[0].token}`
+        }
+        const nowMarket = sellToken(inData);
+        rows[0].liq_bal0 = `${parseFloat(nowMarket.getNum1).toFixed(item.decimal0)} ${item.symbol0}`
+        rows[0].liq_bal1 = `${parseFloat(nowMarket.getNum2).toFixed(item.decimal1)} ${item.symbol1}`
+        const minnerData = dealMinerData(rows[0], v)
+        this.$set(v, 'minnerData', minnerData)
         this.handleRunReward()
       })
     },
@@ -298,8 +293,8 @@ export default {
       }
       item.loading = true;
       this.claimLoading = true;
-      const formName = this.$store.state.app.scatter.identity.accounts[0].name;
-      const permission = this.$store.state.app.scatter.identity.accounts[0].authority;
+      const formName = this.account.name;
+      const permission = this.account.permissions;
       const params = {
         actions: [
           {
@@ -316,33 +311,34 @@ export default {
           },
         ]
       }
-      EosModel.toTransaction(params, (res) => {
+      DApp.toTransaction(params, (err) => {
         item.loading = false;
-        if(res.code && JSON.stringify(res.code) !== '{}') {
-          this.$message({
-            message: res.message,
-            type: 'error'
-          });
-          return
+        if (err && err.code == 402) {
+          return;
         }
-        // this.changeReWard = toFixed(0, 8);
-        // this.reward = 0;
-        this.handleGetMiners();
-        this.$message({
+        if (err) {
+          this.$toast({
+            type: 'fail',
+            message: err.message,
+          })
+          return;
+        }
+        this.$toast({
           message: this.$t('public.success'),
           type: 'success'
         });
+        this.handleGetMiners();
       })
     },
     handleClaimAll() {
       if (this.allClaim) {
         return
       }
-      if (!this.scatter.identity || !this.scatter.identity.accounts[0].name) {
+      if (!this.account.name) {
         return
       }
-      const formName = this.$store.state.app.scatter.identity.accounts[0].name;
-      const permission = this.$store.state.app.scatter.identity.accounts[0].authority;
+      const formName = this.account.name;
+      const permission = this.account.permissions;
       const actions = [];
       this.lists.forEach(item => {
         if (!item.reward || Number(item.reward) < Number(this.minReward)) {
@@ -369,23 +365,26 @@ export default {
         actions
       }
       this.allClaim = true;
-      EosModel.toTransaction(params, (res) => {
+      DApp.toTransaction(params, (err) => {
         this.allClaim = false;
         this.lists.forEach(item => {
           this.$set(item, 'loading', false);
         })
-        if(res.code && JSON.stringify(res.code) !== '{}') {
-          this.$message({
-            message: res.message,
-            type: 'error'
-          });
-          return
+        if (err && err.code == 402) {
+          return;
         }
-        this.handleGetMiners();
-        this.$message({
+        if (err) {
+          this.$toast({
+            type: 'fail',
+            message: err.message,
+          })
+          return;
+        }
+        this.$toast({
           message: this.$t('public.success'),
           type: 'success'
         });
+        this.handleGetMiners();
       })
     },
   },

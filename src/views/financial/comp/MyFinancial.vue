@@ -41,7 +41,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import { EosModel } from '@/utils/eos';
+import { DApp } from '@/utils/wallet';
 import Withdraw from '../dialog/Withdraw';
 import { get_balance } from '@/utils/api'
 import { toLocalTime, getMarketTime, toFixed } from '@/utils/public';
@@ -76,12 +76,12 @@ export default {
   },
   computed: {
     ...mapState({
-      scatter: state => state.app.scatter,
+      account: state => state.app.account,
       filterMkLists: state => state.sys.filterMkLists,
     }),
   },
   watch: {
-    scatter: {
+    account: {
       handler: function st() {
         this.handleGetAccDepInfo()
       },
@@ -134,7 +134,7 @@ export default {
     },
     // 获取用户理财详情
     async handleGetAccDepInfo() {
-      const formName = this.scatter.identity.accounts[0].name;
+      const formName = this.account.name;
       const params = {
         "code":"yfcpayoutone",
         "scope":"EOS",
@@ -212,8 +212,8 @@ export default {
     },
     // 领取收益
     handleClaim() {
-      const permission = this.scatter.identity.accounts[0].authority;
-      const formName = this.scatter.identity.accounts[0].name;
+      const permission = this.account.permissions;
+      const formName = this.account.name;
       const params = {
         actions: [{
           account: 'yfcpayoutone',
@@ -228,22 +228,25 @@ export default {
           },
         }],
       }
-      EosModel.toTransaction(params, (res) => {
+      DApp.toTransaction(params, (err) => {
         this.loading = false;
-        if(res.code && JSON.stringify(res.code) !== '{}') {
-          this.$message({
-            message: res.message,
-            type: 'error'
-          });
-          return
+        if (err && err.code == 402) {
+          return;
         }
-        setTimeout(() => {
-          this.handleGetAccDepInfo()
-        }, 1500);
-        this.$message({
+        if (err) {
+          this.$toast({
+            type: 'fail',
+            message: err.message,
+          })
+          return;
+        }
+        this.$toast({
           message: this.$t('public.success'),
           type: 'success'
         });
+        setTimeout(() => {
+          this.handleGetAccDepInfo()
+        }, 1500);
       })
     }
   }

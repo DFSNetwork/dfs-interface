@@ -45,7 +45,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import { EosModel } from '@/utils/eos';
+import { DApp } from '@/utils/wallet';
 
 import { toFixed } from '@/utils/public';
 import { getRexActions, getClaimActions } from '../js/nodePools'
@@ -80,7 +80,7 @@ export default {
   },
   computed: {
     ...mapState({
-      scatter: state => state.app.scatter,
+      account: state => state.app.account,
     }),
     aboutRexNum() {
       const num = this.buy / this.rexPrice;
@@ -88,9 +88,9 @@ export default {
     }
   },
   watch: {
-    scatter: {
+    account: {
       handler: function listen(newVal) {
-        if (newVal.identity) {
+        if (newVal.name) {
           this.handleGetBal();
         }
       },
@@ -111,17 +111,19 @@ export default {
       location.href = 'https://dfscommunity.baklib.com/newbie/f036'
     },
     // 获取账户余额
-    handleGetBal() {
+    async handleGetBal() {
       const params = {
         code: 'eosio.token',
-        coin: 'EOS',
+        symbol: 'EOS',
         decimal: 4,
+        account: this.account.name
       }
-      EosModel.getCurrencyBalance(params, res => {
-        let balance = toFixed('0.0000000000001', params.decimal);
-        (!res || res.length === 0) ? balance : balance = res.split(' ')[0];
-        this.bal = balance;
-      })
+      const {status, result} = await this.$api.get_currency_balance(params);
+      if (!status) {
+        return
+      }
+      const bal = result.split(' ')[0];
+      this.bal = bal;
     },
     // 点击百分比
     handleIn(rate) {
@@ -148,16 +150,19 @@ export default {
         amount: `${toFixed(this.buy, 4)} EOS`,
         type: 'buyRex'
       })
-      EosModel.toTransaction(params, (res) => {
+      DApp.toTransaction(params, (err) => {
         this.loading = false;
-        if(res.code && JSON.stringify(res.code) !== '{}') {
-          this.$message({
-            message: res.message,
-            type: 'error'
-          });
-          return
+        if (err && err.code == 402) {
+          return;
         }
-        this.$message({
+        if (err) {
+          this.$toast({
+            type: 'fail',
+            message: err.message,
+          })
+          return;
+        }
+        this.$toast({
           message: '操作成功，请重新加入矿池',
           type: 'success'
         });
@@ -168,16 +173,19 @@ export default {
     // 领取
     handleClaim() {
       const params = getClaimActions(this.accVoteData)
-      EosModel.toTransaction(params, (res) => {
+      DApp.toTransaction(params, (err) => {
         this.loading = false;
-        if(res.code && JSON.stringify(res.code) !== '{}') {
-          this.$message({
-            message: res.message,
-            type: 'error'
-          });
-          return
+        if (err && err.code == 402) {
+          return;
         }
-        this.$message({
+        if (err) {
+          this.$toast({
+            type: 'fail',
+            message: err.message,
+          })
+          return;
+        }
+        this.$toast({
           message: '领取成功，即将执行REX操作',
           type: 'success'
         });

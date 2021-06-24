@@ -1,8 +1,9 @@
 import Decimal from 'decimal.js';
-import { EosModel } from '@/utils/eos';
+import { DApp } from '@/utils/wallet';
 import moment from 'moment';
 import store from '@/store';
 import {getJson} from './api'
+import {get_table_rows} from '@/api/list'
 
 let cdnImgJson = localStorage.getItem('ImgJson') ? JSON.parse(localStorage.getItem('ImgJson')) : {}; // CDN 图片配置
 async function getCdnImgJson() {
@@ -75,21 +76,14 @@ export function accPow(arg1, arg2) {
 
 // 登录
 export function login(vThis, cb) {
-  EosModel.scatterInit(vThis, () => {
-    // handleScatterOut(cb)
-    EosModel.getIdentity('eos', (err => {
-      cb(err)
+  DApp.scatterInit(vThis, () => {
+    DApp.login('eos', (res => {
+      cb(res)
     }));
   });
 }
-// 先退出scatter
-export function handleScatterOut(cb) {
-  EosModel.accountLoginOut(() => {
-    EosModel.getIdentity('eos', (err => cb(err)));
-  });
-}
 // 获取60秒均价
-export function getPrice(cb) {
+export async function getPrice(cb) {
   const baseConfig = store.state.sys.baseConfig;
   const params = {
     code: baseConfig.oracle, // 'jinoracle113',
@@ -98,12 +92,14 @@ export function getPrice(cb) {
     scope: '0',
     table: 'avgprices',
   }
-  EosModel.getTableRows(params, (res) => {
-    const list = res.rows || [];
-    const t = list.find(v => v.key === 60) || {};
-    const price = toFixed(t.price0_avg_price / 10000, 4);
-    cb(price);
-  })
+  const {status, result} = await get_table_rows(params)
+  if (!status || !result.rows.length) {
+    return
+  }
+  const list = result.rows || [];
+  const t = list.find(v => v.key === 60) || {};
+  const price = toFixed(t.price0_avg_price / 10000, 4);
+  cb(price);
 }
 
 // 科学计数法转数值 - 处理 1e-7 这类精度问题
@@ -486,8 +482,8 @@ export function getCoin(contract, coin) {
 
 // 处理账号缩略 < 12 隐藏后半部分 | === 12 隐藏中间部分 | 自己账户不处理
 export function dealAccountHide(str) {
-  const scatter = store.state.app.scatter;
-  if (scatter && scatter.identity && scatter.identity.accounts[0].name === str) {
+  const account = store.state.app.account;
+  if (account && account.name && account.name === str) {
     return str
   }
   const t = str.length % 3;

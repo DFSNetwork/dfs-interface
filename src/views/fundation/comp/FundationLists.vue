@@ -306,8 +306,8 @@ export default {
         return
       }
       const params = {};
-      if (this.scatter && this.scatter.identity) {
-        params.user = this.scatter.identity.accounts[0].name;
+      if (this.account && this.account.name) {
+        params.user = this.account.name;
       }
       const {status, result} = await get_top3_fundation();
       if (!status) {

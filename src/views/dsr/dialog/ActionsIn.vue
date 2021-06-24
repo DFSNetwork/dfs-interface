@@ -74,7 +74,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import { EosModel } from '@/utils/eos';
+import { DApp } from '@/utils/wallet';
 import { toFixed, accMul, accAdd, accDiv, toLocalTime } from '@/utils/public';
 import ActionsInSure from './ActionsInSure';
 
@@ -135,7 +135,7 @@ export default {
   },
   computed: {
     ...mapState({
-      scatter: state => state.app.scatter,
+      account: state => state.app.account,
     }),
     timeApr() {
       return this.handleApr(this.value);
@@ -147,9 +147,9 @@ export default {
     }
   },
   watch: {
-    scatter: {
+    account: {
       handler: function listen(newVal) {
-        if (newVal.identity) {
+        if (newVal.name) {
           this.handleBalanTimer();
         }
       },
@@ -223,24 +223,26 @@ export default {
         memo,
         quantity: `${this.payNum} DFS`
       }
-      EosModel.transfer(params, (res) => {
+      DApp.transfer(params, (err) => {
         this.loading = false;
-        if(res.code && JSON.stringify(res.code) !== '{}') {
-          this.handleClose();
-          this.$message({
-            message: res.message,
-            type: 'error'
-          });
-          return
+        if (err && err.code == 402) {
+          return;
         }
+        if (err) {
+          this.$toast({
+            type: 'fail',
+            message: err.message,
+          })
+          return;
+        }
+        this.$toast({
+          message: this.$t('public.success'),
+          type: 'success'
+        });
         this.payNum = '';
         this.handleBalanTimer();
         this.showSure = false;
         this.$emit('listenClose', true)
-        this.$message({
-          message: this.$t('public.success'),
-          type: 'success'
-        });
       })
     },
     // 重启余额定时器
@@ -255,14 +257,16 @@ export default {
     async handleGetBalance() {
       const params = {
         code: this.thisMarket.contract,
-        coin: this.thisMarket.symbol,
-        decimal: this.thisMarket.decimal
+        symbol: this.thisMarket.symbol,
+        decimal: this.thisMarket.decimal,
+        account: this.account.name,
       };
-      await EosModel.getCurrencyBalance(params, res => {
-        let balance = toFixed('0.0000000000001', params.decimal);
-        (!res || res.length === 0) ? balance : balance = res.split(' ')[0];
-        this.balance = balance;
-      })
+      const {status, result} = await this.$api.get_currency_balance(params);
+      if (!status) {
+        return
+      }
+      const balance = result.split(' ')[0];
+      this.balance = balance;
     },
   }
 }

@@ -522,7 +522,7 @@ export default {
       }
       DApp.transfer(params, (err) => {
         this.loading = false;
-        if (err && err.code === 402) {
+        if (err && err.code == 402) {
           return;
         }
         if (err) {

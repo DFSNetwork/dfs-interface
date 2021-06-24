@@ -40,7 +40,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import { EosModel } from '@/utils/eos';
+import { DApp } from '@/utils/wallet';
 import { get_balance } from '@/utils/api'
 import { toFixed } from '@/utils/public';
 
@@ -62,7 +62,7 @@ export default {
   },
   computed: {
     ...mapState({
-      scatter: state => state.app.scatter,
+      account: state => state.app.account,
     }),
     regNum() {
       if (!Number(this.deposit)) {
@@ -77,9 +77,9 @@ export default {
     }
   },
   watch: {
-    scatter: {
+    account: {
       handler: function acc(newVal) {
-        if (newVal.identity) {
+        if (newVal.name) {
           this.handleGetBal();
         }
       },
@@ -108,7 +108,7 @@ export default {
       this.balTimer = setTimeout(() => {
         this.handleGetBal()
       }, 5000);
-      const formName = this.scatter.identity.accounts[0].name;
+      const formName = this.account.name;
       const params = {
         code: 'eosio.token',
         symbol: 'EOS',
@@ -132,20 +132,23 @@ export default {
         memo: `deposit`,
         quantity: `${toFixed(this.deposit, 4)} EOS`
       }
-      EosModel.transfer(params, (res) => {
+      DApp.transfer(params, (err) => {
         this.loading = false;
-        if(res.code && JSON.stringify(res.code) !== '{}') {
-          this.$message({
-            message: res.message,
-            type: 'error'
-          });
-          return
+        if (err && err.code == 402) {
+          return;
         }
-        this.handleClose(true)
-        this.$message({
+        if (err) {
+          this.$toast({
+            type: 'fail',
+            message: err.message,
+          })
+          return;
+        }
+        this.$toast({
           message: this.$t('public.success'),
           type: 'success'
         });
+        this.handleClose(true)
       })
     }
   }

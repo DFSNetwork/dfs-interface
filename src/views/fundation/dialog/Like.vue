@@ -71,7 +71,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import { EosModel } from '@/utils/eos';
+import { DApp } from '@/utils/wallet';
 import {get_balance} from '@/utils/api'
 
 export default {
@@ -100,7 +100,7 @@ export default {
   },
   computed: {
     ...mapState({
-      scatter: state => state.app.scatter,
+      account: state => state.app.account,
       baseConfig: state => state.sys.baseConfig,
     }),
     about() {
@@ -120,9 +120,9 @@ export default {
     }
   },
   watch: {
-    scatter: {
+    account: {
       handler: function listen(newVal) {
-        if (newVal.identity) {
+        if (newVal.name) {
           // 用户数据获取
           this.handleGetBal()
         }
@@ -133,7 +133,7 @@ export default {
   },
   methods: {
     async handleGetBal() {
-      const formName = this.scatter.identity.accounts[0].name;
+      const formName = this.account.name;
       const params = {
         code: 'tagtokenmain',
         symbol: 'TAG',
@@ -159,11 +159,11 @@ export default {
       if (this.showErr) {
         return
       }
-      if (!this.scatter || !this.scatter.identity) {
+      if (!this.account || !this.account.name) {
         return
       }
-      const formName = this.scatter.identity.accounts[0].name;
-      const permission = this.scatter.identity.accounts[0].authority;
+      const formName = this.account.name;
+      const permission = this.account.permissions;
       const memo = `${formName} 💗 ${this.replyItem.fromx || this.reply.fromx}`;
       const quantity = `${Number(this.num).toFixed(8)} TAG`;
       const transfer = {
@@ -201,16 +201,19 @@ export default {
       const params = {
         actions: [like, transfer],
       }
-      EosModel.toTransaction(params, (res) => {
+      DApp.toTransaction(params, (err) => {
         this.loading = false;
-        if(res.code && JSON.stringify(res.code) !== '{}') {
-          this.$message({
-            message: res.message,
-            type: 'error'
-          });
-          return
+        if (err && err.code == 402) {
+          return;
         }
-        this.$message({
+        if (err) {
+          this.$toast({
+            type: 'fail',
+            message: err.message,
+          })
+          return;
+        }
+        this.$toast({
           message: this.$t('public.success'),
           type: 'success'
         });

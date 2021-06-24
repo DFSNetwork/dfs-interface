@@ -9,9 +9,8 @@
 import moment from 'moment';
 import { DApp } from '@/utils/wallet';
 import { mapState } from 'vuex';
-import { GetUrlPara, login, getUrlParams, toLocalTime, accPow, accDiv, toFixed } from '@/utils/public';
+import { GetUrlPara, login, getUrlParams, toLocalTime, accPow, accDiv } from '@/utils/public';
 import { getVotePools, get_balance } from '@/utils/api';
-import { EosModel } from '@/utils/eos';
 import MyKonami from '@/views/konami/Index';
 
 import {getTagLpBal} from '@/utils/minerLogic';
@@ -57,11 +56,10 @@ export default {
     this.handleEnvReLoad();
     this.handleEnvSet();
     this.handleGetTokensInfo()
-    EosModel.scatterInit(this, () => {
-      this.handleLogin()
-      DApp.scatterInit(this, () => {
+    DApp.scatterInit(this, () => {
+      DApp.login(() => {
       })
-    });
+    })
     setTimeout(() => {
       this.handleGetDfsCurrent()
       this.handleYfcData();
@@ -115,36 +113,8 @@ export default {
     handleLogin() {
       login(this, () => {})
     },
-    handleRegInviAcc(inviAcc) {
-      setTimeout(() => {
-        const params = {
-          "code": "dfsdfsfamily",
-          "scope": "dfsdfsfamily",
-          "table": "codes",
-          "index_position": 2,
-          "key_type": "i64",
-          "lower_bound": ` ${inviAcc}`,
-          "upper_bound": ` ${inviAcc}`,
-          "json": true,
-        }
-        EosModel.getTableRows(params, (res) => {
-          if (!res.rows.length) {
-            localStorage.removeItem('inviAcc')
-            return
-          }
-          const inviAcc = res.rows[0];
-          localStorage.setItem('inviAcc', JSON.stringify(inviAcc))
-        })
-      }, 200);
-    },
     handleSetLang() {
       const urlParams = getUrlParams(window.location.href) || {};
-      // set inviAcc
-      const inviAcc = urlParams.code;
-      const localInviAcc = localStorage.getItem('inviAcc') ? JSON.parse(localStorage.getItem('inviAcc')) : {}
-      if (inviAcc && !localInviAcc.accSet) {
-        this.handleRegInviAcc(inviAcc)
-      }
       // set wallet
       const wallet = urlParams.wallet || localStorage.getItem('WALLET') || 'scatter';
       localStorage.setItem('WALLET', wallet)
@@ -213,7 +183,7 @@ export default {
       this.$store.dispatch('setDamping', damping)
     },
     // DFS价格 - 5分钟一次
-    handleGetPrice() {
+    async handleGetPrice() {
       const params = {
         "code": "defislinkeos",
         "scope": "39",
@@ -221,79 +191,82 @@ export default {
         "limit": 3,
         "json": true,
       }
-      EosModel.getTableRows(params, (res) => {
-        const rows = res.rows || [];
-        if (!rows.length) {
-          return
-        }
-        const price = rows.find(v => v.key === 300) || {};
-        const price5min = accDiv(price.price1_avg_price, 10000) || 0;
-        this.$store.dispatch('setDfsPrice', price5min)
-      })
+      const {status, result} = await this.$api.get_table_rows(params)
+      if (!status || !result.rows.length) {
+        return
+      }
+      const rows = result.rows || [];
+      const price = rows.find(v => v.key === 300) || {};
+      const price5min = accDiv(price.price1_avg_price, 10000) || 0;
+      this.$store.dispatch('setDfsPrice', price5min)
     },
     // 获取YFC矿池列表 - 执行一次
     handleGetPonds() {
-      this.lpMid.forEach(v => {
+      this.lpMid.forEach(async v => {
         const params = {
           "code": v.mineAcc,
           "scope": v.mineAcc,
           "table": "ponds",
           "json": true,
-          limit: 1000,
+          limit: -1,
         }
-        EosModel.getTableRows(params, (res) => {
-          const rows = res.rows || []
-          if (!rows.length) {
-            return
+        const {status, result} = await this.$api.get_table_rows(params)
+        if (!status) {
+          return
+        }
+        const rows = result.rows || []
+        if (!rows.length) {
+          return
+        }
+        const list = rows;
+        list.forEach(v => {
+          if (v.start) {
+            let beginTime = toLocalTime(`${v.start}.000+0000`);
+            beginTime = moment(beginTime).valueOf();
+            this.$set(v, 'beginTime', beginTime / 1000);
           }
-          const list = rows;
-          list.forEach(v => {
-            if (v.start) {
-              let beginTime = toLocalTime(`${v.start}.000+0000`);
-              beginTime = moment(beginTime).valueOf();
-              this.$set(v, 'beginTime', beginTime / 1000);
-            }
-            if (v.end) {
-              let endTime = toLocalTime(`${v.end}.000+0000`);
-              endTime = moment(endTime).valueOf();
-              this.$set(v, 'endTime', endTime / 1000);
-            }
-          });
-          const lpMineList = this.$store.state.config.lpMineList;
-          lpMineList[v.symbol] = list;
-          this.$store.dispatch('setLpMineList', lpMineList)
-        })
+          if (v.end) {
+            let endTime = toLocalTime(`${v.end}.000+0000`);
+            endTime = moment(endTime).valueOf();
+            this.$set(v, 'endTime', endTime / 1000);
+          }
+        });
+        const lpMineList = this.$store.state.config.lpMineList;
+        lpMineList[v.symbol] = list;
+        this.$store.dispatch('setLpMineList', lpMineList)
       })
     },
     // 获取swap, yfc池子账户余额 - 10秒轮询
-    handleGetBalance(type) {
+    async handleGetBalance(type) {
       if (!type) {
         let params = {
           code: 'eosio.token',
-          coin: 'EOS',
+          symbol: 'EOS',
           decimal: 4,
           account: 'defisswapcnt'
         };
-        EosModel.getCurrencyBalance(params, res => {
-          let balanceYfc = toFixed('0.0000000000001', params.decimal);
-          (!res || res.length === 0) ? balanceYfc : balanceYfc = res.split(' ')[0];
-          this.$store.dispatch('setPoolsBal', balanceYfc)
-        })
+        const {status, result} = await this.$api.get_currency_balance(params);
+        if (!status) {
+          return
+        }
+        const bal = result.split(' ')[0];
+        this.$store.dispatch('setPoolsBal', bal)
       }
-      this.lpMid.forEach(v => {
+      this.lpMid.forEach(async v => {
         const params = {
           code: v.contract,
-          coin: v.symbol,
+          symbol: v.symbol,
           decimal: v.decimal,
           account: v.poolAcc
         }
-        EosModel.getCurrencyBalance(params, res => {
-          let balanceYfc = toFixed('0.0000000000001', params.decimal);
-          (!res || res.length === 0) ? balanceYfc : balanceYfc = res.split(' ')[0];
-          const lpPoolsBal = this.$store.state.config.lpPoolsBal;
-          lpPoolsBal[v.symbol] = balanceYfc;
-          this.$store.dispatch('setLpPoolsBal', lpPoolsBal)
-        })
+        const {status, result} = await this.$api.get_currency_balance(params);
+        if (!status) {
+          return
+        }
+        const bal = result.split(' ')[0];
+        const lpPoolsBal = this.$store.state.config.lpPoolsBal;
+        lpPoolsBal[v.symbol] = bal;
+        this.$store.dispatch('setLpPoolsBal', lpPoolsBal)
       })
       getTagLpBal(() =>{})
     },

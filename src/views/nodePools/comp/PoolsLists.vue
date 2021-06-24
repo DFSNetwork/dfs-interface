@@ -134,7 +134,6 @@
 import { toFixed, countdown } from '@/utils/public';
 import { sellToken } from '@/utils/logic';
 import { mapState } from 'vuex';
-import { EosModel } from '@/utils/eos';
 
 import SureTip from '@/views/farms/dialog/SureTip';
 import MineRules from '../dialog/MineRules';
@@ -232,7 +231,7 @@ export default {
   },
   computed: {
     ...mapState({
-      scatter: state => state.app.scatter,
+      account: state => state.app.account,
       baseConfig: state => state.sys.baseConfig,
       marketLists: state => state.sys.marketLists,
     }),
@@ -243,9 +242,9 @@ export default {
     }
   },
   watch: {
-    scatter: {
+    account: {
       handler: function listen(newVal) {
-        if (newVal.identity) {
+        if (newVal.name) {
           this.handleStartTimer()
         }
       },
@@ -334,28 +333,30 @@ export default {
       // this.handleGetBal('bal1')
     },
     handleGetBal(type = 'bal0') {
-      if (!this.scatter || !this.scatter.identity || !this.lpLists.length) {
+      if (!this.account || !this.account.name || !this.lpLists.length) {
         return
       }
-      this.lpLists.forEach(v => {
-        // const v = this.lpLists[0];
+      this.lpLists.forEach(async v => {
         let params = {
           code: v.contract0,
-          coin: v.symbol0,
+          symbol: v.symbol0,
           decimal: v.decimal0,
+          account: this.account.name
         }
         if (type !== 'bal0') {
           params = {
             code: v.contract1,
-            coin: v.symbol1,
+            symbol: v.symbol1,
             decimal: v.decimal1,
+            account: this.account.name
           }
         }
-        EosModel.getCurrencyBalance(params, res => {
-          let balance = toFixed('0.0000000000001', params.decimal);
-          (!res || res.length === 0) ? balance : balance = res.split(' ')[0];
-          type === 'bal0' ? this.$set(v, 'bal0', balance) : this.$set(v, 'bal1', balance);
-        })
+        const {status, result} = await this.$api.get_currency_balance(params);
+        if (!status) {
+          return
+        }
+        const balance = result.split(' ')[0];
+        type === 'bal0' ? this.$set(v, 'bal0', balance) : this.$set(v, 'bal1', balance);
       })
     },
     // 计算相差多少

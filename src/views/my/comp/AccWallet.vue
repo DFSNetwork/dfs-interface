@@ -77,7 +77,7 @@ export default {
   },
   computed: {
     ...mapState({
-      scatter: state => state.app.scatter,
+      account: state => state.app.account,
       baseConfig: state => state.sys.baseConfig,
       marketLists: state => state.sys.marketLists,
       dsrPools: state => state.sys.dsrPools,
@@ -94,9 +94,9 @@ export default {
     }
   },
   watch: {
-    scatter: {
+    account: {
       handler: function acc(newVal) {
-        if (newVal.identity) {
+        if (newVal.name) {
           this.handleGetBal();
           this.handleGetDss();
           this.handleGetDfsMarket();
@@ -159,7 +159,7 @@ export default {
       this.marketDfs = marketDfs;
     },
     async handleGetBal() {
-      const formName = this.scatter.identity.accounts[0].name;
+      const formName = this.account.name;
       const params = {
         code: 'minedfstoken',
         symbol: 'DFS',
@@ -174,7 +174,7 @@ export default {
     },
   
     async handleGetDss() {
-      const formName = this.scatter.identity.accounts[0].name;
+      const formName = this.account.name;
       const params = {
         "code": "dfsdsrsystem",
         "scope": "dfsdsrsystem",
@@ -250,7 +250,7 @@ export default {
     },
 
     async handleGetDfsMarket() {
-      const formName = this.scatter.identity.accounts[0].name;
+      const formName = this.account.name;
       const params = {
         code: 'defislogsone',
         scope: formName,
@@ -268,10 +268,10 @@ export default {
     },
     // 获取挖矿用户数据
     async handleGetAccMiner() {
-      if (!this.marketLists.length || !this.scatter || !this.scatter.identity) {
+      if (!this.marketLists.length || !this.account || !this.account.name) {
         return
       }
-      const formName = this.scatter.identity.accounts[0].name;
+      const formName = this.account.name;
       const params = {
         code: 'miningpool11',
         scope: 39,

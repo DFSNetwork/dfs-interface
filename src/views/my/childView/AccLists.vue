@@ -60,7 +60,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import { EosModel } from '@/utils/eos';
+import { DApp } from '@/utils/wallet';
 import { get_acc_lists, get_acc_info } from '@/utils/api';
 import CancelFollow from '../dialog/CancelFollow';
 
@@ -97,7 +97,7 @@ export default {
   },
   computed: {
     ...mapState({
-      scatter: state => state.app.scatter,
+      account: state => state.app.account,
       accInfo: state => state.app.accInfo,
     }),
     type() {
@@ -106,13 +106,13 @@ export default {
     },
   },
   watch: {
-    scatter: {
+    account: {
       handler: function sc (newVal) {
         if (!(this.$route.name === 'follow' || this.$route.name === 'fans' || this.$route.name === 'visitors')) {
           return
         }
-        if (newVal.identity) {
-          this.user = newVal.identity.accounts[0].name;
+        if (newVal.name) {
+          this.user = newVal.name;
           if (this.followLists.length) {
             return
           }
@@ -171,8 +171,8 @@ export default {
       this.checkItem = item
     },
     handleFollow(item) {
-      const formName = this.scatter.identity.accounts[0].name;
-      const permission = this.scatter.identity.accounts[0].authority;
+      const formName = this.account.name;
+      const permission = this.account.permissions;
       
       const params = {
         actions: [{
@@ -188,15 +188,18 @@ export default {
           },
         }]
       }
-      EosModel.toTransaction(params, (res) => {
-        if(res.code && JSON.stringify(res.code) !== '{}') {
-          this.$message({
-            message: res.message,
-            type: 'error'
-          });
-          return
+      DApp.toTransaction(params, (err) => {
+        if (err && err.code == 402) {
+          return;
         }
-        this.$message({
+        if (err) {
+          this.$toast({
+            type: 'fail',
+            message: err.message,
+          })
+          return;
+        }
+        this.$toast({
           message: '关注成功',
           type: 'success'
         });
@@ -301,7 +304,7 @@ export default {
       if (!next_key) {
         this.allFollow = [];
       }
-      const formName = this.scatter.identity.accounts[0].name;
+      const formName = this.account.name;
       const {status, result} = await get_acc_lists(formName, 'followers', next_key);
       this.allFollowLoading = false;
       if (!status) {

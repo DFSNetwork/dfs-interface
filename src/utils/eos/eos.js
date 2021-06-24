@@ -78,7 +78,7 @@ class model {
           this.storeAccountOut(this.scatapp);
         }
         this.scatapp.online = false;
-        store.dispatch('setScatter', this.scatapp);
+        // store.dispatch('setScatter', this.scatapp);
         sessionStorage.setItem('scatterInstall', 0);
         setTimeout(() => {
           self.scatterInit(self.vthis, callback);
@@ -99,12 +99,12 @@ class model {
         //   scatterFrom = getVersion.split(' ')[0].toLowerCase(); // leafwallet 叶子钱包
         // }
         self.scatapp.scatterFrom = scatterFrom;
-        store.dispatch('setScatter', self.scatapp);
+        // store.dispatch('setScatter', self.scatapp);
         self.initNext();
         callback();
       } catch (error) {
         self.scatapp.scatterFrom = scatterFrom;
-        store.dispatch('setScatter', self.scatapp);
+        // store.dispatch('setScatter', self.scatapp);
         self.initNext();
         callback();
       }
@@ -118,7 +118,7 @@ class model {
         scatterItem.identity = null;
         scatterItem.wallet = '';
         scatterItem.chain = 'eos';
-        store.dispatch('setScatter', scatterItem);
+        // store.dispatch('setScatter', scatterItem);
         this.accountByScatter = null;
       }
       return;
@@ -236,7 +236,7 @@ class model {
     scatterItem.online = online;
     // test 账户
     // scatterItem.identity.accounts[0].name = 'dfsdeveloper';
-    store.dispatch('setScatter', scatterItem);
+    // store.dispatch('setScatter', scatterItem);
     localStorage.setItem('Frontend-Token', '');
 
     const newAccount = {
@@ -271,7 +271,7 @@ class model {
       scat.by = '';
       localStorage.setItem('Frontend-Token', '');
       this.accountByScatter = null;
-      store.dispatch('setScatter', scat);
+      // store.dispatch('setScatter', scat);
     }
   }
 

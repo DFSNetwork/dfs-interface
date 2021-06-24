@@ -45,8 +45,6 @@
 
 <script>
 import { mapState } from 'vuex';
-// import { EosModel } from '@/utils/eos';
-// import moment from 'moment';
 import { toFixed, accMul, accDiv } from '@/utils/public';
 import ActionsIn from '../dialog/ActionsIn';
 import ActionsOut from '../dialog/ActionsOut';

@@ -40,7 +40,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import { EosModel } from '@/utils/eos';
+import { DApp } from '@/utils/wallet';
 import { toFixed, toLocalTime, countdown } from '@/utils/public';
 
 export default {
@@ -69,7 +69,7 @@ export default {
   },
   computed: {
     ...mapState({
-      scatter: state => state.app.scatter,
+      account: state => state.app.account,
     }),
     regNum() {
       if (!Number(this.withdraw)) {
@@ -84,9 +84,9 @@ export default {
     }
   },
   watch: {
-    scatter: {
+    account: {
       handler: function acc(newVal) {
-        if (newVal.identity) {
+        if (newVal.name) {
           this.handleGetDepositData();
         }
       },
@@ -111,7 +111,7 @@ export default {
       this.$emit('listenClose', type)
     },
     async handleGetDepositData() {
-      const formName = this.scatter.identity.accounts[0].name;
+      const formName = this.account.name;
       const params = {
         "code":"yfcsteadyone",
         "scope":"EOS",
@@ -153,8 +153,8 @@ export default {
       if (this.down.total > 0) {
         return
       }
-      const permission = this.scatter.identity.accounts[0].authority;
-      const formName = this.scatter.identity.accounts[0].name;
+      const permission = this.account.permissions;
+      const formName = this.account.name;
       let amount = Number(this.withdraw || 0) * 10000
       amount = parseInt(amount)
       const params = {
@@ -172,16 +172,19 @@ export default {
           },
         }],
       }
-      EosModel.toTransaction(params, (res) => {
+      DApp.toTransaction(params, (err) => {
         this.loading = false;
-        if(res.code && JSON.stringify(res.code) !== '{}') {
-          this.$message({
-            message: res.message,
-            type: 'error'
-          });
-          return
+        if (err && err.code == 402) {
+          return;
         }
-        this.$message({
+        if (err) {
+          this.$toast({
+            type: 'fail',
+            message: err.message,
+          })
+          return;
+        }
+        this.$toast({
           message: this.$t('public.success'),
           type: 'success'
         });

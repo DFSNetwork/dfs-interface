@@ -125,7 +125,6 @@
 
 <script>
 import { mapState } from 'vuex';
-import { EosModel } from '@/utils/eos';
 import MarketList from '@/components/MarketArea';
 import Tabs from '../index/components/Tabs';
 import MarketApy from './popup/MarketApy'
@@ -180,7 +179,7 @@ export default {
   },
   computed: {
     ...mapState({
-      scatter: state => state.app.scatter,
+      account: state => state.app.account,
       baseConfig: state => state.sys.baseConfig,
       marketLists: state => state.sys.marketLists,
     }),
@@ -217,9 +216,9 @@ export default {
       deep: true,
       immediate: true
     },
-    scatter: {
+    account: {
       handler: function listen(newVal) {
-        if (newVal.identity) {
+        if (newVal.name) {
           this.handleGetAccToken();
         }
       },
@@ -292,13 +291,13 @@ export default {
       localStorage.setItem('swapMarkets', JSON.stringify(swapMarkets))
     },
     regInit() {
-      if (this.scatter.identity && this.marketLists.length) {
+      if (this.account.name && this.marketLists.length) {
         return true;
       }
       return false;
     },
     // 获取账户当前交易对凭证数量
-    handleGetAccToken() {
+    async handleGetAccToken() {
       if (!this.regInit()) {
         return;
       }
@@ -306,14 +305,16 @@ export default {
         code: this.baseConfig.toAccountSwap,
         scope: this.thisMarket.mid,
         table: 'liquidity',
-        lower_bound: ` ${this.scatter.identity.accounts[0].name}`,
-        upper_bound: ` ${this.scatter.identity.accounts[0].name}`,
+        lower_bound: ` ${this.account.name}`,
+        upper_bound: ` ${this.account.name}`,
         json: true
       }
-      EosModel.getTableRows(params, (res) => {
-        const list = res.rows || [];
-        !list[0] ? this.token = '0' : this.token = `${list[0].token}`;
-      })
+      const {status, result} = await this.$api.get_table_rows(params)
+      if (!status || !result.rows.length) {
+        return
+      }
+      const list = result.rows || [];
+      !list[0] ? this.token = '0' : this.token = `${list[0].token}`;
     },
   }
 }

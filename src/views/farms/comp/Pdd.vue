@@ -23,7 +23,7 @@
 import moment from 'moment';
 import { mapState } from 'vuex';
 import { toFixed, toLocalTime, accAdd, accSub, accDiv, getAccYfcReward, countdown } from '@/utils/public';
-import { EosModel } from '@/utils/eos';
+import { DApp } from '@/utils/wallet';
 export default {
   name: 'pdd',
   props: {
@@ -34,7 +34,7 @@ export default {
   },
   computed: {
     ...mapState({
-      scatter: state => state.app.scatter,
+      account: state => state.app.account,
       poolsBal: state => state.sys.poolsBal,
       lpPoolsBal: state => state.config.lpPoolsBal,
       lpDamping: state => state.config.lpDamping,
@@ -100,9 +100,9 @@ export default {
       deep: true,
       immediate: true,
     },
-    scatter: {
+    account: {
       handler: function listen(newVal) {
-        if (newVal.identity) {
+        if (newVal.name) {
           // this.handleGetAccLpt();
         }
       },
@@ -126,16 +126,19 @@ export default {
       const params = {
         actions,
       }
-      EosModel.toTransaction(params, (res) => {
+      DApp.toTransaction(params, (err) => {
         this.claiming = false;
-        if(res.code && JSON.stringify(res.code) !== '{}') {
-          this.$message({
-            message: res.message,
-            type: 'error'
-          });
-          return
+        if (err && err.code == 402) {
+          return;
         }
-        this.$message({
+        if (err) {
+          this.$toast({
+            type: 'fail',
+            message: err.message,
+          })
+          return;
+        }
+        this.$toast({
           message: this.$t('public.success'),
           type: 'success'
         });
@@ -146,8 +149,8 @@ export default {
     },
     handleGetActions() {
       const actions = [];
-      const formName = this.scatter.identity.accounts[0].name;
-      const permission = this.scatter.identity.accounts[0].authority;
+      const formName = this.account.name;
+      const permission = this.account.permissions;
       this.newLists.forEach(v => {
         if (!v.showReward || !Number(v.showReward)) {
           return
@@ -213,14 +216,14 @@ export default {
       this.handleGetMarketList();
     },
     handleGetMarketList() {
-      if (this.hasGet || !this.scatter || !this.scatter.identity || !this.dealArr.length) {
+      if (this.hasGet || !this.account || !this.account.name || !this.dealArr.length) {
         return;
       }
       this.timerArr.forEach(v => {
         clearInterval(v)
       })
       this.hasGet = true;
-      const formName = this.scatter.identity.accounts[0].name;
+      const formName = this.account.name;
       this.dealArr.forEach((v, index) => {
         if (!Number(v.weight)) {
           return
@@ -230,7 +233,7 @@ export default {
         if (!(tDateStart.total <= 0 && tDateEnd.total > 0) || parseFloat(v.supply) >= parseFloat(v.max_supply)) {
           return
         }
-        setTimeout(() => {
+        setTimeout(async () => {
           const params = {
             code: 'pddfarmers11',
             scope: v.id,
@@ -239,26 +242,24 @@ export default {
             upper_bound: ` ${formName}`,
             json: true,
           }
-          EosModel.getTableRows(params, (res) => {
-            const rows = res.rows || []
-            if (!rows.length) {
-              this.$set(v, 'minnerData', {})
-              this.$set(v, 'showReward', '0.00000000')
-              this.$set(v, 'reward', '0.00000000')
-              return
-            }
-            const minnerData = rows[0];
-            let lastTime = toLocalTime(`${minnerData.last_drip}.000+0000`);
-            lastTime = moment(lastTime).valueOf();
-            minnerData.lastTime = lastTime;
-            const liq = this.getLiq(minnerData);
-            minnerData.liq = liq;
-            this.$set(v, 'minnerData', minnerData)
+          const {status, result} = await this.$api.get_table_rows(params)
+          if (!status || !result.rows.length) {
+            this.$set(v, 'minnerData', {})
             this.$set(v, 'showReward', '0.00000000')
             this.$set(v, 'reward', '0.00000000')
-            // console.log(minnerData)
-            this.handleRunReward()
-          })
+            return
+          }
+          const rows = result.rows || []
+          const minnerData = rows[0];
+          let lastTime = toLocalTime(`${minnerData.last_drip}.000+0000`);
+          lastTime = moment(lastTime).valueOf();
+          minnerData.lastTime = lastTime;
+          const liq = this.getLiq(minnerData);
+          minnerData.liq = liq;
+          this.$set(v, 'minnerData', minnerData)
+          this.$set(v, 'showReward', '0.00000000')
+          this.$set(v, 'reward', '0.00000000')
+          this.handleRunReward()
         }, index * 200);
       })
     },
