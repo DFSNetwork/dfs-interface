@@ -180,7 +180,6 @@ export default {
         v.liq_bal1 = `${parseFloat(nowMarket.getNum2).toFixed(this.thisMarket.decimal1)} ${this.thisMarket.symbol1}`
         let lastTime = toLocalTime(`${v.last_drip}.000+0000`);
         v.lastTime = moment(lastTime).valueOf();
-
         newList.push(v)
       })
       const newListSort = newList.sort((a, b) => {
@@ -188,6 +187,7 @@ export default {
       })
       this.dfsPoolsJson[`${this.$route.params.mid}`] = newListSort
       localStorage.setItem('dfsPoolsJson', JSON.stringify(this.dfsPoolsJson))
+      // console.log(newListSort)
       this.allMinersList = newListSort;
       this.handleCurrentChange()
     },
@@ -206,6 +206,7 @@ export default {
       this.secTimer = setTimeout(() => {
         this.handleRunReward()
       }, 1000);
+      // console.log(this.allBal, this.swapBal)
       this.minersArr.forEach(v => {
         if (!v.token) {
           return
@@ -222,6 +223,7 @@ export default {
             num
           })
           reward = parseFloat(reward || 0) + parseFloat(reward0 || 0);
+          // console.log('usdt - ', reward0)
         }
         if (market.contract0 === 'eosio.token' || market.contract1 === 'eosio.token') {
           const num = market.contract0 === 'eosio.token' ? parseFloat(v.liq_bal0) : parseFloat(v.liq_bal1) 
@@ -233,6 +235,7 @@ export default {
             num
           })
           reward = parseFloat(reward || 0) + parseFloat(reward0 || 0);
+          // console.log('eos - ', reward0)
         }
         if (market.contract0 === 'minedfstoken' || market.contract1 === 'minedfstoken') {
           const num = market.contract0 === 'minedfstoken' ? parseFloat(v.liq_bal0) : parseFloat(v.liq_bal1) 
@@ -244,6 +247,7 @@ export default {
             num
           })
           reward = parseFloat(reward || 0) + parseFloat(reward0 || 0);
+          // console.log('dfs - ', reward0)
         }
         this.$set(v, 'reward', reward)
       })
