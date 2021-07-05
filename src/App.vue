@@ -2,6 +2,7 @@
   <div id="app" class="app">
     <router-view></router-view>
     <my-konami />
+    <NewwalletConf />
   </div>
 </template>
 
@@ -12,13 +13,15 @@ import { mapState } from 'vuex';
 import { GetUrlPara, login, getUrlParams, toLocalTime, accPow, accDiv } from '@/utils/public';
 import { getVotePools, get_balance } from '@/utils/api';
 import MyKonami from '@/views/konami/Index';
+import NewwalletConf from '@/components/NewwalletConf'
 
 import {getTagLpBal} from '@/utils/minerLogic';
 
 export default {
   name: 'App',
   components: {
-    MyKonami
+    MyKonami,
+    NewwalletConf
   },
   computed: {
     ...mapState({

@@ -158,6 +158,9 @@ export default {
 
     handleCancelLike() {
       if (!this.account.name) {
+        this.$router.push({
+          name: 'loginWallet'
+        })
         return
       }
       const formName = this.account.name;
@@ -198,6 +201,9 @@ export default {
     },
     handleAddLike() {
       if (!this.account.name) {
+        this.$router.push({
+          name: 'loginWallet'
+        })
         return
       }
       const formName = this.account.name;

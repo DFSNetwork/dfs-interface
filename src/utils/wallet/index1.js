@@ -121,7 +121,7 @@ class ScatterClass {
             from: formName,
             to: obj.toAccount,
             quantity: obj.quantity,
-            memo: obj.memo || 'test'
+            memo: obj.memo || ''
           }
         }
       ]

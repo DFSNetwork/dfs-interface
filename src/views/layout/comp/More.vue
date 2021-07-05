@@ -6,15 +6,18 @@
     v-model="showNav">
     <div class="morePop">
       <div class="acc flexb">
-        <div>
-          <div @click="handleLogin" v-if="!account || !account.name"
-            class="login">{{ $t('more.login') }}</div>
+        <div style="flex:1">
+          <div class="flexb" v-if="!account || !account.name">
+            <div
+              class="login" @click="handleLogin('newwallet')">账号登录</div>
+            <div class="appLogin" @click="handleLogin('scatter')">钱包登录</div>
+          </div>
           <div v-else class="login">{{ account.name }}</div>
           <div class="tip">{{ $t('more.wel') }}</div>
         </div>
-        <img v-if="!account || !account.name" @click="handleLogin"
-          class="right" src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/acc_right.svg" alt="">
-        <span v-else class="red exit" @click="handleLoginOut">{{ $t('public.loginOut') }}</span>
+        <!-- <img v-if="!account || !account.name" @click="handleLogin"
+          class="right" src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/acc_right.svg" alt=""> -->
+        <span v-if="account && account.name" class="red exit" @click="handleLoginOut">{{ $t('public.loginOut') }}</span>
       </div>
       <!-- list -->
       <div class="lists">
@@ -92,20 +95,8 @@
         </div>
       </div>
 
-      <!-- 切换语言 -->
-      <!-- <div class="lang flexb" @click="handleChangeLang()">
-        <span v-if="language === 'zh-CN'">{{ $t('public.switchLang') }}</span>
-        <span v-else>{{ $t('public.switchLang') }}</span>
-        <img class="langImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/lang.svg">
-      </div> -->
-      <!-- versions -->
-      <!-- <div class="flexa version">
-        <span class="flexc" @click="handleToV1('v1')">V1</span>
-        <span class="flexc" @click="handleToV1('v2')">V2</span>
-        <span class="flexc" @click="handleToV1('v3')">V3</span>
-        <span class="flexc" @click="handleToV1('v4')">V4</span>
-        <span class="flexc" @click="handleToV1('v5')">V5</span>
-      </div> -->
+      <div class="exportPrivate flexc" @click="handleShowComp('exportPrivate')"
+        v-if="account.name && wallet === 'newwallet'">导出我的私钥</div>
     </div>
   </van-popup>
 </template>
@@ -121,10 +112,12 @@ export default {
     return {
       showNav: false,
       cpuSwitch: false,
+      wallet: '',
     }
   },
   mounted() {
     this.cpuSwitch = this.freeCpu;
+    this.wallet = localStorage.getItem('WALLET')
   },
   computed: {
     ...mapState({
@@ -147,9 +140,18 @@ export default {
       this.$store.dispatch('setLanguage', type);
     },
     // 登录
-    handleLogin() {
-      login(this, () => {
-        this.showNav = false;
+    handleLogin(wallet) {
+      this.wallet = wallet;
+      localStorage.setItem('WALLET', wallet)
+      DApp.scatterInit(this, () => {
+        if (wallet === 'newwallet') {
+          this.handleTo('loginWallet')
+          return
+        }
+        login(this, () => {
+          this.showNav = false;
+          this.handleTo('home')
+        })
       })
     },
     handleShowNode() {
@@ -188,7 +190,7 @@ export default {
     },
     handleLoginOut() {
       DApp.loginOut(() => {
-        location.reload()
+        // location.reload()
       })
     },
     // 分享 - 复制文本
@@ -212,11 +214,11 @@ export default {
 
 <style lang="scss" scoped>
 /*iphoneX、iphoneXs*/
-@media only screen and (max-width: 750px) {
-  .exit{
-    display: none !important;
-  }
-}
+// @media only screen and (max-width: 750px) {
+//   .exit{
+//     display: none !important;
+//   }
+// }
 .morePop{
   max-height: 100vh;
   overflow: auto;
@@ -225,16 +227,27 @@ export default {
     width: 20px;
   }
   .red{
-    color: #EB6765;
+    color: #FFF;
+    background: #EB6765;
+    padding: 14px 22px;
+    font-size: 24px;
+    border-radius: 20px;
   }
   .acc{
-    padding: 30px 60px 0px 30px;
+    padding: 30px 15px 0px 30px;
     text-align: left;
     .login{
       font-size: 50px;
       font-weight: 500;
       margin-bottom: 10px;
       color: #333;
+    }
+    .appLogin{
+      color: #FFF;
+      background: $color-main;
+      padding: 14px 22px;
+      border-radius: 20px;
+      font-size: 24px;
     }
   }
   .lists{
@@ -348,6 +361,13 @@ export default {
         width: 60px;
       }
     }
+  }
+  .exportPrivate{
+    border: 2px solid $color-main;
+    color: $color-main;
+    margin: 30px;
+    height: 80px;
+    border-radius: 20px;
   }
 }
 

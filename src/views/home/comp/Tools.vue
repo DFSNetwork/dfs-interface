@@ -14,44 +14,51 @@
 
     <!-- 应用工具 -->
     <div class="appLists">
-      <div class="lists flexb">
-        <div class="list" @click="handleTo('invite')">
-          <!-- <img class="hot" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/new.png"> -->
-          <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/invite_icon.png">
-          <div>{{ $t('invite.myFarm') }}</div>
-        </div>
-        <div class="list" @click="handleTo('vote')">
-          <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/vote_icon.png">
-          <div>{{ $t('home.vote') }}</div>
-        </div>
-        <div class="list" @click="handleTo('mineHomeDfs')">
-          <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/mining_icon.png">
-          <div>{{ $t('home.mine') }}</div>
-        </div>
-        <div class="list" @click="handleToPro('suggestions')">
-          <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/fundation_icon.png">
-          <div>{{ $t('home.issues') }}</div>
-        </div>
-      </div>
-      <div class="lists flexb">
-        <div class="list" @click="handleTo('financial')">
-          <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/financial_icon.png">
-          <div>{{ $t('home.financial') }}</div>
-        </div>
-        <div class="list" @click="handleTo('dssHomeDfs')">
-          <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/dss_icon.png">
-          <div>DFS DSS</div>
-        </div>
-        <div class="list" @click="handleToPro('usdx')">
-          <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/usdx_icon.png">
-          <div>USDX</div>
-        </div>
-        <div class="list" @click="handleToPro('record')">
-          <!-- <img class="hot" src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/hot.png"> -->
-          <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/note_icon.png">
-          <div>{{ $t('home.diary') }}</div>
-        </div>
-      </div>
+      <van-swipe class="my-swipe" :autoplay="10000" :loop="false" indicator-color="#29D4B0">
+        <van-swipe-item>
+          <div class="lists flexb">
+            <div class="list" @click="handleTo('invite')">
+              <!-- <img class="hot" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/new.png"> -->
+              <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/invite_icon.png">
+              <div>{{ $t('invite.myFarm') }}</div>
+            </div>
+            <div class="list" @click="handleTo('vote')">
+              <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/vote_icon.png">
+              <div>{{ $t('home.vote') }}</div>
+            </div>
+            <div class="list" @click="handleTo('mineHomeDfs')">
+              <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/mining_icon.png">
+              <div>{{ $t('home.mine') }}</div>
+            </div>
+            <div class="list" @click="handleToPro('suggestions')">
+              <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/fundation_icon.png">
+              <div>{{ $t('home.issues') }}</div>
+            </div>
+          </div>
+          <div class="lists flexb">
+            <div class="list" @click="handleTo('financial')">
+              <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/financial_icon.png">
+              <div>{{ $t('home.financial') }}</div>
+            </div>
+            <div class="list" @click="handleTo('dssHomeDfs')">
+              <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/dss_icon.png">
+              <div>DFS DSS</div>
+            </div>
+            <div class="list" @click="handleToPro('usdx')">
+              <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/usdx_icon.png">
+              <div>USDX</div>
+            </div>
+            <div class="list" @click="handleToPro('record')">
+              <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/note_icon.png">
+              <div>{{ $t('home.diary') }}</div>
+            </div>
+          </div>
+        </van-swipe-item>
+
+        <van-swipe-item>
+          123
+        </van-swipe-item>
+      </van-swipe>
     </div>
   </div>
 </template>
@@ -133,11 +140,25 @@ export default {
 }
 .appLists{
   font-size: 24px;
-  background: #FFF;
-  padding: 22px 10px;
+  // background: #FFF;
+  // padding: 22px 10px;
   border-radius: 10px;
-  margin-bottom: 20px;
+  // margin-bottom: 20px;
   color: #333;
+  .my-swipe{
+    padding-bottom: 56px;
+    /deep/ .van-swipe__track{
+      padding: 22px 0px 32px;
+      background: #FFF;
+      box-sizing: border-box;
+    }
+    /deep/ .van-swipe__indicator{
+      width: 20px;
+      height: 6px;
+      border-radius: 2px;
+      background: #999999;
+    }
+  }
   .lists{
     margin-bottom: 28px;
     text-align: center;

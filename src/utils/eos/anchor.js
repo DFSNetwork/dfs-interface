@@ -19,8 +19,8 @@ class AnchorClass {
     this.transport = null
     this.link = null
     this.vthis = null
-    location.reload()
-    cb()
+    // location.reload()
+    this.scatterInit(this.vthis, cb)
   }
   async login(cb) {
     const identity = await this.link.login('apps.defis.network')

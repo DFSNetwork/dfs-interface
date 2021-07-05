@@ -9,7 +9,6 @@
 
 <script>
 import { mapState } from 'vuex';
-import { DApp } from '@/utils/wallet';
 import { dealAreaArr } from '@/views/pddex/comp/appLogic';
 
 export default {
@@ -24,8 +23,6 @@ export default {
   },
   mounted() {
     this.handleGetMarkets()
-    DApp.scatterInit(this, () => {
-    })
   },
   computed: {
     ...mapState({

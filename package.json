@@ -24,6 +24,7 @@
     "mockjs": "^1.1.0",
     "moment": "^2.24.0",
     "numeral": "^2.0.6",
+    "qrcode": "^1.4.4",
     "qrcodejs2": "^0.0.2",
     "scatterjs-core": "^2.7.7",
     "scatterjs-plugin-eosjs": "^1.5.0",

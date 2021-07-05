@@ -59,7 +59,7 @@ class ScatterClass {
   loginOut(cb) {
     const self = this;
     self.scatter.forgetIdentity()
-    location.reload()
+    // location.reload()
     cb()
   }
   // login
@@ -121,7 +121,7 @@ class ScatterClass {
             from: formName,
             to: obj.toAccount,
             quantity: obj.quantity,
-            memo: obj.memo || 'test'
+            memo: obj.memo || ''
           }
         }
       ]

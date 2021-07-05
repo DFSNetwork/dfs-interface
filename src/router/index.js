@@ -136,12 +136,6 @@ const constantRouter = [
         component: () => import(/* webpackChunkName: "home" */ '@/views/nodePools/childView/DetailLists.vue'),
         meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noTab: true },
       },
-      { // 我的页面
-        path: '/my-center',
-        name: 'myCenter',
-        component: () => import(/* webpackChunkName: "home" */ '@/views/my/Index.vue'),
-        meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noHeader: true },
-      },
       { // 编辑资料
         path: '/my-center/set-edit',
         name: 'setInfo',
@@ -492,6 +486,52 @@ const constantRouter = [
             meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noTab: true, noHeader: true, },
           },
         ]
+      },
+    ],
+  },
+  // 创建账户
+  {
+    path: '/wallet',
+    component: Layout,
+    redirect: '/',
+    children: [
+      {
+        path: 'create-wallet',
+        name: 'createWallet',
+        component: () => import(/* webpackChunkName: "home" */ '@/views/accForPwd/Index.vue'),
+        meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noTab: true },
+      },
+      {
+        path: 'login-wallet',
+        name: 'loginWallet',
+        component: () => import(/* webpackChunkName: "home" */ '@/views/accForPwd/Login.vue'),
+        meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noTab: true },
+      },
+    ],
+  },
+  // 个人中心
+  {
+    path: '/my-center',
+    component: Layout,
+    redirect: '/',
+    children: [
+      { // 我的页面
+        path: '/',
+        name: 'myCenter',
+        component: () => import(/* webpackChunkName: "home" */ '@/views/my/Index.vue'),
+        meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noHeader: true },
+      },
+      { // 转账页面
+        path: 'transfer',
+        name: 'myTransfer',
+        component: () => import(/* webpackChunkName: "home" */ '@/views/my/childView/Transfer.vue'),
+        meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noHeader: true, noTab: true },
+      },
+      { // 收款页面
+        path: 'receive',
+        name: 'myReceive',
+        component: () => import(/* webpackChunkName: "home" */ '@/views/my/childView/Receive.vue'),
+        meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noHeader: true, noTab: true },
       },
     ],
   },

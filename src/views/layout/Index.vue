@@ -25,6 +25,14 @@
     </el-dialog>
 
     <warm-tip :showWarm="showWarm" @listenClose="handleClose" />
+
+
+    <van-popup class="popup_p"
+      style="width: 700px"
+      v-model="showRisk">
+      <ExportPrivateKey 
+        @listenClose="handleClose"/>
+    </van-popup>
   </div>
 </template>
 
@@ -39,6 +47,7 @@ import InviAcc from '@/components/InviAcc';
 import NodeSet from '@/components/popup/NodeSet';
 import WarmTip from '@/components/WarmTip';
 import Tabbar from './comp/Tabbar';
+import ExportPrivateKey from '@/views/accForPwd/popup/ExportPrivateKey'
 
 import { get_acc_info, get_balance } from '@/utils/api';
 import { dealMarketLists } from '@/utils/logic';
@@ -58,6 +67,7 @@ export default {
     NodeSet,
     WarmTip,
     Tabbar,
+    ExportPrivateKey,
   },
   data() {
     return {
@@ -68,6 +78,7 @@ export default {
       showInvi: false,
       showNode: false,
       showWarm: false,
+      showRisk: false,
       tagTimer: null,
 
       // 价格定时器
@@ -144,6 +155,7 @@ export default {
     handleClose() {
       this.showWarm = false;
       this.showNode = false;
+      this.showRisk = false;
     },
     handleShowComp(type) {
       if (type === 'invi') {
@@ -157,6 +169,9 @@ export default {
       }
       if (type === 'silderSet') {
         this.$refs.slipPointTools.showNav = true;
+      }
+      if (type === 'exportPrivate') {
+        this.showRisk = true;
       }
     },
     handleShowNav() {

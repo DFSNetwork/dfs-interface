@@ -5,6 +5,8 @@ const fetch = require('node-fetch');
 
 import { get_account, reg_newaccount, pushFreeCpu } from '@/api/list'
 import store from '@/store';
+import Bus from '@/utils/bus';
+import { asset } from 'eosjs-without-sort/lib/schema';
 
 class newWallet {
   constructor() {
@@ -13,6 +15,7 @@ class newWallet {
     this.rpc = null;
     this.signatureProvider = null;
     this.public_key = null;
+    this.prive_key = null;
     this.vthis = null;
   }
   scatterInit(vthis, cb) {
@@ -22,22 +25,27 @@ class newWallet {
     console.log('init')
     cb()
   }
+  exportPrivateKey() {
+    return this.prive_key
+  }
   loginOut(cb) {
     this.Ecc = null;
     this.eos_client = null;
     this.rpc = null;
     this.signatureProvider = null;
     this.public_key = null;
-    location.reload()
-    cb()
+    this.prive_key = null;
+    // location.reload()
+    this.scatterInit(this.vthis, cb)
   }
   login(cb) {
     // console.log('login')
     // cb ? cb() : ''
-    this.loginByAcc({
-      account: 'hellodfsdfs2',
-      pwd: 'abcd1234',
-    }, cb)
+    // this.loginByAcc({
+    //   account: 'hellodfsdfs2',
+    //   pwd: 'abcd1234',
+    // }, cb)
+    cb()
   }
   async loginByAcc(params, cb) {
     let eos_account = params.account;
@@ -45,6 +53,7 @@ class newWallet {
 
     // 获取公钥，签名字符串
     let prive_key = this.Ecc.seedPrivate(`${eos_account}-${login_password}`);
+    this.prive_key = prive_key
     this.public_key = this.Ecc.privateToPublic(prive_key);
     this.signatureProvider = new JsSignatureProvider([prive_key]);
     // 获取eos对象
@@ -85,11 +94,24 @@ class newWallet {
         publicKey: this.public_key,
       }
       store.dispatch('setAccount', newAccount);
-      cb(newAccount)
+      cb(null, newAccount)
     } catch (error) {
       console.log(error)
       return cb('账户接口查询失败')
     }
+  }
+  // 操作确认 - 密码验证
+  regPwd(pwd, cb) {
+    const name = store.state.app.account.name;
+    if (!name) {
+      return
+    }
+    let prive_key = this.Ecc.seedPrivate(`${name}-${pwd}`);
+    if (prive_key === this.prive_key) {
+      cb()
+      return
+    }
+    cb('err')
   }
   // 注册
   async accReg(params, cb) {
@@ -99,20 +121,22 @@ class newWallet {
     // 获取公钥，签名字符串
     let prive_key = this.Ecc.seedPrivate(`${eos_account}-${login_password}`);
     let public_key = this.Ecc.privateToPublic(prive_key);
+    console.log(prive_key, public_key)
+    cb(null, public_key)
 
-    const obj = {
-      account: eos_account,
-      publickey: public_key,
-    };
-    const { status, result } = await reg_newaccount(obj);
-    if (!status) {
-      return cb("fail");
-    }
-    if (result.code === 500) {
-      cb(result.msg, null);
-      return;
-    }
-    cb(null, result);
+    // const obj = {
+    //   account: eos_account,
+    //   publickey: public_key,
+    // };
+    // const { status, result } = await reg_newaccount(obj);
+    // if (!status) {
+    //   return cb("fail");
+    // }
+    // if (result.code === 500) {
+    //   cb(result.msg, null);
+    //   return;
+    // }
+    // cb(null, result);
   }
 
   // 操作
@@ -129,7 +153,19 @@ class newWallet {
       }
     })()
   }
-  transfer(obj, callback) {
+  transfer(obj, cb) {
+    Bus.$emit('busShowComfire', Object.assign({}, obj, {
+      type: 'transfer',
+      cb: cb,
+    }))
+  }
+  toTransaction(obj, cb) {
+    Bus.$emit('busShowComfire', Object.assign({}, obj, {
+      type: 'toTransaction',
+      cb: cb,
+    }))
+  }
+  transferSure(obj, callback) {
     const formName = store.state.app.account.name;
     const permission = store.state.app.account.permissions;
     const params = {
@@ -145,7 +181,7 @@ class newWallet {
             from: formName,
             to: obj.toAccount,
             quantity: obj.quantity,
-            memo: obj.memo || 'test'
+            memo: obj.memo || ''
           }
         }
       ]
@@ -154,7 +190,7 @@ class newWallet {
   }
 
   // 免CPU操作 
-  toTransaction(tx, cb) {
+  toTransactionSure(tx, cb) {
     (async () => {
       try {
         const txh = {

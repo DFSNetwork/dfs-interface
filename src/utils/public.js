@@ -1,6 +1,7 @@
 import Decimal from 'decimal.js';
 import { DApp } from '@/utils/wallet/index';
 import moment from 'moment';
+import QRcode from 'qrcode';
 import store from '@/store';
 import {getJson} from './api'
 import {get_table_rows} from '@/api/list'
@@ -673,4 +674,16 @@ function handleDealArr(resArr) {
     }
   })
   return uniques;
+}
+
+
+// 二维码生成
+export function QRcodeCode(QRcodeText, tag, width, callback) {
+  const option = {
+    width,
+    errorCorrectionLevel: 'L'
+  };
+  QRcode.toCanvas(tag, QRcodeText, option, (err) => {
+    callback(err);
+  });
 }

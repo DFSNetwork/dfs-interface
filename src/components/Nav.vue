@@ -85,7 +85,7 @@ export default {
     },
     handleLoginOut() {
       DApp.loginOut(() => {
-        location.reload()
+        // location.reload()
       })
     },
     handleToOther(name) {
