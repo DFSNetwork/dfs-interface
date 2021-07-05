@@ -5,11 +5,21 @@
     </div>
     <div class="mt40">
       <div class="dataInfo">
+        <div class="bg-left"></div>
+        <div class="bg-right"></div>
         <div class="flexb floatDiv">
           <div class="left">
-            <div class="dinBold">{{ lockDfs }} DFS</div>
             <div class="tip bonus">
-              <span>{{ $t('dsr.totalNum') }}</span>
+              <span>{{ $t('dsr.totalNum') }}(DFS)</span>
+            </div>
+            <div class="dinBold">{{ lockDfs }} </div>
+          </div>
+        </div>
+        <div class="miningInfo flexb" v-loading="loading">
+          <div class="miningData">
+            <div class="num dinBold">{{ ableClaimNum }}</div>
+            <div class="tip">
+              <span>{{ $t('dsr.poolBal') }}(DFS)</span>
             </div>
           </div>
           <div class="right">
@@ -19,21 +29,24 @@
             </div>
           </div>
         </div>
-        <div class="miningInfo flexb" v-loading="loading">
-          <div class="miningData">
-            <div class="num dinBold">{{ ableUse }} DFS</div>
-            <div class="tip">{{ $t('dsr.allInve') }}</div>
-          </div>
-          <div class="miningData">
-            <div class="num dinBold">{{ ableClaimNum }} DFS</div>
-            <div class="tip">
-              <span>{{ $t('dsr.poolBal') }}</span>
-              <!-- <span>({{ `${timeObj.hours}:${timeObj.minutes}:${timeObj.seconds}` }})</span> -->
-            </div>
-          </div>
+
+        <div class="unClaim flexc">
+          <span>{{ $t('mine.waitClaim') }}</span>
+          <span class="green">{{ myDepositInfo.showReward }}</span>
+          <span>DFS</span>
+          <img class="tipIcon ml10" @click="showReWardTip = true" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/tips_icon_btn.svg" alt="">
         </div>
+        <div class="allClaimBtn flexc"
+          @click="handleClaimAll"
+          v-loading="allClaim">{{ $t('bonus.claim') }}</div>
       </div>
     </div>
+
+    <van-popup
+      class="popup_p"
+      v-model="showReWardTip">
+      <MinReward :minReward="minReward"/>
+    </van-popup>
   </div>
 </template>
 
@@ -41,8 +54,12 @@
 import { EosModel } from '@/utils/eos';
 import { mapState } from 'vuex';
 import { toFixed, accMul, accDiv, countdown } from '@/utils/public';
+import MinReward from '@/views/market/popup/MinReward'
 
 export default {
+  components: {
+    MinReward
+  },
   data() {
     return {
       lockDfs: '0.0000',
@@ -59,6 +76,10 @@ export default {
         seconds: '00'
       },
       secTimer: null,
+
+      showReWardTip: false,
+      allClaim: false,
+      minReward: '0.0001',
     }
   },
   props: {
@@ -80,6 +101,12 @@ export default {
       type: Boolean,
       default: true
     },
+    myDepositInfo: {
+      type: Object,
+      default: function b() {
+        return {}
+      }
+    }
   },
   computed: {
     ...mapState({
@@ -190,6 +217,46 @@ export default {
         // }
       })
     },
+    handleClaimAll() {
+      if (this.allClaim) {
+        return
+      }
+      this.allClaim = true;
+      const formName = this.$store.state.app.scatter.identity.accounts[0].name;
+      const permission = this.$store.state.app.scatter.identity.accounts[0].authority;
+      const params = {
+        actions: [
+          {
+            account: 'dfsdsrsystem',
+            name: 'claim',
+            authorization: [{
+              actor: formName, // 转账者
+              permission,
+            }],
+            data: {
+              user: formName,
+            }
+          },
+        ]
+      }
+      EosModel.toTransaction(params, (res) => {
+        this.allClaim = false;
+        if(res.code && JSON.stringify(res.code) !== '{}') {
+          this.$message({
+            message: res.message,
+            type: 'error'
+          });
+          return
+        }
+        this.$message({
+          message: this.$t('public.success'),
+          type: 'success'
+        });
+        setTimeout(() => {
+          this.handleGetList();
+        }, 1000);
+      })
+    },
   },
 }
 </script>
@@ -244,8 +311,26 @@ export default {
   background: #FFF;
   position: relative;
   color: #333;
+  overflow: hidden;
+  .bg-left{
+    position: absolute;
+    width: 198px;
+    height: 232px;
+    background: linear-gradient(-45deg, #FFFFFF 0%, #FFFFFF 50%, #F3FFFB 50%, #F3FFFB 100%);
+    left: 0;
+    top: 0;
+  }
+  .bg-right{
+    position: absolute;
+    width: 438px;
+    height: 532px;
+    background: linear-gradient(-233deg, #FFFFFF 0%, #FFFFFF 50%, #F3FFFB 50%, #F3FFFB 100%);
+    bottom: 20px;
+    right: 0px;
+  }
+
   .dinBold{
-    font-size: 33px !important;
+    font-size: 40px !important;
     margin-bottom: 9px;
   }
   .floatDiv{
@@ -257,25 +342,28 @@ export default {
     margin-bottom: 25px;
     &>div{
       flex: 1;
-      background: #FFF;
+      // background: #FFF;
       // padding: 40px 20px;
       border-radius: 20px;
-      text-align: left;
-      &:first-child{
-        margin-right: 30px;
+      text-align: center;
+      .dinBold{
+        font-size: 60px !important;
+        margin-bottom: 9px;
       }
     }
     .bonus{
-      font-size: 26px;
-      margin-top: 10px;
+      font-size: 30px;
+      margin-bottom: 10px;
     }
   }
 }
 .miningInfo{
-  background: #FFF;
+  // background: #FFF;
+  z-index: 1;
+  position: relative;
   // padding: 40px;
   font-size: 28px;
-  text-align: left;
+  text-align: center;
   &>div{
     flex: 1;
     &:first-child{
@@ -286,5 +374,34 @@ export default {
       // margin-top: 10px;
     }
   }
+}
+.unClaim{
+  position: relative;
+  z-index: 1;
+  background: #F8F8F8;
+  font-size: 30px;
+  color: #999;
+  height: 72px;
+  width: 560px;
+  margin: 30px auto;
+  border-radius: 40px;
+  .green{
+    color: $color-main;
+    margin: 0 10px;
+  }
+  .tipIcon{
+    width: 32px;
+    margin-left: 12px;
+  }
+}
+.allClaimBtn{
+  position: relative;
+  z-index: 1;
+  background: $color-main;
+  border-radius: 12px;
+  color: #FFF;
+  font-size: 36px;
+  height: 92px;
+  font-weight: 500;
 }
 </style>

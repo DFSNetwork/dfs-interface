@@ -82,18 +82,29 @@ export default {
       if (!this.checkedMarket.mid) {
         return
       }
-      const params = {
-        "code": "miningpool11",
-        "scope": this.checkedMarket.mid,
-        "table": "miners2",
-        limit: 3000,
-        "json": true,
+      let more = true;
+      let next = '';
+      let rows = [];
+      while (more) {
+        const params = {
+          "code": "miningpool11",
+          "scope": this.checkedMarket.mid,
+          "table": "miners2",
+          limit: 100,
+          "json": true,
+          lower_bound: next,
+        }
+        const {status, result} = await this.$api.get_table_rows(params);
+        console.log(result)
+        if (!status) {
+          more = false;
+          continue
+        }
+        more = result.more;
+        next = result.next_key;
+        const rows1 = result.rows || [];
+        rows.push(...rows1)
       }
-      const {status, result} = await this.$api.get_table_rows(params);
-      if (!status) {
-        return
-      }
-      const rows = result.rows || [];
       let newArr = []
       const item = this.checkedMarket
       rows.forEach(v => {

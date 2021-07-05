@@ -1,20 +1,10 @@
 <template>
   <div class="dsr">
-    <dsr-info :args="args" :timesmap="timesmap" :claimLoading="claimLoading" :ableClaimNum="ableClaimNum"
+    <dsr-info :args="args" :timesmap="timesmap"
+      :claimLoading="claimLoading"
+      :ableClaimNum="ableClaimNum"
+      :myDepositInfo="myDepositInfo"
       @listenAllLock="listenAllLock"/>
-    <div class="allClaim flexb">
-      <img class="bgImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/bg/myReward.png" alt="">
-      <div>
-        <div class="subTitle flexa tip">
-          <span>{{ $t('mine.waitClaim') }}</span>
-          <img class="tipIcon ml10" @click="showReWardTip = true" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/tips_icon_btn.svg" alt="">
-        </div>
-        <div class="claimNum dinBold">{{myDepositInfo.showReward || '0.00000000'}} DFS</div>
-      </div>
-      <div class="flexb">
-        <div class="allClaimBtn" v-loading="allClaim" @click="handleClaimAll">{{ $t('bonus.claim') }}</div>
-      </div>
-    </div>
     <dsr-list :args="args" @listenUpdate="listenUpdate"
               :myDepositInfo="myDepositInfo" :allLock="allLock"/>
     <dsr-miner-list :args="args" :timesmap="timesmap" :allLock="allLock" :ableClaimNum="ableClaimNum"/>
