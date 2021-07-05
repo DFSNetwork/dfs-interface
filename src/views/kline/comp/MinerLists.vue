@@ -95,7 +95,6 @@ export default {
           lower_bound: next,
         }
         const {status, result} = await this.$api.get_table_rows(params);
-        console.log(result)
         if (!status) {
           more = false;
           continue
