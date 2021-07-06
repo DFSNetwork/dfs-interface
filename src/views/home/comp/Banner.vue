@@ -8,10 +8,10 @@
           src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/banner1-en.png">
       </van-swipe-item>
 
-      <van-swipe-item>
+      <!-- <van-swipe-item>
         <img class="bannerImg"
           src="@/assets/banner/M.png">
-      </van-swipe-item>
+      </van-swipe-item> -->
     </van-swipe>
   </div>
 </template>
