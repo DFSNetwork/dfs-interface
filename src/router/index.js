@@ -535,6 +535,20 @@ const constantRouter = [
       },
     ],
   },
+  // 邀请返佣
+  {
+    path: '/inviter',
+    component: Layout,
+    redirect: '/',
+    children: [
+      { // 我的页面
+        path: '/',
+        name: 'inviter',
+        component: () => import(/* webpackChunkName: "home" */ '@/views/inviteNewAcc/Index.vue'),
+        meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noHeader: true, noTab: true },
+      },
+    ],
+  },
 ]
 
 export default new Router({

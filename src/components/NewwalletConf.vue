@@ -64,7 +64,8 @@ export default {
   watch: {
     account: {
       handler: function at(newVal) {
-        if (!newVal.name) {
+        const wallet = localStorage.getItem('WALLET')
+        if (!newVal.name || wallet !== 'newwallet') {
           return
         }
         this.handleGetAssets()
@@ -87,7 +88,7 @@ export default {
         return
       }
       const bal = result.split(' ')[0];
-      if (parseFloat(bal) >= 0.1) {
+      if (parseFloat(bal) >= 500) {
         this.showRiskWarn = true;
       }
     },

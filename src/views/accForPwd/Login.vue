@@ -55,7 +55,7 @@ export default {
       name: '',
       pwd: '',
       pwdType: 'password', // text
-      accReg: /^([a-z]|[1-5]){12}$/, // 匹配账户
+      accReg: /^([a-z]|[1-5]|\.){5,12}$/, // 匹配账户
     }
   },
   methods: {
@@ -72,8 +72,8 @@ export default {
       this.pwdType = 'password'
     },
     handleReg() {
-      if (!this.name.trim() || this.name.trim().length < 12 || !this.accReg.test(this.name)) {
-        this.$toast.fail('请输入12位账号')
+      if (!this.name.trim() || this.name.trim().length < 4 || !this.accReg.test(this.name)) {
+        this.$toast.fail('请输入5-12位账户')
         return false
       }
       if (!this.pwd) {

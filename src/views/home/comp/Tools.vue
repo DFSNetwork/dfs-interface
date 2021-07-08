@@ -17,7 +17,7 @@
       <van-swipe class="my-swipe" :autoplay="10000" :loop="false" indicator-color="#29D4B0">
         <van-swipe-item>
           <div class="lists flexb">
-            <div class="list" @click="handleTo('invite')">
+            <div class="list" @click="handleTo('inviter')">
               <!-- <img class="hot" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/new.png"> -->
               <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/invite1_icon.png">
               <div>邀请返佣</div>
@@ -26,7 +26,7 @@
               <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/mining_icon.png">
               <div>{{ $t('home.mine') }}</div>
             </div>
-            <div class="list" @click="handleTo('vote')">
+            <div class="list" @click="handleTo('plan')">
               <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/date_icon.png">
               <div>定投大厅</div>
             </div>
@@ -66,11 +66,11 @@
               <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/financial_icon.png">
               <div>{{ $t('home.financial') }}</div>
             </div>
-            <div class="list" @click="handleTo('mineHomeDfs')">
+            <div class="list" @click="handleToPro('kline')">
               <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/kline_icon.png">
               <div>K线数据</div>
             </div>
-            <div class="list" @click="handleToPro('suggestions')">
+            <div class="list" @click="handleToPro('dcap')">
               <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/dtoken_icon.png">
               <div>跨链充提</div>
             </div>
@@ -86,6 +86,10 @@ export default {
   name: 'homeTools',
   methods: {
     handleTo(name, params) {
+      if (name === 'plan') {
+        this.$toast('即将上线')
+        return
+      }
       this.$router.push({
         name, params,
       })
@@ -109,6 +113,9 @@ export default {
       }
       if (name === 'starteos') {
         location.href = 'https://usdtcross.starteos.io/'
+      }
+      if (name === 'kline') {
+        location.href = 'https://dfs.defiview.io/kline'
       }
     }
   }
