@@ -3,10 +3,9 @@ import { Api, JsonRpc } from 'eosjs';
 import { JsSignatureProvider } from 'eosjs/dist/eosjs-jssig';  
 const fetch = require('node-fetch');
 
-import { get_account, reg_newaccount, pushFreeCpu } from '@/api/list'
+import { get_account, pushFreeCpu } from '@/api/list'; // reg_newaccount
 import store from '@/store';
 import Bus from '@/utils/bus';
-import { asset } from 'eosjs-without-sort/lib/schema';
 
 class newWallet {
   constructor() {

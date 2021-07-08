@@ -13,18 +13,27 @@
         @listenClose="handleClose"
         @listenSend="handleSend"/>
     </van-popup>
+
+    <van-popup class="popup_p" v-model="showRiskWarn">
+      <RiskWarn @listenClose="handleClose"/>
+    </van-popup>
   </div>
 </template>
 
 <script>
 import { DApp } from '@/utils/wallet';
+import { mapState } from 'vuex'
+
 import Bus from '@/utils/bus';
 import ShowActionsInfo from '@/components/popup/ShowActionsInfo';
 import ShowIptPwd from '@/components/popup/ShowIptPwd'
+import RiskWarn from '@/views/accForPwd/popup/RiskWarn'
+
 export default {
   components: {
     ShowActionsInfo,
-    ShowIptPwd
+    ShowIptPwd,
+    RiskWarn
   },
   data() {
     return {
@@ -33,6 +42,8 @@ export default {
       obj: {},
       unShowComfire: false, // 不展示确认弹窗
       unShowPwd: false, // 不展示密码弹窗
+
+      showRiskWarn: false,
     }
   },
   created() {
@@ -44,7 +55,42 @@ export default {
   beforeDestroy: function () {
     Bus.$off('busShowComfire')
   },
+  computed: {
+    ...mapState({
+      // 箭头函数可使代码更简练
+      account: state => state.app.account,
+    }),
+  },
+  watch: {
+    account: {
+      handler: function at(newVal) {
+        if (!newVal.name) {
+          return
+        }
+        this.handleGetAssets()
+      }
+    }
+  },
   methods: {
+    async handleGetAssets() {
+      const params = {
+        code: 'eosio.token',
+        symbol: 'EOS',
+        decimal: 4,
+        account: this.account.name,
+      }
+      const {status, result} = await this.$api.get_currency_balance(params);
+      if (!status) {
+        return
+      }
+      if (!result.length) {
+        return
+      }
+      const bal = result.split(' ')[0];
+      if (parseFloat(bal) >= 0.1) {
+        this.showRiskWarn = true;
+      }
+    },
     handleRegShow() {
       if (this.unShowComfire && this.unShowPwd) {
         // 直接执行合约操作
@@ -65,6 +111,7 @@ export default {
     handleClose() {
       this.showComfire = false;
       this.showIptPwd = false;
+      this.showRiskWarn = false;
     },
     handleShowIptPwd(obj) {
       this.showComfire = false;

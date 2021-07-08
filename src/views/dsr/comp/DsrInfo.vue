@@ -51,6 +51,7 @@
 </template>
 
 <script>
+import { DApp } from '@/utils/wallet';
 import { mapState } from 'vuex';
 import { toFixed, accMul, accDiv, countdown } from '@/utils/public';
 import MinReward from '@/views/market/popup/MinReward'
@@ -110,6 +111,7 @@ export default {
   computed: {
     ...mapState({
       // 箭头函数可使代码更简练
+      account: state => state.app.account,
       baseConfig: state => state.sys.baseConfig, // 基础配置 - 默认为{}
     }),
     perDayReward() {
@@ -213,8 +215,8 @@ export default {
         return
       }
       this.allClaim = true;
-      const formName = this.$store.state.app.scatter.identity.accounts[0].name;
-      const permission = this.$store.state.app.scatter.identity.accounts[0].authority;
+      const formName = this.account.name;
+      const permission = this.account.permissions;
       const params = {
         actions: [
           {
@@ -230,16 +232,19 @@ export default {
           },
         ]
       }
-      EosModel.toTransaction(params, (res) => {
+      DApp.toTransaction(params, (err) => {
         this.allClaim = false;
-        if(res.code && JSON.stringify(res.code) !== '{}') {
-          this.$message({
-            message: res.message,
-            type: 'error'
-          });
-          return
+        if (err && err.code == 402) {
+          return;
         }
-        this.$message({
+        if (err) {
+          this.$toast({
+            type: 'fail',
+            message: err.message,
+          })
+          return;
+        }
+        this.$toast({
           message: this.$t('public.success'),
           type: 'success'
         });

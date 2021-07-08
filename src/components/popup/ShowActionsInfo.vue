@@ -59,7 +59,6 @@ export default {
       this.$emit('listenClose', false)
     },
     handleSend() {
-      this.next = this.next
       this.$emit('listenIptPwd', {
         type: 'comfire',
         status: this.next

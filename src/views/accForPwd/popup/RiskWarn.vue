@@ -1,6 +1,8 @@
 <template>
   <div class="risk">
-    <img class="close" src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/close-black.png">
+    <img class="close"
+      @click="handleClose"
+      src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/close-black.png">
     <div class="title">风险提示</div>
     <img class="riskImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/risk.png">
     <div class="tips">
@@ -27,6 +29,11 @@
 <script>
 export default {
   name: 'riskWarn',
+  methods: {
+    handleClose() {
+      this.$emit('listenClose', false)
+    }
+  }
 }
 </script>
 

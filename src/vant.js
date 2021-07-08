@@ -4,7 +4,7 @@ import { List, Icon, Field, Form, Picker, Popup, Rate, Swipe, SwipeItem,
   NoticeBar, Popover, Calendar, Lazyload, ImagePreview, Tab, Tabs, DropdownMenu,
   Slider, CellGroup, Button, Stepper, DropdownItem, PullRefresh, Sticky, Progress,
   Pagination, Switch, Loading } from 'vant';
-import { Collapse, CollapseItem } from 'vant';
+import { Collapse, CollapseItem, Divider } from 'vant';
 Vue.use(Button)
 Vue.use(Swipe);
 Vue.use(SwipeItem);
@@ -35,3 +35,4 @@ Vue.use(Pagination);
 Vue.use(Loading);
 Vue.use(Collapse);
 Vue.use(CollapseItem);
+Vue.use(Divider);

@@ -24,11 +24,30 @@
       <span class="green" @click="handleTo('createWallet')">去创建</span>
     </div>
 
+
+    <div class="otherLogin">
+      <van-divider>第三方登录</van-divider>
+      <div class="flexb pro">
+        <div class="logoItem" @click="handleLoginOther('tp')">
+          <img class="logo" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/tp_logo.png">
+          <div>TP</div>
+        </div>
+        <div class="logoItem" @click="handleLoginOther('mykey')">
+          <img class="logo" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/mykey_logo.png">
+          <div>Mykey</div>
+        </div>
+        <div class="logoItem" @click="handleLoginOther('start')">
+          <img class="logo" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/start_logo.png">
+          <div>Start</div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import { DApp } from '@/utils/wallet'
+import { login } from '@/utils/public';
 export default {
   name: 'loginWallet',
   data() {
@@ -71,20 +90,37 @@ export default {
       // 1. 拿到账号密码对应公钥
       // 2. 查询链上账户公钥
       // 3. 公钥对比  一致 - 密码正确 ｜ 不一致 - 密码错误
-      DApp.loginByAcc({
-        account: this.name,
-        pwd: this.pwd,
-      }, (err) => {
-        if (err) {
-          this.$toast.fail('账号或密码错误')
-          return
-        }
-        this.$toast.success('登陆成功')
-        this.$router.push({
-          name: 'home'
+      localStorage.setItem('WALLET', 'newwallet')
+      DApp.scatterInit(this, () => {
+        DApp.loginByAcc({
+          account: this.name,
+          pwd: this.pwd,
+        }, (err) => {
+          if (err) {
+            this.$toast.fail('账号或密码错误')
+            return
+          }
+          this.$toast.success('登陆成功')
+          this.$router.push({
+            name: 'home'
+          })
         })
       })
-    }
+    },
+    // 登录
+    handleLoginOther(wallet) {
+      localStorage.setItem('WALLET', wallet)
+      DApp.scatterInit(this, () => {
+        if (wallet === 'newwallet') {
+          this.handleTo('loginWallet')
+          return
+        }
+        login(this, () => {
+          this.showNav = false;
+          this.handleTo('home')
+        })
+      })
+    },
   }
 }
 </script>
@@ -148,6 +184,23 @@ export default {
     font-weight: 500;
     .green{
       color: $color-main;
+    }
+  }
+
+  .otherLogin{
+    margin-top: 80px;
+    .pro{
+      margin-top: 80px;
+    }
+    .logoItem{
+      flex: 1;
+      text-align: center;
+      font-size: 32px;
+      .logo{
+        width: 90px;
+        height: 90px;
+        margin-bottom: 9px;
+      }
     }
   }
 }

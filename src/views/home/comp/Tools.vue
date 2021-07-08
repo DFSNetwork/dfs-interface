@@ -19,16 +19,16 @@
           <div class="lists flexb">
             <div class="list" @click="handleTo('invite')">
               <!-- <img class="hot" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/new.png"> -->
-              <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/invite_icon.png">
-              <div>{{ $t('invite.myFarm') }}</div>
-            </div>
-            <div class="list" @click="handleTo('vote')">
-              <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/vote_icon.png">
-              <div>{{ $t('home.vote') }}</div>
+              <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/invite1_icon.png">
+              <div>邀请返佣</div>
             </div>
             <div class="list" @click="handleTo('mineHomeDfs')">
               <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/mining_icon.png">
               <div>{{ $t('home.mine') }}</div>
+            </div>
+            <div class="list" @click="handleTo('vote')">
+              <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/date_icon.png">
+              <div>定投大厅</div>
             </div>
             <div class="list" @click="handleToPro('suggestions')">
               <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/fundation_icon.png">
@@ -36,9 +36,9 @@
             </div>
           </div>
           <div class="lists flexb">
-            <div class="list" @click="handleTo('financial')">
-              <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/financial_icon.png">
-              <div>{{ $t('home.financial') }}</div>
+            <div class="list" @click="handleTo('vote')">
+              <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/vote_icon.png">
+              <div>{{ $t('home.vote') }}</div>
             </div>
             <div class="list" @click="handleTo('dssHomeDfs')">
               <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/dss_icon.png">
@@ -56,7 +56,25 @@
         </van-swipe-item>
 
         <van-swipe-item>
-          123
+          <div class="lists flexb">
+            <div class="list" @click="handleTo('invite')">
+              <!-- <img class="hot" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/new.png"> -->
+              <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/farm1_icon.png">
+              <div>{{ $t('invite.myFarm') }}</div>
+            </div>
+            <div class="list" @click="handleTo('financial')">
+              <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/financial_icon.png">
+              <div>{{ $t('home.financial') }}</div>
+            </div>
+            <div class="list" @click="handleTo('mineHomeDfs')">
+              <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/kline_icon.png">
+              <div>K线数据</div>
+            </div>
+            <div class="list" @click="handleToPro('suggestions')">
+              <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/dtoken_icon.png">
+              <div>跨链充提</div>
+            </div>
+          </div>
         </van-swipe-item>
       </van-swipe>
     </div>

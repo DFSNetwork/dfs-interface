@@ -4,13 +4,28 @@
     <div class="item flexb" :class="{'border': iptAct === 1, 'error': nameError}">
       <van-field class="ipt"
         v-model="name"
-        maxlength="12"
+        maxlength="8"
         @focus="handleFocus(1)"
         @blur="handleBlur(1)"
         type="text" placeholder="设置账号名（EOS）" />
+      <van-popover
+        v-model="showPopover"
+        trigger="click"
+        :actions="actions"
+        @select="handleOnSelect"
+      >
+        <template #reference>
+          <div class="flexa model dinReg">
+            <span class="">{{ selectAct }}</span>
+            <img src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/select.png" alt="">
+          </div>
+        </template>
+      </van-popover>
+    </div>
+    <div class="label flexb">
+      <span>账号由8位小写字母a-z和1-5组成</span>
       <span class="green" @click="handleRandomAcc">随机账号</span>
     </div>
-    <div class="label">账号由12位小写字母a-z和1-5组成</div>
     <div class="item flexb" :class="{'border': iptAct === 2, 'error': pwdError}">
       <van-field class="ipt"
         v-model="pwd"
@@ -37,21 +52,34 @@
 
     <div class="btn flexc" @click="handleRegister">注 册</div>
     <div class="tips">
-      <div>在线创建账号，在您设置好自己的账号后，您亦可在信息确认页面刷新切换公私钥。</div>
+      <div>注册指引：</div>
+      <div>1.注册完成后，登录大丰收，完成激活</div>
+      <div>2.一周内未激活帐号，系统将自动回收</div>
+      <div>3.在线创建账号，在您设置好自己的账号后，您亦可在信息确认页面刷新切换公私钥。</div>
       <div>请您在输入前，一定要备份好自己的账号与密码，并妥善保管好。请勿将密码泄露给任何人。</div>
     </div>
 
     <div class="hasWallet">
       <span>已有账号？</span>
-      <span class="green" @click="handleTo('loginWallet')">去登录</span>
+      <span class="green"
+        @click="handleTo('loginWallet')">去登录</span>
     </div>
+
+    <van-popup class="popup_p"
+      v-model="showRegiInfo">
+      <ShowRegiActions :memo="memo" @listenClose="handleClose"/>
+    </van-popup>
   </div>
 </template>
 
 <script>
 import { DApp } from '@/utils/wallet'
+import ShowRegiActions from '@/views/accForPwd/popup/ShowRegiActions'
 export default {
   name: 'accForPwd',
+  components: {
+    ShowRegiActions
+  },
   data() {
     return {
       iptAct: 0,
@@ -59,16 +87,32 @@ export default {
       pwd: '',
       pwd2: '',
       pwdType: 'password', // text
-      accReg: /^([a-z]|[1-5]){12}$/, // 匹配账户
+      accReg: /^([a-z]|[1-5]){8}\.(tag|dfs)$/, // 匹配账户
 
       nameError: false,
       pwdError: false,
       pwd2Error: false,
+
+      showRegiInfo: false,
+      memo: '',
+
+      showPopover: false,
+      actions: [{ text: '.tag' }, { text: '.dfs' }],
+      selectAct: '.tag',
     }
   },
   computed: {
+    shortName() {
+      return `${this.name}${this.selectAct}`
+    }
   },
   methods: {
+    handleOnSelect(act) {
+      this.selectAct = act.text
+    },
+    handleClose() {
+      this.showRegiInfo = false
+    },
     handleTo(name) {
       this.$router.replace({
         name
@@ -86,7 +130,7 @@ export default {
     },
     handleBlur() {
       if (this.iptAct === 1) {
-        if (!this.name || this.accReg.test(this.name)) {
+        if (!this.name || this.accReg.test(this.shortName)) {
           this.nameError = false
         } else {
           this.nameError = true
@@ -109,14 +153,14 @@ export default {
     handleRandomAcc() {
       let returnStr = '',       
           charStr = 'abcdefghijklmnopqrstuvwxyz12345'; 
-      for(let i = 0; i < 12; i++){
+      for(let i = 0; i < 8; i++){
         let index = Math.round(Math.random() * (charStr.length - 1));
         returnStr += charStr.substring(index, index + 1);
       }
       this.name = returnStr;
     },
     handleReg() {
-      if (!this.name || this.name.length < 12 || !this.accReg.test(this.name)) {
+      if (!this.shortName || this.shortName.length < 12 || !this.accReg.test(this.shortName)) {
         this.$toast.fail('请按规则输入12位账号')
         return false
       }
@@ -136,14 +180,14 @@ export default {
       }
       try {
         // 验证账户是否被注册
-        const {status} = await this.$api.get_account(this.name)
+        const {status} = await this.$api.get_account(this.shortName)
         if (!status) {
           return
         }
         this.$toast.fail('账号已被注册')
       } catch (error) {
         const params = {
-          account: this.name,
+          account: this.shortName,
           pwd: this.pwd
         }
         DApp.accReg(params, (err, pub) => {
@@ -151,8 +195,10 @@ export default {
             this.$toast.fail(err)
             return
           }
-          const memo = `new:${this.name}:${pub}`
+          const memo = `new:${this.shortName}:${pub}`
           console.log(memo)
+          this.showRegiInfo = true;
+          this.memo = memo
           // this.handleTo('loginWallet')
         })
       }
@@ -183,6 +229,14 @@ export default {
     &.error{
       border: 2px solid #FF4D4D;
     }
+    .model{
+      margin-right: 10px;
+      font-size: 28px;
+      img{
+        width: 24px;
+        margin-left: 12px;
+      }
+    }
     .green{
       color: $color-main;
       width: 120px;
@@ -198,6 +252,9 @@ export default {
       &::after{
         display: none;
       }
+      &.accipt{
+        max-width: 200px;
+      }
       /deep/ .van-field__control{
         font-size: 32px;
         color: #333;
@@ -209,6 +266,13 @@ export default {
     color: #BCC3C6;
     margin-top: 22px;
     margin-left: 22px;
+
+    .green{
+      color: $color-main;
+      width: 120px;
+      text-align: center;
+      margin-right: 28px;
+    }
   }
   .btn{
     font-size: 36px;
