@@ -9,36 +9,62 @@
         </div>
         <div class="flexb item">
           <span class="label">邀请链接</span>
-          <div class="flexa">
-            <span class="dinReg link">https://apps.defis.network/wallet/create-wallet</span>
+          <div class="flexa"
+            v-clipboard:copy="link"
+            v-clipboard:success="onCopy"
+            v-clipboard:error="onError">
+            <span class="dinReg link">{{ link }}</span>
             <img class="copyImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/copy.png">
           </div>
         </div>
         <div class="btnDiv flexb">
-          <div class="flexc btn">面对面邀请</div>
-          <div class="flexc btn">链接邀请</div>
+          <div class="flexc btn" @click="showInvite = true">面对面邀请</div>
+          <div class="flexc btn"
+            v-clipboard:copy="link"
+            v-clipboard:success="onCopy"
+            v-clipboard:error="onError">链接邀请</div>
         </div>
       </div>
     </div>
 
     <Claim />
     <InvLists />
+
+    <van-popup class="popup_p"
+      v-model="showInvite">
+      <ShowInvite :memo="link" @listenClose="handleClose"/>
+    </van-popup>
   </div>
 </template>
 
 <script>
 import Claim from '@/views/inviteNewAcc/comp/Claim';
 import InvLists from '@/views/inviteNewAcc/comp/InvLists'
+import ShowInvite from '@/views/inviteNewAcc/popup/ShowInvite';
 export default {
   name: 'inviteNewAcc',
   components: {
     Claim,
     InvLists,
+    ShowInvite,
   },
   data() {
     return {
-
+      // link: 'https://apps.defis.network/wallet/create-wallet?wallet=newwallet',
+      link: 'http://192.168.31.28:8888/wallet/create-wallet?wallet=newwallet',
+      showInvite: false,
     }
+  },
+  methods: {
+    handleClose() {
+      this.showInvite = false;
+    },
+    onCopy() {
+      this.$toast.success(this.$t('public.copySuccess'));
+    },
+    onError() {
+      this.$toast.fail(this.$t('public.copyFail'));
+    },
   }
 }
 </script>

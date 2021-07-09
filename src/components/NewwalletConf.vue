@@ -85,6 +85,7 @@ export default {
           this.handleGetAssets()
         }
       } catch (error) {
+        console.log(error)
       }
     },
     async handleGetAssets() {
