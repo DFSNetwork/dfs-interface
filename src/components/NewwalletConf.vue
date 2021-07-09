@@ -68,11 +68,25 @@ export default {
         if (!newVal.name || wallet !== 'newwallet') {
           return
         }
-        this.handleGetAssets()
+        this.handleGetAcc()
       }
     }
   },
   methods: {
+    async handleGetAcc() {
+      const {status, result} = await this.$api.get_account(this.account.name);
+      if (!status) {
+        return
+      }
+      const pers = result.permissions;
+      const perm = pers.find(v => v.perm_name === 'owner') || {}
+      try {
+        if (perm.required_auth.accounts[0].permission.actor === 'dfsacmanager') {
+          this.handleGetAssets()
+        }
+      } catch (error) {
+      }
+    },
     async handleGetAssets() {
       const params = {
         code: 'eosio.token',
@@ -88,7 +102,7 @@ export default {
         return
       }
       const bal = result.split(' ')[0];
-      if (parseFloat(bal) >= 500) {
+      if (parseFloat(bal) >= 0.01) {
         this.showRiskWarn = true;
       }
     },

@@ -21,34 +21,23 @@
       </div>
     </div>
 
-    <div class="main2">
-      <div class="card">
-        <div class="title flexa">
-          <span>邀请好友</span>
-          <img class="tips" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/tips_icon_btn.svg">
-        </div>
-        <div class="flexb item">
-          <span class="label">邀请链接</span>
-          <div class="flexa">
-            <span class="dinReg link">https://apps.defis.network/wallet/create-wallet</span>
-            <img class="copyImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/copy.png">
-          </div>
-        </div>
-        <div class="btnDiv flexb">
-          <div class="flexc btn">面对面邀请</div>
-          <div class="flexc btn">链接邀请</div>
-        </div>
-      </div>
-    </div>
+    <Claim />
+    <InvLists />
   </div>
 </template>
 
 <script>
+import Claim from '@/views/inviteNewAcc/comp/Claim';
+import InvLists from '@/views/inviteNewAcc/comp/InvLists'
 export default {
   name: 'inviteNewAcc',
+  components: {
+    Claim,
+    InvLists,
+  },
   data() {
     return {
-      
+
     }
   }
 }
@@ -58,20 +47,17 @@ export default {
 .inviter{
   background: #F9F9F9;
   min-height: 100vh;
+  padding-bottom: 40px;
   .banner{
     height: 320px;
   }
-  .main2,
   .main{
-    margin: -60px 30px 0;
+    margin: -60px 30px 30px;
     position: relative;
     border-radius: 12px;
     background: #FFF;
     padding: 26px;
     font-size: 28px;
-  }
-  .main2{
-    margin-top: 30px;
   }
   .card{
     .title{

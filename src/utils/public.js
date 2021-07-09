@@ -259,7 +259,6 @@ export function dealMinerData(minnerData) {
   let lastTime = toLocalTime(`${minnerData.last_drip}.000+0000`);
   lastTime = moment(lastTime).valueOf();
   minnerData.lastTime = lastTime;
-  console.log(minnerData)
   const liq_bal0Arr = minnerData.liq_bal0.split(' ');
   const liq_bal1Arr = minnerData.liq_bal1.split(' ');
   let liq = 0;
