@@ -14,7 +14,7 @@
 
     <!-- 应用工具 -->
     <div class="appLists">
-      <van-swipe class="my-swipe" :autoplay="10000" :loop="false" indicator-color="#29D4B0">
+      <van-swipe class="my-swipe" :loop="false" indicator-color="#29D4B0">
         <van-swipe-item>
           <div class="lists flexb">
             <div class="list" @click="handleTo('inviter')">

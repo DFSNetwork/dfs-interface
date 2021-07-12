@@ -7,13 +7,12 @@
     <div class="morePop">
       <div class="acc flexb">
         <div style="flex:1">
+          <div class="wel">{{ $t('more.wel') }}</div>
           <div class="flexb" v-if="!account || !account.name">
-            <div
-              class="login" @click="handleLogin('newwallet')">账号登录</div>
             <div class="appLogin" @click="handleLogin('scatter')">钱包登录</div>
+            <div class="appLogin appLogin2" @click="handleLogin('newwallet')">账号登录</div>
           </div>
           <div v-else class="login">{{ account.name }}</div>
-          <div class="tip">{{ $t('more.wel') }}</div>
         </div>
         <!-- <img v-if="!account || !account.name" @click="handleLogin"
           class="right" src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/acc_right.svg" alt=""> -->
@@ -71,19 +70,19 @@
         <!-- <div class="subTi">联系我们</div> -->
         <div class="flexb item">
           <a href="https://github.com/defis-net" target="_blank">
-            <img src="https://cdn.jsdelivr.net/gh/defis-net/material2/telUs/GitHub.png">
+            <img src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/github2.png">
           </a>
-          <a href="https://bihu.com/people/1511717747" target="_blank">
+          <!-- <a href="https://bihu.com/people/1511717747" target="_blank">
             <img src="https://cdn.jsdelivr.net/gh/defis-net/material2/telUs/Bihu.png">
-          </a>
+          </a> -->
           <a href="https://twitter.com/DFSnetworks" target="_blank">
-            <img src="https://cdn.jsdelivr.net/gh/defis-net/material2/telUs/Twitter.png">
+            <img src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/twitter2.png">
+          </a>
+          <a href="https://t.me/dfsnet" target="_blank">
+            <img src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/telegram2.png">
           </a>
         </div>
-        <div class="flexb item">
-          <a href="https://t.me/dfsnet" target="_blank">
-            <img src="https://cdn.jsdelivr.net/gh/defis-net/material2/telUs/Telegram.png">
-          </a>
+        <!-- <div class="flexb item">
           <a v-clipboard:copy="'dfsfarmer'"
             v-clipboard:success="handleCopy"
             v-clipboard:error="handleCopyError">
@@ -92,7 +91,7 @@
           <a href="https://dfsofficial.medium.com/" target="_blank">
             <img src="https://cdn.jsdelivr.net/gh/defis-net/material2/telUs/medium.png">
           </a>
-        </div>
+        </div> -->
       </div>
     </div>
   </van-popup>
@@ -233,6 +232,11 @@ export default {
   .acc{
     padding: 30px 15px 0px 30px;
     text-align: left;
+    .wel{
+      margin-bottom: 10px;
+      font-size: 32px;
+      font-weight: 500;
+    }
     .login{
       font-size: 50px;
       font-weight: 500;
@@ -240,11 +244,21 @@ export default {
       color: #333;
     }
     .appLogin{
+      margin-top: 20px;
+      flex: 1;
       color: #FFF;
       background: $color-main;
       padding: 14px 22px;
       border-radius: 20px;
-      font-size: 24px;
+      font-size: 28px;
+      margin-right: 22px;
+      text-align: center;
+      &.appLogin2{
+        color: $color-main;
+        margin-right: 0;
+        background: #FFF;
+        box-shadow: 0px 4px 8px 0px rgba(206,206,206,0.5);
+      }
     }
   }
   .lists{
@@ -343,19 +357,19 @@ export default {
     }
   }
   .telUs{
-    background: #EEFBF8;
+    // background: #EEFBF8;
     color: $color-main;
     text-align: left;
     margin: 28px;
     border-radius: 12px;
-    padding: 28px;
+    padding: 28px 0;
     .item{
       margin-top: 30px;
       &:first-child{
         margin-top: 0px;
       }
       img{
-        width: 60px;
+        width: 96px;
       }
     }
   }

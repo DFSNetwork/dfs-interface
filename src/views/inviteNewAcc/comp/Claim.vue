@@ -6,19 +6,28 @@
         <img class="tips" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/tips_icon_btn.svg">
       </div>
 
-      <div class="unClaim">
-        <div class="label">待领取总收益</div>
-        <div class="dinBold num">${{ totalUnClaim }}</div>
-        <div class="small abt tip">≈ ¥ {{ abtCNY }}</div>
+      <div class="unClaim flexb">
+        <div>
+          <div class="label">总收益</div>
+          <div class="dinBold num">${{ total }}</div>
+          <!-- <div class="small abt tip">≈ ¥ {{ abtCNY }}</div> -->
+        </div>
+        <div>
+          <div class="label">待领取收益</div>
+          <div class="dinBold num">${{ totalUnClaim }}</div>
+          <!-- <div class="small abt tip">≈ ¥ {{ abtCNY }}</div> -->
+        </div>
       </div>
-      <div class="claimBtn flexc" @click="handleClaim()">一键领取</div>
+      <div class="claimBtn flexc" :class="{'unable': !parseFloat(totalUnClaim || 0)}"
+        @click="handleClaim('all')">一键领取</div>
 
       <div class="item flexb" v-for="(v, i) in area" :key="i">
         <div class="">
           <div class="label dinReg">{{ v.name }} 邀请收益</div>
           <div class="dinBold num">{{ v.unclaimed || `0.0000 ${v.name}` }}</div>
         </div>
-        <div class="btn flexc" @click="handleClaim(v.name)">领取收益</div>
+        <div class="btn flexc" :class="{'unable': !parseFloat(v.unclaimed || 0)}"
+          @click="handleClaim(v.name)">领取收益</div>
       </div>
     </div>
   </div>
@@ -48,6 +57,20 @@ export default {
       coinPrices: (state) => state.sys.coinPrices,
       usdtPrice: (state) => state.sys.usdtPrice,
     }),
+    total() {
+      let total = 0;
+      this.area.forEach(v => {
+        const unc = parseFloat(v.total_reward || 0);
+        if (!unc) {
+          return
+        }
+        let pi = this.coinPrices.find(vv => vv.coin === v.name) || {};
+        pi = pi.price || 0;
+        let t = unc * pi;
+        total = parseFloat(total || 0) + parseFloat(t || 0)
+      })
+      return total.toFixed(2)
+    },
     totalUnClaim() {
       let total = 0;
       this.area.forEach(v => {
@@ -90,13 +113,16 @@ export default {
     },
     handleClaim(type)  {
       let list = this.area;
-      if (type) {
+      if (type !== 'all') {
         list = this.area.filter(v => v.name === type)
       }
       const formName = this.account.name;
       const permission = this.account.permissions;
       let actions = []
       list.forEach(v => {
+        if (!parseFloat(v.unclaimed || 0)) {
+          return
+        }
         const obj = {
           account: v.pool,
           name: 'claiminvite',
@@ -110,6 +136,9 @@ export default {
         }
         actions.push(obj)
       })
+      if (!actions.length) {
+        return
+      }
       const params = {
         actions
       }
@@ -174,11 +203,21 @@ export default {
     }
     .unClaim{
       font-size: 32px;
+      text-align: left;
+      &>div{
+        flex: 1;
+        padding-left: 24px;
+        margin-right: 27px;
+        &:last-child{
+          margin-right: 0;
+        }
+      }
       .label{
         color: #A6A6A6;
       }
       .num{
-        font-size: 64px;
+        font-size: 44px;
+        margin-top: 18px;
       }
       .abt{
         margin: 20px;
@@ -190,7 +229,11 @@ export default {
       border-radius: 12px;
       background: $color-main;
       font-size: 32px;
-      margin: 30px 0;
+      margin: 30px 0 0;
+      &.unable{
+        color: #999;
+        background: #F2F2F2;
+      }
     }
     .item{
       height: 164px;

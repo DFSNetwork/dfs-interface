@@ -13,7 +13,7 @@
           </div>
           <div class="flexb">
             <span class="tip">邀请</span>
-            <span class="tip">邀请日期</span>
+            <span class="tip">${{ handleGetItemReward(v.owner) }}</span>
             <!-- <span class="dinReg num">预估返佣：0.82 EOS</span> -->
           </div>
         </div>
@@ -31,11 +31,15 @@ export default {
   data() {
     return {
       lists: [],
+      tagLists: [],
+      dfsLists: [],
     }
   },
   computed: {
     ...mapState({
       account: state => state.app.account,
+      coinPrices: (state) => state.sys.coinPrices,
+      usdtPrice: (state) => state.sys.usdtPrice,
     }),
   },
   watch: {
@@ -45,6 +49,8 @@ export default {
           return
         }
         this.handleGetLists()
+        this.handleGetReward()
+        this.handleGetReward('tag')
       },
       deep: true,
       immediate: true,
@@ -78,6 +84,45 @@ export default {
         v.time = time;
       });
       this.lists = rows;
+    },
+    async handleGetReward(type) {
+      const name = this.account.name;
+      const params = {
+        "code": "miningpool11",
+        "scope": ` ${'judy.dfs'}`,
+        "table": "members",
+        "json": true,
+        limit: 100,
+      }
+      if (type === 'tag') {
+        params.code = 'tagtokenfarm'
+      }
+      const {status, result} = await this.$api.get_table_rows(params);
+      if (!status) {
+        return
+      }
+      const rows = result.rows || [];
+      let priceObj = this.coinPrices.find(vv => vv.coin === 'DFS') || {};
+      if (type === 'tag') {
+        priceObj = this.coinPrices.find(vv => vv.coin === 'TAG') || {};
+      }
+      const price = priceObj.price || 0;
+      let count = 0;
+      rows.forEach(v => {
+        let t = parseFloat(v.total_reward || 0) / 100 * price;
+        v.reward = parseFloat(t || 0).toFixed(4)
+      })
+      type === 'tag' ? this.tagLists = rows : this.dfsLists = rows;
+    },
+    handleGetItemReward(acc) {
+      const tag = this.tagLists.find(v => v.owner === acc) || {}
+      const tagNum = tag.reward || 0
+
+      const dfs = this.dfsLists.find(v => v.owner === acc) || {}
+      const dfsNum = dfs.reward || 0
+
+      const count = parseFloat(dfsNum || 0) + parseFloat(tagNum || 0)
+      return count.toFixed(4)
     }
   }
 }
