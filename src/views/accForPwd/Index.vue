@@ -211,10 +211,11 @@ export default {
 .walletCreate{
   font-size: 28px;
   text-align: left;
-  padding: 0 40px;
+  padding: 0 40px 40px;
   .title{
     font-size: 60px;
-    font-size: 500;
+    font-weight: 600;
+    margin-top: 20px;
   }
   .item{
     background: #F5F6F8;
@@ -291,6 +292,7 @@ export default {
   .hasWallet{
     // position: fixed;
     // bottom: 150px;
+    text-align: center;
     margin-top: 50px;
     font-size: 36px;
     font-weight: 500;

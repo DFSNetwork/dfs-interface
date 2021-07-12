@@ -294,14 +294,15 @@ export default {
 }
 .mt40{
   margin-top: -40px;
-  background: #FFF;
+  margin-bottom: 40px;
+  // background: #FFF;
   position: relative;
-  padding-top: 40px;
-  border-radius: 40px 40px 0 0 ;
+  // padding-top: 40px;
+  border-radius: 40px 40px 0 0;
 }
 .dataInfo{
   box-shadow: 0px 4px 8px 4px rgba(227,227,227,0.5);
-  border-radius: 20px 20px 0px 0px;
+  border-radius: 20px;
   padding: 28px 28px;
   margin: 0px 32px 20px;
   background: #FFF;

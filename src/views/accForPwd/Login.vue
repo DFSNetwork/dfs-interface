@@ -19,12 +19,6 @@
 
     <div class="btn flexc" @click="handleLogin">登 录</div>
 
-    <div class="hasWallet">
-      <span>还没有大丰收账号？</span>
-      <span class="green" @click="handleTo('createWallet')">去创建</span>
-    </div>
-
-
     <div class="otherLogin">
       <van-divider>第三方登录</van-divider>
       <div class="flexb pro">
@@ -42,6 +36,11 @@
         </div>
       </div>
     </div>
+
+    <div class="hasWallet">
+      <span>还没有大丰收账号？</span>
+      <span class="green" @click="handleTo('createWallet')">去创建</span>
+    </div>
   </div>
 </template>
 
@@ -52,7 +51,7 @@ export default {
   name: 'loginWallet',
   data() {
     return {
-      name: '',
+      name: localStorage.getItem('LOGINACC') || '',
       pwd: '',
       pwdType: 'password', // text
       accReg: /^([a-z]|[1-5]|\.){5,12}$/, // 匹配账户
@@ -91,6 +90,7 @@ export default {
       // 2. 查询链上账户公钥
       // 3. 公钥对比  一致 - 密码正确 ｜ 不一致 - 密码错误
       localStorage.setItem('WALLET', 'newwallet')
+      localStorage.setItem('LOGINACC', this.name)
       DApp.scatterInit(this, () => {
         DApp.loginByAcc({
           account: this.name,
@@ -131,8 +131,9 @@ export default {
   text-align: left;
   padding: 0 40px;
   .title{
+    margin-top: 20px;
     font-size: 60px;
-    font-size: 500;
+    font-weight: 600;
   }
   .item{
     background: #F5F6F8;
@@ -179,9 +180,10 @@ export default {
   }
   .hasWallet{
     // position: fixed;
-    margin-top: 50px;
+    margin-top: 80px;
     font-size: 36px;
     font-weight: 500;
+    text-align: center;
     .green{
       color: $color-main;
     }
