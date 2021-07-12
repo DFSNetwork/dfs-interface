@@ -4,7 +4,7 @@
       <span class="back flexa" @click="$router.back()">
         <img src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/back.png" alt="">
       </span>
-      <span>设置</span>
+      <span>{{ $t('my.setting') }}</span>
       <span class="back"></span>
     </div>
 
@@ -23,11 +23,11 @@
     </div>
 
     <div class="exportPrivate flexb"
-      @click="showExp = true"
+      @click="showPwd = true"
       v-if="wallet === 'newwallet' && account.name">
       <div class="flexa">
         <img class="icon" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/exportPrivite1.png" alt="">
-        <span>导出私钥</span>
+        <span>{{ $t('my.exPriveKey') }}</span>
       </div>
       <img class="right" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/itemRight.png">
     </div>
@@ -36,7 +36,7 @@
       v-if="wallet === 'newwallet' && account.name">
       <div class="flexa">
         <img class="icon" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/password1.png" alt="">
-        <span>修改密码</span>
+        <span>{{ $t('my.exPwd') }}</span>
       </div>
       <img class="right" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/itemRight.png">
     </div>
@@ -46,7 +46,7 @@
     <!-- <div class="exportPrivate flexb" @click="showUpAcc = true"> -->
       <div class="flexa">
         <img class="icon" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/upAcc1.png" alt="">
-        <span>升级账户</span>
+        <span>{{ $t('my.upAcc') }}</span>
       </div>
       <img class="right" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/itemRight.png">
     </div>
@@ -59,25 +59,33 @@
       v-model="showUpAcc">
       <UpAcc @listenClose="handleClose"/>
     </van-popup>
+    <van-popup  class="popup_p"
+      v-model="showPwd">
+      <ShowIptPwd @listenSend="handleSend" @listenClose="handleClose"/>
+    </van-popup>
   </div>
 </template>
 
 <script>
+import { DApp } from '@/utils/wallet';
 import { mapState } from 'vuex';
 import ExportPrivateKey from '@/views/accForPwd/popup/ExportPrivateKey'
 import UpAcc from '@/views/my/dialog/UpAcc'
+import ShowIptPwd from '@/components/popup/ShowIptPwd'
 
 export default {
   name: 'setting',
   components: {
     ExportPrivateKey,
     UpAcc,
+    ShowIptPwd,
   },
   data() {
     return {
       wallet: localStorage.getItem('WALLET') || 'scatter',
       showExp: false,
       showUpAcc: false,
+      showPwd: false,
     }
   },
   computed: {
@@ -90,6 +98,11 @@ export default {
     handleClose() {
       this.showUpAcc = false
       this.showExp = false;
+      this.showPwd = false;
+    },
+    handleSend() {
+      this.showPwd = false;
+      this.showExp = true
     }
   }
 }

@@ -4,21 +4,21 @@
       <span class="back flexa" @click="handleBack">
         <img src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/back.png">
       </span>
-      <span>转账</span>
+      <span>{{ $t('newwallet.transfer') }}</span>
       <span class="back"></span>
     </div>
 
     <div class="form">
       <div class="item">
-        <div class="label">收款账户</div>
+        <div class="label">{{ $t('newwallet.transferToTip') }}</div>
         <div>
           <van-field class="ipt" v-model="toAcc" maxlength="12"
-            placeholder="请输入收款账户" />
+            :placeholder="$t('newwallet.transferToTip')" />
         </div>
       </div>
       <div class="item">
         <div class="label flexb">
-          <span>转账数量</span>
+          <span>{{ $t('newwallet.transferNum') }}</span>
           <span class="flexa coin" @click="showMarketList = true">
             <span>{{ tokenInfo.symbol }}</span>
             <img class="toRight" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/back.png">
@@ -29,24 +29,24 @@
             @focus="handlePayFocus"
             @blur="handlePayBlur"
             type="number"
-            placeholder="请输入转账数量" />
-          <span class="max flexc" @click="handleMax">全部</span>
+            :placeholder="$t('newwallet.transferNumTip')" />
+          <span class="max flexc" @click="handleMax">MAX</span>
         </div>
       </div>
       <div class="item paddbm">
         <div class="label flexb">
-          <span>余额</span>
+          <span>{{ $t('public.balance') }}</span>
           <span class="green">{{ bal }} {{ tokenInfo.symbol }}</span>
         </div>
       </div>
       <div class="item">
-        <div class="label">备注</div>
+        <div class="label">{{ $t('newwallet.memo') }}</div>
         <div>
-          <van-field class="ipt" v-model="memo" placeholder="备注" />
+          <van-field class="ipt" v-model="memo" :placeholder="$t('newwallet.memo')" />
         </div>
       </div>
     </div>
-    <div class="btn flexc" @click="handleTransfer">确认</div>
+    <div class="btn flexc" @click="handleTransfer">{{ $t('public.confirm') }}</div>
 
     <!-- 币种列表 -->
     <van-popup

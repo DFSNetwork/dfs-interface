@@ -166,10 +166,11 @@ class newWallet {
     })()
   }
   transfer(obj, cb) {
-    Bus.$emit('busShowComfire', Object.assign({}, obj, {
-      type: 'transfer',
-      cb: cb,
-    }))
+    // Bus.$emit('busShowComfire', Object.assign({}, obj, {
+    //   type: 'transfer',
+    //   cb: cb,
+    // }))
+    this.transferSure(obj, cb)
   }
   toTransaction(obj, cb) {
     Bus.$emit('busShowComfire', Object.assign({}, obj, {

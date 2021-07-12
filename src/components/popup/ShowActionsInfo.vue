@@ -2,13 +2,17 @@
   <div class="info">
     <img class="close" @click="handleClose" src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/sd_icon_btn.svg">
     <div class="title">交易详情</div>
+    <div class="actsMethods">调用合约方法 </div>
     <div class="datas">
-      <div class="action flexb" v-for="(v, i) in params" :key="i">
-        <span class="mr">调用合约方法 </span>
-        <span>
+      <div class="action din" v-for="(v, i) in params" :key="i">
+        <div class="mtd">
           <span> {{ v.account }} </span>
           <span> > {{ v.name }}</span>
-        </span>
+        </div>
+        <div class="dtsItem flexb" v-for="(vv, ii) in v.data" :key="`${i}-${ii}`">
+          <span>{{ ii }}</span>
+          <span>{{ vv }}</span>
+        </div>
       </div>
     </div>
 
@@ -50,6 +54,7 @@ export default {
         }
         this.type = newVal.type;
         this.params = newVal.actions;
+        console.log(this.params)
         this.cb = newVal.cb;
       },
       deep: true,
@@ -91,13 +96,27 @@ export default {
     font-size: 36px;
     text-align: center;
   }
+  .actsMethods{
+    font-size: 30px;
+    font-weight: 500;
+  }
   .datas{
-    margin: 40px 0;
+    margin: 20px 0 40px;
     background: #F3F3F3;
     border-radius: 12px;
     padding: 28px 34px;
     color: #8B8B8B;
     font-size: 26px;
+    max-height: 350px;
+    overflow: auto;
+    .mtd{
+      color: #333;
+      font-weight: 600;
+      font-size: 28px;
+    }
+    .dtsItem{
+      margin: 12px 0;
+    }
   }
   .btn{
     background: $color-main;

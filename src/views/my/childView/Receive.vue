@@ -4,7 +4,7 @@
       <span class="back flexa" @click="handleBack">
         <img src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/back.png">
       </span>
-      <span>收款</span>
+      <span>{{ $t('newwallet.receive') }}</span>
       <span class="back"></span>
     </div>
 
@@ -20,7 +20,7 @@
           <div class="copy flexc"
             v-clipboard:copy="account.name"
             v-clipboard:success="onCopy"
-            v-clipboard:error="onError">复制收款地址</div>
+            v-clipboard:error="onError">{{ $t('invi.copy') }}</div>
         </div>
       </div>
     </div>

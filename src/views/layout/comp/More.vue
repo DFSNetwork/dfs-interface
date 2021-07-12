@@ -9,8 +9,8 @@
         <div style="flex:1">
           <div class="wel">{{ $t('more.wel') }}</div>
           <div class="flexb" v-if="!account || !account.name">
-            <div class="appLogin" @click="handleLogin('scatter')">钱包登录</div>
-            <div class="appLogin appLogin2" @click="handleLogin('newwallet')">账号登录</div>
+            <div class="appLogin" @click="handleLogin('scatter')">{{ $t('newwallet.loginByWallet') }}</div>
+            <div class="appLogin appLogin2" @click="handleLogin('newwallet')">{{ $t('newwallet.loginByPwd') }}</div>
           </div>
           <div v-else class="login">{{ account.name }}</div>
         </div>

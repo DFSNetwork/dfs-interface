@@ -52,7 +52,11 @@ export default {
       totalValue: '总估值',
       noLiqData: '暂无做市数据',
       windmill: '大风车',
-      clear: '清除页面缓存'
+      clear: '清除页面缓存',
+      setting: '设置',
+      exPriveKey: '导出私钥',
+      exPwd: '修改密码',
+      upAcc: '升级账户',
     }
   },
   'en': {
@@ -106,7 +110,11 @@ export default {
       totalValue:'Total Value',
       noLiqData:'No Liquidity data yet',
       windmill: 'Windmill',
-      clear:'Clear Web Cache'
+      clear:'Clear Web Cache',
+      setting:'Settings',
+      exPriveKey:'Export private key',
+      exPwd:'Modify password',
+      upAcc:'Upgrade account',
     }
   }
 }

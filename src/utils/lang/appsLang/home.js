@@ -31,6 +31,8 @@ export default {
       diary: '大丰收日记',
       exchange: '兑换USDT',
       issues: '建言献策',
+      inviter: '邀请返佣',
+      investment: '定投大厅',
     }
   },
   'en': {
@@ -64,6 +66,8 @@ export default {
       diary:'DFS Diary',
       exchange: 'Get USDT',
       issues: 'Issues',
+      inviter:'Rebate',
+      investment:'Investment',
     }
   }
 }

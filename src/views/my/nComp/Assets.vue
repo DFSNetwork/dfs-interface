@@ -28,15 +28,15 @@
     <div class="walletTrans flexb" v-if="wallet === 'newwallet' && account.name">
       <div class="flexa" @click="handleTo('myTransfer')">
         <img src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/transfer.png">
-        <span>转账</span>
+        <span>{{ $t('newwallet.transfer') }}</span>
       </div>
       <div class="flexa" @click="handleTo('myReceive')">
         <img src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/payment.png">
-        <span>收款</span>
+        <span>{{ $t('newwallet.receive') }}</span>
       </div>
       <div class="flexa" @click="handleTo('index')">
         <img src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/transaction.png">
-        <span>交易</span>
+        <span>{{ $t('newwallet.trade') }}</span>
       </div>
     </div>
     <div class="tools tip item flexb">
@@ -203,11 +203,11 @@ export default {
     font-size: 28px;
     img{
       width: 60px;
-      margin-right: 30px;
+      margin-right: 18px;
     }
     &>div{
-      flex: 1;
-      margin-right: 80px;
+      // flex: 1;
+      // margin-right: 80px;
       &:last-child{
         margin-right: 0;
       }
