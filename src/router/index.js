@@ -533,6 +533,18 @@ const constantRouter = [
         component: () => import(/* webpackChunkName: "home" */ '@/views/my/childView/Receive.vue'),
         meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noHeader: true, noTab: true },
       },
+      { // 设置页面
+        path: 'setting',
+        name: 'mySetting',
+        component: () => import(/* webpackChunkName: "home" */ '@/views/my/childView/Setting.vue'),
+        meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noHeader: true, noTab: true },
+      },
+      { // 修改密码
+        path: 'expwd',
+        name: 'myExpwd',
+        component: () => import(/* webpackChunkName: "home" */ '@/views/my/childView/ExPwd.vue'),
+        meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noTab: true },
+      }
     ],
   },
   // 邀请返佣

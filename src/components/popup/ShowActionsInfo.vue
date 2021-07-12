@@ -3,10 +3,12 @@
     <img class="close" @click="handleClose" src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/sd_icon_btn.svg">
     <div class="title">交易详情</div>
     <div class="datas">
-      <div class="action flexa" v-for="(v, i) in params" :key="i">
-        <span>调用合约方法 </span>
-        <span> {{ v.account }} </span>
-        <span> > {{ v.name }}</span>
+      <div class="action flexb" v-for="(v, i) in params" :key="i">
+        <span class="mr">调用合约方法 </span>
+        <span>
+          <span> {{ v.account }} </span>
+          <span> > {{ v.name }}</span>
+        </span>
       </div>
     </div>
 
@@ -95,6 +97,7 @@ export default {
     border-radius: 12px;
     padding: 28px 34px;
     color: #8B8B8B;
+    font-size: 26px;
   }
   .btn{
     background: $color-main;

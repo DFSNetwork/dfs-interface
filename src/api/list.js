@@ -196,7 +196,7 @@ export function get_account(name) {
     }
     axios.post(`${host}/v1/chain/get_account`, JSON.stringify(params)).then((res) => {
       let result = Object.assign(res.data, {});
-      console.log(result)
+      // console.log(result)
       resolve({ status: res.status === 200, result });
     }, err => {
       reject(err)

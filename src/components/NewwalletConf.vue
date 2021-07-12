@@ -103,7 +103,7 @@ export default {
         return
       }
       const bal = result.split(' ')[0];
-      if (parseFloat(bal) >= 0.01) {
+      if (parseFloat(bal) >= 500) {
         this.showRiskWarn = true;
       }
     },

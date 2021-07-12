@@ -87,10 +87,23 @@ class newWallet {
       if (!hasPubKey) {
         return cb('账户公钥不匹配')
       }
+      let isSelf = false;
+      const ownerInfo = permissions.find(v => v.perm_name === 'owner');
+      try {
+        if (ownerInfo.required_auth.accounts[0].permission.actor === 'dfsacmanager') {
+          isSelf = false
+        } else {
+          isSelf = true;
+        }
+      } catch (error) {
+        console.log(error)
+      }
+
       const newAccount = {
         name: eos_account,
         permissions: perm_name,
         publicKey: this.public_key,
+        isSelf
       }
       store.dispatch('setAccount', newAccount);
       cb(null, newAccount)

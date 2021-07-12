@@ -87,7 +87,7 @@ export default {
       pwd: '',
       pwd2: '',
       pwdType: 'password', // text
-      accReg: /^([a-z]|[1-5]){8}\.(tag|dfs)$/, // 匹配账户
+      accReg: /^([a-z]|[1-5]){1,8}\.(tag|dfs)$/, // 匹配账户
 
       nameError: false,
       pwdError: false,
@@ -97,7 +97,7 @@ export default {
       memo: '',
 
       showPopover: false,
-      actions: [{ text: '.tag' }, { text: '.dfs' }],
+      actions: [{ text: '.tag' }],
       selectAct: '.tag',
     }
   },
@@ -160,8 +160,8 @@ export default {
       this.name = returnStr;
     },
     handleReg() {
-      if (!this.shortName || this.shortName.length < 12 || !this.accReg.test(this.shortName)) {
-        this.$toast.fail('请按规则输入12位账号')
+      if (!this.shortName || this.shortName.length < 4 || !this.accReg.test(this.shortName)) {
+        this.$toast.fail('请按规则输入账号')
         return false
       }
       if (!this.pwd || this.pwd.length < 12) {
@@ -196,7 +196,7 @@ export default {
             return
           }
           const memo = `new:${this.shortName}:${pub}`
-          console.log(memo)
+          // console.log(memo)
           this.showRegiInfo = true;
           this.memo = memo
           // this.handleTo('loginWallet')
