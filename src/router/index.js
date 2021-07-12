@@ -561,6 +561,20 @@ const constantRouter = [
       },
     ],
   },
+  // 邀请返佣
+  {
+    path: '/testscan',
+    component: Layout,
+    redirect: '/',
+    children: [
+      { // 我的页面
+        path: '/',
+        name: 'testscan',
+        component: () => import(/* webpackChunkName: "home" */ '@/views/accForPwd/test.vue'),
+        meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noHeader: true, noTab: true },
+      },
+    ],
+  },
 ]
 
 export default new Router({

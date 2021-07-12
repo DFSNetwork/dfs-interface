@@ -20,6 +20,7 @@ import dfsMine from './appsLang/dfsMine'
 import my from './appsLang/my'
 import upRecord from './appsLang/upRecord'
 import kline from './appsLang/kline'
+import newwallet from './appsLang/newwallet'
 
 Vue.use(VueI18n);
 
@@ -39,6 +40,7 @@ const messages = {
     ...my['zh-CN'],
     ...upRecord['zh-CN'],
     ...kline['zh-CN'],
+    ...newwallet['zh-CN'],
     ...sys['zh-CN']
   },
   en: { // 英文包
@@ -56,6 +58,7 @@ const messages = {
     ...my['en'],
     ...upRecord['en'],
     ...kline['en'],
+    ...newwallet['en'],
     ...sys['en']
   },
 };

@@ -202,12 +202,18 @@ export function get_acc_info(user) {
     axios.post(`${host}/v1/chain/get_table_rows`, JSON.stringify(params)).then((res) => {
       let result = {};
       if (!res.data.rows.length) {
-        result = {}
+        result = {
+          avatar: "https://cdn.jsdelivr.net/gh/defis-net/material2/coin/tagtokenmain-tag.png",
+          cover: "https://cdn.jsdelivr.net/gh/defis-net/material/accBanner/banner1.png",
+          desc: "",
+          nick: "",
+          sex: 2,
+        }
       } else {
         result = Object.assign(res.data.rows[0], {});
-        if (account && account.name && account.name === user) {
-          store.dispatch('setAccInfo', result);
-        }
+      }
+      if (account && account.name && account.name === user) {
+        store.dispatch('setAccInfo', result);
       }
       resolve({ status: res.status === 200, result });
     }, err => {

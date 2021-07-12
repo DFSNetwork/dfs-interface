@@ -10,6 +10,7 @@
   "dependencies": {
     "@scatterjs/core": "^2.7.54",
     "@scatterjs/eosjs2": "^1.5.36",
+    "@zxing/library": "^0.18.6",
     "amfe-flexible": "^2.2.1",
     "anchor-link": "^2.1.4",
     "anchor-link-browser-transport": "^2.1.2",
@@ -36,7 +37,8 @@
     "vue-i18n": "^7.8.1",
     "vue-router": "^3.4.8",
     "vue-worker": "^1.2.1",
-    "vuex": "^3.1.2"
+    "vuex": "^3.1.2",
+    "webrtc-adapter": "^8.0.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.3.0",

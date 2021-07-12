@@ -94,9 +94,6 @@
           </a>
         </div>
       </div>
-
-      <div class="exportPrivate flexc" @click="handleShowComp('exportPrivate')"
-        v-if="account.name && wallet === 'newwallet'">导出我的私钥</div>
     </div>
   </van-popup>
 </template>
