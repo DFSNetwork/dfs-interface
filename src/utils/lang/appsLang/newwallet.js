@@ -81,6 +81,12 @@ export default {
       claimRwd: '领取收益',
       inviRcd: '邀请记录',
       invi: '邀请',
+
+      regRules: '注册指引：',
+      regRules1: '1. 按规定输入要创建的账号和密码',
+      regRules2: '2. 将创建账户二维码截图给邀请人，由邀请人帮您创建当前账户',
+      regRules3: '3. 邀请人创建成功后，您即可登录大丰收进行交易',
+      regRules4: '请您在输入前，一定要备份好自己的账号与密码，并妥善保管好。请勿将密码泄露给任何人。',
     }
   },
   'en': {
@@ -125,7 +131,7 @@ export default {
       createAcc:'Create an account',
       setAccName:'Set the account name (EOS)',
       setAccNameTip:'The account is composed of 8 lowercase letters a-z and 1-5',
-      randomAcc:'Random Account',
+      randomAcc:'Random',
       setPwd:'Set password',
       setPwdTip:'Not less than 12 digits, including uppercase and lowercase letters and special symbols',
       setPwd2:'Please enter the password again',
@@ -164,6 +170,12 @@ export default {
       claimRwd:'Receive income',
       inviRcd:'Invitation Record',
       invi:'Invite',
+
+      regRules:'Registration Guidelines:',
+      regRules1: '1. Enter the account and password to be created as required',
+      regRules2: '2. Show the inviter a screenshot of the QR code of the created account, and the inviter will help you create the current account',
+      regRules3: '3. After the inviter is successfully created, you can log in to Dafengshou for trading',
+      regRules4:'Please make sure to back up your account and password before entering, and keep them properly. Do not disclose the password to anyone. ',
     }
   }
 }

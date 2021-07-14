@@ -238,6 +238,7 @@ export default {
     .item{
       height: 164px;
       border-bottom: 1px solid $color-border;
+      text-align: left;
       &:last-child{
         border: 0px;
       }

@@ -52,11 +52,11 @@
 
     <div class="btn flexc" @click="handleRegister">{{ $t('newwallet.reg') }}</div>
     <div class="tips">
-      <div>注册指引：</div>
-      <div>1.注册完成后，登录大丰收，完成激活</div>
-      <div>2.一周内未激活帐号，系统将自动回收</div>
-      <div>3.在线创建账号，在您设置好自己的账号后，您亦可在信息确认页面刷新切换公私钥。</div>
-      <div>请您在输入前，一定要备份好自己的账号与密码，并妥善保管好。请勿将密码泄露给任何人。</div>
+      <div>{{ $t('newwallet.regRules') }}</div>
+      <div>{{ $t('newwallet.regRules1') }}</div>
+      <div>{{ $t('newwallet.regRules2') }}</div>
+      <div>{{ $t('newwallet.regRules3') }}</div>
+      <div>{{ $t('newwallet.regRules4') }}</div>
     </div>
 
     <div class="hasWallet">

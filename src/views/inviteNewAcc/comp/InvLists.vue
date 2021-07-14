@@ -134,7 +134,7 @@ export default {
   position: relative;
   border-radius: 12px;
   background: #FFF;
-  padding: 26px 26px 0;
+  padding: 26px 26px 10px;
   font-size: 28px;
   .card{
     .title{
