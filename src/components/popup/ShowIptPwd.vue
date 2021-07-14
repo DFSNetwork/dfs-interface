@@ -1,20 +1,20 @@
 <template>
   <div class="pwd">
     <img class="close" @click="handleClose" src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/sd_icon_btn.svg">
-    <div class="title">验证密码</div>
+    <div class="title">{{ $t('newwallet.regPwd') }}</div>
     <div class="flexa iptDiv">
       <van-field v-model="pwd"
         class="ipt"
-        type="password" placeholder="请输入密码" />
+        type="password" :placeholder="$t('newwallet.regPwdTip')" />
     </div>
-    <div class="btn flexc" @click="handleRegPwd">确认</div>
+    <div class="btn flexc" @click="handleRegPwd">{{ $t('public.confirm') }}</div>
 
     <div class="flexa" @click="handleUnshowNext">
       <div class="checkBox" :class="{'act': next}">
         <img v-if="next"
         src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/checked.png">
       </div>
-      <span>下次交易不再输入密码</span>
+      <span>{{ $t('newwallet.nextUn') }}</span>
     </div>
   </div>
 </template>
@@ -39,7 +39,7 @@ export default {
       const pwd = this.pwd;
       DApp.regPwd(pwd, (err) => {
         if (err) {
-          this.$toast.fail('密码错误')
+          this.$toast.fail(this.$t('newwallet.pwdErr'))
           return
         }
         this.$emit('listenSend', {

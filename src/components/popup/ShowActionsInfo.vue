@@ -1,8 +1,8 @@
 <template>
   <div class="info">
     <img class="close" @click="handleClose" src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/sd_icon_btn.svg">
-    <div class="title">交易详情</div>
-    <div class="actsMethods">调用合约方法 </div>
+    <div class="title">{{ $t('newwallet.tradeDtl') }}</div>
+    <div class="actsMethods">{{ $t('newwallet.useContract') }} </div>
     <div class="datas">
       <div class="action din" v-for="(v, i) in params" :key="i">
         <div class="mtd">
@@ -16,13 +16,13 @@
       </div>
     </div>
 
-    <div class="btn flexc" @click="handleSend">发送交易</div>
+    <div class="btn flexc" @click="handleSend">{{ $t('newwallet.sendTrade') }}</div>
     <div class="flexa" @click="handleUnshowNext">
       <div class="checkBox" :class="{'act': next}">
         <img v-if="next"
         src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/checked.png">
       </div>
-      <span>退出应用前不用再次确认</span>
+      <span>{{ $t('newwallet.nextUn') }}</span>
     </div>
   </div>
 </template>

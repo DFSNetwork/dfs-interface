@@ -2,7 +2,7 @@
   <div class="info">
     <img class="close" @click="handleClose" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/close-white.png">
     <img class="logo" src="@/assets/img/logo.png">
-    <div class="title">扫码注册·加入大丰收</div>
+    <div class="title">{{ $t('newwallet.scanTip') }}</div>
     <div class="bg">
       <div class="qrCode">
         <canvas id="codeShare"></canvas>
@@ -16,7 +16,7 @@
           <span
             v-clipboard:copy="memo"
             v-clipboard:success="onCopy"
-            v-clipboard:error="onError">复制 memo</span>
+            v-clipboard:error="onError">{{ $t('newwallet.copy') }} memo</span>
           <!-- <img src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/copy.png"> -->
         </span>
       </div>

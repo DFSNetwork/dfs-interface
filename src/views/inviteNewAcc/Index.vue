@@ -4,11 +4,11 @@
     <div class="main">
       <div class="card">
         <div class="title flexa">
-          <span>邀请好友</span>
+          <span>{{ $t('newwallet.invite') }}</span>
           <img class="tips" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/tips_icon_btn.svg">
         </div>
         <div class="flexb item">
-          <span class="label">邀请链接</span>
+          <span class="label">{{ $t('newwallet.inviLink') }}</span>
           <div class="flexa"
             v-clipboard:copy="link"
             v-clipboard:success="onCopy"
@@ -18,11 +18,11 @@
           </div>
         </div>
         <div class="btnDiv flexb">
-          <div class="flexc btn" @click="showInvite = true">面对面邀请</div>
+          <div class="flexc btn" @click="showInvite = true">{{ $t('newwallet.faceToInvi') }}</div>
           <div class="flexc btn"
             v-clipboard:copy="link"
             v-clipboard:success="onCopy"
-            v-clipboard:error="onError">链接邀请</div>
+            v-clipboard:error="onError">{{ $t('newwallet.链接邀请') }}</div>
         </div>
       </div>
     </div>

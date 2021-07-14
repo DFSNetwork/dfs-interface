@@ -3,24 +3,24 @@
     <img class="close"
       @click="handleClose"
       src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/close-black.png">
-    <div class="title">风险提示</div>
+    <div class="title">{{ $t('newwallet.warmTip') }}</div>
     <img class="riskImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/risk.png">
     <div class="tips">
-      <div>检测到您账户已超出当前最大限额，为了您的账户安全。</div>
-      <div>建议您前往下载钱包，成为真正钱包用户。</div>
+      <div>{{ $t('newwallet.warmTip1') }}</div>
+      <div>{{ $t('newwallet.warmTip2') }}</div>
     </div>
     <div class="wallets">
       <div class="flexb">
         <img src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/tp.png" alt="">
-        <span class="down">前往下载</span>
+        <span class="down">{{ $t('newwallet.toDown') }}</span>
       </div>
       <div class="flexb">
         <img src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/mykey.png" alt="">
-        <span class="down">前往下载</span>
+        <span class="down">{{ $t('newwallet.toDown') }}</span>
       </div>
       <div class="flexb">
         <img src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/start.png" alt="">
-        <span class="down">前往下载</span>
+        <span class="down">{{ $t('newwallet.toDown') }}</span>
       </div>
     </div>
   </div>

@@ -2,9 +2,9 @@
   <div class="export">
     <img class="close" @click="handleClose"
       src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/close-black.png">
-    <div class="title">安全提示</div>
+    <div class="title">{{ $t('newwallet.safeTip') }}</div>
     <div class="tips">
-      安全警告，私钥导出后请妥善保管，不要泄露，一旦泄露，可能导致资产损失
+      {{ $t('newwallet.safeTip1') }}
     </div>
     <div class="private">
       <span>{{ privateKey }}</span>
@@ -12,11 +12,11 @@
         v-clipboard:copy="privateKey"
         v-clipboard:success="onCopy"
         v-clipboard:error="onError">
-        <span>点击复制</span>
+        <span>{{ $t('newwallet.copy') }}</span>
         <img src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/copy.png">
       </div>
     </div>
-    <div class="btn flexc" @click="handleClose">我知道了</div>
+    <div class="btn flexc" @click="handleClose">{{ $t('newwallet.known') }}</div>
   </div>
 </template>
 

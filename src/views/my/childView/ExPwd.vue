@@ -1,19 +1,19 @@
 <template>
   <div class="expwd">
-    <div class="title">修改密码</div>
+    <div class="title">{{ $t('newwallet.exPwd') }}</div>
     <div class="item flexb" :class="{'border': iptAct === 1, 'error': pwdError}">
       <van-field class="ipt"
         @focus="handleFocus(1)"
         @blur="handleBlur"
         v-model="pwd"
-        type="password" placeholder="请输入原密码" />
+        type="password" :placeholder="$t('newwallet.iptPwd')" />
     </div>
     <div class="item flexb" :class="{'border': iptAct === 2, 'error': newpwdError}">
       <van-field class="ipt"
         @focus="handleFocus(2)"
         @blur="handleBlur"
         v-model="newpwd"
-        :type="pwdType" placeholder="请输入新密码" />
+        :type="pwdType" :placeholder="$t('newwallet.iptNewPwd')" />
       <span class="green" @click="handleExType">
         <img v-if="pwdType === 'password'" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/pwd-show.png">
         <img v-else src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/pwd-hide.png">
@@ -24,14 +24,14 @@
         @focus="handleFocus(3)"
         @blur="handleBlur"
         v-model="newpwd2"
-        :type="pwdType" placeholder="请再次输入新密码" />
+        :type="pwdType" :placeholder="$t('newwallet.iptNewPwd2')" />
       <span class="green" @click="handleExType">
         <img v-if="pwdType === 'password'" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/pwd-show.png">
         <img v-else src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/pwd-hide.png">
       </span>
     </div>
 
-    <div class="btn flexc" @click="handleGetNewKey">确认</div>
+    <div class="btn flexc" @click="handleGetNewKey">{{ $t('public.confirm') }}</div>
   </div>
 </template>
 
@@ -76,7 +76,7 @@ export default {
         DApp.regPwd(pwd, (err) => {
           if (err) {
             this.pwdError = true
-            this.$toast.fail('密码错误')
+            this.$toast.fail(this.$t('newwallet.pwdErr'))
             return
           }
           this.pwdError = false
@@ -86,14 +86,14 @@ export default {
           this.newpwdError = false
         } else {
           this.newpwdError = true
-          this.$toast.fail('请输入12位以上密码')
+          this.$toast.fail(this.$t('newwallet.pwdLenErr'))
         }
       } else {
         if (this.newpwd === this.newpwd2) {
           this.newpwd2Error = false
         } else {
           this.newpwd2Error =  true
-          this.$toast.fail('两次密码不一致，请重新输入')
+          this.$toast.fail(this.$t('newwallet.pwdUnLike'))
         }
       }
       this.iptAct = 0;

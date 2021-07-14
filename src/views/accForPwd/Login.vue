@@ -1,26 +1,26 @@
 <template>
   <div class="wallet">
-    <div class="title">账户登录</div>
+    <div class="title">{{ $t('newwallet.accLogin') }}</div>
     <div class="item flexb">
       <van-field class="ipt"
         v-model="name"
-        type="text" placeholder="请输入EOS账号" />
+        type="text" :placeholder="$t('newwallet.loginAccTip')" />
     </div>
     <div class="item flexb">
       <van-field class="ipt"
         v-model="pwd"
-        :type="pwdType" placeholder="请输入登录密码" />
+        :type="pwdType" :placeholder="$t('newwallet.loginPwdTip')" />
       <span class="green" @click="handleExType">
         <img v-if="pwdType === 'password'" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/pwd-show.png">
         <img v-else src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/pwd-hide.png">
       </span>
     </div>
-    <div class="label">请保管好个人密码，不要透露给任何人！</div>
+    <div class="label">{{ $t('newwallet.pwdTip') }}</div>
 
-    <div class="btn flexc" @click="handleLogin">登 录</div>
+    <div class="btn flexc" @click="handleLogin">{{ $t('newwallet.login') }}</div>
 
     <div class="otherLogin">
-      <van-divider>第三方登录</van-divider>
+      <van-divider>{{ $t('newwallet.otherLogin') }}</van-divider>
       <div class="flexb pro">
         <div class="logoItem" @click="handleLoginOther('tp')">
           <img class="logo" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/tp_logo.png">
@@ -38,8 +38,9 @@
     </div>
 
     <div class="hasWallet">
-      <span>还没有大丰收账号？</span>
-      <span class="green" @click="handleTo('createWallet')">去创建</span>
+      <span>{{ $t('newwallet.hasDfsAcc') }}</span>
+      <span class="green"
+        @click="handleTo('createWallet')">{{ $t('newwallet.toCreate') }}</span>
     </div>
   </div>
 </template>
@@ -72,11 +73,11 @@ export default {
     },
     handleReg() {
       if (!this.name.trim() || this.name.trim().length < 4 || !this.accReg.test(this.name)) {
-        this.$toast.fail('请输入5-12位账户')
+        this.$toast.fail(this.$t('newwallet.accErr'))
         return false
       }
       if (!this.pwd) {
-        this.$toast.fail('请输入密码')
+        this.$toast.fail(this.$t('newwallet.loginPwdTip'))
         return false
       }
       return true
@@ -97,10 +98,10 @@ export default {
           pwd: this.pwd,
         }, (err) => {
           if (err) {
-            this.$toast.fail('账号或密码错误')
+            this.$toast.fail(this.$t('newwallet.pwdErr'))
             return
           }
-          this.$toast.success('登陆成功')
+          this.$toast.success(this.$t('newwallet.loginSuccess'))
           this.$router.push({
             name: 'home'
           })

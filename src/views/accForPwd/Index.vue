@@ -1,13 +1,13 @@
 <template>
   <div class="walletCreate">
-    <div class="title">创建账号</div>
+    <div class="title">{{ $t('newwallet.createAcc') }}</div>
     <div class="item flexb" :class="{'border': iptAct === 1, 'error': nameError}">
       <van-field class="ipt"
         v-model="name"
         maxlength="8"
         @focus="handleFocus(1)"
         @blur="handleBlur(1)"
-        type="text" placeholder="设置账号名（EOS）" />
+        type="text" :placeholder="$t('newwallet.setAccName')" />
       <van-popover
         v-model="showPopover"
         trigger="click"
@@ -23,34 +23,34 @@
       </van-popover>
     </div>
     <div class="label flexb">
-      <span>账号由8位小写字母a-z和1-5组成</span>
-      <span class="green" @click="handleRandomAcc">随机账号</span>
+      <span>{{ $t('newwallet.setAccNameTip') }}</span>
+      <span class="green" @click="handleRandomAcc">{{ $t('newwallet.randomAcc') }}</span>
     </div>
     <div class="item flexb" :class="{'border': iptAct === 2, 'error': pwdError}">
       <van-field class="ipt"
         v-model="pwd"
         @focus="handleFocus(2)"
         @blur="handleBlur(2)"
-        :type="pwdType" placeholder="设置密码" />
+        :type="pwdType" :placeholder="$t('newwallet.setPwd')" />
       <span class="green" @click="handleExType">
         <img v-if="pwdType === 'password'" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/pwd-show.png">
         <img v-else src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/pwd-hide.png">
       </span>
     </div>
-    <div class="label">不少于12位，包含大小写字母、含特殊符号</div> 
+    <div class="label">{{ $t('newwallet.setPwdTip') }}</div> 
     <div class="item flexb" :class="{'border': iptAct === 3, 'error': pwd2Error}">
       <van-field class="ipt"
         @focus="handleFocus(3)"
         @blur="handleBlur(3)"
         v-model="pwd2"
-        :type="pwdType" placeholder="请再次输入密码" />
+        :type="pwdType" :placeholder="$t('newwallet.setPwd2')" />
       <span class="green" @click="handleExType">
         <img v-if="pwdType === 'password'" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/pwd-show.png">
         <img v-else src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/pwd-hide.png">
       </span>
     </div>
 
-    <div class="btn flexc" @click="handleRegister">注 册</div>
+    <div class="btn flexc" @click="handleRegister">{{ $t('newwallet.reg') }}</div>
     <div class="tips">
       <div>注册指引：</div>
       <div>1.注册完成后，登录大丰收，完成激活</div>
@@ -60,9 +60,9 @@
     </div>
 
     <div class="hasWallet">
-      <span>已有账号？</span>
+      <span>{{ $t('newwallet.hasAcc') }}</span>
       <span class="green"
-        @click="handleTo('loginWallet')">去登录</span>
+        @click="handleTo('loginWallet')">{{ $t('newwallet.toLogin') }}</span>
     </div>
 
     <van-popup class="popup_p"
@@ -161,15 +161,15 @@ export default {
     },
     handleReg() {
       if (!this.shortName || this.shortName.length < 4 || !this.accReg.test(this.shortName)) {
-        this.$toast.fail('请按规则输入账号')
+        this.$toast.fail(this.$t('newwallet.accRuleErr'))
         return false
       }
       if (!this.pwd || this.pwd.length < 12) {
-        this.$toast.fail('请按规则输入不少于12位密码')
+        this.$toast.fail(this.$t('newwallet.pwdLenErr'))
         return false
       }
       if (!this.pwd2 || this.pwd2 !== this.pwd) {
-        this.$toast.fail('两次密码不一致，请重新输入')
+        this.$toast.fail(this.$t('newwallet.pwdUnLike'))
         return false
       }
       return true
@@ -184,7 +184,7 @@ export default {
         if (!status) {
           return
         }
-        this.$toast.fail('账号已被注册')
+        this.$toast.fail(this.$t('newwallet.accRegied'))
       } catch (error) {
         const params = {
           account: this.shortName,

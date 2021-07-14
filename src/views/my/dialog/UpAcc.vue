@@ -4,18 +4,18 @@
       <img class="bg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/upgrade.png">
       <div class="title">
         <img class="new" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/new_upacc.png" >
-        <div>升级个人账户</div>
-        <div class="subTitle">升级为自主账户</div>
+        <div>{{ $t('newwallet.upAcc') }}</div>
+        <div class="subTitle">{{ $t('newwallet.upAccTip') }}</div>
       </div>
     </div>
 
     <div class="tips">
-      <div class="label">1. 账户升级，购买永久专属你的账户</div>
-      <div class="label">2. 获取账户完整的操作权限</div>
+      <div class="label">{{ $t('newwallet.upAccTip1') }}</div>
+      <div class="label">{{ $t('newwallet.upAccTip2') }}</div>
     </div>
 
-    <div class="btn flexc" @click="handleUpAcc">立即升级</div>
-    <div class="btn unBtn flexc" @click="handleClose">暂不升级</div>
+    <div class="btn flexc" @click="handleUpAcc">{{ $t('newwallet.upNow') }}</div>
+    <div class="btn unBtn flexc" @click="handleClose">{{ $t('newwallet.unUp') }}</div>
   </div>
 </template>
 
