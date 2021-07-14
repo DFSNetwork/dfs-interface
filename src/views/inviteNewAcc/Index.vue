@@ -22,7 +22,7 @@
           <div class="flexc btn"
             v-clipboard:copy="link"
             v-clipboard:success="onCopy"
-            v-clipboard:error="onError">{{ $t('newwallet.链接邀请') }}</div>
+            v-clipboard:error="onError">{{ $t('newwallet.linkInvi') }}</div>
         </div>
       </div>
     </div>

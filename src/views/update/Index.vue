@@ -1,6 +1,7 @@
 <template>
   <div class="update">
     <div class="title">{{ $t('upRecord.title') }}</div>
+    <V4 />
     <V3 />
     <V2 />
     <V1 />
@@ -11,10 +12,11 @@
 import V1 from './comp/V1'
 import V2 from './comp/V2'
 import V3 from './comp/V3'
+import V4 from './comp/V4'
 export default {
   name: 'update',
   components: {
-    V1, V2, V3,
+    V1, V2, V3, V4,
   }
 }
 </script>

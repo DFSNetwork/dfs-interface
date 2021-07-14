@@ -72,6 +72,15 @@ export default {
       inviLink: '邀请链接',
       faceToInvi: '面对面邀请',
       linkInvi: '链接邀请',
+      inviTip: '扫码注册·加入大丰收',
+      myRewd: '我的收益',
+      totalRwd: '总收益',
+      unClaim: '待领取收益',
+      oneKeyClaim: '一键领取',
+      inviRwd: '邀请收益',
+      claimRwd: '领取收益',
+      inviRcd: '邀请记录',
+      invi: '邀请',
     }
   },
   'en': {
@@ -141,11 +150,20 @@ export default {
       pwdUnLike:'The two passwords are inconsistent, please re-enter',
       accRuleErr:'Please enter the account number according to the rules',
       accRegied:'Account has been registered',
-      
-      invite:'Invite friends',
+
+      invite:'Invite Friends',
       inviLink:'Invitation Link',
-      faceToInvi:'face to face invitation',
-      linkInvi:'Link invitation',
+      faceToInvi:'Face To Face',
+      linkInvi:'Link Invitation',
+      inviTip:'Scan QR Code to Register·Join the Great Harvest',
+      myRewd:'My Earnings',
+      totalRwd:'Total Revenue',
+      unClaim:'Pending income',
+      oneKeyClaim:'One-key claim',
+      inviRwd:'Invitation revenue',
+      claimRwd:'Receive income',
+      inviRcd:'Invitation Record',
+      invi:'Invite',
     }
   }
 }

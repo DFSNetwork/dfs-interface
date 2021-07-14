@@ -2,7 +2,7 @@
   <div class="invLists">
     <div class="card">
       <div class="title flexa">
-        <span>邀请记录</span>
+        <span>{{ $t('newwallet.inviRcd') }}</span>
         <!-- <img class="tips" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/tips_icon_btn.svg"> -->
       </div>
       <div class="item flexa" v-for="(v, i) in lists" :key="i">
@@ -12,7 +12,7 @@
             <span class="dinReg date">{{ v.time }}</span>
           </div>
           <div class="flexb">
-            <span class="tip">邀请</span>
+            <span class="tip">{{ $t('newwallet.invi') }}</span>
             <span class="tip">${{ handleGetItemReward(v.owner) }}</span>
             <!-- <span class="dinReg num">预估返佣：0.82 EOS</span> -->
           </div>

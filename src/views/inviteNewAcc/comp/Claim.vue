@@ -2,32 +2,32 @@
   <div class="main">
     <div class="card">
       <div class="title flexa">
-        <span>我的收益</span>
+        <span>{{ $t('newwallet.myRewd') }}</span>
         <img class="tips" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/tips_icon_btn.svg">
       </div>
 
       <div class="unClaim flexb">
         <div>
-          <div class="label">总收益</div>
+          <div class="label">{{ $t('newwallet.totalRwd') }}</div>
           <div class="dinBold num">${{ total }}</div>
           <!-- <div class="small abt tip">≈ ¥ {{ abtCNY }}</div> -->
         </div>
         <div>
-          <div class="label">待领取收益</div>
+          <div class="label">{{ $t('newwallet.unClaim') }}</div>
           <div class="dinBold num">${{ totalUnClaim }}</div>
           <!-- <div class="small abt tip">≈ ¥ {{ abtCNY }}</div> -->
         </div>
       </div>
       <div class="claimBtn flexc" :class="{'unable': !parseFloat(totalUnClaim || 0)}"
-        @click="handleClaim('all')">一键领取</div>
+        @click="handleClaim('all')">{{ $t('newwallet.oneKeyClaim') }}</div>
 
       <div class="item flexb" v-for="(v, i) in area" :key="i">
         <div class="">
-          <div class="label dinReg">{{ v.name }} 邀请收益</div>
+          <div class="label dinReg">{{ v.name }} {{ $t('newwallet.inviRwd') }}</div>
           <div class="dinBold num">{{ v.unclaimed || `0.0000 ${v.name}` }}</div>
         </div>
         <div class="btn flexc" :class="{'unable': !parseFloat(v.unclaimed || 0)}"
-          @click="handleClaim(v.name)">领取收益</div>
+          @click="handleClaim(v.name)">{{ $t('newwallet.claimRwd') }}</div>
       </div>
     </div>
   </div>
