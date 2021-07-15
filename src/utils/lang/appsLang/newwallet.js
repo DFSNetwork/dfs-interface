@@ -106,6 +106,11 @@ export default {
       walletAcc: '钱包账号',
       unHasWallet: '还没有钱包？',
       toDownWallet: '去下载',
+
+      traferAddress: '转入地址',
+      regiTips: '注意：',
+      regiTips1: '1. 通过钱包转账并备注或通过交易所提币并备注的方式向以上智能合约地址转入至少0.1个EOS。多于0.1EOS的部分将自动转入新创建的账号。',
+      regiTips2: '2. 请确保转入地址和备注同时正确。',
     }
   },
   'en': {
@@ -209,6 +214,11 @@ export default {
       walletAcc:'Wallet account number',
       unHasWallet:'Don\'t have a wallet yet? ',
       toDownWallet:'Go to download',
+
+      traferAddress:'transfer address',
+      regiTips:'Note:',
+      regiTips1: '1. Transfer at least 0.1 EOS to the above smart contract address via wallet transfer and remarks or with exchanges and remarks. The part more than 0.1 EOS will be automatically transferred to the newly created account. ',
+      regiTips2: '2. Please make sure that the transfer address and remarks are correct at the same time. ',
     }
   }
 }
