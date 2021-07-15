@@ -13,14 +13,14 @@
 
         <!-- 创建账户 -->
         <div class="createAcc flexa">
-          <span>创建账户：</span>
+          <span>{{ $t('newwallet.createAcc') }}：</span>
           <span class="accNAme dinBold">{{ shortName }}</span>
         </div>
 
         <!-- 转入地址 -->
         <div class="memoDiv">
           <div class="subTitle flexb">
-            <span>转入地址</span>
+            <span>{{ $t('newwallet.traferAddress') }}</span>
             <img class="copyImg"
               v-clipboard:copy="'dfsacmanager'"
               v-clipboard:success="onCopy"
@@ -45,9 +45,9 @@
       </div>
 
       <div class="tipsDiv">
-        <div>注意：</div>
-        <div>1. 通过钱包转账并备注或通过交易所提币并备注的方式向以上智能合约地址转入至少0.1个EOS。多于0.1EOS的部分将自动转入新创建的账号。</div>
-        <div>2. 请确保转入地址和备注同时正确。</div>
+        <div>{{ $t('newwallet.regiTips') }}</div>
+        <div>{{ $t('newwallet.regiTips1') }}</div>
+        <div>{{ $t('newwallet.regiTips2') }}</div>
       </div>
     </div>
   </div>
