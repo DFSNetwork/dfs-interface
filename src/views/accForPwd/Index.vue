@@ -69,9 +69,9 @@
         @click="handleTo('loginWallet')">{{ $t('newwallet.toLogin') }}</span>
     </div>
 
-    <van-popup class="popup_p"
+    <van-popup class="popup_long"
       v-model="showRegiInfo">
-      <ShowRegiActions :memo="memo" @listenClose="handleClose"/>
+      <ShowRegiActions :memo="memo" :shortName="shortName" @listenClose="handleClose"/>
     </van-popup>
   </div>
 </template>

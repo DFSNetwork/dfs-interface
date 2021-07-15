@@ -33,7 +33,7 @@
     <div class="red">{{ $t('newwallet.warnTip2') }}</div>
     <div class="flexc btn" @click="show = true">{{ $t('newwallet.toUse') }}</div>
 
-    <van-popup class="popup_p"
+    <van-popup class="popup_long"
       v-model="show"
       get-container="body">
       <UsePriTip @listenClose="listenClose"/>
