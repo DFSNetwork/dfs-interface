@@ -502,6 +502,12 @@ const constantRouter = [
         meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noTab: true },
       },
       {
+        path: 'create-wallet-key',
+        name: 'createWalletKey',
+        component: () => import(/* webpackChunkName: "home" */ '@/views/accForPwd/RegiByPubKey.vue'),
+        meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noTab: true },
+      },
+      {
         path: 'login-wallet',
         name: 'loginWallet',
         component: () => import(/* webpackChunkName: "home" */ '@/views/accForPwd/Login.vue'),

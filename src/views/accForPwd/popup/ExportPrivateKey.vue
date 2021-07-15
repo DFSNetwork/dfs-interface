@@ -68,7 +68,7 @@ export default {
   .tips{
     margin: 30px 0;
     background: #FFD5D5;
-    border: 2px solid #FF2A2A;
+    // border: 2px solid #FF2A2A;
     color: #FF1717;
     border-radius: 12px;
     padding: 14px 34px;

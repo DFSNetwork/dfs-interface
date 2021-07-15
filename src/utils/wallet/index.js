@@ -53,6 +53,9 @@ class DAppModel {
   regPwd(pwd, cb) { // 密码验证
     this.obj.regPwd(pwd, cb)
   }
+  randomKey(cb) {
+    this.obj.randomKey(cb)
+  }
 }
 
 export const DApp = new DAppModel();

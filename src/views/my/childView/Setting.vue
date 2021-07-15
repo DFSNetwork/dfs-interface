@@ -67,7 +67,7 @@
 </template>
 
 <script>
-import { DApp } from '@/utils/wallet';
+// import { DApp } from '@/utils/wallet';
 import { mapState } from 'vuex';
 import ExportPrivateKey from '@/views/accForPwd/popup/ExportPrivateKey'
 import UpAcc from '@/views/my/dialog/UpAcc'

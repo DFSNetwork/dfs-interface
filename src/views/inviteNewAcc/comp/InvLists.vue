@@ -59,6 +59,7 @@ export default {
   methods: {
     async handleGetLists() {
       const name = this.account.name;
+      // const name = 'judy.dfs';
       if (!name) {
         return
       }
@@ -77,7 +78,6 @@ export default {
       if (!status) {
         return
       }
-      console.log(result)
       const rows = result.rows;
       rows.forEach(v => {
         const time = toLocalTime(`${v.create_time}+0000`)
@@ -87,9 +87,10 @@ export default {
     },
     async handleGetReward(type) {
       const name = this.account.name;
+      // const name = 'judy.dfs';
       const params = {
         "code": "miningpool11",
-        "scope": ` ${'judy.dfs'}`,
+        "scope": ` ${name}`,
         "table": "members",
         "json": true,
         limit: 100,
@@ -107,7 +108,6 @@ export default {
         priceObj = this.coinPrices.find(vv => vv.coin === 'TAG') || {};
       }
       const price = priceObj.price || 0;
-      let count = 0;
       rows.forEach(v => {
         let t = parseFloat(v.total_reward || 0) / 100 * price;
         v.reward = parseFloat(t || 0).toFixed(4)

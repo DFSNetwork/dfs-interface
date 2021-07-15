@@ -1,9 +1,9 @@
 <template>
   <div class="walletCreate">
     <div class="title">
-      <span>{{ $t('newwallet.createAcc') }}</span>
-      <span @click="handleTo('createWalletKey')"
-        class="unAct">{{ $t('newwallet.walletAcc') }}</span>
+      <span @click="handleTo('createWallet')"
+        class="unAct">{{ $t('newwallet.createAcc') }}</span>
+      <span>{{ $t('newwallet.walletAcc') }}</span>
     </div>
     <div class="item flexb" :class="{'border': iptAct === 1, 'error': nameError}">
       <van-field class="ipt"
@@ -30,66 +30,64 @@
       <span>{{ $t('newwallet.setAccNameTip') }}</span>
       <span class="green" @click="handleRandomAcc">{{ $t('newwallet.randomAcc') }}</span>
     </div>
-    <div class="item flexb" :class="{'border': iptAct === 2, 'error': pwdError}">
-      <van-field class="ipt"
-        v-model="pwd"
+    <div class="item item2 flexb" :class="{'border': iptAct === 2, 'error': pwdError}">
+      <van-field class="ipt textarea"
+        v-model="pubkey"
+        rows="2"
         @focus="handleFocus(2)"
         @blur="handleBlur(2)"
-        :type="pwdType" :placeholder="$t('newwallet.setPwd')" />
-      <span class="green" @click="handleExType">
-        <img v-if="pwdType === 'password'" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/pwd-show.png">
-        <img v-else src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/pwd-hide.png">
-      </span>
+        type="textarea" :placeholder="$t('newwallet.warnTip4')" />
     </div>
-    <div class="label">{{ $t('newwallet.setPwdTip') }}</div> 
-    <div class="item flexb" :class="{'border': iptAct === 3, 'error': pwd2Error}">
-      <van-field class="ipt"
-        @focus="handleFocus(3)"
-        @blur="handleBlur(3)"
-        v-model="pwd2"
-        :type="pwdType" :placeholder="$t('newwallet.setPwd2')" />
-      <span class="green" @click="handleExType">
-        <img v-if="pwdType === 'password'" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/pwd-show.png">
-        <img v-else src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/pwd-hide.png">
+    <div class="label flexb">
+      <span class="red">{{ $t('newwallet.warnTip3') }}</span>
+      <span class="flexa green" @click="showRandomKey = true">
+        <span>{{ $t('newwallet.generator') }}</span>
       </span>
-    </div>
+    </div> 
 
     <div class="btn flexc" @click="handleRegister">{{ $t('newwallet.reg') }}</div>
     <div class="tips">
       <div>{{ $t('newwallet.regRules') }}</div>
-      <div>{{ $t('newwallet.regRules1') }}</div>
-      <div>{{ $t('newwallet.regRules2') }}</div>
-      <div>{{ $t('newwallet.regRules3') }}</div>
-      <div>{{ $t('newwallet.regRules4') }}</div>
+      <div>{{ $t('newwallet.regRules5') }}</div>
+      <div>{{ $t('newwallet.regRules6') }}</div>
+      <div>{{ $t('newwallet.regRules7') }}</div>
+      <div>{{ $t('newwallet.regRules8') }}</div>
+      <div>{{ $t('newwallet.regRules9') }}</div>
     </div>
 
     <div class="hasWallet">
-      <span>{{ $t('newwallet.hasAcc') }}</span>
+      <span>{{ $t('newwallet.unHasWallet') }}</span>
       <span class="green"
-        @click="handleTo('loginWallet')">{{ $t('newwallet.toLogin') }}</span>
+        @click="handleTo('loginWallet')">{{ $t('newwallet.toDownWallet') }}</span>
     </div>
 
     <van-popup class="popup_p"
       v-model="showRegiInfo">
       <ShowRegiActions :memo="memo" @listenClose="handleClose"/>
     </van-popup>
+
+    <van-popup class="popup_p"
+      v-model="showRandomKey">
+      <ShowKeys @listenClose="handleClose" @update="handleGetNewKey"/>
+    </van-popup>
   </div>
 </template>
 
 <script>
-import { DApp } from '@/utils/wallet'
-import ShowRegiActions from '@/views/accForPwd/popup/ShowRegiActions'
+// import { DApp } from '@/utils/wallet'
+import ShowRegiActions from '@/views/accForPwd/popup/ShowRegiActions';
+import ShowKeys from '@/views/accForPwd/popup/ShowKeys';
 export default {
   name: 'accForPwd',
   components: {
-    ShowRegiActions
+    ShowRegiActions,
+    ShowKeys
   },
   data() {
     return {
       iptAct: 0,
       name: '',
-      pwd: '',
-      pwd2: '',
+      pubkey: '',
       pwdType: 'password', // text
       accReg: /^([a-z]|[1-5]){1,8}\.(tag|dfs)$/, // 匹配账户
 
@@ -103,6 +101,8 @@ export default {
       showPopover: false,
       actions: [{ text: '.tag' }],
       selectAct: '.tag',
+
+      showRandomKey: false,
     }
   },
   computed: {
@@ -111,11 +111,15 @@ export default {
     }
   },
   methods: {
+    handleGetNewKey(data) {
+      this.pubkey = data;
+    },
     handleOnSelect(act) {
       this.selectAct = act.text
     },
     handleClose() {
-      this.showRegiInfo = false
+      this.showRegiInfo = false;
+      this.showRandomKey = false;
     },
     handleTo(name) {
       this.$router.replace({
@@ -140,16 +144,10 @@ export default {
           this.nameError = true
         }
       } else if (this.iptAct === 2) {
-        if (!this.pwd || this.pwd.length >= 12) {
+        if (!this.pubkey || this.pubkey.length == 53) {
           this.pwdError = false
         } else {
           this.pwdError = true
-        }
-      } else {
-        if (this.pwd === this.pwd2) {
-          this.pwd2Error = false
-        } else {
-          this.pwd2Error =  true
         }
       }
       this.iptAct = 0;
@@ -168,12 +166,8 @@ export default {
         this.$toast.fail(this.$t('newwallet.accRuleErr'))
         return false
       }
-      if (!this.pwd || this.pwd.length < 12) {
-        this.$toast.fail(this.$t('newwallet.pwdLenErr'))
-        return false
-      }
-      if (!this.pwd2 || this.pwd2 !== this.pwd) {
-        this.$toast.fail(this.$t('newwallet.pwdUnLike'))
+      if (!this.pubkey || this.pubkey.length !== 53) {
+        this.$toast.fail('请输入正确公钥')
         return false
       }
       return true
@@ -190,21 +184,10 @@ export default {
         }
         this.$toast.fail(this.$t('newwallet.accRegied'))
       } catch (error) {
-        const params = {
-          account: this.shortName,
-          pwd: this.pwd
-        }
-        DApp.accReg(params, (err, pub) => {
-          if (err) {
-            this.$toast.fail(err)
-            return
-          }
-          const memo = `new:${this.shortName}:${pub}`
-          // console.log(memo)
-          this.showRegiInfo = true;
-          this.memo = memo
-          // this.handleTo('loginWallet')
-        })
+        const memo = `new:${this.shortName}:${this.pubkey}`
+        console.log(memo)
+        this.showRegiInfo = true;
+        this.memo = memo
       }
     }
   }
@@ -222,7 +205,7 @@ export default {
     margin-top: 20px;
     .unAct{
       color: #A5A5A5;
-      margin-left: 70px;
+      margin-right: 70px;
     }
   }
   .item{
@@ -237,6 +220,10 @@ export default {
     }
     &.error{
       border: 2px solid #FF4D4D;
+    }
+    &.item2{
+      height: 150px;
+      padding: 0;
     }
     .model{
       margin-right: 10px;
@@ -258,6 +245,11 @@ export default {
       background: rgba(0,0,0,0);
       padding: 0;
       flex: 1;
+      &.textarea{
+        padding: 0;
+        height: 160px;
+        padding: 28px;
+      }
       &::after{
         display: none;
       }
@@ -275,6 +267,10 @@ export default {
     color: #BCC3C6;
     margin-top: 22px;
     margin-left: 22px;
+
+    .red{
+      color: #FF1717;
+    }
 
     .green{
       color: $color-main;

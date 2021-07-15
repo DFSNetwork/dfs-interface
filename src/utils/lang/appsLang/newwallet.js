@@ -87,6 +87,25 @@ export default {
       regRules2: '2. 将创建账户二维码截图给邀请人，由邀请人帮您创建当前账户',
       regRules3: '3. 邀请人创建成功后，您即可登录大丰收进行交易',
       regRules4: '请您在输入前，一定要备份好自己的账号与密码，并妥善保管好。请勿将密码泄露给任何人。',
+      regRules5: '1. 按规定输入您要创建的账户',
+      regRules6: '2. 通过密钥生成器生成一对密钥',
+      regRules7: '3. 保存您的私钥到至少2个安全的地方',
+      regRules8: '4. 生成注册二维码，由邀请人扫码帮助完成注册',
+      regRules9: '5. 创建成功后即可通过钱包导入私钥，打开大丰收进行交易',
+
+      warnTip: '温馨提醒',
+      warnTip1: '确认已备份了私钥，并保存安全的地方',
+      warnTip2: '*温馨提醒，使用私钥前请备份！',
+      warnTip3: '请确保已经保存该公钥对应的私钥！',
+      warnTip4: '请输入公钥，注意大小写',
+      clkCopuy: '点击复制',
+      pubKey: '公钥',
+      priKey: '私钥',
+      generator: '密钥生成器',
+      toUse: '去使用',
+      walletAcc: '钱包账号',
+      unHasWallet: '还没有钱包？',
+      toDownWallet: '去下载',
     }
   },
   'en': {
@@ -176,6 +195,20 @@ export default {
       regRules2: '2. Show the inviter a screenshot of the QR code of the created account, and the inviter will help you create the current account',
       regRules3: '3. After the inviter is successfully created, you can log in to Dafengshou for trading',
       regRules4:'Please make sure to back up your account and password before entering, and keep them properly. Do not disclose the password to anyone. ',
+
+      warnTip:'warm reminder',
+      warnTip1:'Confirm that the private key has been backed up and save it in a safe place',
+      warnTip2:'*Warm reminder, please backup before using the private key! ',
+      warnTip3:'Please make sure you have saved the private key corresponding to the public key! ',
+      warnTip4:'Please enter the public key, pay attention to case',
+      clkCopuy:'click to copy',
+      pubKey:'Public Key',
+      priKey:'Private key',
+      generator:'Key Generator',
+      toUse:'Go to use',
+      walletAcc:'Wallet account number',
+      unHasWallet:'Don\'t have a wallet yet? ',
+      toDownWallet:'Go to download',
     }
   }
 }

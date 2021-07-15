@@ -174,7 +174,7 @@ export default {
     font-size: 36px;
     font-weight: 500;
     height: 100px;
-    border-radius: 6px;
+    border-radius: 16px;
     color: #FFF;
     background: $color-main;
     margin: 50px 0px 25px;

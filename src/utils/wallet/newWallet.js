@@ -27,6 +27,13 @@ class newWallet {
   exportPrivateKey() {
     return this.prive_key
   }
+  randomKey(cb) {
+    this.Ecc.randomKey().then(privateKey => {
+      const priKey = privateKey;
+      const pubkey = this.Ecc.privateToPublic(priKey);
+      cb(priKey, pubkey)
+    })
+  }
   loginOut(cb) {
     this.Ecc = null;
     this.eos_client = null;
