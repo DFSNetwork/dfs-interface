@@ -533,6 +533,12 @@ const constantRouter = [
         component: () => import(/* webpackChunkName: "home" */ '@/views/my/childView/Transfer.vue'),
         meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noHeader: true, noTab: true },
       },
+      { // 转账页面
+        path: 'transfer-info',
+        name: 'transferInfo',
+        component: () => import(/* webpackChunkName: "home" */ '@/views/my/childView/TradeInfo.vue'),
+        meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noHeader: true, noTab: true },
+      },
       { // 收款页面
         path: 'receive',
         name: 'myReceive',
@@ -564,6 +570,45 @@ const constantRouter = [
         name: 'inviter',
         component: () => import(/* webpackChunkName: "home" */ '@/views/inviteNewAcc/Index.vue'),
         meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noHeader: true, noTab: true },
+      },
+    ],
+  },
+  // 定投
+  {
+    path: '/investment',
+    component: Layout,
+    redirect: '/',
+    children: [
+      {
+        path: '/',
+        component: () => import(/* webpackChunkName: "home" */ '@/views/investment/Layout'),
+        meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noHeader: true },
+        children: [
+          { // 定投页面
+            path: '/',
+            name: 'investment',
+            component: () => import(/* webpackChunkName: "home" */ '@/views/investment/Index.vue'),
+            meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noHeader: true, noTab: true },
+          },
+          { // 我的定投页面
+            path: 'my-inverst',
+            name: 'myInverst',
+            component: () => import(/* webpackChunkName: "home" */ '@/views/investment/child/MyInverst.vue'),
+            meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noHeader: true, noTab: true },
+          },
+          { // 我的定投页面
+            path: 'inverst-rank',
+            name: 'inverstRank',
+            component: () => import(/* webpackChunkName: "home" */ '@/views/investment/child/InverstRank.vue'),
+            meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noHeader: true, noTab: true },
+          },
+          { // 规则
+            path: 'rules',
+            name: 'inverstRules',
+            component: () => import(/* webpackChunkName: "home" */ '@/views/investment/child/Rules.vue'),
+            meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noHeader: true, noTab: true },
+          },
+        ]
       },
     ],
   },

@@ -5,7 +5,8 @@
       <div class="card">
         <div class="title flexa">
           <span>{{ $t('newwallet.invite') }}</span>
-          <img class="tips" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/tips_icon_btn.svg">
+          <img class="tips" @click="showInviteTip = true"
+            src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/tips_icon_btn.svg">
         </div>
         <div class="flexb item">
           <span class="label">{{ $t('newwallet.inviLink') }}</span>
@@ -34,6 +35,11 @@
       v-model="showInvite">
       <ShowInvite :memo="link" @listenClose="handleClose"/>
     </van-popup>
+
+    <van-popup class="popup_p"
+      v-model="showInviteTip">
+      <ShowInviTips :showType="'invite'" />
+    </van-popup>
   </div>
 </template>
 
@@ -41,18 +47,21 @@
 import Claim from '@/views/inviteNewAcc/comp/Claim';
 import InvLists from '@/views/inviteNewAcc/comp/InvLists'
 import ShowInvite from '@/views/inviteNewAcc/popup/ShowInvite';
+import ShowInviTips from '@/views/inviteNewAcc/popup/ShowInviTips';
 export default {
   name: 'inviteNewAcc',
   components: {
     Claim,
     InvLists,
     ShowInvite,
+    ShowInviTips,
   },
   data() {
     return {
-      // link: 'https://apps.defis.network/wallet/create-wallet?wallet=newwallet',
-      link: 'http://192.168.31.28:8888/wallet/create-wallet?wallet=newwallet',
+      link: 'https://apps.defis.network/wallet/create-wallet?wallet=newwallet',
+      // link: 'http://192.168.31.28:8888/wallet/create-wallet?wallet=newwallet',
       showInvite: false,
+      showInviteTip: false,
     }
   },
   methods: {

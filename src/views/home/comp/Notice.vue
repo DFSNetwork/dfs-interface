@@ -142,6 +142,9 @@ export default {
       /deep/ .van-swipe__indicators{
         bottom: 5px;
       }
+      /deep/ .van-swipe__indicator{
+        background: #999999;
+      }
     }
     .symInfo{
       padding-right: 10px;

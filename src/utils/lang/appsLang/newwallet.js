@@ -9,6 +9,8 @@ export default {
       trade: '交易',
       copy: '复制',
       known: '我知道了',
+      pwdModel: '密码模式',
+      walletModel: '钱包模式',
 
       transferTo: '收款账户',
       transferToTip: '请输入收款账户',
@@ -35,13 +37,13 @@ export default {
       pwdTip: '请保管好个人密码，不要透露给任何人！',
       login: '登 录',
       otherLogin: '第三方登录',
-      hasDfsAcc: '还没有大丰收账号？',
+      hasDfsAcc: '还没有EOS账号？',
       hasAcc: '已有账号？',
       toCreate: '去创建',
       loginSuccess: '登陆成功',
       createAcc: '创建账号',
       setAccName: '设置账号名（EOS）',
-      setAccNameTip: '账号由8位小写字母a-z和1-5组成',
+      setAccNameTip: '账号由1-8位小写字母a-z和1-5组成',
       randomAcc: '随机账号',
       setPwd: '设置密码',
       setPwdTip: '不少于12位，包含大小写字母、含特殊符号',
@@ -111,6 +113,18 @@ export default {
       regiTips: '注意：',
       regiTips1: '1. 通过钱包转账并备注或通过交易所提币并备注的方式向以上智能合约地址转入至少0.1个EOS。多于0.1EOS的部分将自动转入新创建的账号。',
       regiTips2: '2. 请确保转入地址和备注同时正确。',
+
+
+      transferSuccess: '转账成功',
+      transferFrom: '发款账户',
+      transferToAcc: '收款账户',
+      transferTrxid: '哈希值',
+      transferBlock: '区块号',
+      transferTime: '交易时间',
+      transferDetail: '查询详细信息',
+
+      inviterTip1: '用户通过二维码或邀请链接注册成功EOS账户，好友参与做市挖矿奖励，邀请人即可获得相应比例的奖励',
+      inviterTip2: '邀请好友参与做市挖矿，即可额外获得挖矿收益的1%作为邀请人奖励。',
     }
   },
   'en': {
@@ -122,6 +136,8 @@ export default {
       trade: 'SWAP',
       copy:'Copy',
       known:'I know',
+      pwdModel:'Pwd Mode',
+      walletModel:'Wallet Model',
 
       transferTo:'Receiving account',
       transferToTip:'Please enter the receiving account',
@@ -148,13 +164,13 @@ export default {
       pwdTip:'Please keep your personal password, and don\'t disclose it to anyone! ',
       login:'Login',
       otherLogin:'Third Party Login',
-      hasDfsAcc:'Don\'t have a big harvest account yet? ',
+      hasDfsAcc:'Don\'t have EOS account yet? ',
       hasAcc:'Already have an account? ',
       toCreate:'Go to create',
       loginSuccess:'Login successful',
       createAcc:'Create an account',
       setAccName:'Set the account name (EOS)',
-      setAccNameTip:'The account is composed of 8 lowercase letters a-z and 1-5',
+      setAccNameTip:'The account number consists of 1-8 lowercase letters a-z and 1-5',
       randomAcc:'Random',
       setPwd:'Set password',
       setPwdTip:'Not less than 12 digits, including uppercase and lowercase letters and special symbols',
@@ -219,6 +235,17 @@ export default {
       regiTips:'Note:',
       regiTips1: '1. Transfer at least 0.1 EOS to the above smart contract address via wallet transfer and remarks or with exchanges and remarks. The part more than 0.1 EOS will be automatically transferred to the newly created account. ',
       regiTips2: '2. Please make sure that the transfer address and remarks are correct at the same time. ',
+
+      transferSuccess:'Transfer is successful',
+      transferFrom:'Payment account',
+      transferToAcc:'Receiving account',
+      transferTrxid:'Hash value',
+      transferBlock:'Block number',
+      transferTime:'Transaction Time',
+      transferDetail:'Query detailed information',
+
+      inviterTip1:'Users successfully register EOS account through QR code or invitation link, friends participate in market-making mining rewards, and inviters can get a corresponding proportion of rewards',
+      inviterTip2:'Invite friends to participate in market-making mining, and you can get an additional 1% of the mining revenue as a reward for the inviter. ',
     }
   }
 }

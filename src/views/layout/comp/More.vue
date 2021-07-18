@@ -81,6 +81,9 @@
           <a href="https://t.me/dfsnet" target="_blank">
             <img src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/telegram2.png">
           </a>
+          <a href="https://bihu.com/people/1511717747" target="_blank">
+            <img src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/bihu2.png">
+          </a>
         </div>
         <!-- <div class="flexb item">
           <a v-clipboard:copy="'dfsfarmer'"

@@ -79,7 +79,7 @@ export default {
 
 <style lang="scss" scoped>
 .transfer{
-  background: #F5F5F5;
+  background: #FFF;
   font-size: 30px;
   min-height: 100vh;
   text-align: left;

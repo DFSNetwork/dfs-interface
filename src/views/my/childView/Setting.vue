@@ -120,7 +120,7 @@ export default {
     height: 90px;
     padding: 0 28px;
     font-weight: 500;
-    margin-bottom: 30px;
+    // margin-bottom: 30px;
     .back{
       width: 50px;
       height: 50px;
@@ -132,9 +132,10 @@ export default {
   }
   .accinfo{
     background: #FFF;
-    height: 200px;
-    margin: 30px 0;
+    height: 170px;
+    margin: 0 0 30px 0;
     padding: 0 38px 0 28px;
+    box-sizing: border-box;
     text-align: left;
     .right{
       width: 16px;

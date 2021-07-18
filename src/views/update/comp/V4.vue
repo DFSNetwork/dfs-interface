@@ -1,13 +1,17 @@
 <template>
-  <div class="flexs vs">
-    <div>
+  <div class="vs">
+    <div class="flexa">
+      <img class="timeImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/time.png" alt="">
+      <div class="time dinBold tip">2021-07-18 19:30</div>
+    </div>
+    <div class="main">
       <div class="content">{{ $t('upRecord.v4_1') }}</div>
       <div class="content">{{ $t('upRecord.v4_2') }}</div>
       <div class="content">{{ $t('upRecord.v4_3') }}</div>
       <div class="content">{{ $t('upRecord.v4_4') }}</div>
       <div class="content">{{ $t('upRecord.v4_5') }}</div>
       <div class="content">{{ $t('upRecord.v4_6') }}</div>
-      <div class="time tip">2021-07-14 18:00</div>
+      <div class="content">{{ $t('upRecord.v4_7') }}</div>
     </div>
   </div>
 </template>

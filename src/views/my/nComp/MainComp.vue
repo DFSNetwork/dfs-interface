@@ -283,6 +283,10 @@ export default {
     // 获取币种对USDT的估值
     handleGetTokenAmt(allBals) {
       allBals.forEach(token => {
+        if (token.decimals > 6) {
+          this.$set(token, 'amount', parseFloat(token.amount).toFixed(6))
+          this.$set(token, 'dss', parseFloat(token.dss).toFixed(6))
+        }
         const count = parseFloat(token.amount || 0) + parseFloat(token.bal || 0);
         this.$set(token, 'count', parseFloat(count).toFixed(4))
         // 获取EOS的价格

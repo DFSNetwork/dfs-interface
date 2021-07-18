@@ -28,7 +28,7 @@
             </div>
             <div v-if="coinName === 'deep'" class="symPools tip">{{ $t('pddex.pools') }} {{ handleDealNum(v.poolsNum) }} {{ v.symbol0 }}</div>
             <div v-else-if="coinName === 'apy'" class="symPools tip">{{ $t('pddex.apys1') }} {{ v.apy }}%</div>
-            <div v-else class="symPools tip">{{ $t('pddex.amt1') }} ${{ parseInt(v.volume24HToUsdt) }}</div>
+            <div v-else class="symPools tip">{{ $t('pddex.amt1') }} {{ parseInt(v.volume24H) }} {{ v.symbol0 }}</div>
           </div>
         </div>
         <div class="dinBold">
@@ -58,7 +58,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import { dealNum } from '@/utils/public'
+// import { dealNum } from '@/utils/public'
 export default {
   name: 'homeRank',
   data() {
@@ -90,7 +90,7 @@ export default {
   },
   methods: {
     handleDealNum(num) {
-      return dealNum(num)
+      return parseInt(num)
     },
     handleDealRank() {
       let nMarkets = JSON.parse(JSON.stringify(this.marketLists))
@@ -179,7 +179,7 @@ export default {
     padding: 0 0 10px;
     .tools{
       padding: 23px 0 0px;
-      font-size: 20px;
+      font-size: 22px;
       &>span{
         flex: 3;
         text-align: right;

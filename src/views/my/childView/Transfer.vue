@@ -164,7 +164,7 @@ export default {
         memo: this.memo,
         quantity
       }
-      DApp.transfer(params, (err) => {
+      DApp.transfer(params, (err, res) => {
         if (err && err.code == 402) {
           return;
         }
@@ -179,6 +179,10 @@ export default {
           message: this.$t('public.success'),
           type: 'success'
         });
+        localStorage.setItem('TRANSFERINFO', JSON.stringify(res))
+        this.$router.replace({
+          name: 'transferInfo',
+        })
       })
     }
   }
@@ -187,7 +191,7 @@ export default {
 
 <style lang="scss" scoped>
 .transfer{
-  background: #F5F5F5;
+  background: #FFF;
   font-size: 30px;
   min-height: 100vh;
   text-align: left;
@@ -207,17 +211,14 @@ export default {
   }
   .form{
     border-radius: 12px;
-    box-shadow: 0px 4px 8px 0px rgba(213,213,213,0.5);
-    padding: 30px;
-    margin: 30px;
+    // box-shadow: 0px 4px 8px 0px rgba(213,213,213,0.5);
+    padding: 0 30px 30px;
+    // margin: 30px;
     background: #FFF;
     .item{
       margin-top: 25px;
       border-bottom: 1px solid $color-border;
       padding-bottom: 12px;
-      &:last-child{
-        border-bottom: 0px solid $color-border;
-      }
       &.paddbm{
         margin-top: 40px;
         padding-bottom: 30px;

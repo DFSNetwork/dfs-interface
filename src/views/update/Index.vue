@@ -1,6 +1,9 @@
 <template>
   <div class="update">
-    <div class="title">{{ $t('upRecord.title') }}</div>
+    <div class="title flexa">
+      <img class="mail" src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/mail.png">
+      <span>{{ $t('upRecord.title') }}</span>
+    </div>
     <V4 />
     <V3 />
     <V2 />
@@ -28,10 +31,14 @@ export default {
   border-top: 1px solid $color-border;
   text-align: left;
   .title{
-    color: #333;
-    font-size: 40px;
+    color: #29D4B0;
+    font-size: 32px;
     font-weight: 500;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
+    .mail{
+      width: 32px;
+      margin-right: 24px;
+    }
   }
 }
 </style>

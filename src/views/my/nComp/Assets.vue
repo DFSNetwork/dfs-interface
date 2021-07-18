@@ -25,7 +25,7 @@
             src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/switch.png">
       </div>
     </div>
-    <div class="walletTrans flexb" v-if="wallet === 'newwallet' && account.name">
+    <div class="walletTrans flexb">
       <div class="flexa" @click="handleTo('myTransfer')">
         <img src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/transfer.png">
         <span>{{ $t('newwallet.transfer') }}</span>

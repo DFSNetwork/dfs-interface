@@ -1,9 +1,9 @@
 <template>
   <div class="walletCreate">
     <div class="title">
-      <span>{{ $t('newwallet.createAcc') }}</span>
+      <span>{{ $t('newwallet.pwdModel') }}</span>
       <span @click="handleTo('createWalletKey')"
-        class="unAct">{{ $t('newwallet.walletAcc') }}</span>
+        class="unAct">{{ $t('newwallet.walletModel') }}</span>
     </div>
     <div class="item flexb" :class="{'border': iptAct === 1, 'error': nameError}">
       <van-field class="ipt"

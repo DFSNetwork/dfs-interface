@@ -3,7 +3,8 @@
     <div class="card">
       <div class="title flexa">
         <span>{{ $t('newwallet.myRewd') }}</span>
-        <img class="tips" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/tips_icon_btn.svg">
+        <img class="tips" @click="showInviteTip = true"
+          src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/tips_icon_btn.svg">
       </div>
 
       <div class="unClaim flexb">
@@ -30,13 +31,22 @@
           @click="handleClaim(v.name)">{{ $t('newwallet.claimRwd') }}</div>
       </div>
     </div>
+
+    <van-popup class="popup_p"
+      v-model="showInviteTip">
+      <ShowInviTips :showType="'reward'" />
+    </van-popup>
   </div>
 </template>
 
 <script>
 import { DApp } from '@/utils/wallet'
 import { mapState } from 'vuex';
+import ShowInviTips from '@/views/inviteNewAcc/popup/ShowInviTips';
 export default {
+  components: {
+    ShowInviTips
+  },
   data() {
     return {
       area: [{
@@ -45,7 +55,8 @@ export default {
       }, {
         name: 'TAG',
         pool: 'tagtokenfarm',
-      }]
+      }],
+      showInviteTip: false,
     }
   },
   mounted() {

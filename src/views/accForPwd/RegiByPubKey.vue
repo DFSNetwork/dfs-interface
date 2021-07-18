@@ -2,8 +2,8 @@
   <div class="walletCreate">
     <div class="title">
       <span @click="handleTo('createWallet')"
-        class="unAct">{{ $t('newwallet.createAcc') }}</span>
-      <span>{{ $t('newwallet.walletAcc') }}</span>
+        class="unAct">{{ $t('newwallet.pwdModel') }}</span>
+      <span>{{ $t('newwallet.walletModel') }}</span>
     </div>
     <div class="item flexb" :class="{'border': iptAct === 1, 'error': nameError}">
       <van-field class="ipt"

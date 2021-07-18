@@ -73,12 +73,12 @@
                   <span class="small">/{{ v.symbol0 }}</span>
                 </div>
                 <div class="tip smallTip">
-                  <span v-if="sortPools">{{ $t('pddex.pools') }} {{ handleDealNum(v.poolsNum) }}</span>
+                  <span v-if="sortPools">{{ $t('pddex.pools') }} {{ handleDealNum(v.poolsNum) }} {{ v.symbol0 }}</span>
                   <span v-else-if="sortApy">
                     <span>{{ $t('pddex.apys1') }} {{ parseFloat(v.apy).toFixed(2) }}%</span>
                     <span class="green_p" @click.stop="handleShowApy(v)">详情＞</span>
                   </span>
-                  <span v-else>{{ $t('pddex.amt1') }} {{ handleDealNum(v.volume24H) }}</span>
+                  <span v-else>{{ $t('pddex.amt1') }} {{ handleDealNum(v.volume24H) }} {{ v.symbol0 }}</span>
                 </div>
               </div>
             </div>
@@ -115,12 +115,12 @@
                   <span class="small">/{{ v.symbol0 }}</span>
                 </div>
                 <div class="tip smallTip">
-                  <span v-if="sortPools">{{ $t('pddex.pools') }} {{ handleDealNum(v.poolsNum) }}</span>
+                  <span v-if="sortPools">{{ $t('pddex.pools') }} {{ handleDealNum(v.poolsNum) }} {{ v.symbol0 }}</span>
                   <span v-else-if="sortApy">
                     <span>{{ $t('pddex.apys1') }} {{ v.apy }}%</span>
                     <span class="green_p" @click.stop="handleShowApy(v)">详情＞</span>
                   </span>
-                  <span v-else>{{ $t('pddex.amt1') }} {{ handleDealNum(v.volume24H) }}</span>
+                  <span v-else>{{ $t('pddex.amt1') }} {{ handleDealNum(v.volume24H) }}  {{ v.symbol0 }}</span>
                 </div>
               </div>
             </div>
@@ -159,7 +159,7 @@
 import { mapState } from 'vuex';
 import { dealAreaArr } from '@/views/pddex/comp/appLogic';
 import MarketApy from '@/views/market/popup/MarketApy'
-import { dealNum } from '@/utils/public'
+// import { dealNum } from '@/utils/public'
 
 export default {
   name: 'pddexTab',
@@ -433,7 +433,7 @@ export default {
       this.cdAreaLists = this.allMarket[coin];
     },
     handleDealNum(num) {
-      return dealNum(num)
+      return parseInt(num)
     }
   }
 }

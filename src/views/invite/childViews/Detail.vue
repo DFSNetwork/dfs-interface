@@ -272,7 +272,10 @@ export default {
       return parseFloat(unit || 0)
     },
     aboutReward() {
-      let u = parseFloat(this.dealUnit || 0) * parseFloat(this.farmInfo.wealth || 0)
+      // let u = parseFloat(this.dealUnit || 0) * parseFloat(this.farmInfo.wealth || 0)
+      // let r = parseFloat(u || 0)
+      // return parseFloat(r || 0).toFixed(8)
+      let u = parseFloat(this.farmInfo.wealth || 0) * this.rate / 10000;
       let r = parseFloat(u || 0)
       return parseFloat(r || 0).toFixed(8)
     },
@@ -284,7 +287,11 @@ export default {
       return parseFloat(r || 0).toFixed(4)
     },
     abledReward() {
-      let u = parseFloat(this.nextObj.unit || 0) * parseFloat(this.accSnapshoots.wealth || 0)
+      // console.log(this.nextObj, this.accSnapshoots)
+      // let u = parseFloat(this.nextObj.unit || 0) * parseFloat(this.accSnapshoots.wealth || 0)
+      // let r = parseFloat(u || 0)
+      // return parseFloat(r || 0).toFixed(8)
+      let u = parseFloat(this.accSnapshoots.wealth || 0) * this.rate / 10000;
       let r = parseFloat(u || 0)
       return parseFloat(r || 0).toFixed(8)
     },

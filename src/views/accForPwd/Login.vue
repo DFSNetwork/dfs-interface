@@ -20,7 +20,7 @@
     <div class="btn flexc" @click="handleLogin">{{ $t('newwallet.login') }}</div>
 
     <div class="otherLogin">
-      <van-divider>{{ $t('newwallet.otherLogin') }}</van-divider>
+      <van-divider>{{ $t('newwallet.loginByWallet') }}</van-divider>
       <div class="flexb pro">
         <div class="logoItem" @click="handleLoginOther('tp')">
           <img class="logo" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/tp_logo.png">
