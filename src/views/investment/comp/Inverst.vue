@@ -5,7 +5,7 @@
         <img class="logo" :src="item.logo">
         <span class="dinBold">{{ item.sym }}</span>
 
-        <span class="count dinBold">{{ $t('my.count') }}: ${{ parseFloat(item.pay_quantity || 0) | numberTofixed }}</span>
+        <span class="count dinBold">{{ $t('my.count') }}: ${{ parseFloat(item.total_pay_quantity || 0) | numberTofixed }}</span>
       </div>
       <div class="flexa">
         <div class="btn flexc clRed" v-if="!parseFloat(item.buy_fund_balance || 0)" @click="handleDel">删除</div>
@@ -86,7 +86,7 @@ export default {
     }
   },
   mounted() {
-    console.log(this.item)
+    // console.log(this.item)
   },
   computed: {
     ...mapState({
