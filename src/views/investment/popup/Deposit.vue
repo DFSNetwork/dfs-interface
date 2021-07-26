@@ -101,16 +101,16 @@
         <span>定投周期</span>
       </div> -->
       <div class="chexkBox flexb">
+        <div class="din flexc" @click="nextDays = 1"
+          :class="{'act': parseFloat(nextDays || 0) === 1}">{{ $t('invest.xDays', {x: 1}) }}</div>
         <div class="din flexc" @click="nextDays = 3"
-          :class="{'act': parseFloat(nextDays || 0) === 3}">{{ $t('invest.xDays', {x: 1}) }}</div>
+          :class="{'act': parseFloat(nextDays || 0) === 3}">{{ $t('invest.xDays', {x: 3}) }}</div>
         <div class="din flexc" @click="nextDays = 5"
-          :class="{'act': parseFloat(nextDays || 0) === 5}">{{ $t('invest.xDays', {x: 3}) }}</div>
+          :class="{'act': parseFloat(nextDays || 0) === 5}">{{ $t('invest.xDays', {x: 4}) }}</div>
         <div class="din flexc" @click="nextDays = 7"
-          :class="{'act': parseFloat(nextDays || 0) === 7}">{{ $t('invest.xDays', {x: 4}) }}</div>
+          :class="{'act': parseFloat(nextDays || 0) === 7}">{{ $t('invest.xDays', {x: 7}) }}</div>
         <div class="din flexc" @click="nextDays = 15"
-          :class="{'act': parseFloat(nextDays || 0) === 15}">{{ $t('invest.xDays', {x: 7}) }}</div>
-        <div class="din flexc" @click="nextDays = 30"
-          :class="{'act': parseFloat(nextDays || 0) === 30}">{{ $t('invest.xDays', {x: 15}) }}</div>
+          :class="{'act': parseFloat(nextDays || 0) === 15}">{{ $t('invest.xDays', {x: 15}) }}</div>
       </div>
     </div>
 
