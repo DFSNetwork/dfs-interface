@@ -106,7 +106,7 @@
         <div class="din flexc" @click="nextDays = 3"
           :class="{'act': parseFloat(nextDays || 0) === 3}">{{ $t('invest.xDays', {x: 3}) }}</div>
         <div class="din flexc" @click="nextDays = 5"
-          :class="{'act': parseFloat(nextDays || 0) === 5}">{{ $t('invest.xDays', {x: 4}) }}</div>
+          :class="{'act': parseFloat(nextDays || 0) === 5}">{{ $t('invest.xDays', {x: 5}) }}</div>
         <div class="din flexc" @click="nextDays = 7"
           :class="{'act': parseFloat(nextDays || 0) === 7}">{{ $t('invest.xDays', {x: 7}) }}</div>
         <div class="din flexc" @click="nextDays = 15"
