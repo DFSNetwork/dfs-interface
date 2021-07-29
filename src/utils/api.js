@@ -318,7 +318,8 @@ export function get_kline_data(params) {
 // 获取K线数据
 export function get_kline_data2(params) {
   return new Promise((resolve, reject) => {
-    axios.get('https://dfs.defiview.io/api/getBars', {params}).then((res) => {
+    axios.get('https://api.defis.network/dex/swap/kline', {params}).then((res) => {
+    // axios.get('https://dfs.defiview.io/api/getBars', {params}).then((res) => {
       let result = Object.assign(res.data, {});
       resolve({ status: res.status === 200, result });
     }, err => {
