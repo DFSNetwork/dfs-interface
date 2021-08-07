@@ -197,7 +197,7 @@ export default {
   computed: {
     ...mapState({
       account: state => state.app.account,
-      marketLists: state => state.config.marketLists,
+      marketLists: state => state.sys.marketLists,
       tradeInfo: state => state.sys.tradeInfo,
       baseConfig: state => state.sys.baseConfig,
     }),
