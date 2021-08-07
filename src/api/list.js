@@ -224,7 +224,7 @@ export function reg_newaccount(obj) {
 // 免CPU
 export function pushFreeCpu(params) {
   return new Promise((resolve, reject) => {
-    console.log(JSON.stringify(params))
+    // console.log(JSON.stringify(params))
     axios.post(`https://api.defis.network/account/pushaction`, params).then((res) => {
     // axios.post(`http://localhost:8103/common/pushActions`, params).then((res) => {
       let result = Object.assign(res.data, {});

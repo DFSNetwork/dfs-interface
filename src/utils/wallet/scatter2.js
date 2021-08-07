@@ -7,7 +7,6 @@ import Eos from 'eosjs-without-sort'; // 代签不排序
 
 import axios from 'axios';
 import store from '@/store';
-import { pushFreeCpu, testAction } from '@/api/list'; // reg_newaccount
 
 ScatterJS.plugins( new ScatterEOS() );
 
@@ -54,7 +53,6 @@ class ScatterClass {
       }
       self.scatter = ScatterJS.scatter;
       self.eosJs = ScatterJS.eos(network, Eos, {});
-      window.eosJs = self.eosJs
       callback();
     });
   }
@@ -151,114 +149,69 @@ class ScatterClass {
       return
     }
     // if (isTpWallet()) {
-      this.handleUseFreeCpu(params, callback)
+    //   this.handleUseFreeCpu(params, callback)
     //   return
     // }
-    // self.eosJs.transaction(params, {
-    //   blocksBehind: 3,
-    //   expireSeconds: 30,
-    // }).then((res) => {
-    //   callback(null, res);
-    // }).catch((e) => {
-    //   self.dealError(e, callback);
-    // });
+    self.eosJs.transaction(params, {
+      blocksBehind: 3,
+      expireSeconds: 30,
+    }).then((res) => {
+      console.log(res)
+      callback(null, res);
+    }).catch((e) => {
+      self.dealError(e, callback);
+    });
   }
 
-  buffer2hex(buffer) {
-    return Array.from(buffer, (x) => ('00' + x.toString(16)).slice(-2)).join('')
-  }
-
-  handleUseFreeCpu(tx, cb) {
-    (async () => {
-      try {
-        const txh = {
-          blocksBehind: 3,
-          expireSeconds: 120,
-        };
-        const data = {
-          tx,
-          txh
-        }
-        const formName = store.state.app.account.name;
-        tx.actions.unshift({
-          account: "dfsfreecpu11",
-          name: 'freecpu',
-          authorization: [
-            {
-              actor: "iq3rwbsfcqlv",
-              permission: `active`,
-            },
-          ],
-          data: {
-            user: formName
-          },
-        })
-        console.log(tx)
-        let pushTransactionArgs = await this.eosJs.transaction(tx, {
-          ...txh,
-          sign: true,
-          broadcast: false,
-        });
-        alert('Sign Success')
-        const p = pushTransactionArgs;
+  handleUseFreeCpu(params, callback) {
+    console.log(params)
+    let actor = '11111cpufree';
+    params.actions.forEach(v => {
+      v.authorization.unshift({ actor, permission: 'active' })
+    })
+    
+    this.eosJs.transaction(params, {
+      broadcast: !1,
+      sign: !0,
+    }).then(res => {
+      if (res.processed || res.transaction_id) {
+        const p = res;
         const l = p.transaction.transaction;
         l.signatures = p.transaction.signatures;
         l.context_free_data = [];
-        console.log(l)
-        data.sign_data = l
-        alert(JSON.stringify(pushTransactionArgs))
-
-        const {status, result} = await pushFreeCpu(data)
-        console.log(result, status)
-        // if (!status || !result) { // 请求失败 - 走正常流程操作
-        //   this.transaction(tx, cb)
-        //   return
-        // }
-        // let pushTransactionArgs
-        // if (result.code === 200) {
-        //   let serverTransactionPushArgs = result.data;
-        // }
-      } catch (error) {
-        alert(JSON.stringify(error))
-        console.log(JSON.stringify(error))
-        this.dealFreeCpuError(error, cb)
+        // const signed = JSON.stringify(l);
+        const signed = l;
+        this.pushFreeCpu(signed, (error, resFree) => {
+          if (resFree) {
+            callback(null, resFree);
+            return;
+          }
+          this.errorCall(error, callback);
+        })
       }
-    })()
-  }
-  dealFreeCpuError(error, cb) {
-    console.log(error.toString())
-    const err = error.toString()
-    let back = {
-      code: 999,
-      message: "fails!",
-    };
-    if (err.indexOf('INSUFFICIENT_OUTPUT_AMOUNT') !== -1) {
-      back = {
-        code: 3050003,
-        message: "滑点过高",
-      };
-    }
-    cb(back, null);
+    }).catch((e) => {
+      this.errorCall(e, callback);
+    });
   }
 
-  // pushFreeCpu(signedTx, cb) {
-  //   let url = 'http://47.243.71.86:7001/api/common/freeCpu';
-  //   // let url = 'http://192.168.31.101:7001/api/common/freeCpu';
-  //   axios.post(url, signedTx, {
-  //     headers: {
-  //       accept: 'application/json, text/plain, */*',
-  //     },
-  //   }).then((res) => {
-  //     if (res.data.code !== 0) {
-  //       const msg = res.data.message;
-  //       cb(msg, null);
-  //       return
-  //     }
-  //     cb(null, res.data)
-  //   }).catch((error) => {
-  //     console.log(error); // eslint-disable-line
-  //   })
-  // }
+  pushFreeCpu(signedTx, cb) {
+    let url = 'http://47.243.71.86:7001/api/common/freeCpu';
+    // let url = 'http://192.168.31.101:7001/api/common/freeCpu';
+    axios.post(url, signedTx, {
+      headers: {
+        accept: 'application/json, text/plain, */*',
+      },
+    }).then((res) => {
+      if (res.data.code !== 0) {
+        const msg = res.data.message;
+        cb(msg, null);
+        return
+      }
+      cb(null, res.data)
+    }).catch((error) => {
+      console.log(error); // eslint-disable-line
+    })
+  }
 
   dealError(e, callback) {
     console.log(e)

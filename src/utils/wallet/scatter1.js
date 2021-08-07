@@ -1,18 +1,34 @@
 // scatter 链接钱包
 import ScatterJS from 'scatterjs-core';
-// import ScatterEOS from 'scatterjs-plugin-eosjs2';
-import ScatterEOS from 'scatterjs-plugin-eosjs';
-import Eos from 'eosjs-without-sort'; // 代签不排序
+import ScatterEOS from 'scatterjs-plugin-eosjs2';
+// import ScatterEOS from 'scatterjs-plugin-eosjs';
+// import Eos from 'eosjs-without-sort'; // 代签不排序
 // import { isTpWallet } from '@/utils/wallet/fullScreen'; // tokenpocket JS
+import { pushFreeCpu } from '@/api/list'; // reg_newaccount
 
 import axios from 'axios';
 import store from '@/store';
-import { pushFreeCpu, testAction } from '@/api/list'; // reg_newaccount
 
+import {JsonRpc, Api} from 'eosjs'
 ScatterJS.plugins( new ScatterEOS() );
-
 // import './newWallet'
 // import '../eos2/index';
+
+
+function c(a, b) {
+  return function() {
+      if ("undefined" == typeof a[b])
+          throw new Error("".concat(b, " does not exist on the eosjs.Api() object."));
+      for (var c = arguments.length, d = Array(c), f = 0; f < c; f++)
+          d[f] = arguments[f];
+      var g = d.find(function(a) {
+          return a.hasOwnProperty("requiredFields")
+      });
+      console.log(d)
+      return e = g ? g.requiredFields : {},
+      a[b].apply(a, d)
+  }
+}
 
 class ScatterClass {
   constructor() {
@@ -53,8 +69,13 @@ class ScatterClass {
         return false;
       }
       self.scatter = ScatterJS.scatter;
-      self.eosJs = ScatterJS.eos(network, Eos, {});
+      const rpc = new JsonRpc(network.fullhost());
+      self.eosJs = ScatterJS.eos(network, Api, {rpc}).valueOf();
       window.eosJs = self.eosJs
+      console.log(self.eosJs)
+      console.log(self.eosJs.signatureProvider)
+      console.log(self.scatter)
+      console.log(Api)
       callback();
     });
   }
@@ -151,21 +172,16 @@ class ScatterClass {
       return
     }
     // if (isTpWallet()) {
-      this.handleUseFreeCpu(params, callback)
-    //   return
-    // }
-    // self.eosJs.transaction(params, {
-    //   blocksBehind: 3,
-    //   expireSeconds: 30,
-    // }).then((res) => {
-    //   callback(null, res);
-    // }).catch((e) => {
-    //   self.dealError(e, callback);
-    // });
-  }
-
-  buffer2hex(buffer) {
-    return Array.from(buffer, (x) => ('00' + x.toString(16)).slice(-2)).join('')
+    // this.handleUseFreeCpu(params, callback)
+    //   retu
+    self.eosJs.transaction(params, {
+      blocksBehind: 3,
+      expireSeconds: 30,
+    }).then((res) => {
+      callback(null, res);
+    }).catch((e) => {
+      self.dealError(e, callback);
+    });
   }
 
   handleUseFreeCpu(tx, cb) {
@@ -179,52 +195,63 @@ class ScatterClass {
           tx,
           txh
         }
-        const formName = store.state.app.account.name;
-        tx.actions.unshift({
-          account: "dfsfreecpu11",
-          name: 'freecpu',
-          authorization: [
-            {
-              actor: "iq3rwbsfcqlv",
-              permission: `active`,
-            },
-          ],
-          data: {
-            user: formName
-          },
-        })
-        console.log(tx)
-        let pushTransactionArgs = await this.eosJs.transaction(tx, {
-          ...txh,
-          sign: true,
-          broadcast: false,
-        });
-        alert('Sign Success')
-        const p = pushTransactionArgs;
-        const l = p.transaction.transaction;
-        l.signatures = p.transaction.signatures;
-        l.context_free_data = [];
-        console.log(l)
-        data.sign_data = l
-        alert(JSON.stringify(pushTransactionArgs))
-
+        console.log(data)
         const {status, result} = await pushFreeCpu(data)
         console.log(result, status)
-        // if (!status || !result) { // 请求失败 - 走正常流程操作
-        //   this.transaction(tx, cb)
-        //   return
-        // }
-        // let pushTransactionArgs
-        // if (result.code === 200) {
-        //   let serverTransactionPushArgs = result.data;
-        // }
+        if (!status || !result) { // 请求失败 - 走正常流程操作
+          this.transact(tx, cb)
+          return
+        }
+        let pushTransactionArgs
+        // console.log(this.eosJs)
+        // console.log(await this.eosJs.signatureProvider())
+        // console.log(await this.eosJs.signatureProvider().sign)
+        if (result.code === 200) {
+          let serverTransactionPushArgs = result.data;
+          const requiredKeys = await this.eosJs.signatureProvider.getAvailableKeys();
+          const serializedTx = Buffer.from(
+            serverTransactionPushArgs.serializedTransaction,
+            "hex"
+          );
+          console.log(serializedTx)
+          const signArgs = {
+            chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
+            requiredKeys,
+            serializedTransaction: serializedTx,
+            abis: [],
+          };
+          window.signArgs = signArgs
+          console.log('signArgs', signArgs)
+          pushTransactionArgs = await this.eosJs.signatureProvider.sign(
+            signArgs
+          );
+          console.log(123)
+          // add server signature
+          pushTransactionArgs.signatures.unshift(
+            serverTransactionPushArgs.signatures[0]
+          );
+        } else {
+          // no server response => sign original tx
+          pushTransactionArgs = await this.eosJs.transact(tx, {
+            ...txh,
+            sign: true,
+            broadcast: false,
+          });
+        }
+        console.log('pushTransactionArgs', pushTransactionArgs)
+        let push_result = await this.eosJs.pushSignedTransaction(
+          pushTransactionArgs
+        );
+        console.log(push_result)
+        cb(null, push_result)
       } catch (error) {
-        alert(JSON.stringify(error))
+        // alert(JSON.stringify(error))
         console.log(JSON.stringify(error))
         this.dealFreeCpuError(error, cb)
       }
     })()
   }
+
   dealFreeCpuError(error, cb) {
     console.log(error.toString())
     const err = error.toString()
