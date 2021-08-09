@@ -29,10 +29,14 @@
         </div> -->
         <div class="list switch flexb">
           <span>免CPU操作</span>
-          <van-switch class="vanSwitch"
-            :value="cpuSwitch" @input="handleSetCpu"
-            size="24px"
-            active-color="#FFF" inactive-color="#eee" />
+          <span class="rel">
+            <van-switch class="vanSwitch"
+              :value="cpuSwitch" @input="handleSetCpu"
+              size="26px"
+              active-color="#FFF" inactive-color="#FFF"/>
+            <span v-if="cpuSwitch" class="switchInfo infoA" @click="cpuSwitch = !cpuSwitch">ON</span>
+            <span v-else class="switchInfo infoB" @click="cpuSwitch = !cpuSwitch">OFF</span>
+          </span>
         </div>
         <div class="list flexa" @click="handleShowComp('silderSet')">
           <img class="listImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/swap-set.png">
@@ -130,6 +134,7 @@ export default {
       location.href = "https://defis.network/"
     },
     handleSetCpu(checked) {
+      console.log(checked)
       this.cpuSwitch = checked;
       this.$store.dispatch('setFreeCpu', checked)
     },
@@ -314,6 +319,9 @@ export default {
       height: 104px;
       border-radius: 12px;
       color: #FFF;
+      .rel{
+        position: relative;
+      }
       .vanSwitch{
         border: 1px solid #FFF;
         /deep/ .van-switch__node{
@@ -321,6 +329,23 @@ export default {
           box-shadow: none;
           border: 1px solid #FFF;
           box-sizing: border-box;
+        }
+      }
+      .switchInfo{
+        font-size: 20px;
+        color: #FFF;
+        position: absolute;
+        &.infoA{
+          color: $color-main;
+          top: 50%;
+          left: 12px;
+          transform: translateY(-60%);
+        }
+        &.infoB{
+          color: #EB6765;
+          top: 50%;
+          right: 10px;
+          transform: translateY(-60%);
         }
       }
     }
