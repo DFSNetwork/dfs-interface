@@ -20,19 +20,19 @@
       </div>
       <!-- list -->
       <div class="lists">
-        <!-- <div class="list switch flexb">
-          <span>免CPU操作</span>
-          <van-switch class="vanSwitch"
-            :value="cpuSwitch" @input="handleSetCpu"
-            size="24px"
-            active-color="#FFF" inactive-color="#eee" />
-        </div> -->
-        <div class="list flexb wel" @click="handleToAbout">
+        <!-- <div class="list flexb wel" @click="handleToAbout">
           <div class="flexa">
             <img class="dfslogo" src="https://cdn.jsdelivr.net/gh/defis-net/material2/coin/minedfstoken-dfs.png">
             <span>{{ $t('more.aboutDfs') }}</span>
           </div>
           <img class="right_to" src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/about_right.svg" alt="">
+        </div> -->
+        <div class="list switch flexb">
+          <span>免CPU操作</span>
+          <van-switch class="vanSwitch"
+            :value="cpuSwitch" @input="handleSetCpu"
+            size="24px"
+            active-color="#FFF" inactive-color="#eee" />
         </div>
         <div class="list flexa" @click="handleShowComp('silderSet')">
           <img class="listImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/swap-set.png">
@@ -309,7 +309,7 @@ export default {
       }
     }
     .switch{
-      background: rgba(#29D4B0, .9);
+      background: rgba(#29D4B0, 1);
       padding: 30px;
       height: 104px;
       border-radius: 12px;

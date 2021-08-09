@@ -228,8 +228,21 @@ export function pushFreeCpu(params) {
     axios.post(`https://api.defis.network/account/pushaction`, params).then((res) => {
     // axios.post(`http://localhost:8103/common/pushActions`, params).then((res) => {
       let result = Object.assign(res.data, {});
-      console.log(result)
+      // console.log(result)
       resolve({ status: res.status === 200, result });
+    }, err => {
+      reject(err)
+    })
+  })
+}
+export function pushFreeCpu2(params) {
+  return new Promise((resolve, reject) => {
+    // console.log(JSON.stringify(params))
+    axios.post(`https://api.defis.network/account/pushaction2`, params).then((res) => {
+    // axios.post(`http://192.168.31.27:8911/account/pushaction2`, params).then((res) => {
+      let result = Object.assign(res.data, {});
+      console.log(result)
+      resolve({ status: result.code === 200, result });
     }, err => {
       reject(err)
     })

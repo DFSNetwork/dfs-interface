@@ -5,7 +5,8 @@
       :claimLoading="claimLoading"
       :ableClaimNum="ableClaimNum"
       :myDepositInfo="myDepositInfo"
-      @listenAllLock="listenAllLock"/>
+      @listenAllLock="listenAllLock"
+      @listenUpdate="listenUpdate"/>
     <dsr-list :args="args" @listenUpdate="listenUpdate"
               :myDepositInfo="myDepositInfo" :allLock="allLock"/>
     <dsr-miner-list :args="args" :timesmap="timesmap" :allLock="allLock" :ableClaimNum="ableClaimNum"/>
