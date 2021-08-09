@@ -1,18 +1,34 @@
 // scatter 链接钱包
 import ScatterJS from 'scatterjs-core';
-// import ScatterEOS from 'scatterjs-plugin-eosjs2';
-import ScatterEOS from 'scatterjs-plugin-eosjs';
-import Eos from 'eosjs-without-sort'; // 代签不排序
+import ScatterEOS from 'scatterjs-plugin-eosjs2';
+// import ScatterEOS from 'scatterjs-plugin-eosjs';
+// import Eos from 'eosjs-without-sort'; // 代签不排序
 // import { isTpWallet } from '@/utils/wallet/fullScreen'; // tokenpocket JS
+import { pushFreeCpu } from '@/api/list'; // reg_newaccount
 
 import axios from 'axios';
 import store from '@/store';
-import { pushFreeCpu2 } from '@/api/list'; // reg_newaccount
 
+import {JsonRpc, Api} from 'eosjs'
 ScatterJS.plugins( new ScatterEOS() );
-
 // import './newWallet'
 // import '../eos2/index';
+
+
+function c(a, b) {
+  return function() {
+      if ("undefined" == typeof a[b])
+          throw new Error("".concat(b, " does not exist on the eosjs.Api() object."));
+      for (var c = arguments.length, d = Array(c), f = 0; f < c; f++)
+          d[f] = arguments[f];
+      var g = d.find(function(a) {
+          return a.hasOwnProperty("requiredFields")
+      });
+      console.log(d)
+      return e = g ? g.requiredFields : {},
+      a[b].apply(a, d)
+  }
+}
 
 class ScatterClass {
   constructor() {
@@ -53,8 +69,13 @@ class ScatterClass {
         return false;
       }
       self.scatter = ScatterJS.scatter;
-      self.eosJs = ScatterJS.eos(network, Eos, {});
+      const rpc = new JsonRpc(network.fullhost());
+      self.eosJs = ScatterJS.eos(network, Api, {rpc}).valueOf();
       window.eosJs = self.eosJs
+      console.log(self.eosJs)
+      console.log(self.eosJs.signatureProvider)
+      console.log(self.scatter)
+      console.log(Api)
       callback();
     });
   }
@@ -128,11 +149,10 @@ class ScatterClass {
         }
       ]
     }
-    const useFreeCpu = store.state.app.freeCpu;
-    if (useFreeCpu) {
-      this.handleUseFreeCpu(params, callback)
-      return
-    }
+    // if (isTpWallet()) {
+    //   this.handleUseFreeCpu(params, callback)
+    //   return
+    // }
     this.eosJs.transaction(params, {
       blocksBehind: 3,
       expireSeconds: 30,
@@ -151,12 +171,9 @@ class ScatterClass {
       self.toTransaction(obj, callback)
       return
     }
-    const useFreeCpu = store.state.app.freeCpu;
-    // console.log(useFreeCpu)
-    if (useFreeCpu) {
-      this.handleUseFreeCpu(params, callback)
-      return
-    }
+    // if (isTpWallet()) {
+    // this.handleUseFreeCpu(params, callback)
+    //   retu
     self.eosJs.transaction(params, {
       blocksBehind: 3,
       expireSeconds: 30,
@@ -165,10 +182,6 @@ class ScatterClass {
     }).catch((e) => {
       self.dealError(e, callback);
     });
-  }
-
-  buffer2hex(buffer) {
-    return Array.from(buffer, (x) => ('00' + x.toString(16)).slice(-2)).join('')
   }
 
   handleUseFreeCpu(tx, cb) {
@@ -182,59 +195,69 @@ class ScatterClass {
           tx,
           txh
         }
-        const formName = store.state.app.account.name;
-        tx.actions.unshift({
-          account: "dfsfreecpu11",
-          name: 'freecpu',
-          authorization: [
-            {
-              actor: "yfcmonitor11",
-              permission: `active`,
-            },
-          ],
-          data: {
-            user: formName
-          },
-        })
-        // tx.actions[0].authorization.unshift({
-        //   actor: "iq3rwbsfcqlv",
-        //   permission: `active`,
-        // })
-        let pushTransactionArgs = await this.eosJs.transaction(tx, {
-          // ...txh,
-          sign: true,
-          broadcast: false,
-        });
-        const p = pushTransactionArgs;
-        const l = p.transaction.transaction;
-        l.signatures = p.transaction.signatures;
-        l.context_free_data = [];
-        data.sign_data = l
-
-        console.log(tx)
         console.log(data)
-
-        const {status, result} = await pushFreeCpu2(data)
+        const {status, result} = await pushFreeCpu(data)
         console.log(result, status)
         if (!status || !result) { // 请求失败 - 走正常流程操作
-          cb(result, null)
+          this.transact(tx, cb)
           return
         }
-        cb(null, result)
+        let pushTransactionArgs
+        // console.log(this.eosJs)
+        // console.log(await this.eosJs.signatureProvider())
+        // console.log(await this.eosJs.signatureProvider().sign)
+        if (result.code === 200) {
+          let serverTransactionPushArgs = result.data;
+          const requiredKeys = await this.eosJs.signatureProvider.getAvailableKeys();
+          const serializedTx = Buffer.from(
+            serverTransactionPushArgs.serializedTransaction,
+            "hex"
+          );
+          console.log(serializedTx)
+          const signArgs = {
+            chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
+            requiredKeys,
+            serializedTransaction: serializedTx,
+            abis: [],
+          };
+          window.signArgs = signArgs
+          console.log('signArgs', signArgs)
+          pushTransactionArgs = await this.eosJs.signatureProvider.sign(
+            signArgs
+          );
+          console.log(123)
+          // add server signature
+          pushTransactionArgs.signatures.unshift(
+            serverTransactionPushArgs.signatures[0]
+          );
+        } else {
+          // no server response => sign original tx
+          pushTransactionArgs = await this.eosJs.transact(tx, {
+            ...txh,
+            sign: true,
+            broadcast: false,
+          });
+        }
+        console.log('pushTransactionArgs', pushTransactionArgs)
+        let push_result = await this.eosJs.pushSignedTransaction(
+          pushTransactionArgs
+        );
+        console.log(push_result)
+        cb(null, push_result)
       } catch (error) {
+        // alert(JSON.stringify(error))
+        console.log(JSON.stringify(error))
         this.dealFreeCpuError(error, cb)
       }
     })()
   }
+
   dealFreeCpuError(error, cb) {
-    // console.log(typeof error)
-    let err = error.toString()
-    if (typeof error === 'object') {
-      err = JSON.stringify(error)
-    }
+    console.log(error.toString())
+    const err = error.toString()
     let back = {
       code: 999,
-      message: err,
+      message: "fails!",
     };
     if (err.indexOf('INSUFFICIENT_OUTPUT_AMOUNT') !== -1) {
       back = {
@@ -242,14 +265,27 @@ class ScatterClass {
         message: "滑点过高",
       };
     }
-    if (err.indexOf('you have no permission for this operation') !== -1) {
-      back = {
-        code: 3050003,
-        message: "您没有权限操作",
-      };
-    }
     cb(back, null);
   }
+
+  // pushFreeCpu(signedTx, cb) {
+  //   let url = 'http://47.243.71.86:7001/api/common/freeCpu';
+  //   // let url = 'http://192.168.31.101:7001/api/common/freeCpu';
+  //   axios.post(url, signedTx, {
+  //     headers: {
+  //       accept: 'application/json, text/plain, */*',
+  //     },
+  //   }).then((res) => {
+  //     if (res.data.code !== 0) {
+  //       const msg = res.data.message;
+  //       cb(msg, null);
+  //       return
+  //     }
+  //     cb(null, res.data)
+  //   }).catch((error) => {
+  //     console.log(error); // eslint-disable-line
+  //   })
+  // }
 
   dealError(e, callback) {
     console.log(e)

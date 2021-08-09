@@ -249,7 +249,7 @@ export default {
           type: 'success'
         });
         setTimeout(() => {
-          this.handleGetList();
+          this.$emit('listenUpdate', true);
         }, 1000);
       })
     },
