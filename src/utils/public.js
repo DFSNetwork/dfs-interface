@@ -3,19 +3,21 @@ import { DApp } from '@/utils/wallet/index';
 import moment from 'moment';
 import QRcode from 'qrcode';
 import store from '@/store';
-import {getJson} from './api'
+// import {getJson} from './api'
 import {get_table_rows} from '@/api/list'
+import imgJson from '@/assets/img/coinJson.json';
 
-let cdnImgJson = localStorage.getItem('ImgJson') ? JSON.parse(localStorage.getItem('ImgJson')) : {}; // CDN 图片配置
-async function getCdnImgJson() {
-  const {status, result} = await getJson()
-  if (!status) {
-    return
-  }
-  cdnImgJson = result;
-  localStorage.setItem('ImgJson', JSON.stringify(cdnImgJson))
-}
-getCdnImgJson();
+let cdnImgJson = imgJson
+// localStorage.getItem('ImgJson') ? JSON.parse(localStorage.getItem('ImgJson')) : {}; // CDN 图片配置
+// async function getCdnImgJson() {
+//   const {status, result} = await getJson()
+//   if (!status) {
+//     return
+//   }
+//   cdnImgJson = result;
+//   localStorage.setItem('ImgJson', JSON.stringify(cdnImgJson))
+// }
+// getCdnImgJson();
 export function getPngLen() {
   return cdnImgJson ? cdnImgJson.png.length : 1
 }
