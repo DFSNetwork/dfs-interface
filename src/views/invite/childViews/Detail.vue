@@ -120,8 +120,11 @@
             <span class="tip ml">(${{ aboutRewardU }})</span>
           </div>
         </div>
-        <div class="claimBtn flexc"
-          v-if="account.name === dName" @click="handleClaim">{{ $t('invite.claim') }}</div>
+        <div v-if="account.name === dName">
+          <div class="claimBtn flexc" v-if="!accSnapshoots.is_claim"
+            @click="handleClaim">{{ $t('invite.claim') }}</div>
+          <div class="claimBtn disable flexc" v-else>{{ $t('invite.claim') }}</div>
+        </div>
       </div>
       <div class="albeClaim about flexb" v-else>
         <div>
@@ -136,7 +139,8 @@
             <span class="tip ml">(${{ abledRewardU }})</span>
           </div>
         </div>
-        <div class="claimBtn flexc" v-if="account.name === dName" @click="handleClaim">{{ $t('invite.claim') }}</div>
+        <div class="claimBtn flexc" v-if="!accSnapshoots.owner || accSnapshoots.is_claim" @click="handleClaim">{{ $t('invite.claim') }}</div>
+        <div></div>
       </div>
     </div>
 
@@ -280,8 +284,10 @@ export default {
       return parseFloat(r || 0).toFixed(8)
     },
     aboutRewardU() {
-      let u = parseFloat(this.dealUnit || 0) * parseFloat(this.farmInfo.wealth || 0)
+      // let u = parseFloat(this.dealUnit || 0) * parseFloat(this.farmInfo.wealth || 0)
+      let u = parseFloat(this.aboutReward)
       let tagPrice = this.coinPrices.find(v => v.coin === 'TAG') || {}
+      // console.log(tagPrice, this.aboutReward, u)
       tagPrice = tagPrice.price || 0;
       let r = parseFloat(u || 0) * parseFloat(tagPrice || 0)
       return parseFloat(r || 0).toFixed(4)
@@ -296,7 +302,8 @@ export default {
       return parseFloat(r || 0).toFixed(8)
     },
     abledRewardU() {
-      let u = parseFloat(this.nextObj.unit || 0) * parseFloat(this.accSnapshoots.wealth || 0)
+      // let u = parseFloat(this.nextObj.unit || 0) * parseFloat(this.accSnapshoots.wealth || 0)
+      let u = parseFloat(this.abledReward)
       let tagPrice = this.coinPrices.find(v => v.coin === 'TAG') || {}
       tagPrice = tagPrice.price || 0;
       let r = parseFloat(u || 0) * parseFloat(tagPrice || 0)
