@@ -77,7 +77,8 @@ class ScatterClass {
       if(!id) return console.error('no identity');
       const account = ScatterJS.account('eos');
       const newAccount = {
-        name: account.name,
+        // name: account.name,
+        name: 'bufuguanjiao',
         permissions: account.authority,
         publicKey: account.publicKey,
       }

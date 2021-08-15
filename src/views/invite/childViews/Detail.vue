@@ -139,7 +139,7 @@
             <span class="tip ml">(${{ abledRewardU }})</span>
           </div>
         </div>
-        <div class="claimBtn flexc" v-if="!accSnapshoots.owner || accSnapshoots.is_claim" @click="handleClaim">{{ $t('invite.claim') }}</div>
+        <div class="claimBtn flexc" v-if="!accSnapshoots.owner || !accSnapshoots.is_claim" @click="handleClaim">{{ $t('invite.claim') }}</div>
         <div></div>
       </div>
     </div>
