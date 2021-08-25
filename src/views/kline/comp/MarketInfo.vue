@@ -32,7 +32,7 @@
           </div>
           <div class="infoItem">
             <div class="label">{{ $t('kline.vol') }}({{ checkedMarket.symbol0 }})</div>
-            <div>{{ checkedMarket.volume24HToUsdt | numToCnt }}</div>
+            <div>{{ parseInt(checkedMarket.volume24HToUsdt || 0) }}</div>
           </div>
         </div>
         <div class="subInfo flexb">
