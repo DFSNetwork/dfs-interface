@@ -3,7 +3,7 @@
     <div class="flexb info">
       <div class="coin flexa">
         <div class="token flexa">
-          <img class="coinImg" :src="checkedMarket.imgUrl1 || errorCoinImg" :onerror="errorCoinImg">
+          <img class="coinImg" :src="checkedMarket.imgUrl1" :onerror="$errorImg">
           <div class="">
             <div class="tokenName din">{{ checkedMarket.symbol1 }}/{{ checkedMarket.symbol0 }}</div>
             <div class="tokenContract tip">{{ checkedMarket.contract1 }}</div>
@@ -88,7 +88,6 @@ export default {
   },
   data() {
     return {
-      errorCoinImg: 'this.src="https://ndi.340wan.com/eos/eosio.token-eos.png"',
       likeArr: [],
       isExPrice: false,
       showApyDetail: false,

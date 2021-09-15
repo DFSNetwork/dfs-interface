@@ -6,7 +6,7 @@
         <!-- 交易对信息 -->
         <div class="symbolInfo flexb" @click="showMarketList = true">
           <div class="flexa">
-            <img class="coinImg" :onerror="errorCoinImg" :src="thisMarket.sym0Data.imgUrl" >
+            <img class="coinImg" :onerror="$errorImg" :src="thisMarket.sym0Data.imgUrl" >
             <div>
               <div class="flexa">
                 <span>{{ thisMarket.symbol0 }} <i class="el-icon-arrow-down"></i></span>
@@ -16,7 +16,7 @@
           </div>
           <img class="addImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/add.svg">
           <div class="flexa">
-            <img class="coinImg" :onerror="errorCoinImg" :src="thisMarket.sym1Data.imgUrl" >
+            <img class="coinImg" :onerror="$errorImg" :src="thisMarket.sym1Data.imgUrl" >
             <div>
               <div class="flexa">
                 <span>{{ thisMarket.symbol1 }} <i class="el-icon-arrow-down"></i></span>
@@ -151,7 +151,6 @@ export default {
   data() {
     return {
       first: true,
-      errorCoinImg: 'this.src="https://ndi.340wan.com/eos/eosio.token-eos.png"',
       exRate: true,
       showMarketList: false,
       showApyDetail: false,

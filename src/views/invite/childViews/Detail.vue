@@ -229,8 +229,6 @@ export default {
       // 用户快照情况
       accSnapshoots: {},
       nowMarket: {},
-      defaultImg: 'https://ndi.340wan.com/eos/eosio.token-eos.png',
-      errorImg: 'this.src="https://ndi.340wan.com/eos/eosio.token-eos.png"',
     };
   },
   mounted() {

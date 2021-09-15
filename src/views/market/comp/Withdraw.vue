@@ -37,14 +37,14 @@
         <div class="tip">{{ $t('more.wdAssets') }}</div>
         <div class="coinData flexb">
           <div class="flexa">
-            <img class="coinImg" :onerror="errorCoinImg" :src="thisMarket.sym0Data.imgUrl" >
+            <img class="coinImg" :onerror="$errorImg" :src="thisMarket.sym0Data.imgUrl" >
             <span>{{ thisMarket.symbol0 }}</span>
           </div>
           <div class="din">{{ getNum1 }} {{ thisMarket.symbol0 }}</div>
         </div>
         <div class="coinData flexb">
           <div class="flexa">
-            <img class="coinImg" :onerror="errorCoinImg" :src="thisMarket.sym1Data.imgUrl" >
+            <img class="coinImg" :onerror="$errorImg" :src="thisMarket.sym1Data.imgUrl" >
             <span>{{ thisMarket.symbol1 }}</span>
           </div>
           <div class="din">{{ getNum2 }} {{ thisMarket.symbol1 }}</div>
@@ -78,7 +78,6 @@ export default {
   },
   data() {
     return {
-      errorCoinImg: 'this.src="https://ndi.340wan.com/eos/eosio.token-eos.png"',
       sToken: '',
       token: 0,
       // thisMarket: {

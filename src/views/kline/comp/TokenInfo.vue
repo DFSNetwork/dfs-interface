@@ -3,7 +3,8 @@
     <div class="navTabs flexa">
       <van-tabs color="#29D4B0"
         v-model="area"
-        title-active-color="#29D4B0">
+        title-active-color="#333"
+        title-inactive-color="#999">
         <van-tab :title="$t('kline.mksInfo')"></van-tab>
         <van-tab :title="$t('kline.swapLaster')"></van-tab>
         <van-tab :title="$t('kline.coinInfo')"></van-tab>

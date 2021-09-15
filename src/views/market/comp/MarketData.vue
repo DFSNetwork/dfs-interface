@@ -4,10 +4,10 @@
      @click="handleTo('dfsMinePool')">
       <div class="flexb">
         <div class="flexa symbolInfo">
-          <img class="imgCoin" :src="thisMarket.sym0Data.imgUrl" :onerror="errorCoinImg"/>
+          <img class="imgCoin" :src="thisMarket.sym0Data.imgUrl" :onerror="$errorImg"/>
           <span>{{ thisMarket.symbol0 }}</span>
           <span class="and"><img src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/add.svg" alt=""></span>
-          <img class="imgCoin" :src="thisMarket.sym1Data.imgUrl" :onerror="errorCoinImg"/>
+          <img class="imgCoin" :src="thisMarket.sym1Data.imgUrl" :onerror="$errorImg"/>
           <span>{{ thisMarket.symbol1 }}</span>
         </div>
         <div class="flexa">
@@ -114,7 +114,6 @@ export default {
   },
   data() {
     return {
-      errorCoinImg: 'this.src="https://ndi.340wan.com/eos/eosio.token-eos.png"',
       nowMarket: {},
       marketData: [],
       direction: true,

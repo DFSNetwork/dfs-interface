@@ -13,7 +13,7 @@
       </div>
       <div class="iptDiv flexb">
         <div class="coinInfo flex" @click="listenShowDrawer()">
-          <div class="coinImg"><img width="100%" :src="thisMarket0.imgUrl" :onerror="errorCoinImg" alt=""></div>
+          <div class="coinImg"><img width="100%" :src="thisMarket0.imgUrl" :onerror="$errorImg" alt=""></div>
           <div>
             <div class="coin">{{ thisMarket0.symbol }} <i class="el-icon-arrow-down"></i></div>
             <div class="contract tip">{{ thisMarket0.contract }}</div>
@@ -110,7 +110,6 @@ export default {
   },
   data() {
     return {
-      errorCoinImg: 'this.src="https://ndi.340wan.com/eos/eosio.token-eos.png"',
       bal: '0',
       payNum: '',
       memo: '',

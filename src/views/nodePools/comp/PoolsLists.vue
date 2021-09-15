@@ -21,7 +21,7 @@
               <span class="boost flexc" @click="handleTo('voteForTag')">{{ $t('nodePools.boost') }}</span>
             </div>
             <div class="poolInfo flexa">
-              <img class="coinImg" :src="v.sym0Data.imgUrl" :onerror="errorCoinImg">
+              <img class="coinImg" :src="v.sym0Data.imgUrl" :onerror="$errorImg">
               <div class="bal">
                 <div class="flexb">
                   <span>{{ v.symbol0 }}/{{ v.symbol1 }} {{ $t('nodePools.lpMine') }}</span>
@@ -75,7 +75,7 @@
           <span class="boost flexc" @click="handleShowBoost(item)">{{ $t('nodePools.boost') }}</span>
         </div>
         <div class="poolInfo flexa">
-          <img class="coinImg" :src="item.imgUrl" :onerror="errorCoinImg">
+          <img class="coinImg" :src="item.imgUrl" :onerror="$errorImg">
           <div class="bal">
             <div class="flexb">
               <span>{{ $t('nodePools.poolsReward', {token:item.sym}) }}</span>
@@ -197,7 +197,6 @@ export default {
   data() {
     return {
       tabAct: 2,
-      errorCoinImg: 'this.src="https://ndi.340wan.com/eos/eosio.token-eos.png"',
       plan: {},
       planRank: 30,
       params: {},

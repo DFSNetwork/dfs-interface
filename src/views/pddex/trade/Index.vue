@@ -3,7 +3,7 @@
     <div>
       <div class="symbolInfo flexb">
         <div class="flexa">
-          <img class="coinImg" :src="market.sym1Data.imgUrl" :onerror="errorCoinImg">
+          <img class="coinImg" :src="market.sym1Data.imgUrl" :onerror="$errorImg">
           <!-- <img class="coinImg" src="@/assets/logo.png" alt=""> -->
           <div @click="showLists = true">
             <div class="name">
@@ -142,7 +142,6 @@ export default {
   },
   data() {
     return {
-      errorCoinImg: 'this.src="https://ndi.340wan.com/eos/eosio.token-eos.png"',
       active: 0,
       showLists: false,
       showSet: false,

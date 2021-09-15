@@ -3,7 +3,13 @@
     <!-- <div class="title">市场详情</div> -->
     <MarketInfo :checkedMarket="checkedMarket"/>
     <div class="kline">
-      <div class="kTitle flexa">{{ $t('kline.klinePrice') }}</div>
+      <div class="kTitle flexb">
+        <span>{{ $t('kline.klinePrice') }}</span>
+        <div class="flexa warn" @click="showWarn = true">
+          <img class="warnImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/warn.png" >
+          <span>{{ $t('sys.tip') }}</span>
+        </div>
+      </div>
       <ChardingView :checkedMarket="checkedMarket"/>
     </div>
     <TokenInfo :checkedMarket="checkedMarket"/>
@@ -13,6 +19,10 @@
       <div class="btn flexc" @click="handleTo('index')">{{ $t('tab.dex') }}</div>
       <div class="btn market flexc" @click="handleTo('market')">{{ $t('tab.pools') }}</div>
     </div>
+
+    <van-popup class="popup_p" v-model="showWarn">
+      <WarnCoin />
+    </van-popup>
   </div>
 </template>
 
@@ -22,6 +32,7 @@ import ChardingView from './ChardingView';
 import MarketInfo from './comp/MarketInfo';
 // import MinerLists from './comp/MinerLists';
 import TokenInfo from './comp/TokenInfo';
+import WarnCoin from '@/views/kline/popup/WarnCoin'
 
 export default {
   name: 'kLine',
@@ -30,9 +41,11 @@ export default {
     MarketInfo,
     // MinerLists,
     TokenInfo,
+    WarnCoin,
   },
   data() {
     return {
+      showWarn: false,
       checkedMarket: {
         // mid: 17,
         symbol0: 'EOS',
@@ -128,7 +141,17 @@ export default {
       color: #333;
       font-size: 30px;
       font-weight: 500;
-      padding-left: 28px;
+      padding: 0 28px;
+      margin-bottom: 20px;
+      .warn{
+        font-size: 28px;
+        color: $color-main;
+        .warnImg{
+          display: block;
+          width: 32px;
+          margin-right: 14px;
+        }
+      }
     }
   }
   .nullDiv{
@@ -145,7 +168,7 @@ export default {
     .btn{
       flex: 1;
       height: 85px;
-      border-radius: 48px;
+      border-radius: 8px;
       background: #29D4B0;
       color: #FFF;
       font-size: 34px;

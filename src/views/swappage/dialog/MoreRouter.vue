@@ -7,7 +7,7 @@
       <div class="subTitle">本次路径兑换</div>
       <div class="flexw">
         <span v-for="(item, i) in routePath" :key="i" class="flexc coin">
-          <img class="coinUrl" :onerror="errorCoinImg"
+          <img class="coinUrl" :onerror="$errorImg"
             :src="handleDealRouteImg(item)">
           <span>{{ item.split(':')[1] }}</span>
           <span v-if="routePath.length - 1 !== i" class="el-icon-arrow-right"></span>
@@ -38,7 +38,6 @@ export default {
   },
   data() {
     return {
-      errorCoinImg: 'this.src="https://ndi.340wan.com/eos/eosio.token-eos.png"',
     }
   },
   methods: {

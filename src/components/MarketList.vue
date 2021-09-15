@@ -15,7 +15,7 @@
         <div class="item flexb" :key="i" @click="handleSelectThis(item)">
           <div class="symbolInfo flexb">
             <div class="flexa">
-              <img class="coinImg" :onerror="errorCoinImg" :src="item.sym0Data.imgUrl" alt="">
+              <img class="coinImg" :onerror="$errorImg" :src="item.sym0Data.imgUrl" alt="">
               <div>
                 <div class="flexa">
                   <span>{{item.symbol0}}</span>
@@ -25,7 +25,7 @@
             </div>
             <img class="addImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/add.svg">
             <div class="flexa">
-              <img class="coinImg" :onerror="errorCoinImg" :src="item.sym1Data.imgUrl">
+              <img class="coinImg" :onerror="$errorImg" :src="item.sym1Data.imgUrl">
               <div>
                 <div class="flexa">
                   <span>{{item.symbol1}}</span>
@@ -42,7 +42,7 @@
       <template v-for="(item, i) in searchArr">
         <div class="item flexb" @click="handleSelectThis(item)" v-if="handleShow(item)" :key="i">
           <div class="left flex">
-            <img class="coinImg" :src="item.imgUrl" :onerror="errorCoinImg" alt="">
+            <img class="coinImg" :src="item.imgUrl" :onerror="$errorImg" alt="">
             <div>
               <div class="coin">{{ item.symbol }}</div>
               <div class="contract tip">{{ item.contract }}</div>
@@ -66,7 +66,6 @@ export default {
       searchArr: [],
       coinList: [],
       filterCoinList: [],
-      errorCoinImg: 'this.src="https://ndi.340wan.com/eos/eosio.token-eos.png"',
     }
   },
   props: {

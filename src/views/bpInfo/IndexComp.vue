@@ -13,7 +13,7 @@
           <span v-else>{{i + 1}}</span>
         </div>
         <div class="flexs" style="flex: 1">
-          <img class="bpImg" :src="v.logo || errImg" :onerror="errImg">
+          <img class="bpImg" :src="v.logo" :onerror="$errorImg">
           <div style="flex: 1">
             <div class="name">{{ v.owner }}</div>
             <div class="star flexa dinBold">
@@ -78,7 +78,6 @@ export default {
   },
   data() {
     return {
-      errImg: 'this.src="https://ndi.340wan.com/eos/eosio.token-eos.png"',
       bpLists: [],
       allBpLists: [],
       loadingMore: false,

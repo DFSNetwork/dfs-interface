@@ -11,7 +11,7 @@
         <div>
           <div class="bal" @click="handleClickBalan('payNum1')">{{ $t('public.balance') }}：{{ balanceSym0 }} {{ thisMarket.symbol0 }}</div>
           <div class="coinInfo flexa">
-            <img class="coinImg" :src="thisMarket.sym0Data.imgUrl" :onerror="errorCoinImg">
+            <img class="coinImg" :src="thisMarket.sym0Data.imgUrl" :onerror="$errorImg">
             <div class="coin">
               <div class="coinName">{{ thisMarket.symbol0 }}</div>
               <div class="coinContract tip">{{ thisMarket.contract0 }}</div>
@@ -34,7 +34,7 @@
         <div>
           <div class="bal" @click="handleClickBalan('payNum2')">{{ $t('public.balance') }}：{{ balanceSym1 }} {{ thisMarket.symbol1 }}</div>
           <div class="coinInfo flexa">
-            <img class="coinImg" :src="thisMarket.sym1Data.imgUrl" :onerror="errorCoinImg">
+            <img class="coinImg" :src="thisMarket.sym1Data.imgUrl" :onerror="$errorImg">
             <div class="coin">
               <div class="coinName">{{ thisMarket.symbol1 }}</div>
               <div class="coinContract tip">{{ thisMarket.contract1 }}</div>
@@ -94,7 +94,6 @@ export default {
   },
   data() {
     return {
-      errorCoinImg: 'this.src="https://ndi.340wan.com/eos/eosio.token-eos.png"',
       balanceSym0: '0.0000',
       balanceSym1: '0.0000',
       payNum1: '',

@@ -29,7 +29,7 @@
         <div :class="`mylist ${handleGetClass(thisMarket.mid)}`" @click="handleJoin(thisMarket)">
           <div class="symbol flexb noTop">
             <div class="coinInfo flex">
-              <div class="coinImg"><img width="100%" :src="thisMarket.sym0Data.imgUrl" :onerror="errorCoinImg"></div>
+              <div class="coinImg"><img width="100%" :src="thisMarket.sym0Data.imgUrl" :onerror="$errorImg"></div>
               <div>
                 <div class="coin">{{ thisMarket.symbol0 }}</div>
                 <div class="contract tip">{{ thisMarket.contract0 }}</div>
@@ -37,7 +37,7 @@
             </div>
             <div class="add">+</div>
             <div class="coinInfo flex">
-              <div class="coinImg"><img width="100%" :src="thisMarket.sym1Data.imgUrl" :onerror="errorCoinImg"></div>
+              <div class="coinImg"><img width="100%" :src="thisMarket.sym1Data.imgUrl" :onerror="$errorImg"></div>
               <div>
                 <div class="coin">{{ thisMarket.symbol1 }}</div>
                 <div class="contract tip">{{ thisMarket.contract1 }}</div>
@@ -188,7 +188,6 @@ export default {
   },
   data() {
     return {
-      errorCoinImg: 'this.src="https://ndi.340wan.com/eos/eosio.token-eos.png"',
       getMinersList: false,
       showReWardTip: false,
       claimLoading: false,

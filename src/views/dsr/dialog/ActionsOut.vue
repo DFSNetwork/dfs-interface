@@ -9,7 +9,7 @@
         </div>
         <div class="iptDiv flexb">
           <div class="coinInfo flex">
-            <div class="coinImg"><img width="100%" :src="thisMarket.imgUrl" :onerror="errorCoinImg" alt=""></div>
+            <div class="coinImg"><img width="100%" :src="thisMarket.imgUrl" :onerror="$errorImg" alt=""></div>
             <div>
               <div class="coin">{{ thisMarket.symbol }}</div>
               <div class="contract tip">{{ thisMarket.contract }}</div>
@@ -42,7 +42,6 @@ export default {
   data() {
     return {
       token: '0.0000',
-      errorCoinImg: 'this.src="https://ndi.340wan.com/eos/eosio.token-eos.png"',
       payNum: '',
       thisMarket: {
         symbol: 'DFS',

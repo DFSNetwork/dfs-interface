@@ -50,11 +50,11 @@
               <div class="poolName">
                 <span class="coinImg flexa">
                   <span class="flexa">
-                    <img :src="item.sym0Data.imgUrl" :onerror="errorCoinImg">
+                    <img :src="item.sym0Data.imgUrl" :onerror="$errorImg">
                     <span>{{ item.symbol0 }}</span>
                   </span>
                   <span class="flexa">
-                    <img :src="item.sym1Data.imgUrl" :onerror="errorCoinImg">
+                    <img :src="item.sym1Data.imgUrl" :onerror="$errorImg">
                     <span>{{ item.symbol1 }}</span>
                   </span>
                 </span>
@@ -115,7 +115,6 @@ export default {
     return {
       showRules: false,
       act: 1,
-      errorCoinImg: 'this.src="https://ndi.340wan.com/eos/eosio.token-eos.png"',
       search: '',
       searchList: [],
       checkBox: [],

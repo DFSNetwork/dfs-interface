@@ -6,7 +6,7 @@
     <div class="mylist">
       <div class="flexa">
         <span class="rank flexc">{{ node.rank }}</span>
-        <img class="logo" :src="node.owner !== 'bp.dfs' ? node.logo : voteDefaultImg" :onerror="errorCoinImg">
+        <img class="logo" :src="node.owner !== 'bp.dfs' ? node.logo : voteDefaultImg" :onerror="$errorImg">
         <span class="nodeName">{{ owner }}</span>
       </div>
       <div class="tip data flexb">
@@ -71,7 +71,6 @@ export default {
   data() {
     return {
       voteDefaultImg: 'https://cdn.jsdelivr.net/gh/defis-net/material2/coin/tagtokenmain-tag.png',
-      errorCoinImg: 'this.src="https://ndi.340wan.com/eos/eosio.token-eos.png"',
       owner: '',
       allVotes: '0',
       allMinersList: [],

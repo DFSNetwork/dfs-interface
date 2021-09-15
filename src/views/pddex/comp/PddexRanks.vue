@@ -66,7 +66,7 @@
           </div>
           <div class="rankItem flexb dinReg" v-for="(v, index) in followList" :key="`${active}-${index}`" @click="handleToTrade(v)">
             <div class="name flexa">
-              <img class="coinUrl" :src="v.sym1Data.imgUrl" :onerror="errorCoinImg">
+              <img class="coinUrl" :src="v.sym1Data.imgUrl" :onerror="$errorImg">
               <div>
                 <div class="din">
                   <span>{{ v.symbol1 }}</span>
@@ -108,7 +108,7 @@
           </div>
           <div class="rankItem flexb dinReg" v-for="(v, index) in cdAreaLists" :key="`${active}-${index}`" @click="handleToTrade(v)">
             <div class="name flexa">
-              <img class="coinUrl" :src="v.sym1Data.imgUrl" :onerror="errorCoinImg">
+              <img class="coinUrl" :src="v.sym1Data.imgUrl" :onerror="$errorImg">
               <div>
                 <div class="din">
                   <span>{{ v.symbol1 }}</span>
@@ -176,7 +176,6 @@ export default {
       rankList: [],
       likeArr: [], // 存放接口返回的关注数据
       swapTradeLists: {},
-      errorCoinImg: 'this.src="https://ndi.340wan.com/eos/eosio.token-eos.png"',
       allMarket: localStorage.getItem('allMarket') ? JSON.parse(localStorage.getItem('allMarket')) :{},
       areaLists: ['USDT', 'USDC', 'EOS', 'DFS', 'TAG', 'DFG'],
       cdAreaLists: [],

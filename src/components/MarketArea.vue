@@ -16,7 +16,7 @@
         <div class="list flexb" v-for="(v, i) in searchArr" :key="`list${i}`"
           @click="handleSelectThis(v)">
           <div class="flexa">
-            <img class="coinImg" :src="v.sym1Data.imgUrl" :onerror="errorCoinImg">
+            <img class="coinImg" :src="v.sym1Data.imgUrl" :onerror="$errorImg">
             <div>
               <span>{{ v.symbol1 }}</span>
               <span class="small">/{{ v.symbol0 }}</span>
@@ -30,7 +30,7 @@
         <div class="list flexb" v-for="(v, i) in searchArr" :key="`list${i}`"
           @click="handleSelectThis(v)">
           <div class="flexa">
-            <img class="coinImg" :src="v.imgUrl" :onerror="errorCoinImg">
+            <img class="coinImg" :src="v.imgUrl" :onerror="$errorImg">
             <div>
               <span>{{ v.symbol }}</span>
             </div>
@@ -74,7 +74,6 @@ export default {
   },
   data() {
     return {
-      errorCoinImg: 'this.src="https://ndi.340wan.com/eos/eosio.token-eos.png"',
       search: '',
       area: 1,
       areaLists: [{

@@ -10,7 +10,7 @@
           </div>
           <div class="iptDiv flexb">
             <div class="coinInfo flex" @click="listenShowDrawer('bankStart')">
-              <div class="coinImg"><img width="100%" :src="thisMarket0.imgUrl" :onerror="errorCoinImg" alt=""></div>
+              <div class="coinImg"><img width="100%" :src="thisMarket0.imgUrl" :onerror="$errorImg" alt=""></div>
               <div>
                 <div class="coin">{{ thisMarket0.symbol }} <i class="el-icon-arrow-down"></i></div>
                 <div class="contract tip">{{ thisMarket0.contract }}</div>
@@ -31,7 +31,7 @@
           </div>
           <div class="iptDiv flexb">
             <div class="coinInfo flex" @click="listenShowDrawer('bankEnd')">
-              <div class="coinImg"><img width="100%" :src="thisMarket1.imgUrl" :onerror="errorCoinImg" alt=""></div>
+              <div class="coinImg"><img width="100%" :src="thisMarket1.imgUrl" :onerror="$errorImg" alt=""></div>
               <div>
                 <div class="coin">{{ thisMarket1.symbol }} <i class="el-icon-arrow-down"></i></div>
                 <div class="contract tip">{{ thisMarket1.contract }}</div>
@@ -111,7 +111,6 @@ export default {
   data() {
     return {
       discount: 0.2, // 配置项 - 后期从合约拿
-      errorCoinImg: 'this.src="https://ndi.340wan.com/eos/eosio.token-eos.png"',
       payNum: '',
       getNum: '',
       payIptFocus: false,

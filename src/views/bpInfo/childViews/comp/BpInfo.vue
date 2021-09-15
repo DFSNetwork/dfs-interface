@@ -3,7 +3,7 @@
     <div class="info">
       <div class="flexb">
         <div class="flexa">
-          <img class="bpImg" :src="bpDetailInfo.logo || errorCoinImg" :onerror="errorCoinImg">
+          <img class="bpImg" :src="bpDetailInfo.logo" :onerror="$errorImg">
           <div class="">
             <div class="name">{{ bpname }}</div>
             <div class="dfsVote dinReg">{{ $t('bpInfo.voteNum', {num: bpDetailInfo.voteNum || 0}) }}</div>
@@ -178,7 +178,6 @@ export default {
   },
   data() {
     return {
-      errorCoinImg: 'this.src="https://ndi.340wan.com/eos/eosio.token-eos.png"',
       bpname: '',
       bpInfo: {},
       bpDetailInfo: {},
