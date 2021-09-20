@@ -12,6 +12,10 @@
         <img class="bannerImg"
           src="https://cdn.jsdelivr.net/gh/defis-net/material2/banner/new-inviter.png">
       </van-swipe-item>
+      <van-swipe-item>
+        <img class="bannerImg" @click="handleToObj('nft')"
+          src="https://cdn.jsdelivr.net/gh/defis-net/material2/banner/nft-banner-1.png">
+      </van-swipe-item>
     </van-swipe>
   </div>
 </template>
@@ -29,6 +33,9 @@ export default {
     handleToObj(type) {
       if (type === 'trade') {
         location.href = 'https://dfsfans.io/?page=home&tab=play'
+      }
+      if (type === 'nft') {
+        location.href = 'https://opensky.defis.network/'
       }
     }
   }
