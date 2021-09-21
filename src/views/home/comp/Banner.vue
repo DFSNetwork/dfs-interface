@@ -9,12 +9,16 @@
       </van-swipe-item> -->
 
       <van-swipe-item>
-        <img class="bannerImg"
-          src="https://cdn.jsdelivr.net/gh/defis-net/material2/banner/new-inviter.png">
+        <img class="bannerImg" @click="handleToObj('nft')"
+          src="https://cdn.jsdelivr.net/gh/defis-net/material2/banner/opensky.png">
       </van-swipe-item>
       <van-swipe-item>
         <img class="bannerImg" @click="handleToObj('nft')"
           src="https://cdn.jsdelivr.net/gh/defis-net/material2/banner/nft-banner-1.png">
+      </van-swipe-item>
+      <van-swipe-item>
+        <img class="bannerImg"
+          src="https://cdn.jsdelivr.net/gh/defis-net/material2/banner/new-inviter.png">
       </van-swipe-item>
     </van-swipe>
   </div>
