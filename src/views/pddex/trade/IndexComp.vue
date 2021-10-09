@@ -148,7 +148,7 @@ export default {
           imgUrl: 'https://cdn.jsdelivr.net/gh/defis-net/material2/coin/eosio.token-eos.svg'
         },
         sym1Data:{
-          imgUrl: 'https://ndi.340wan.com/eos/tethertether-usdt.png'
+          imgUrl: 'https://cdn.jsdelivr.net/gh/defis-net/material2/coin/tethertether-usdt.png'
         }
       },
       showTradeinfo: {},

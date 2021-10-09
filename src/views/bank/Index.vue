@@ -122,7 +122,7 @@ export default {
       thisMarket0: {
         symbol: 'USDT',
         contract: 'tethertether',
-        imgUrl: 'https://ndi.340wan.com/eos/tethertether-usdt.png',
+        imgUrl: 'https://cdn.jsdelivr.net/gh/defis-net/material2/coin/tethertether-usdt.png',
         decimal: 4
       },
       thisMarket1: {
@@ -154,7 +154,7 @@ export default {
         {
           symbol: 'USDT',
           contract: 'tethertether',
-          imgUrl: 'https://ndi.340wan.com/eos/tethertether-usdt.png',
+          imgUrl: 'https://cdn.jsdelivr.net/gh/defis-net/material2/coin/tethertether-usdt.png',
           decimal: 4
         },
       ]

@@ -78,7 +78,7 @@ export default {
           imgUrl: "https://apps.defis.network/static/coin/eosio.token-eos.svg"
         },
         sym1Data: {
-          imgUrl: "https://ndi.340wan.com/eos/minedfstoken-dfs.png"
+          imgUrl: "https://cdn.jsdelivr.net/gh/defis-net/material2/coin/minedfstoken-dfs.png"
         },
       }, // 当前矿池数据
       allVotes: '0',

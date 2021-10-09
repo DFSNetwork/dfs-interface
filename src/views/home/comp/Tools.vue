@@ -17,15 +17,15 @@
       <van-swipe class="my-swipe" :loop="false" indicator-color="#29D4B0">
         <van-swipe-item>
           <div class="lists flexb">
-            <div class="list" @click="handleToPro('nft')">
+            <div class="list" @click="handleToPro('town')">
               <img class="hot" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/new.png">
+              <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material3/Town-img/login/windmill_icon.png">
+              <div>风车小镇</div>
+            </div>
+            <div class="list" @click="handleToPro('nft')">
+              <!-- <img class="hot" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/new.png"> -->
               <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/NFT.png">
               <div>NFT</div>
-            </div>
-            <div class="list" @click="handleTo('inviter')">
-              <!-- <img class="hot" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/new.png"> -->
-              <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/invite1_icon.png">
-              <div>{{ $t('home.inviter') }}</div>
             </div>
             <div class="list" @click="handleTo('invite')">
               <!-- <img class="hot" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/new.png"> -->
@@ -51,9 +51,10 @@
               <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/date_icon.png">
               <div>{{ $t('home.investment') }}</div>
             </div>
-            <div class="list" @click="handleToPro('record')">
-              <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/note_icon.png">
-              <div>{{ $t('home.diary') }}</div>
+            <div class="list" @click="handleTo('inviter')">
+              <!-- <img class="hot" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/new.png"> -->
+              <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/invite1_icon.png">
+              <div>{{ $t('home.inviter') }}</div>
             </div>
           </div>
         </van-swipe-item>
@@ -82,7 +83,10 @@
               <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/dtoken_icon.png">
               <div>{{ $t('sys.dcap') }}</div>
             </div>
-            <div class="list"></div>
+            <div class="list" @click="handleToPro('record')">
+              <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/note_icon.png">
+              <div>{{ $t('home.diary') }}</div>
+            </div>
             <div class="list"></div>
             <div class="list"></div>
           </div>
@@ -130,6 +134,9 @@ export default {
       }
       if (name === 'nft') {
         location.href = 'https://opensky.defis.network/'
+      }
+      if (name === 'town') {
+        location.href = 'https://dfsgame.netlify.app'
       }
     }
   }

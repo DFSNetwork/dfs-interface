@@ -47,7 +47,7 @@ export default {
         symbol: 'DFS',
         contract: 'minedfstoken',
         decimal: 4,
-        imgUrl: 'https://ndi.340wan.com/eos/minedfstoken-dfs.png'
+        imgUrl: 'https://cdn.jsdelivr.net/gh/defis-net/material2/coin/minedfstoken-dfs.png'
       },
       loading: false,
     }

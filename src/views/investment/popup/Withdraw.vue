@@ -9,7 +9,7 @@
       </div>
       <div class="coin flexb">
         <div class="flexa">
-          <img class="logo" src="https://ndi.340wan.com/eos/tethertether-usdt.png">
+          <img class="logo" src="https://cdn.jsdelivr.net/gh/defis-net/material2/coin/tethertether-usdt.png">
           <div>
             <div class="name dinBold">USDT</div>
             <div class="dinReg tip cts">tethertether</div>

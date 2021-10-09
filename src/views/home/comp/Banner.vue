@@ -8,6 +8,10 @@
           src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/banner1-en.png">
       </van-swipe-item> -->
 
+    <van-swipe-item>
+        <img class="bannerImg" @click="handleToObj('town')"
+          src="https://cdn.jsdelivr.net/gh/defis-net/material3/Town-img/login/banner.png">
+      </van-swipe-item>
       <van-swipe-item>
         <img class="bannerImg" @click="handleToObj('nft')"
           src="https://cdn.jsdelivr.net/gh/defis-net/material2/banner/opensky.png">
@@ -40,6 +44,9 @@ export default {
       }
       if (type === 'nft') {
         location.href = 'https://opensky.defis.network/'
+      }
+      if (type === 'town') {
+        location.href = 'https://dfsgame.netlify.app'
       }
     }
   }

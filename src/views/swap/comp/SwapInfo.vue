@@ -135,7 +135,7 @@ export default {
         contract: 'tethertether',
         symbol: 'USDT',
         decimal: '4',
-        imgUrl: 'https://ndi.340wan.com/eos/tethertether-usdt.png',
+        imgUrl: 'https://cdn.jsdelivr.net/gh/defis-net/material2/coin/tethertether-usdt.png',
       },
       balA: '0.0000',
       balB: '0.0000',
