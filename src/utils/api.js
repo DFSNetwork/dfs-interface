@@ -96,9 +96,9 @@ export function get_producers() {
 
 // 获取乐捐数据
 export function get_fundation(params) {
-  // https://api.defis.network/history/fundation?page=1&limit=15
+  // https://api.yfc.one/history/fundation?page=1&limit=15
   return new Promise((resolve, reject) => {
-    axios.get('https://api.defis.network/history/fundation', {params}).then((res) => {
+    axios.get('https://api.yfc.one/history/fundation', {params}).then((res) => {
       let result = Object.assign(res.data, {});
       resolve({ status: res.status === 200, result });
     }, err => {
@@ -108,9 +108,9 @@ export function get_fundation(params) {
 }
 // 获取乐捐总价值
 export function get_summary() {
-  // https://api.defis.network/history/fundation?page=1&limit=15
+  // https://api.yfc.one/history/fundation?page=1&limit=15
   return new Promise((resolve, reject) => {
-    axios.get('https://api.defis.network/dfs/fundation/summary').then((res) => {
+    axios.get('https://api.yfc.one/dfs/fundation/summary').then((res) => {
       let result = Object.assign(res.data, {});
       resolve({ status: res.status === 200, result });
     }, err => {
@@ -121,7 +121,7 @@ export function get_summary() {
 // 获取最新 ｜ 最贵 ｜ 最热 留言数据
 export function get_new_fundation(params) {
   return new Promise((resolve, reject) => {
-    axios.get('https://api.defis.network/dfs/fundation/new', {params}).then((res) => {
+    axios.get('https://api.yfc.one/dfs/fundation/new', {params}).then((res) => {
       let result = Object.assign(res.data, {});
       resolve({ status: res.status === 200, result });
     }, err => {
@@ -131,7 +131,7 @@ export function get_new_fundation(params) {
 }
 export function get_mvd_fundation(params) {
   return new Promise((resolve, reject) => {
-    axios.get('https://api.defis.network/dfs/fundation/mvd', {params}).then((res) => {
+    axios.get('https://api.yfc.one/dfs/fundation/mvd', {params}).then((res) => {
       let result = Object.assign(res.data, {});
       resolve({ status: res.status === 200, result });
     }, err => {
@@ -141,7 +141,7 @@ export function get_mvd_fundation(params) {
 }
 export function get_hot_fundation(params) {
   return new Promise((resolve, reject) => {
-    axios.get('https://api.defis.network/dfs/fundation/hot', {params}).then((res) => {
+    axios.get('https://api.yfc.one/dfs/fundation/hot', {params}).then((res) => {
       let result = Object.assign(res.data, {});
       resolve({ status: res.status === 200, result });
     }, err => {
@@ -152,7 +152,7 @@ export function get_hot_fundation(params) {
 
 export function get_reply_fundation(params) {
   return new Promise((resolve, reject) => {
-    axios.get('https://api.defis.network/dfs/fundation/reply', {params}).then((res) => {
+    axios.get('https://api.yfc.one/dfs/fundation/reply', {params}).then((res) => {
       let result = Object.assign(res.data, {});
       resolve({ status: res.status === 200, result });
     }, err => {
@@ -163,7 +163,7 @@ export function get_reply_fundation(params) {
 // 获取乐捐记录
 export async function get_acc_fund_lists(params) {
   return new Promise((resolve, reject) => {
-    axios.get('https://api.defis.network/dfs/fundation/i', {params}).then((res) => {
+    axios.get('https://api.yfc.one/dfs/fundation/i', {params}).then((res) => {
       let result = Object.assign(res.data, {});
       // console.log(result)
       resolve({ status: res.status === 200, result });
@@ -177,7 +177,7 @@ export async function get_acc_fund_lists(params) {
 export async function get_farmers_lists() {
   return new Promise((resolve, reject) => {
     // const params = {};
-    axios.get('https://api.defis.network/dfs/tag/farmers').then((res) => {
+    axios.get('https://api.yfc.one/dfs/tag/farmers').then((res) => {
       let result = Object.assign(res.data, {});
       resolve({ status: res.status === 200, result });
     }, err => {
@@ -280,7 +280,7 @@ export function get_acc_visit(user) {
     const params = {
       user,
     }
-    axios.get('https://api.defis.network/dfs/social/summary', {params}).then((res) => {
+    axios.get('https://api.yfc.one/dfs/social/summary', {params}).then((res) => {
       let result = Object.assign(res.data, {});
       resolve({ status: res.status === 200, result });
     }, err => {
@@ -295,7 +295,7 @@ export function acc_visit_other(visitor, user) {
       user,
       visitor,
     }
-    axios.get('https://api.defis.network/dfs/social/visit', {params}).then((res) => {
+    axios.get('https://api.yfc.one/dfs/social/visit', {params}).then((res) => {
       let result = Object.assign(res.data, {});
       resolve({ status: res.status === 200, result });
     }, err => {
@@ -307,7 +307,7 @@ export function acc_visit_other(visitor, user) {
 // 获取K线数据
 export function get_kline_data(params) {
   return new Promise((resolve, reject) => {
-    axios.get('https://api.defis.network/kline/data', {params}).then((res) => {
+    axios.get('https://api.yfc.one/kline/data', {params}).then((res) => {
       let result = Object.assign(res.data, {});
       resolve({ status: res.status === 200, result });
     }, err => {
@@ -318,7 +318,7 @@ export function get_kline_data(params) {
 // 获取K线数据
 export function get_kline_data2(params) {
   return new Promise((resolve, reject) => {
-    axios.get('https://api.defis.network/dex/swap/kline', {params}).then((res) => {
+    axios.get('https://api.yfc.one/dex/swap/kline', {params}).then((res) => {
     // axios.get('https://dfs.defiview.io/api/getBars', {params}).then((res) => {
       let result = Object.assign(res.data, {});
       resolve({ status: res.status === 200, result });
@@ -331,7 +331,7 @@ export function get_kline_data2(params) {
 // 获取今日最新最热最贵3条置顶数据
 export function get_top3_fundation(params) {
   return new Promise((resolve, reject) => {
-    axios.get('https://api.defis.network/dfs/fundation/top3', {params}).then((res) => {
+    axios.get('https://api.yfc.one/dfs/fundation/top3', {params}).then((res) => {
       let result = Object.assign(res.data, {});
       resolve({ status: res.status === 200, result });
     }, err => {
@@ -343,8 +343,8 @@ export function get_top3_fundation(params) {
 // 获取公告
 export function get_voices() {
   return new Promise((resolve, reject) => {
-    // https://api.defis.network/static/swap/voices
-    axios.get('https://api.defis.network/dfs/swap/voices').then((res) => {
+    // https://api.yfc.one/static/swap/voices
+    axios.get('https://api.yfc.one/dfs/swap/voices').then((res) => {
       let result = Object.assign(res.data, {});
       resolve({ status: res.status === 200, result });
     }, err => {
@@ -356,7 +356,7 @@ export function get_voices() {
 // 获取bp评价列表
 export function get_bp_scores(params) {
   return new Promise((resolve, reject) => {
-    axios.get('https://api.defis.network/dfs/fundation/bp', {params}).then((res) => {
+    axios.get('https://api.yfc.one/dfs/fundation/bp', {params}).then((res) => {
       let result = Object.assign(res.data, {});
       resolve({ status: res.status === 200, result });
     }, err => {
@@ -379,7 +379,7 @@ export function get_bp_info(params) {
       });
       return
     }
-    axios.get('https://api.defis.network/dfs/bp/bps', {params}).then((res) => {
+    axios.get('https://api.yfc.one/dfs/bp/bps', {params}).then((res) => {
       let result = Object.assign(res.data, {});
       store.dispatch('setNodeListsTamp', moment().valueOf())
       resolve({ status: res.status === 200, result });

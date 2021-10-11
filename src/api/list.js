@@ -29,7 +29,7 @@ export function get_table_rows(params) {
 // 获取24H数据 - 多数据
 export function get_swap_summary() {
   return new Promise((resolve, reject) => {
-    axios.get('https://api.defis.network/dfs/swap/summary2').then((res) => {
+    axios.get('https://api.yfc.one/dfs/swap/summary2').then((res) => {
       let result = Object.assign(res.data, {});
       resolve({ status: res.status === 200, result });
     }, err => {
@@ -40,7 +40,7 @@ export function get_swap_summary() {
 // 获取24H数据 - 基础数据
 export function get_swap_counter() {
   return new Promise((resolve, reject) => {
-    axios.get('https://api.defis.network/dfs/swap/counter').then((res) => {
+    axios.get('https://api.yfc.one/dfs/swap/counter').then((res) => {
       let result = Object.assign(res.data, {});
       resolve({ status: res.status === 200, result });
     }, err => {
@@ -83,7 +83,7 @@ export function get_all_orders() {
       // "json":true,
       // "limit":1000
     }
-    axios.get('https://api.defis.network/pddex2/orders', JSON.stringify(params)).then((res) => {
+    axios.get('https://api.yfc.one/pddex2/orders', JSON.stringify(params)).then((res) => {
       let result = Object.assign(res.data, {});
       resolve({ status: res.status === 200, result });
     }, err => {
@@ -107,7 +107,7 @@ export function get_info(host) {
 // 获取markets压缩数据
 export function get_markets() {
   return new Promise((resolve, reject) => {
-    axios.get('https://api.defis.network/dfs/common/markets', {
+    axios.get('https://api.yfc.one/dfs/common/markets', {
       timeout: 5000,
     }).then((res) => {
       var deflated = res.data;
@@ -125,7 +125,7 @@ export function get_markets() {
 // 获取常用币种价格
 export function get_price() {
   return new Promise((resolve, reject) => {
-    axios.get('https://api.defis.network/dfs/common/get_price').then((res) => {
+    axios.get('https://api.yfc.one/dfs/common/get_price').then((res) => {
       const result = res.data;
       resolve({ status: res.status === 200, result });
     }, err => {
@@ -167,7 +167,7 @@ export function get_currency_balance(params) {
 export function get_market_info(params) {
   return new Promise((resolve, reject) => {
     // axios.get('http://localhost:8101/apy/apy-by-mid', {params}).then((res) => {
-    axios.get('https://api.defis.network/dfs/apy/apy-by-mid', {params}).then((res) => {
+    axios.get('https://api.yfc.one/dfs/apy/apy-by-mid', {params}).then((res) => {
       const result = res.data;
       resolve({ status: res.status === 200, result });
     }, err => {
@@ -178,7 +178,7 @@ export function get_market_info(params) {
 // 获取交易对最新交易记录
 export function get_swap_lasters(params) {
   return new Promise((resolve, reject) => {
-    axios.get('https://api.defis.network/dfs/swap/marketlog', {params}).then((res) => {
+    axios.get('https://api.yfc.one/dfs/swap/marketlog', {params}).then((res) => {
       const result = res.data;
       resolve({ status: res.status === 200, result });
     }, err => {
@@ -211,7 +211,7 @@ export function reg_newaccount(obj) {
       username: obj.account,
       publickey: obj.publickey
     }
-    axios.post(`https://api.defis.network/account/newaccount`, JSON.stringify(params)).then((res) => {
+    axios.post(`https://api.yfc.one/account/newaccount`, JSON.stringify(params)).then((res) => {
       let result = Object.assign(res.data, {});
       console.log(result)
       resolve({ status: res.status === 200, result });
@@ -225,7 +225,7 @@ export function reg_newaccount(obj) {
 export function pushFreeCpu(params) {
   return new Promise((resolve, reject) => {
     // console.log(JSON.stringify(params))
-    axios.post(`https://api.defis.network/account/pushaction`, params).then((res) => {
+    axios.post(`https://api.yfc.one/account/pushaction`, params).then((res) => {
     // axios.post(`http://localhost:8103/common/pushActions`, params).then((res) => {
       let result = Object.assign(res.data, {});
       // console.log(result)
@@ -238,7 +238,7 @@ export function pushFreeCpu(params) {
 export function pushFreeCpu2(params) {
   return new Promise((resolve, reject) => {
     // console.log(JSON.stringify(params))
-    axios.post(`https://api.defis.network/account/pushaction2`, params).then((res) => {
+    axios.post(`https://api.yfc.one/account/pushaction2`, params).then((res) => {
     // axios.post(`http://192.168.31.27:8911/account/pushaction2`, params).then((res) => {
       let result = Object.assign(res.data, {});
       console.log(result)
