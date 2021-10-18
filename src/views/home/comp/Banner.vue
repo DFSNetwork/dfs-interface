@@ -46,7 +46,7 @@ export default {
         location.href = 'https://opensky.defis.network/'
       }
       if (type === 'town') {
-        location.href = 'https://dfsgame.netlify.app'
+        location.href = 'https://dfsfarms.netlify.app/'
       }
     }
   }
