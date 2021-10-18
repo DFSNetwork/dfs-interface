@@ -48,18 +48,9 @@ export default {
           name: 'Default',
           area: 'production',
           protocol: 'https',
-          host: 'eos.chains.one/', // eospush.tokenpocket.pro
+          host: 'eos.chains.one', // eospush.tokenpocket.pro
           port: '443',
-          url: 'https://eos.chains.one/', // https://eospush.tokenpocket.pro
-          chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
-        },
-        {
-          name: 'DFS社区节点',
-          area: 'production',
-          protocol: 'http',
-          host: 'eos.rrdy.com', // eospush.tokenpocket.pro
-          port: '443',
-          url: 'https://eos.rrdy.com', // https://eospush.tokenpocket.pro
+          url: 'https://eos.chains.one', // https://eospush.tokenpocket.pro
           chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
         },
         {
