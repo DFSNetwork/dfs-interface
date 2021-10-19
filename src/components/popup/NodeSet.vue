@@ -16,7 +16,7 @@
               'red': node.delay >= 3000 || !node.delay,
             }">{{ node.delay || '- ' }}ms</span>
           </div>
-          <span class="tip">{{ node.url }}</span>
+          <span class="tip" v-if="!node.unShowUrl">{{ node.url }}</span>
         </div>
       </div>
       <div class="nodeList flexa" @click="handleCheck(node, nodeList.length)">
@@ -60,6 +60,16 @@ export default {
           host: 'eos.chains.one', // eospush.tokenpocket.pro
           port: '443',
           url: 'https://eos.chains.one', // https://eospush.tokenpocket.pro
+          chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
+        },
+        {
+          unShowUrl: true,
+          name: 'Default2',
+          area: 'production',
+          protocol: 'https',
+          host: '47.99.40.133', // eospush.tokenpocket.pro
+          port: '443',
+          url: 'https://47.99.40.133', // https://eospush.tokenpocket.pro
           chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
         },
         {
