@@ -119,7 +119,7 @@ export default {
         return
       }
       if (name === 'usdx') {
-        location.href = 'https://usdx.defis.network/'
+        location.href = 'https://usdx.netlify.app/'
         return
       }
       if (name === 'suggestions') {
@@ -133,7 +133,7 @@ export default {
         location.href = 'https://dfs.defiview.io/kline'
       }
       if (name === 'nft') {
-        location.href = 'https://opensky.defis.network/'
+        location.href = 'https://dfsopensky.netlify.app/'
       }
       if (name === 'town') {
         location.href = 'https://dfsfarms.netlify.app'

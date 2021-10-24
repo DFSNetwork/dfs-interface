@@ -188,10 +188,10 @@ export default {
         return
       }
       if (name === 'usdx') {
-        location.href = 'https://usdx.defis.network'
+        location.href = 'https://usdx.netlify.app'
       }
       if (name === 'usdxVote') {
-        location.href = 'https://usdx.defis.network/govern/usdc'
+        location.href = 'https://usdx.netlify.app/govern/usdc'
       }
     }
   },

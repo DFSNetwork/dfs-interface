@@ -43,7 +43,7 @@ export default {
         location.href = 'https://dfsfans.io/?page=home&tab=play'
       }
       if (type === 'nft') {
-        location.href = 'https://opensky.defis.network/'
+        location.href = 'https://dfsopensky.netlify.app/'
       }
       if (type === 'town') {
         location.href = 'https://dfsfarms.netlify.app/'
