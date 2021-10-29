@@ -20,7 +20,7 @@
             <div class="list" @click="handleToPro('town')">
               <img class="hot" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/new.png">
               <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material3/Town-img/login/windmill_icon.png">
-              <div>风车小镇</div>
+              <div>{{ $t('home.township') }}</div>
             </div>
             <div class="list" @click="handleToPro('nft')">
               <!-- <img class="hot" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/new.png"> -->

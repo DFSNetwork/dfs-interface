@@ -33,6 +33,7 @@ export default {
       issues: '建言献策',
       inviter: '邀请返佣',
       investment: '定投大厅',
+      township: '风车小镇',
     }
   },
   'en': {
@@ -68,6 +69,7 @@ export default {
       issues: 'Issues',
       inviter:'Rebate',
       investment:'Investment',
+      township: 'Township',
     }
   }
 }
