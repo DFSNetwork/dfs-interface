@@ -3,6 +3,14 @@ export default {
   'zh-CN': {
     upRecord: {
       title: '更新记录',
+      v5_1: 'DFS和TAG矿池调整预告:',
+      v5_2: 'DeFi挖矿从去年的DeFi之夏到如今已经热度褪去。',
+      v5_3: '我们利用流动性挖矿的方式，完成了项目的启动和DFS代币的分发。',
+      v5_4: '如今继续进行流动性挖矿，意义已经不大。',
+      v5_5: '11月20日后，将只保留 DFS/EOS、DFS/USDT 以及 EOS/TAG、USDT/TAG 4个交易对矿池，减少产量以维持项目入不敷出阴跌不止的不良循环。',
+      v5_6: '之后我们主要将精力和目标放在项目本身，聚焦NFT、GameFi、元宇宙等热门赛道，持续探索区块链技术的应用场景，用区块链技术为社区创造价值为社区服务。',
+      v5_7: '感谢每一位曾经支持过DFS、以及现在依然关注和陪伴DFS的朋友。为防失联，可电报搜索dfsnet频道或下载mixin加入群聊：',
+
       v4_1: '1. 支持账号密码登陆DFS。',
       v4_2: '2. 账号注册方式采用一对一邀请制。由现有用户邀请新用户注册。',
       v4_3: '3. 邀请人需支付0.1EOS用于协助创建账号，账号创建成功后。被邀请人可以使用账号和密码的方式，登陆并使用DFS。',
@@ -19,6 +27,13 @@ export default {
   'en': {
     upRecord: {
       title: 'Update Logs',
+      v5_1:'DFS and TAG mining pool adjustment notice:',
+      v5_2:'DeFi mining has faded from the DeFi summer of last year to now. ',
+      v5_3:'We have completed the launch of the project and the distribution of DFS tokens by using liquidity mining. ',
+      v5_4:'Now that liquidity mining continues, it is of little significance. ',
+      v5_5:'After November 20th, only DFS/EOS, DFS/USDT, EOS/TAG, USDT/TAG 4 trading pairs will be kept, and the output will be reduced to maintain the bad cycle of unstoppable projects. ',
+      v5_6:'After that, we will mainly focus on the project itself, focus on popular tracks such as NFT, GameFi, and Metaverse, continue to explore the application scenarios of blockchain technology, and use blockchain technology to create value for the community and serve the community. ',
+      v5_7:'Thank you to everyone who has supported DFS before and who still follow and accompany DFS. To prevent loss of connection, you can telegram search the dfsnet channel or download the mixin to join the group chat:',
       v4_1: '1. Support account password to log in to DFS. ',
       v4_2: '2. The account registration method adopts one-to-one invitation system. Existing users invite new users to register. ',
       v4_3: '3. The inviter needs to pay 0.1EOS to assist in the creation of the account, after the account is successfully created. The invitee can log in and use DFS using account and password. ',
