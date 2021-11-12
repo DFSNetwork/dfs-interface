@@ -12,7 +12,7 @@
       <div class="content">{{ $t('upRecord.v5_5') }}</div>
       <div class="content">{{ $t('upRecord.v5_6') }}</div>
       <div class="content">{{ $t('upRecord.v5_7') }}
-        <a class="link" href="https://mixin.one/messenger。">https://mixin.one/messenger。</a>
+        <a class="link" href="https://mixin.one/messenger">https://mixin.one/messenger</a>。
       </div>
     </div>
   </div>
