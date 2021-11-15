@@ -229,6 +229,8 @@ export default {
     mineApr: 'Forecast annual mining revenue',
     marketFeesApr: 'Estimated annualized fee income',
     marketApr24H: 'Recent 24H fee annualized',
+    coinSupply: 'Supply',
+    price: 'Price'
   },
   node: {
     nodeSet: 'Node Setting',

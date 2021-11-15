@@ -612,6 +612,20 @@ const constantRouter = [
       },
     ],
   },
+  // 减产矿池
+  {
+    path: '/newPools',
+    component: Layout,
+    redirect: '/',
+    children: [
+      { // 我的页面
+        path: '/',
+        name: 'newPools',
+        component: () => import(/* webpackChunkName: "home" */ '@/views/newPools/Index.vue'),
+        meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noTab: true },
+      },
+    ],
+  },
   // 邀请返佣
   {
     path: '/testscan',
