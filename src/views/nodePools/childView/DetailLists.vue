@@ -112,7 +112,6 @@
 
 <script>
 import { mapState } from 'vuex';
-import { EosModel } from '@/utils/eos';
 import moment from 'moment';
 
 import { get_balance, get_farmers_lists} from '@/utils/api'
@@ -196,9 +195,9 @@ export default {
       deep: true,
       immediate: true,
     },
-    scatter: {
+    account: {
       handler: function st(newVal) {
-        if (newVal.identity) {
+        if (newVal.name) {
           this.handleGetAccVote()
 
           this.handleGetRank()
@@ -212,7 +211,7 @@ export default {
   },
   computed: {
     ...mapState({
-      scatter: state => state.app.scatter,
+      account: state => state.app.account,
       baseConfig: state => state.sys.baseConfig,
       filterMkLists: state => state.sys.filterMkLists,
       marketLists: state => state.sys.marketLists,
@@ -320,7 +319,7 @@ export default {
     },
     // 获取用户挖矿数据
     async handleGetAccVote() {
-      if (!this.scatter || !this.scatter.identity) {
+      if (!this.account || !this.account.name) {
         return
       }
       getAccVote((accVoteData) => {
@@ -472,7 +471,7 @@ export default {
     },
     // 获取用户挖矿数据
     async handleGetAccLpData() {
-      const formName = this.scatter.identity.accounts[0].name;
+      const formName = this.account.name;
       const params = {
         "code": this.baseConfig.nodeMiner,
         "scope": this.sym,
@@ -555,10 +554,10 @@ export default {
     },
     // 获取用户排名
     handleGetRank() {
-      if (!this.allLists.length || !this.scatter || !this.scatter.identity) {
+      if (!this.allLists.length || !this.account || !this.account.name) {
         return
       }
-      const formName = this.scatter.identity.accounts[0].name;
+      const formName = this.account.name;
       const miner = this.allLists.find(v => v.miner === formName) || {};
       this.accLpData = Object.assign({}, this.accLpData, miner)
       this.$forceUpdate()
@@ -712,28 +711,31 @@ export default {
       this.handleGetBal('bal0')
       this.handleGetBal('bal1')
     },
-    handleGetBal(type = 'bal0') {
-      if (!this.scatter || !this.scatter.identity || !this.lpPool.liquidity_token) {
+    async handleGetBal(type = 'bal0') {
+      if (!this.account || !this.account.name || !this.lpPool.liquidity_token) {
         return
       }
       const v = this.lpPool;
       let params = {
         code: v.contract0,
-        coin: v.symbol0,
+        symbol: v.symbol0,
         decimal: v.decimal0,
+        account: this.account.name,
       }
       if (type !== 'bal0') {
         params = {
           code: v.contract1,
-          coin: v.symbol1,
+          symbol: v.symbol1,
           decimal: v.decimal1,
+          account: this.account.name,
         }
       }
-      EosModel.getCurrencyBalance(params, res => {
-        let balance = toFixed('0.0000000000001', params.decimal);
-        (!res || res.length === 0) ? balance : balance = res.split(' ')[0];
-        type === 'bal0' ? this.bal0 = balance : this.bal1 = balance;
-      })
+      const {status, result} = await this.$api.get_currency_balance(params);
+      if (!status) {
+        return
+      }
+      const bal = result.split(' ')[0];
+      type === 'bal0' ? this.bal0 = bal : this.bal1 = bal;
     },
   }
 }

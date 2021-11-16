@@ -24,7 +24,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import { EosModel } from '@/utils/eos';
+import { DApp } from '@/utils/wallet';
 
 export default {
   name: 'proxyAcc',
@@ -49,7 +49,7 @@ export default {
   computed: {
     ...mapState({
       dsrPools: state => state.sys.dsrPools,
-      scatter: state => state.app.scatter,
+      account: state => state.app.account,
     }),
   },
   watch: {
@@ -68,12 +68,12 @@ export default {
     },
     // 执行代理委托
     handleProxy() {
-      if (!this.scatter || !this.scatter.identity || this.loading) {
+      if (!this.account || !this.account.name || this.loading) {
         return
       }
       this.loading = true;
-      const formName = this.scatter.identity.accounts[0].name;
-      const permission = this.scatter.identity.accounts[0].authority;
+      const formName = this.account.name;
+      const permission = this.account.permissions;
       const params = {
         actions: [{
           account: 'eosio',
@@ -89,16 +89,19 @@ export default {
           },
         }]
       }
-      EosModel.toTransaction(params, (res) => {
+      DApp.toTransaction(params, (err) => {
         this.loading = false;
-        if(res.code && JSON.stringify(res.code) !== '{}') {
-          this.$message({
-            message: res.message,
-            type: 'error'
-          });
-          return
+        if (err && err.code == 402) {
+          return;
         }
-        this.$message({
+        if (err) {
+          this.$toast({
+            type: 'fail',
+            message: err.message,
+          })
+          return;
+        }
+        this.$toast({
           message: this.$t('public.success'),
           type: 'success'
         });

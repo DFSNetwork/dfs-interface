@@ -1,4 +1,4 @@
-.vs{
+/* .vs{
   margin-bottom: 60px;
 }
 .vs .star{
@@ -18,4 +18,26 @@
 .vs .time{
   font-size: 32px;
   margin-top: 15px;
+} */
+
+.timeImg{
+  width: 26px;
+  margin-right: 16px;
+  display: block;
+  margin-top: 3px;
+}
+.time{
+  color: #333 !important;
+  font-size: 28px;
+}
+.main{
+  margin: 20px 0 20px 12px;
+  padding-left: 28px;
+  font-size: 28px;
+  line-height: 40px;
+  border-left: 1px dashed #DEDEDE;
+}
+.main .content{
+  margin: 8px 0;
+  font-weight: 300;
 }

@@ -9,7 +9,7 @@
         </div>
         <div class="iptDiv flexb">
           <div class="coinInfo flex">
-            <div class="coinImg"><img width="100%" :src="thisMarket.imgUrl" :onerror="errorCoinImg" alt=""></div>
+            <div class="coinImg"><img width="100%" :src="thisMarket.imgUrl" :onerror="$errorImg" alt=""></div>
             <div>
               <div class="coin">{{ thisMarket.symbol }}</div>
               <div class="contract tip">{{ thisMarket.contract }}</div>
@@ -35,19 +35,19 @@
 </template>
 
 <script>
-import { EosModel } from '@/utils/eos';
+import { DApp } from '@/utils/wallet';
+import { mapState } from 'vuex';
 import { toFixed } from '@/utils/public';
 export default {
   data() {
     return {
       token: '0.0000',
-      errorCoinImg: 'this.src="https://ndi.340wan.com/eos/eosio.token-eos.png"',
       payNum: '',
       thisMarket: {
         symbol: 'DFS',
         contract: 'minedfstoken',
         decimal: 4,
-        imgUrl: 'https://ndi.340wan.com/eos/minedfstoken-dfs.png'
+        imgUrl: 'https://cdn.jsdelivr.net/gh/defis-net/material2/coin/minedfstoken-dfs.png'
       },
       loading: false,
     }
@@ -61,6 +61,9 @@ export default {
     }
   },
   computed: {
+    ...mapState({
+      account: state => state.app.account,
+    })
   },
   methods: {
     handleFocus() {
@@ -94,8 +97,8 @@ export default {
       if (!this.handleReg()) {
         return
       }
-      const formName = this.$store.state.app.scatter.identity.accounts[0].name;
-      const permission = this.$store.state.app.scatter.identity.accounts[0].authority;
+      const formName = this.account.name;
+      const permission = this.account.permissions;
       const params = {
         actions: [
           {
@@ -113,20 +116,23 @@ export default {
         ]
       }
       this.loading = true;
-      EosModel.toTransaction(params, (res) => {
+      DApp.toTransaction(params, (err) => {
         this.loading = false;
-        if(res.code && JSON.stringify(res.code) !== '{}') {
-          this.$message({
-            message: res.message,
-            type: 'error'
-          });
-          return
+        if (err && err.code == 402) {
+          return;
         }
-        this.$emit('listenClose', true)
-        this.$message({
+        if (err) {
+          this.$toast({
+            type: 'fail',
+            message: err.message,
+          })
+          return;
+        }
+        this.$toast({
           message: this.$t('public.success'),
           type: 'success'
         });
+        this.$emit('listenClose', true)
       })
     }
   },

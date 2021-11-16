@@ -12,7 +12,7 @@
             <img v-if="accInfo.sex == 0" class="sex" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/sex0.png" alt="">
             <img v-if="accInfo.sex == 1" class="sex" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/sex1.png" alt="">
           </div>
-          <img class="set" @click="$router.push({name: 'setInfo'})"
+          <img class="set" @click="$router.push({name: 'mySetting'})"
             src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/set.png" alt="">
         </div>
         <div class="account flexa">

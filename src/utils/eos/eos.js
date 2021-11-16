@@ -78,7 +78,7 @@ class model {
           this.storeAccountOut(this.scatapp);
         }
         this.scatapp.online = false;
-        store.dispatch('setScatter', this.scatapp);
+        // store.dispatch('setScatter', this.scatapp);
         sessionStorage.setItem('scatterInstall', 0);
         setTimeout(() => {
           self.scatterInit(self.vthis, callback);
@@ -99,12 +99,12 @@ class model {
         //   scatterFrom = getVersion.split(' ')[0].toLowerCase(); // leafwallet 叶子钱包
         // }
         self.scatapp.scatterFrom = scatterFrom;
-        store.dispatch('setScatter', self.scatapp);
+        // store.dispatch('setScatter', self.scatapp);
         self.initNext();
         callback();
       } catch (error) {
         self.scatapp.scatterFrom = scatterFrom;
-        store.dispatch('setScatter', self.scatapp);
+        // store.dispatch('setScatter', self.scatapp);
         self.initNext();
         callback();
       }
@@ -118,7 +118,7 @@ class model {
         scatterItem.identity = null;
         scatterItem.wallet = '';
         scatterItem.chain = 'eos';
-        store.dispatch('setScatter', scatterItem);
+        // store.dispatch('setScatter', scatterItem);
         this.accountByScatter = null;
       }
       return;
@@ -236,7 +236,7 @@ class model {
     scatterItem.online = online;
     // test 账户
     // scatterItem.identity.accounts[0].name = 'dfsdeveloper';
-    store.dispatch('setScatter', scatterItem);
+    // store.dispatch('setScatter', scatterItem);
     localStorage.setItem('Frontend-Token', '');
 
     const newAccount = {
@@ -271,7 +271,7 @@ class model {
       scat.by = '';
       localStorage.setItem('Frontend-Token', '');
       this.accountByScatter = null;
-      store.dispatch('setScatter', scat);
+      // store.dispatch('setScatter', scat);
     }
   }
 
@@ -361,7 +361,10 @@ class model {
     //   this.handleUseFreeCpu(params, callback)
     //   return
     // }
-    this.scatterEosJs.transaction(params).then(callback).catch((e) => {
+    this.scatterEosJs.transaction(params, {
+      blocksBehind: 3,
+      expireSeconds: 30,
+    }).then(callback).catch((e) => {
       this.errorCall(e, callback);
     });
   }
@@ -513,7 +516,10 @@ class model {
     //   this.handleUseFreeCpu(params, callback)
     //   return
     // }
-    this.scatterEosJs.transaction(params).then(callback).catch((e) => {
+    this.scatterEosJs.transaction(params, {
+      blocksBehind: 3,
+      expireSeconds: 30,
+    }).then(callback).catch((e) => {
       this.errorCall(e, callback);
     });
   }
@@ -583,7 +589,6 @@ class model {
       code: '0001',
       message: JSON.stringify(e),
     };
-    console.log(e)
     try {
       if (typeof (e) === 'object') {
         if (e.code === 402) {
@@ -595,6 +600,7 @@ class model {
       }
       if (typeof (e) === 'string') {
         const err = JSON.parse(e);
+        // console.log(err)
         // CPU 不足
         if (err.error.code === 3080004) {
           back = {
@@ -614,7 +620,13 @@ class model {
           back = {
             code: 3080001,
             message: err.error.details[0].message,
-            // message: this.vthis.$t('error.insufficient', {res: 'RAM'}),
+          }
+        }
+        // 交易超时
+        if (err.error.code === 3080006) {
+          back = {
+            code: 3080006,
+            message: this.vthis.$t('error.timeout'),
           }
         }
         if (err.error.code === 3050003 || err.error.code === 3010010) {
@@ -640,7 +652,7 @@ class model {
       }
       callback(back);
     } catch (error) {
-      console.log(error)
+      // console.log(error)
       if (e === '操作已取消') {
         back = {
           code: 402,

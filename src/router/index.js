@@ -136,12 +136,6 @@ const constantRouter = [
         component: () => import(/* webpackChunkName: "home" */ '@/views/nodePools/childView/DetailLists.vue'),
         meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noTab: true },
       },
-      { // 我的页面
-        path: '/my-center',
-        name: 'myCenter',
-        component: () => import(/* webpackChunkName: "home" */ '@/views/my/Index.vue'),
-        meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noHeader: true },
-      },
       { // 编辑资料
         path: '/my-center/set-edit',
         name: 'setInfo',
@@ -492,6 +486,157 @@ const constantRouter = [
             meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noTab: true, noHeader: true, },
           },
         ]
+      },
+    ],
+  },
+  // 创建账户
+  {
+    path: '/wallet',
+    component: Layout,
+    redirect: '/',
+    children: [
+      {
+        path: 'create-wallet',
+        name: 'createWallet',
+        component: () => import(/* webpackChunkName: "home" */ '@/views/accForPwd/Index.vue'),
+        meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noTab: true },
+      },
+      {
+        path: 'create-wallet-key',
+        name: 'createWalletKey',
+        component: () => import(/* webpackChunkName: "home" */ '@/views/accForPwd/RegiByPubKey.vue'),
+        meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noTab: true },
+      },
+      {
+        path: 'login-wallet',
+        name: 'loginWallet',
+        component: () => import(/* webpackChunkName: "home" */ '@/views/accForPwd/Login.vue'),
+        meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noTab: true },
+      },
+    ],
+  },
+  // 个人中心
+  {
+    path: '/my-center',
+    component: Layout,
+    redirect: '/',
+    children: [
+      { // 我的页面
+        path: '/',
+        name: 'myCenter',
+        component: () => import(/* webpackChunkName: "home" */ '@/views/my/Index.vue'),
+        meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noHeader: true },
+      },
+      { // 转账页面
+        path: 'transfer',
+        name: 'myTransfer',
+        component: () => import(/* webpackChunkName: "home" */ '@/views/my/childView/Transfer.vue'),
+        meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noHeader: true, noTab: true },
+      },
+      { // 转账页面
+        path: 'transfer-info',
+        name: 'transferInfo',
+        component: () => import(/* webpackChunkName: "home" */ '@/views/my/childView/TradeInfo.vue'),
+        meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noHeader: true, noTab: true },
+      },
+      { // 收款页面
+        path: 'receive',
+        name: 'myReceive',
+        component: () => import(/* webpackChunkName: "home" */ '@/views/my/childView/Receive.vue'),
+        meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noHeader: true, noTab: true },
+      },
+      { // 设置页面
+        path: 'setting',
+        name: 'mySetting',
+        component: () => import(/* webpackChunkName: "home" */ '@/views/my/childView/Setting.vue'),
+        meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noHeader: true, noTab: true },
+      },
+      { // 修改密码
+        path: 'expwd',
+        name: 'myExpwd',
+        component: () => import(/* webpackChunkName: "home" */ '@/views/my/childView/ExPwd.vue'),
+        meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noTab: true },
+      }
+    ],
+  },
+  // 邀请返佣
+  {
+    path: '/inviter',
+    component: Layout,
+    redirect: '/',
+    children: [
+      { // 我的页面
+        path: '/',
+        name: 'inviter',
+        component: () => import(/* webpackChunkName: "home" */ '@/views/inviteNewAcc/Index.vue'),
+        meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noHeader: true, noTab: true },
+      },
+    ],
+  },
+  // 定投
+  {
+    path: '/investment',
+    component: Layout,
+    redirect: '/',
+    children: [
+      {
+        path: '/',
+        component: () => import(/* webpackChunkName: "home" */ '@/views/investment/Layout'),
+        meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noHeader: true },
+        children: [
+          { // 定投页面
+            path: '/',
+            name: 'investment',
+            component: () => import(/* webpackChunkName: "home" */ '@/views/investment/Index.vue'),
+            meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noHeader: true, noTab: true },
+          },
+          { // 我的定投页面
+            path: 'my-inverst',
+            name: 'myInverst',
+            component: () => import(/* webpackChunkName: "home" */ '@/views/investment/child/MyInverst.vue'),
+            meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noHeader: true, noTab: true },
+          },
+          { // 我的定投页面
+            path: 'inverst-rank',
+            name: 'inverstRank',
+            component: () => import(/* webpackChunkName: "home" */ '@/views/investment/child/InverstRank.vue'),
+            meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noHeader: true, noTab: true },
+          },
+          { // 规则
+            path: 'rules',
+            name: 'inverstRules',
+            component: () => import(/* webpackChunkName: "home" */ '@/views/investment/child/Rules.vue'),
+            meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noHeader: true, noTab: true },
+          },
+        ]
+      },
+    ],
+  },
+  // 减产矿池
+  {
+    path: '/newPools',
+    component: Layout,
+    redirect: '/',
+    children: [
+      { // 我的页面
+        path: '/',
+        name: 'newPools',
+        component: () => import(/* webpackChunkName: "home" */ '@/views/newPools/Index.vue'),
+        meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noTab: true },
+      },
+    ],
+  },
+  // 邀请返佣
+  {
+    path: '/testscan',
+    component: Layout,
+    redirect: '/',
+    children: [
+      { // 我的页面
+        path: '/',
+        name: 'testscan',
+        component: () => import(/* webpackChunkName: "home" */ '@/views/accForPwd/test.vue'),
+        meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noHeader: true, noTab: true },
       },
     ],
   },

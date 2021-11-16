@@ -21,7 +21,7 @@
 
 <script>
 import moment from 'moment';
-import { EosModel } from '@/utils/eos';
+import { DApp } from '@/utils/wallet';
 import { mapState } from 'vuex';
 import { toFixed, accAdd, accSub, accDiv, toLocalTime, countdown } from '@/utils/public';
 
@@ -51,7 +51,7 @@ export default {
   },
   computed: {
     ...mapState({
-      scatter: state => state.app.scatter,
+      account: state => state.app.account,
       dsrPools: state => state.sys.dsrPools,
       marketLists: state => state.sys.marketLists,
     }),
@@ -69,9 +69,9 @@ export default {
       deep: true,
       immediate: true,
     },
-    scatter: {
+    account: {
       handler: function listen(newVal) {
-        if (newVal.identity && !this.isGetAccinfo) {
+        if (newVal.name && !this.isGetAccinfo) {
           this.handleGetAccDssInfo()
         }
       },
@@ -103,40 +103,39 @@ export default {
     clearTimeout(this.sec10Timer)
   },
   methods: {
-    handleGetDfsBalance() {
+    async handleGetDfsBalance() {
       const params = {
         code: 'yfctokenmain',
-        coin: 'YFC',
+        symbol: 'YFC',
         decimal: 4,
         account: 'yfcdssbuffer'
       };
-      EosModel.getCurrencyBalance(params, res => {
-        let balance = toFixed('0.0000000000001', params.decimal);
-        (!res || res.length === 0) ? balance : balance = res.split(' ')[0];
-        this.ableClaimNum = balance;
-      })
+      const {status, result} = await this.$api.get_currency_balance(params);
+      if (!status) {
+        return
+      }
+      const balance = result.split(' ')[0];
+      this.ableClaimNum = balance;
       this.sec10Timer = setTimeout(() => {
         this.handleGetDfsBalance();
       }, 10000);
     },
-    handleGetDssArgs() {
+    async handleGetDssArgs() {
       const params = {
         "code": "yfcdsssystem",
         "scope": "yfcdsssystem",
         "table": "args",
         "json": true,
       }
-      EosModel.getTableRows(params, (res) => {
-        if (!res.rows.length) {
-          return
-        }
-        this.args = res.rows[0];
-        // console.log(this.args)
-      })
+      const {status, result} = await this.$api.get_table_rows(params)
+      if (!status || !result.rows.length) {
+        return
+      }
+      this.args = result.rows || []
     },
-    handleGetAccDssInfo() {
+    async handleGetAccDssInfo() {
       this.isGetAccinfo = true;
-      const formName = this.scatter.identity.accounts[0].name;
+      const formName = this.account.name;
       const params = {
         "code": "yfcdsssystem",
         "scope": "yfcdsssystem",
@@ -145,26 +144,24 @@ export default {
         "upper_bound": ` ${formName}`,
         "json": true,
       }
-      EosModel.getTableRows(params, (res) => {
-        // console.log(res)
-        this.loading = false;
-        if (!res.rows.length) {
-          this.myDepositInfo = {}
-          return
-        }
-        const allList = res.rows;
-        allList.forEach((v) => {
-          const inTime = toLocalTime(`${v.last_drip}.000+0000`)
-          this.$set(v, 'inTime', inTime);
-          const releaseTime = toLocalTime(`${v.release_time}.000+0000`)
-          this.$set(v, 'releaseTime', releaseTime);
-          this.$set(v, 'balance', v.bal.split(' ')[0]);
-          const endT = countdown(releaseTime);
-          this.$set(v, 'isRelease', endT.total < 0);
-        })
-        this.myDepositInfo = allList[0];
-        this.handleRunReward()
+      const {status, result} = await this.$api.get_table_rows(params)
+      this.loading = false;
+      if (!status || !result.rows.length) {
+        this.myDepositInfo = {}
+        return
+      }
+      const allList = result.rows;
+      allList.forEach((v) => {
+        const inTime = toLocalTime(`${v.last_drip}.000+0000`)
+        this.$set(v, 'inTime', inTime);
+        const releaseTime = toLocalTime(`${v.release_time}.000+0000`)
+        this.$set(v, 'releaseTime', releaseTime);
+        this.$set(v, 'balance', v.bal.split(' ')[0]);
+        const endT = countdown(releaseTime);
+        this.$set(v, 'isRelease', endT.total < 0);
       })
+      this.myDepositInfo = allList[0];
+      this.handleRunReward()
     },
     // 秒级定时器
     handleRunReward() {
@@ -215,8 +212,8 @@ export default {
       }, 50);
     },
     handleGetActions() {
-      const formName = this.scatter.identity.accounts[0].name;
-      const permission = this.scatter.identity.accounts[0].authority;
+      const formName = this.account.name;
+      const permission = this.account.permissions;
       if (Number(this.minReward) > Number(this.myDepositInfo.reward || 0)) {
         return []
       }
@@ -245,16 +242,19 @@ export default {
       const params = {
         actions
       }
-      EosModel.toTransaction(params, (res) => {
+      DApp.toTransaction(params, (err) => {
         this.claiming = false;
-        if(res.code && JSON.stringify(res.code) !== '{}') {
-          this.$message({
-            message: res.message,
-            type: 'error'
-          });
-          return
+        if (err && err.code == 402) {
+          return;
         }
-        this.$message({
+        if (err) {
+          this.$toast({
+            type: 'fail',
+            message: err.message,
+          })
+          return;
+        }
+        this.$toast({
           message: this.$t('public.success'),
           type: 'success'
         });

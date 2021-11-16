@@ -12,7 +12,7 @@
               </div>
               <div class="iptDiv flexb">
                 <div class="coinInfo flex" @click="listenShowDrawer('start')">
-                  <div class="coinImg"><img width="100%" :src="thisMarket0.imgUrl" :onerror="errorCoinImg" alt=""></div>
+                  <div class="coinImg"><img width="100%" :src="thisMarket0.imgUrl" :onerror="$errorImg" alt=""></div>
                   <div class="coinMinW">
                     <div class="coin">{{ thisMarket0.symbol }} <i class="el-icon-arrow-down"></i></div>
                     <div class="contract tip">{{ thisMarket0.contract }}</div>
@@ -41,7 +41,7 @@
             </div>
             <div class="iptDiv flexb">
               <div class="coinInfo flex" @click="listenShowDrawer('end')">
-                <div class="coinImg"><img width="100%" :src="thisMarket1.imgUrl" :onerror="errorCoinImg" alt=""></div>
+                <div class="coinImg"><img width="100%" :src="thisMarket1.imgUrl" :onerror="$errorImg" alt=""></div>
                 <div>
                   <div class="coin">{{ thisMarket1.symbol }} <i class="el-icon-arrow-down"></i></div>
                   <div class="contract tip">{{ thisMarket1.contract }}</div>
@@ -225,7 +225,7 @@ import { mapState } from 'vuex';
 import { SwapRouter, SwapRouterFilter } from '@/utils/swap_router';
 import Tabs from '../index/components/Tabs';
 import { toFixed, accMul, accDiv, accSub, getPrice, GetUrlPara, getCoin, dealRouterArr } from '@/utils/public';
-import { EosModel } from '@/utils/eos';
+import { DApp } from '@/utils/wallet';
 import UsddTip from '@/components/UsddTip';
 import SlipPointTools from '@/components/SlipPointTools';
 import OgxSwapTip from './dialog/OgxSwapTip';
@@ -248,7 +248,6 @@ export default {
     return {
       discount: 0.2, // 固定
       loading: false,
-      errorCoinImg: 'this.src="https://ndi.340wan.com/eos/eosio.token-eos.png"',
       payNum: '',
       getNum: '',
       payIptFocus: false,
@@ -306,7 +305,7 @@ export default {
   },
   computed: {
     ...mapState({
-      scatter: state => state.app.scatter,
+      account: state => state.app.account,
       slipPoint: state => state.app.slipPoint,
       baseConfig: state => state.sys.baseConfig,
       dfsPrice: state => state.sys.dfsPrice,
@@ -459,9 +458,9 @@ export default {
       immediate: true,
       deep: true
     },
-    scatter: {
+    account: {
       handler: function listen(newVal) {
-        if (newVal.identity) {
+        if (newVal.name) {
           this.handleBalanTimer();
         }
       },
@@ -798,15 +797,22 @@ export default {
         params.memo = `${params.memo}:2`
       }
       // console.log(params)
-      EosModel.transfer(params, (res) => {
+      DApp.transfer(params, (err) => {
         this.loading = false;
-        if(res.code && JSON.stringify(res.code) !== '{}') {
-          this.$message({
-            message: res.message,
-            type: 'error'
-          });
-          return
+        if (err && err.code == 402) {
+          return;
         }
+        if (err) {
+          this.$toast({
+            type: 'fail',
+            message: err.message,
+          })
+          return;
+        }
+        this.$toast({
+          message: this.$t('public.success'),
+          type: 'success'
+        });
         this.handleDealPrice()
         this.payNum = '';
         this.getNum = '';
@@ -814,15 +820,11 @@ export default {
           this.handleInBy(this.tradeInfo.type, 'first')
           this.handleBalanTimer();
         }, 1500);
-        this.$message({
-          message: this.$t('public.success'),
-          type: 'success'
-        });
       })
     },
     handleOgxSwap() {
-      const formName = this.scatter.identity.accounts[0].name;
-      const permission = this.scatter.identity.accounts[0].authority;
+      const formName = this.account.name;
+      const permission = this.account.permissions;
       const params = {
         actions: [{
           account: this.thisMarket0.contract,
@@ -840,16 +842,19 @@ export default {
           },
         }]
       }
-      EosModel.toTransaction(params, (res) => {
+      DApp.toTransaction(params, (err) => {
         this.loading = false;
-        if(res.code && JSON.stringify(res.code) !== '{}') {
-          this.$message({
-            message: res.message,
-            type: 'error'
-          });
-          return
+        if (err && err.code == 402) {
+          return;
         }
-        this.$message({
+        if (err) {
+          this.$toast({
+            type: 'fail',
+            message: err.message,
+          })
+          return;
+        }
+        this.$toast({
           message: this.$t('public.success'),
           type: 'success'
         });
@@ -920,31 +925,33 @@ export default {
     async handleGetBalance(next) {
       const params = {
         code: this.thisMarket0.contract,
-        coin: this.thisMarket0.symbol,
-        decimal: this.thisMarket0.decimal
+        symbol: this.thisMarket0.symbol,
+        decimal: this.thisMarket0.decimal,
+        account: this.account.name,
       };
       if (next) {
         params.code = this.thisMarket1.contract;
-        params.coin = this.thisMarket1.symbol;
+        params.symbol = this.thisMarket1.symbol;
         params.decimal = this.thisMarket1.decimal;
       }
-      await EosModel.getCurrencyBalance(params, res => {
-        let balance = toFixed('0.0000000000001', params.decimal);
-        (!res || res.length === 0) ? balance : balance = res.split(' ')[0];
-        if (next) {
-          if (params.coin !== this.thisMarket1.symbol || params.code !== this.thisMarket1.contract) {
-            this.handleGetBalance(next)
-            return
-          }
-          this.balanceSym1 = balance;
-          return;
-        }
-        if (params.coin !== this.thisMarket0.symbol || params.code !== this.thisMarket0.contract) {
-          this.handleGetBalance()
+      const {status, result} = await this.$api.get_currency_balance(params);
+      if (!status) {
+        return
+      }
+      const balance = result.split(' ')[0];
+      if (next) {
+        if (params.symbol !== this.thisMarket1.symbol || params.code !== this.thisMarket1.contract) {
+          this.handleGetBalance(next)
           return
         }
-        this.balanceSym0 = balance;
-      })
+        this.balanceSym1 = balance;
+        return;
+      }
+      if (params.symbol !== this.thisMarket0.symbol || params.code !== this.thisMarket0.contract) {
+        this.handleGetBalance()
+        return
+      }
+      this.balanceSym0 = balance;
     },
     handleMarketChange(item, type) {
       if (type === 'start') {

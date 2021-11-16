@@ -398,7 +398,7 @@ export default {
       }
       DApp.toTransaction(params, (err) => {
         this.loading = false;
-        if (err && err.code === 402) {
+        if (err && err.code == 402) {
           this.$emit('listenUpdate', true)
           return;
         }

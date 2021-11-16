@@ -39,7 +39,7 @@
                   <van-button v-if="value2 === 'a'" plain type="danger" @click="handleCancel(item, index)">{{ $t('pddex.cancelOrder') }}</van-button>
                   <span class="source flexa" v-else>
                     <span>Dex: </span>
-                    <img class="dex" v-if="item.dex === 'defisswapcnt'" src="https://ndi.340wan.com/eos/minedfstoken-dfs.png" alt="">
+                    <img class="dex" v-if="item.dex === 'defisswapcnt'" src="https://cdn.jsdelivr.net/gh/defis-net/material2/coin/minedfstoken-dfs.png" alt="">
                     <img class="dex" v-else-if="item.dex === 'swap.defi'" src="https://ndi.340wan.com/eos/token.defi-box.png" alt="">
                   </span>
                 </div>

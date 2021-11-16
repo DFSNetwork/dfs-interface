@@ -59,7 +59,7 @@ import Pdd from './comp/Pdd';
 import YfcDss from './comp/YfcDss';
 // tools
 
-import { EosModel } from '@/utils/eos';
+import { DApp } from '@/utils/wallet';
 
 export default {
   name: 'farms',
@@ -173,15 +173,17 @@ export default {
       const params = {
         actions: actions
       }
-      EosModel.toTransaction(params, (res) => {
+      DApp.toTransaction(params, (err) => {
         this.allClaiming = false;
-        if(res.code && JSON.stringify(res.code) !== '{}') {
-          this.nextPage = -1;
-          this.$message({
-            message: res.message,
-            type: 'error'
-          });
-          return
+        if (err && err.code == 402) {
+          return;
+        }
+        if (err) {
+          this.$toast({
+            type: 'fail',
+            message: err.message,
+          })
+          return;
         }
         if (pageIndex !== -1) {
           this.nextPage = Number(pageIndex) + 1;
@@ -190,7 +192,7 @@ export default {
             location.reload()
           }, 2000);
         }
-        this.$message({
+        this.$toast({
           message: this.$t('public.success'),
           type: 'success'
         });

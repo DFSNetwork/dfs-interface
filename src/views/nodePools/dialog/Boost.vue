@@ -2,7 +2,7 @@
   <div class="diaBoost">
     <img class="close" @click="handleClose()" src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/sd_icon_btn.svg">
     <div class="imgDiv flexc">
-      <img class="logo" :src="boostData.imgUrl" :onerror="errorCoinImg">
+      <img class="logo" :src="boostData.imgUrl" :onerror="$errorImg">
     </div>
     <div class="coinName">{{ boostData.sym }}</div>
     <div class="content">
@@ -30,7 +30,6 @@ export default {
   name: 'diaBoost',
   data() {
     return {
-      errorCoinImg: 'this.src="https://ndi.340wan.com/eos/eosio.token-eos.png"',
     }
   },
   props: {

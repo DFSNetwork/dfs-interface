@@ -5,11 +5,21 @@
     </div>
     <div class="mt40">
       <div class="dataInfo">
+        <div class="bg-left"></div>
+        <div class="bg-right"></div>
         <div class="flexb floatDiv">
           <div class="left">
-            <div class="dinBold">{{ lockDfs }} DFS</div>
             <div class="tip bonus">
-              <span>{{ $t('dsr.totalNum') }}</span>
+              <span>{{ $t('dsr.totalNum') }}(DFS)</span>
+            </div>
+            <div class="dinBold">{{ lockDfs }} </div>
+          </div>
+        </div>
+        <div class="miningInfo flexb" v-loading="loading">
+          <div class="miningData">
+            <div class="num dinBold">{{ ableClaimNum }}</div>
+            <div class="tip">
+              <span>{{ $t('dsr.poolBal') }}(DFS)</span>
             </div>
           </div>
           <div class="right">
@@ -19,30 +29,37 @@
             </div>
           </div>
         </div>
-        <div class="miningInfo flexb" v-loading="loading">
-          <div class="miningData">
-            <div class="num dinBold">{{ ableUse }} DFS</div>
-            <div class="tip">{{ $t('dsr.allInve') }}</div>
-          </div>
-          <div class="miningData">
-            <div class="num dinBold">{{ ableClaimNum }} DFS</div>
-            <div class="tip">
-              <span>{{ $t('dsr.poolBal') }}</span>
-              <!-- <span>({{ `${timeObj.hours}:${timeObj.minutes}:${timeObj.seconds}` }})</span> -->
-            </div>
-          </div>
+
+        <div class="unClaim flexc">
+          <span>{{ $t('mine.waitClaim') }}</span>
+          <span class="green">{{ myDepositInfo.showReward }}</span>
+          <span>DFS</span>
+          <img class="tipIcon ml10" @click="showReWardTip = true" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/tips_icon_btn.svg" alt="">
         </div>
+        <div class="allClaimBtn flexc"
+          @click="handleClaimAll"
+          v-loading="allClaim">{{ $t('bonus.claim') }}</div>
       </div>
     </div>
+
+    <van-popup
+      class="popup_p"
+      v-model="showReWardTip">
+      <MinReward :minReward="minReward"/>
+    </van-popup>
   </div>
 </template>
 
 <script>
-import { EosModel } from '@/utils/eos';
+import { DApp } from '@/utils/wallet';
 import { mapState } from 'vuex';
 import { toFixed, accMul, accDiv, countdown } from '@/utils/public';
+import MinReward from '@/views/market/popup/MinReward'
 
 export default {
+  components: {
+    MinReward
+  },
   data() {
     return {
       lockDfs: '0.0000',
@@ -59,6 +76,10 @@ export default {
         seconds: '00'
       },
       secTimer: null,
+
+      showReWardTip: false,
+      allClaim: false,
+      minReward: '0.0001',
     }
   },
   props: {
@@ -80,10 +101,17 @@ export default {
       type: Boolean,
       default: true
     },
+    myDepositInfo: {
+      type: Object,
+      default: function b() {
+        return {}
+      }
+    }
   },
   computed: {
     ...mapState({
       // 箭头函数可使代码更简练
+      account: state => state.app.account,
       baseConfig: state => state.sys.baseConfig, // 基础配置 - 默认为{}
     }),
     perDayReward() {
@@ -114,7 +142,7 @@ export default {
     clearTimeout(this.secTimer)
   },
   methods: {
-    handleNextUpdataTime() {
+    async handleNextUpdataTime() {
       const params = {
         "code": "dfsdsrsystem",
         "scope": "dfsdsrsystem",
@@ -123,16 +151,15 @@ export default {
         "json": true,
         "reverse": true
       }
-      EosModel.getTableRows(params, (res) => {
-        if (!res.rows.length) {
-          return
-        }
-        const rows = res.rows[0]
-        let nextTime = rows.key;
-        nextTime = nextTime + (60 * 60 * 8)
-        this.nextTime = nextTime;
-        this.handleCutDown()
-      })
+      const {status, result} = await this.$api.get_table_rows(params)
+      if (!status || !result.rows.length) {
+        return
+      }
+      const rows = result.rows[0]
+      let nextTime = rows.key;
+      nextTime = nextTime + (60 * 60 * 8)
+      this.nextTime = nextTime;
+      this.handleCutDown()
     },
     handleCutDown() {
       clearTimeout(this.secTimer)
@@ -148,17 +175,16 @@ export default {
     handleTimer() {
       this.handleGetDfsBalance('lock')
       this.handleGetDfsBalance('stock')
-      // this.handleGetDfsBalance('claim')
       clearTimeout(this.timer);
       this.timer = setTimeout(() => {
         this.handleTimer()
       }, 10000)
     },
     // 获取DFS锁定量
-    handleGetDfsBalance(type) {
+    async handleGetDfsBalance(type) {
       const params = {
         code: 'minedfstoken',
-        coin: 'DFS',
+        symbol: 'DFS',
         decimal: 4,
       };
       if (type === 'lock') {
@@ -167,27 +193,64 @@ export default {
       if (type === 'stock') {
         params.account = 'dfsavingpool';
       }
-      // if (type === 'claim') {
-      //   params.account = 'dfsdsrbuffer';
-      // }
-      EosModel.getCurrencyBalance(params, res => {
-        let balance = toFixed('0.0000000000001', params.decimal);
-        (!res || res.length === 0) ? balance : balance = res.split(' ')[0];
-        if (type === 'lock') {
-          this.lockLoading = false;
-          this.lockDfs = balance;
-          this.$emit('listenAllLock', balance)
-          return
+      const {status, result} = await this.$api.get_currency_balance(params);
+      if (!status) {
+        return
+      }
+      const balance = result.split(' ')[0];
+      if (type === 'lock') {
+        this.lockLoading = false;
+        this.lockDfs = balance;
+        this.$emit('listenAllLock', balance)
+        return
+      }
+      if (type === 'stock') {
+        this.stockLoading = false;
+        this.ableUse = balance;
+        return
+      }
+    },
+    handleClaimAll() {
+      if (this.allClaim) {
+        return
+      }
+      this.allClaim = true;
+      const formName = this.account.name;
+      const permission = this.account.permissions;
+      const params = {
+        actions: [
+          {
+            account: 'dfsdsrsystem',
+            name: 'claim',
+            authorization: [{
+              actor: formName, // 转账者
+              permission,
+            }],
+            data: {
+              user: formName,
+            }
+          },
+        ]
+      }
+      DApp.toTransaction(params, (err) => {
+        this.allClaim = false;
+        if (err && err.code == 402) {
+          return;
         }
-        if (type === 'stock') {
-          this.stockLoading = false;
-          this.ableUse = balance;
-          return
+        if (err) {
+          this.$toast({
+            type: 'fail',
+            message: err.message,
+          })
+          return;
         }
-        // if (type === 'claim') {
-        //   this.claimLoading = false;
-        //   this.ableClaimNum = balance;
-        // }
+        this.$toast({
+          message: this.$t('public.success'),
+          type: 'success'
+        });
+        setTimeout(() => {
+          this.$emit('listenUpdate', true);
+        }, 1000);
       })
     },
   },
@@ -231,21 +294,40 @@ export default {
 }
 .mt40{
   margin-top: -40px;
-  background: #FFF;
+  margin-bottom: 40px;
+  // background: #FFF;
   position: relative;
-  padding-top: 40px;
-  border-radius: 40px 40px 0 0 ;
+  // padding-top: 40px;
+  border-radius: 40px 40px 0 0;
 }
 .dataInfo{
   box-shadow: 0px 4px 8px 4px rgba(227,227,227,0.5);
-  border-radius: 20px 20px 0px 0px;
+  border-radius: 20px;
   padding: 28px 28px;
   margin: 0px 32px 20px;
   background: #FFF;
   position: relative;
   color: #333;
+  overflow: hidden;
+  .bg-left{
+    position: absolute;
+    width: 198px;
+    height: 232px;
+    background: linear-gradient(-45deg, #FFFFFF 0%, #FFFFFF 50%, #F3FFFB 50%, #F3FFFB 100%);
+    left: 0;
+    top: 0;
+  }
+  .bg-right{
+    position: absolute;
+    width: 438px;
+    height: 532px;
+    background: linear-gradient(-233deg, #FFFFFF 0%, #FFFFFF 50%, #F3FFFB 50%, #F3FFFB 100%);
+    bottom: 20px;
+    right: 0px;
+  }
+
   .dinBold{
-    font-size: 33px !important;
+    font-size: 40px !important;
     margin-bottom: 9px;
   }
   .floatDiv{
@@ -257,25 +339,28 @@ export default {
     margin-bottom: 25px;
     &>div{
       flex: 1;
-      background: #FFF;
+      // background: #FFF;
       // padding: 40px 20px;
       border-radius: 20px;
-      text-align: left;
-      &:first-child{
-        margin-right: 30px;
+      text-align: center;
+      .dinBold{
+        font-size: 60px !important;
+        margin-bottom: 9px;
       }
     }
     .bonus{
-      font-size: 26px;
-      margin-top: 10px;
+      font-size: 30px;
+      margin-bottom: 10px;
     }
   }
 }
 .miningInfo{
-  background: #FFF;
+  // background: #FFF;
+  z-index: 1;
+  position: relative;
   // padding: 40px;
   font-size: 28px;
-  text-align: left;
+  text-align: center;
   &>div{
     flex: 1;
     &:first-child{
@@ -286,5 +371,34 @@ export default {
       // margin-top: 10px;
     }
   }
+}
+.unClaim{
+  position: relative;
+  z-index: 1;
+  background: #F8F8F8;
+  font-size: 30px;
+  color: #999;
+  height: 72px;
+  width: 560px;
+  margin: 30px auto;
+  border-radius: 40px;
+  .green{
+    color: $color-main;
+    margin: 0 10px;
+  }
+  .tipIcon{
+    width: 32px;
+    margin-left: 12px;
+  }
+}
+.allClaimBtn{
+  position: relative;
+  z-index: 1;
+  background: $color-main;
+  border-radius: 12px;
+  color: #FFF;
+  font-size: 36px;
+  height: 92px;
+  font-weight: 500;
 }
 </style>

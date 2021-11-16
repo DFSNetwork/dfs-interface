@@ -9,7 +9,7 @@
         </div>
         <div class="iptDiv flexb">
           <div class="coinInfo flex">
-            <div class="coinImg"><img width="100%" :src="thisMarket.imgUrl" :onerror="errorCoinImg" alt=""></div>
+            <div class="coinImg"><img width="100%" :src="thisMarket.imgUrl" :onerror="$errorImg" alt=""></div>
             <div>
               <div class="coin">{{ thisMarket.symbol }}</div>
               <div class="contract tip">{{ thisMarket.contract }}</div>
@@ -33,13 +33,12 @@
 </template>
 
 <script>
-import { EosModel } from '@/utils/eos';
+import { DApp } from '@/utils/wallet';
 import { toFixed } from '@/utils/public';
 export default {
   data() {
     return {
       token: '0.0000',
-      errorCoinImg: 'this.src="https://ndi.340wan.com/eos/eosio.token-eos.png"',
       payNum: '',
       thisMarket: {
         symbol: 'TAG',
@@ -73,7 +72,7 @@ export default {
       this.payNum = this.myDepositInfo.balance || '0.0000';
     },
     handleReg() {
-      if (!Number(this.payNum)) {
+      if (!Number(this.payNum || 0)) {
         return false
       }
       if (!this.myDepositInfo.isRelease) {
@@ -92,8 +91,8 @@ export default {
       if (!this.handleReg()) {
         return
       }
-      const formName = this.$store.state.app.scatter.identity.accounts[0].name;
-      const permission = this.$store.state.app.scatter.identity.accounts[0].authority;
+      const formName = this.$store.state.app.account.name;
+      const permission = this.$store.state.app.account.permissions;
       const params = {
         actions: [
           {
@@ -111,20 +110,23 @@ export default {
         ]
       }
       this.loading = true;
-      EosModel.toTransaction(params, (res) => {
+      DApp.toTransaction(params, (err) => {
         this.loading = false;
-        if(res.code && JSON.stringify(res.code) !== '{}') {
-          this.$message({
-            message: res.message,
-            type: 'error'
-          });
-          return
+        if (err && err.code == 402) {
+          return;
         }
-        this.$emit('listenClose', true)
-        this.$message({
+        if (err) {
+          this.$toast({
+            type: 'fail',
+            message: err.message,
+          })
+          return;
+        }
+        this.$toast({
           message: this.$t('public.success'),
           type: 'success'
         });
+        this.$emit('listenClose', true)
       })
     }
   },

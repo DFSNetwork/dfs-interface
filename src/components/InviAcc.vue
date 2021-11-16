@@ -41,7 +41,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import { EosModel } from '@/utils/eos';
+import { DApp } from '@/utils/wallet';
 export default {
   data() {
     return {
@@ -55,14 +55,13 @@ export default {
   },
   computed: {
     ...mapState({
-      scatter: state => state.app.scatter,
+      account: state => state.app.account,
     })
   },
   watch: {
-    scatter: {
+    account: {
       handler: function listen(newVal) {
-        if (newVal.identity) {
-          // console.log(newVal.identity.accounts[0].name)
+        if (newVal.name) {
           this.handleGetInviAcc()
           this.handleGetStakes();
         }
@@ -72,7 +71,7 @@ export default {
     },
   },
   methods: {
-    handleGetInviAcc() {
+    async handleGetInviAcc() {
       this.loading = true;
       const params = {
         "code": "dfsdfsfamily",
@@ -80,40 +79,33 @@ export default {
         "table": "codes",
         "index_position": 2,
         "key_type": "i64",
-        "lower_bound": ` ${this.scatter.identity.accounts[0].name}`,
-        "upper_bound": ` ${this.scatter.identity.accounts[0].name}`,
-        // "lower_bound": ' dfsdeveloper',
-        // "upper_bound": ' dfsdeveloper',
+        "lower_bound": ` ${this.account.name}`,
+        "upper_bound": ` ${this.account.name}`,
         "json": true,
       }
-      EosModel.getTableRows(params, (res) => {
-        this.loading = false;
-        if (!res.rows.length) {
-          this.link = ''
-          return
-        }
-        this.link = `https://apps.defis.network?code=${this.scatter.identity.accounts[0].name}`;
-        // console.log(this.link)
-      })
+      const {status, result} = await this.$api.get_table_rows(params)
+      this.loading = false;
+      if (!status || !result.rows.length) {
+        this.link = ''
+        return
+      }
+      this.link = `https://apps.defis.network?code=${this.account.name}`;
     },
-    handleGetStakes() {
+    async handleGetStakes() {
       const params = {
         "code": "dfsdfsfamily",
         "scope": "dfsdfsfamily",
         "table": "stakes",
-        "lower_bound": ` ${this.scatter.identity.accounts[0].name}`,
-        "upper_bound": ` ${this.scatter.identity.accounts[0].name}`,
-        // "lower_bound": " dfsdeveloper",
-        // "upper_bound": " dfsdeveloper",
+        "lower_bound": ` ${this.account.name}`,
+        "upper_bound": ` ${this.account.name}`,
         "json": true,
       }
-      EosModel.getTableRows(params, (res) => {
-        if (!res.rows.length) {
-          this.redeem = false;
-          return
-        }
-        this.redeem = true;
-      })
+      const {status, result} = await this.$api.get_table_rows(params)
+      if (!status || !result.rows.length) {
+        this.redeem = false;
+        return
+      }
+      this.redeem = true;
     },
     onCopy() {
       this.$message.success(this.$t('public.copySuccess'));
@@ -123,9 +115,8 @@ export default {
     },
     handleRedeem() {
       this.unstakeLoading = true;
-      // cleos push action dfsdfsfamily unstake '["joetothemoon"]' -p joetothemoon
-      const formName = this.$store.state.app.scatter.identity.accounts[0].name;
-      const permission = this.$store.state.app.scatter.identity.accounts[0].authority;
+      const formName = this.account.name;
+      const permission = this.account.permissions;
       const params = {
         actions: [
           {
@@ -141,15 +132,21 @@ export default {
           }
         ]
       }
-      EosModel.toTransaction(params, (res) => {
-        this.unstakeLoading = false;
-        if(res.code && JSON.stringify(res.code) !== '{}') {
-          this.$message({
-            message: res.message,
-            type: 'error'
-          });
-          return
+      DApp.toTransaction(params, (err) => {
+        if (err && err.code == 402) {
+          return;
         }
+        if (err) {
+          this.$toast({
+            type: 'fail',
+            message: err.message,
+          })
+          return;
+        }
+        this.$toast({
+          type: 'success',
+          message: 'Success'
+        })
       })
     },
     handleTransfer(type) {
@@ -174,16 +171,19 @@ export default {
         params.memo = type;
         params.quantity = '5000.0000 DFS';
       }
-      EosModel.transfer(params, (res) => {
+      DApp.transfer(params, (err) => {
         type === 'stake' ? this.stakeLoading = false : this.joinLoading = false;
-        if(res.code && JSON.stringify(res.code) !== '{}') {
-          this.$message({
-            message: res.message,
-            type: 'error'
-          });
-          return
+        if (err && err.code == 402) {
+          return;
         }
-        this.$message({
+        if (err) {
+          this.$toast({
+            type: 'fail',
+            message: err.message,
+          })
+          return;
+        }
+        this.$toast({
           message: this.$t('public.success'),
           type: 'success'
         });

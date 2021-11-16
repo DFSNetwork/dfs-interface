@@ -96,7 +96,7 @@ export default {
   },
   computed: {
     ...mapState({
-      scatter: state => state.app.scatter,
+      account: state => state.app.account,
       filterMkLists: state => state.sys.filterMkLists,
       marketLists: state => state.sys.marketLists,
       baseConfig: state => state.sys.baseConfig,
@@ -145,9 +145,9 @@ export default {
       deep: true,
       immediate: true
     },
-    scatter: {
+    account: {
       handler: function listen(newVal) {
-        if (newVal.identity) {
+        if (newVal.name) {
           // 用户数据获取
           this.handleGetAccVote()
         }
@@ -238,7 +238,7 @@ export default {
 
     // 用户票数统计
     async handleGetAccVote() {
-      if (!this.scatter || !this.scatter.identity) {
+      if (!this.account || !this.account.name) {
         return
       }
       getAccVote((accVoteData) => {
@@ -448,10 +448,9 @@ export default {
     },
     // 获取LP 挖矿排名
     async handleGetLpRank(mid, index) {
-      if (!this.scatter || !this.scatter.identity || index >= this.lpLength) {
+      if (!this.account || !this.account.name || index >= this.lpLength) {
         return
       }
-      // const formName = this.scatter.identity.accounts[0].name;
       const params = {
         "code": this.baseConfig.nodeMiner,
         "scope": mid,
@@ -508,8 +507,7 @@ export default {
       if (!this.lpPoolsMid.length) {
         return
       }
-      // console.log(this.lpPoolsMid)
-      const formName = this.scatter.identity.accounts[0].name;
+      const formName = this.account.name;
       this.lpPoolsMid.forEach(async (mid, index) => {
         if (index >= this.lpLength) {
           return
@@ -566,7 +564,7 @@ export default {
         if (!accLpData.token || !this.lpLists[0].lpBal || !rankList.length) {
           return;
         }
-        const formName = this.scatter.identity.accounts[0].name;
+        const formName = this.account.name;
         const accRank = rankList.find(vv => vv.miner === formName)
         let weight = 1;
         let rank = '100+'

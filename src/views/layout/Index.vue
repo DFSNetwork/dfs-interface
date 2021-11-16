@@ -25,6 +25,14 @@
     </el-dialog>
 
     <warm-tip :showWarm="showWarm" @listenClose="handleClose" />
+
+
+    <van-popup class="popup_p"
+      style="width: 700px"
+      v-model="showRisk">
+      <ExportPrivateKey 
+        @listenClose="handleClose"/>
+    </van-popup>
   </div>
 </template>
 
@@ -39,6 +47,7 @@ import InviAcc from '@/components/InviAcc';
 import NodeSet from '@/components/popup/NodeSet';
 import WarmTip from '@/components/WarmTip';
 import Tabbar from './comp/Tabbar';
+import ExportPrivateKey from '@/views/accForPwd/popup/ExportPrivateKey'
 
 import { get_acc_info, get_balance } from '@/utils/api';
 import { dealMarketLists } from '@/utils/logic';
@@ -58,6 +67,7 @@ export default {
     NodeSet,
     WarmTip,
     Tabbar,
+    ExportPrivateKey,
   },
   data() {
     return {
@@ -68,6 +78,7 @@ export default {
       showInvi: false,
       showNode: false,
       showWarm: false,
+      showRisk: false,
       tagTimer: null,
 
       // 价格定时器
@@ -79,7 +90,7 @@ export default {
   computed:{
     ...mapState({
       // 箭头函数可使代码更简练
-      scatter: state => state.app.scatter,
+      account: state => state.app.account,
       baseConfig: state => state.sys.baseConfig, // 基础配置 - 默认为{}
       mkFilterConf: state => state.config.mkFilterConf, // 基础配置 - 默认为{}
       marketLists: state => state.sys.marketLists,
@@ -90,10 +101,10 @@ export default {
     }
   },
   watch: {
-    scatter: {
+    account: {
       handler: function sc (newVal) {
-        if (newVal.identity) {
-          get_acc_info(newVal.identity.accounts[0].name)
+        if (newVal.name) {
+          get_acc_info(newVal.name)
           this.$api.get_acc_follow()
         }
       },
@@ -144,6 +155,7 @@ export default {
     handleClose() {
       this.showWarm = false;
       this.showNode = false;
+      this.showRisk = false;
     },
     handleShowComp(type) {
       if (type === 'invi') {
@@ -157,6 +169,9 @@ export default {
       }
       if (type === 'silderSet') {
         this.$refs.slipPointTools.showNav = true;
+      }
+      if (type === 'exportPrivate') {
+        this.showRisk = true;
       }
     },
     handleShowNav() {
@@ -203,8 +218,6 @@ export default {
     },
     async handleRowsMarket2() {
       let more = true;
-      let next_key = '';
-      let rows = [];
       while(more) {
         const params = {
           code: "defisswapcnt",
@@ -212,7 +225,6 @@ export default {
           table: "markets",
           json: true,
           limit: -1,
-          // lower_bound: next_key,
         }
         const {status, result} = await this.$api.get_table_rows(params);
         if (!status) {
@@ -220,9 +232,16 @@ export default {
           continue
         }
         more = result.more;
-        next_key = result.next_key;
-        this.handleMerge(result.rows)
-        // rows.push(...result.rows)
+        const filter_markets = result.rows.filter(v => {
+            if (['sars.run', 'smalldogedex', 'eosdogdogeos', 'okkkkkkkkkkk'].includes(v.contract0)) {
+                return false
+            }
+            if (['sars.run', 'smalldogedex', 'eosdogdogeos', 'okkkkkkkkkkk'].includes(v.contract1)) {
+                return false
+            }
+            return true
+        })
+        this.handleMerge(filter_markets)
       }
       // dealMarketLists(rows, this.topLists)
     },
@@ -272,7 +291,7 @@ export default {
         const rows = result.rows || [];
         lists.push(...rows)
         more = result.more;
-        next_key= result.next_key;
+        next_key = result.next_key;
       }
       this.chainGet = true;
       dealMarketLists(lists, this.topLists)

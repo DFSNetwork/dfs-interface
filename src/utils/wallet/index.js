@@ -1,305 +1,61 @@
-// scatter 链接钱包
-import ScatterJS from 'scatterjs-core';
-// import ScatterEOS from 'scatterjs-plugin-eosjs2';
-import ScatterEOS from 'scatterjs-plugin-eosjs';
-// import Eos from 'eosjs';
-// import { isTpWallet } from '@/utils/wallet/fullScreen'; // tokenpocket JS
-
-import axios from 'axios';
+import {scatterClass} from './scatter';
+import newWallet from '@/utils/wallet/newWallet';
+import {Anchor} from '@/utils/eos/anchor';
 import store from '@/store';
-
-ScatterJS.plugins( new ScatterEOS() );
-import { EosModel } from '@/utils/eos';
-
-class ScatterClass {
+class DAppModel {
   constructor() {
-    this.vthis = null;
-    this.scatter = null;
-    this.scatterEosJs = null;
-    this.eosJs = null;
-    this.connectCount = 0; // 重连次数
-    this.isConnect = false;
+    this.wallet = '';
+    this.obj = null;
   }
-  // scatter 初始化
+  
   scatterInit(vthis, callback) {
-    this.vthis = vthis;
-    const self = this;
-    if (self.isConnect) {
-      callback();
-      return
+    this.wallet = (localStorage.getItem('WALLET') || 'scatter').toLowerCase();
+    if (this.wallet === 'anchor') {
+      this.obj = Anchor;
+    } else if (this.wallet === 'scatter2') {
+      this.obj = scatterClass;
+    } else if (this.wallet === 'newwallet') {
+      this.obj = newWallet;
+    } else {
+      this.obj = scatterClass;
     }
-    self.isConnect = !!EosModel.scatter && !!EosModel.scatterEosJs;
-    // console.log(self.isConnect)
-    if (!self.isConnect) {
-      // console.log(self.connectCount)
-      self.connectCount += 1;
-      if (self.connectCount > 10) {
-        return false;
-      }
-      setTimeout(() => {
-        self.scatterInit(self.vthis, callback);
-      }, 500);
-      return false;
-    }
-    self.scatter = EosModel.scatter;
-    self.eosJs = EosModel.scatterEosJs;
-    // console.log(self.isConnect)
-    // console.log(self.scatter)
-    // console.log(self.eosJs)
-    callback();
-    // const networkOpt = {
-    //   blockchain: 'eos',
-    //   protocol: 'https',
-    //   host: 'eos.blockeden.cn',
-    //   port: 443,
-    //   chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
-    // }
-    // const network = ScatterJS.Network.fromJson(networkOpt);
-    // ScatterJS.connect('DeFis-Network',{network}).then(async connected => {
-    //   self.isConnect = connected;
-    //   // console.log(connected)
-    //   if (!connected) {
-    //     self.connectCount += 1;
-    //     if (self.connectCount > 10) {
-    //       return false;
-    //     }
-    //     setTimeout(() => {
-    //       self.scatterInit(self.vthis, callback);
-    //     }, 500);
-    //     return false;
-    //   }
-    //   self.scatter = ScatterJS.scatter;
-    //   // console.log(self.scatter)
-    //   self.eosJs = ScatterJS.eos(network, Eos, {});
-    //   callback();
-    // });
+    this.obj.scatterInit(vthis, callback)
   }
-  loginOut() {
-    const self = this;
-    self.scatter.forgetIdentity()
-    location.reload()
+  accReg(obj, cb) {
+    this.obj.accReg(obj, cb)
   }
-  // login
-  login(callback) {
-    const self = this;
-    if (!self.isConnect) {
-      self.scatterInit(self.vthis, () => {
-        self.login();
-      })
-      return;
-    }
-    self.scatter.login().then(id => {
-      if(!id) return console.error('no identity');
-      const account = ScatterJS.account('eos');
-      const newAccount = {
-        name: account.name,
-        permissions: account.authority,
-        publicKey: account.publicKey,
-      }
-      callback(newAccount)
-    });
+  login(cb) {
+    this.obj.login(cb)
   }
-  /* -------- 获取余额 start -------- */
-  getCurrencyBalance(params, callback) {
-    const newParams = {
-      code: params.code || 'eosio.token',
-      symbol: params.coin || 'EOS',
-      account: params.account || store.state.app.account.name,
-    }
-    const https = store.state.sys.baseConfig.node.url;
-    // console.log(https)
-    axios.post(`${https}/v1/chain/get_currency_balance`, JSON.stringify(newParams)).then((res) => {
-      if (!res.data.length) {
-        callback(`${Number(0).toFixed(params.decimal)} ${params.symbol}`);
-        return;
-      }
-      const returnData = res.data[0];
-      callback(returnData);
-    }).catch((e) => {
-      console.log(`e: ${e}`); // eslint-disable-line
-    })
+  loginByAcc(obj, cb) {
+    this.obj.loginByAcc(obj, cb)
   }
-  /* -------- 获取余额 end -------- */
-
-  transfer(obj, callback) {
-    const formName = store.state.app.account.name;
-    const permission = store.state.app.account.permissions;
-    const params = {
-      actions: [
-        {
-          account: obj.code,
-          name: 'transfer',
-          authorization: [{
-            actor: formName, // 转账者
-            permission,
-          }],
-          data: {
-            from: formName,
-            to: obj.toAccount,
-            quantity: obj.quantity,
-            memo: obj.memo || 'test'
-          }
-        }
-      ]
-    }
-    // if (isTpWallet()) {
-    //   this.handleUseFreeCpu(params, callback)
-    //   return
-    // }
-    this.eosJs.transaction(params, {
-      blocksBehind: 3,
-      expireSeconds: 30,
-    }).then((res) => {
-      callback(null, res)
-    }).catch((e) => {
-      this.dealError(e, callback);
-    });
+  loginOut(cb) {
+    store.dispatch('setAccount', {})
+    this.obj.loginOut(cb)
   }
-
-  // transaction 操作
-  toTransaction(obj, callback) {
-    const params = obj;
-    const self = this;
-    if (!self.isConnect) {
-      self.toTransaction(obj, callback)
-      return
-    }
-    // if (isTpWallet()) {
-    //   this.handleUseFreeCpu(params, callback)
-    //   return
-    // }
-    self.eosJs.transaction(params, {
-      blocksBehind: 3,
-      expireSeconds: 30,
-    }).then((res) => {
-      callback(null, res);
-    }).catch((e) => {
-      self.dealError(e, callback);
-    });
+  transfer(obj, cb) {
+    this.obj.transfer(obj, cb)
   }
-
-  handleUseFreeCpu(params, callback) {
-    console.log(params)
-    let actor = '11111cpufree';
-    params.actions.forEach(v => {
-      v.authorization.unshift({ actor, permission: 'active' })
-    })
-    
-    this.eosJs.transaction(params, {
-      broadcast: !1,
-      sign: !0,
-    }).then(res => {
-      if (res.processed || res.transaction_id) {
-        const p = res;
-        const l = p.transaction.transaction;
-        l.signatures = p.transaction.signatures;
-        l.context_free_data = [];
-        // const signed = JSON.stringify(l);
-        const signed = l;
-        this.pushFreeCpu(signed, (error, resFree) => {
-          if (resFree) {
-            callback(null, resFree);
-            return;
-          }
-          this.errorCall(error, callback);
-        })
-      }
-    }).catch((e) => {
-      this.errorCall(e, callback);
-    });
+  toTransaction(obj, cb) {
+    this.obj.toTransaction(obj, cb)
   }
-
-  pushFreeCpu(signedTx, cb) {
-    let url = 'http://47.243.71.86:7001/api/common/freeCpu';
-    // let url = 'http://192.168.31.101:7001/api/common/freeCpu';
-    axios.post(url, signedTx, {
-      headers: {
-        accept: 'application/json, text/plain, */*',
-      },
-    }).then((res) => {
-      if (res.data.code !== 0) {
-        const msg = res.data.message;
-        cb(msg, null);
-        return
-      }
-      cb(null, res.data)
-    }).catch((error) => {
-      console.log(error); // eslint-disable-line
-    })
+  // newwallet 钱包
+  exportPrivateKey() {
+    return this.obj.exportPrivateKey()
   }
-
-  dealError(e, callback) {
-    console.log(e)
-    //  catch 错误回调 ---- code: 3080004 - cpu不足 | 3080002 - net不足 | 3080001 - ram不足
-    let back = {
-      code: 999,
-      message: 'fails!',
-    };
-    try {
-      if (typeof (e) === 'object') {
-        if (e.code === 402) {
-          back = {
-            code: '402',
-            message: 'User rejected the signature request',
-          }
-        }
-      }
-      if (typeof (e) === 'string') {
-        const err = JSON.parse(e);
-        // CPU 不足
-        if (err.error.code === 3080004) {
-          back = {
-            code: 3080004,
-            message: 'Insufficient CPU resources',
-          }
-        }
-        // NET 不足
-        if (err.error.code === 3080002) {
-          back = {
-            code: 3080002,
-            message: 'Insufficient Net resources',
-          }
-        }
-        // RAM 不足
-        if (err.error.code === 3080001) {
-          back = {
-            code: 3080001,
-            message: 'Insufficient RAM resources',
-          }
-        }
-        if (err.error.code === 3050003 || err.error.code === 3010010) {
-          // 滑点过高导致
-          const detail = err.error.details;
-          if (detail[0].message.indexOf('INSUFFICIENT_OUTPUT_AMOUNT') !== -1) {
-            back = {
-              code: 3050003,
-              // message: this.vthis.$t('dex.heightSlip'),
-              message: '滑点过高',
-            }
-          } else if (detail[0].message.indexOf('Invalid packed transaction') !== -1) { // 用户取消操作
-            back = {
-              code: 402,
-              // message: this.vthis.$t('error.cancel'),
-              message: '用户取消',
-            }
-          } else {
-            back = {
-              code: err.error.code,
-              message: detail[0].message,
-            }
-          }
-        }
-      }
-      callback(back, null);
-    } catch (error) {
-      if (e === '操作已取消') {
-        back = {
-          code: 402,
-          message: 'Cancel',
-        }
-      }
-      callback(back, null);
-    }
+  transferSure(obj, cb) { // 转账确认
+    this.obj.transfer(obj, cb)
+  }
+  toTransactionSure(obj, cb) { // 操作确认
+    this.obj.toTransactionSure(obj, cb)
+  }
+  regPwd(pwd, cb) { // 密码验证
+    this.obj.regPwd(pwd, cb)
+  }
+  randomKey(cb) {
+    this.obj.randomKey(cb)
   }
 }
-export const DApp = new ScatterClass();
+
+export const DApp = new DAppModel();

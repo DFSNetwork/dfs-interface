@@ -24,7 +24,7 @@ export function getVoteWeight() {
 }
 // 用户票数统计
 export async function getAccVote(cb) {
-  const formName = store.state.app.scatter.identity.accounts[0].name;
+  const formName = store.state.app.account.name;
   const params = {
     "code":"eosio",
     "scope":"eosio",
@@ -63,7 +63,7 @@ export async function getAccVote(cb) {
 // 获取farmer挖矿数据
 export async function getAccFarmerData(accVoteData, cb) {
   const baseConfig = store.state.sys.baseConfig;
-  const formName = store.state.app.scatter.identity.accounts[0].name;
+  const formName = store.state.app.account.name;
   const params = {
     "code": baseConfig.nodeMiner,
     "scope": baseConfig.nodeMiner,
@@ -130,9 +130,9 @@ export function getReward(baseData, userData) {
 
 export function getJoinActions(accVoteData) {
   const baseConfig = store.state.sys.baseConfig;
-  const scatter = store.state.app.scatter;
-  const formName = scatter.identity.accounts[0].name;
-  const permission = scatter.identity.accounts[0].authority;
+  const account = store.state.app.account;
+  const formName = account.name;
+  const permission = account.permissions;
   const join = {
     account: baseConfig.nodeMiner,
     name: 'join',
@@ -169,9 +169,9 @@ export function getJoinActions(accVoteData) {
 // 获取投票给Ta Action
 export function getVoteToProxy(accVoteData) {
   const baseConfig = store.state.sys.baseConfig;
-  const scatter = store.state.app.scatter;
-  const formName = scatter.identity.accounts[0].name;
-  const permission = scatter.identity.accounts[0].authority;
+  const account = store.state.app.account;
+  const formName = account.name;
+  const permission = account.permissions;
   const stakeCpu = {
     account: 'eosio',
     name: 'delegatebw',
@@ -240,9 +240,9 @@ export function getVoteToProxy(accVoteData) {
 export function getClaimActions(accVoteData) {
   // console.log(accVoteData)
   const baseConfig = store.state.sys.baseConfig;
-  const scatter = store.state.app.scatter;
-  const formName = scatter.identity.accounts[0].name;
-  const permission = scatter.identity.accounts[0].authority;
+  const account = store.state.app.account;
+  const formName = account.name;
+  const permission = account.permissions;
   const stakeCpu = {
     account: 'eosio',
     name: 'delegatebw',
@@ -310,9 +310,9 @@ export function getClaimActions(accVoteData) {
 // 获取REX操作Actions
 export function getRexActions(accVoteData, obj) {
   const baseConfig = store.state.sys.baseConfig;
-  const scatter = store.state.app.scatter;
-  const formName = scatter.identity.accounts[0].name;
-  const permission = scatter.identity.accounts[0].authority;
+  const account = store.state.app.account;
+  const formName = account.name;
+  const permission = account.permissions;
   let amount = obj.amount;
 
   const stakeCpu = {

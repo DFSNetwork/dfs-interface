@@ -35,7 +35,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import { EosModel } from '@/utils/eos';
+import { DApp } from '@/utils/wallet';
 import ClaimRules from '@/views/nodePools/dialog/ClaimRules' 
 
 // import { getClaimActions } from '../js/nodePools';
@@ -80,7 +80,7 @@ export default {
   },
   computed: {
     ...mapState({
-      scatter: state => state.app.scatter,
+      account: state => state.app.account,
       baseConfig: state => state.sys.baseConfig,
     }),
     allReward() {
@@ -114,12 +114,12 @@ export default {
   },
   methods: {
     handleClaimAll() {
-      if (!this.scatter || !this.scatter.identity || this.claim) {
+      if (!this.account || !this.account.name || this.claim) {
         return
       }
       this.claim = true;
-      const formName = this.scatter.identity.accounts[0].name;
-      const permission = this.scatter.identity.accounts[0].authority;
+      const formName = this.account.name;
+      const permission = this.account.permissions;
       // const params = getClaimActions(this.accVoteData)
       const params = {
         actions: [
@@ -153,21 +153,23 @@ export default {
           params.actions.push(lpAction)
         }
       })
-      EosModel.toTransaction(params, (res) => {
+      DApp.toTransaction(params, (err) => {
         this.claim = false;
-        if(res.code && JSON.stringify(res.code) !== '{}') {
-          this.$message({
-            message: res.message,
-            type: 'error'
-          });
-          return
+        if (err && err.code == 402) {
+          return;
         }
-        this.$message({
+        if (err) {
+          this.$toast({
+            type: 'fail',
+            message: err.message,
+          })
+          return;
+        }
+        this.$toast({
           message: this.$t('public.success'),
           type: 'success'
         });
         setTimeout(() => {
-          console.log('12345')
           // 查询代理账户数据
           this.$emit('listenUpdata', 'acc')
         }, 1500);

@@ -12,7 +12,7 @@
 // import AccInfo from '@/views/my/comp/AccInfo'
 // import AccWallet from  '@/views/my/comp/AccWallet'
 // import Tools from  '@/views/my/comp/Tools'
-
+import { mapState } from 'vuex';
 import MainComp from  './nComp/MainComp'
 
 export default {
@@ -22,7 +22,19 @@ export default {
     // AccWallet,
     // Tools,
     MainComp,
-  }
+  },
+  mounted() {
+    if (!this.account.name) {
+      this.$router.replace({
+        name: 'loginWallet'
+      })
+    }
+  },
+  computed: {
+    ...mapState({
+      account: state => state.app.account,
+    }),
+  },
 }
 </script>
 

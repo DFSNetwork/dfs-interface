@@ -6,7 +6,7 @@
         <!-- 交易对信息 -->
         <div class="symbolInfo flexb" @click="showMarketList = true">
           <div class="flexa">
-            <img class="coinImg" :onerror="errorCoinImg" :src="thisMarket.sym0Data.imgUrl" >
+            <img class="coinImg" :onerror="$errorImg" :src="thisMarket.sym0Data.imgUrl" >
             <div>
               <div class="flexa">
                 <span>{{ thisMarket.symbol0 }} <i class="el-icon-arrow-down"></i></span>
@@ -16,7 +16,7 @@
           </div>
           <img class="addImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/add.svg">
           <div class="flexa">
-            <img class="coinImg" :onerror="errorCoinImg" :src="thisMarket.sym1Data.imgUrl" >
+            <img class="coinImg" :onerror="$errorImg" :src="thisMarket.sym1Data.imgUrl" >
             <div>
               <div class="flexa">
                 <span>{{ thisMarket.symbol1 }} <i class="el-icon-arrow-down"></i></span>
@@ -77,10 +77,6 @@
       </div>
     </div>
 
-    <MarketData v-if="Number(token) !== 0" :thisMarket="thisMarket" :token="token"
-      @listenShowRemove="handleShowRemove"
-      @listenShowAdd="handleShowAdd"/>
-
     <MyMarketLists :thisMarket="thisMarket"/>
 
     <!-- 弹窗组件 -->
@@ -129,14 +125,12 @@
 
 <script>
 import { mapState } from 'vuex';
-import { EosModel } from '@/utils/eos';
 import MarketList from '@/components/MarketArea';
 import Tabs from '../index/components/Tabs';
 import MarketApy from './popup/MarketApy'
 import AddMarket from './popup/AddMarket'
 import MyMarketLists from './comp/MarketLists'
 import AboutMarket from './popup/AboutMarket'
-import MarketData from './comp/MarketData';
 import Withdraw from './comp/Withdraw'
 
 // 公用方法
@@ -152,13 +146,11 @@ export default {
     AddMarket,
     MyMarketLists,
     AboutMarket,
-    MarketData,
     Withdraw,
   },
   data() {
     return {
       first: true,
-      errorCoinImg: 'this.src="https://ndi.340wan.com/eos/eosio.token-eos.png"',
       exRate: true,
       showMarketList: false,
       showApyDetail: false,
@@ -186,7 +178,7 @@ export default {
   },
   computed: {
     ...mapState({
-      scatter: state => state.app.scatter,
+      account: state => state.app.account,
       baseConfig: state => state.sys.baseConfig,
       marketLists: state => state.sys.marketLists,
     }),
@@ -223,9 +215,9 @@ export default {
       deep: true,
       immediate: true
     },
-    scatter: {
+    account: {
       handler: function listen(newVal) {
-        if (newVal.identity) {
+        if (newVal.name) {
           this.handleGetAccToken();
         }
       },
@@ -298,13 +290,13 @@ export default {
       localStorage.setItem('swapMarkets', JSON.stringify(swapMarkets))
     },
     regInit() {
-      if (this.scatter.identity && this.marketLists.length) {
+      if (this.account.name && this.marketLists.length) {
         return true;
       }
       return false;
     },
     // 获取账户当前交易对凭证数量
-    handleGetAccToken() {
+    async handleGetAccToken() {
       if (!this.regInit()) {
         return;
       }
@@ -312,14 +304,16 @@ export default {
         code: this.baseConfig.toAccountSwap,
         scope: this.thisMarket.mid,
         table: 'liquidity',
-        lower_bound: ` ${this.scatter.identity.accounts[0].name}`,
-        upper_bound: ` ${this.scatter.identity.accounts[0].name}`,
+        lower_bound: ` ${this.account.name}`,
+        upper_bound: ` ${this.account.name}`,
         json: true
       }
-      EosModel.getTableRows(params, (res) => {
-        const list = res.rows || [];
-        !list[0] ? this.token = '0' : this.token = `${list[0].token}`;
-      })
+      const {status, result} = await this.$api.get_table_rows(params)
+      if (!status || !result.rows.length) {
+        return
+      }
+      const list = result.rows || [];
+      !list[0] ? this.token = '0' : this.token = `${list[0].token}`;
     },
   }
 }

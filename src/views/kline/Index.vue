@@ -1,18 +1,28 @@
 <template>
   <div class="chartDiv" >
-    <div class="title">市场详情</div>
+    <!-- <div class="title">市场详情</div> -->
     <MarketInfo :checkedMarket="checkedMarket"/>
     <div class="kline">
-      <div class="kTitle flexa">价格K线</div>
+      <div class="kTitle flexb">
+        <span>{{ $t('kline.klinePrice') }}</span>
+        <div class="flexa warn" @click="showWarn = true">
+          <img class="warnImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/warn.png" >
+          <span>{{ $t('sys.tip') }}</span>
+        </div>
+      </div>
       <ChardingView :checkedMarket="checkedMarket"/>
     </div>
-    <MinerLists :checkedMarket="checkedMarket"/>
+    <TokenInfo :checkedMarket="checkedMarket"/>
 
     <div class="nullDiv"></div>
     <div class="btnDiv flexb">
       <div class="btn flexc" @click="handleTo('index')">{{ $t('tab.dex') }}</div>
       <div class="btn market flexc" @click="handleTo('market')">{{ $t('tab.pools') }}</div>
     </div>
+
+    <van-popup class="popup_p" v-model="showWarn">
+      <WarnCoin />
+    </van-popup>
   </div>
 </template>
 
@@ -20,23 +30,28 @@
 import { mapState } from 'vuex';
 import ChardingView from './ChardingView';
 import MarketInfo from './comp/MarketInfo';
-import MinerLists from './comp/MinerLists';
+// import MinerLists from './comp/MinerLists';
+import TokenInfo from './comp/TokenInfo';
+import WarnCoin from '@/views/kline/popup/WarnCoin'
 
 export default {
   name: 'kLine',
   components: {
     ChardingView,
     MarketInfo,
-    MinerLists,
+    // MinerLists,
+    TokenInfo,
+    WarnCoin,
   },
   data() {
     return {
+      showWarn: false,
       checkedMarket: {
         // mid: 17,
         symbol0: 'EOS',
         symbol1: 'USDT',
         imgUrl0: 'https://cdn.jsdelivr.net/gh/defis-net/material2/coin/eosio.token-eos.svg',
-        imgUrl1: 'https://ndi.340wan.com/eos/tethertether-usdt.png',
+        imgUrl1: 'https://cdn.jsdelivr.net/gh/defis-net/material2/coin/tethertether-usdt.png',
       }
     }
   },
@@ -97,6 +112,7 @@ export default {
           return v.symbol1 === arr[1].toUpperCase() && v.symbol0 === arr[3].toUpperCase()
               && v.contract1 === arr[0] && v.contract0 === arr[2] 
         })
+        // console.log(this.marketLists)
         if (checkedMarket) {
           this.checkedMarket = checkedMarket;
         }
@@ -121,10 +137,21 @@ export default {
   }
   .kline{
     .kTitle{
-      background: #F5F5F5;
+      background: #FFF;
+      color: #333;
       font-size: 30px;
-      height: 80px;
-      padding-left: 28px;
+      font-weight: 500;
+      padding: 0 28px;
+      margin-bottom: 20px;
+      .warn{
+        font-size: 28px;
+        color: $color-main;
+        .warnImg{
+          display: block;
+          width: 32px;
+          margin-right: 14px;
+        }
+      }
     }
   }
   .nullDiv{
@@ -141,7 +168,7 @@ export default {
     .btn{
       flex: 1;
       height: 85px;
-      border-radius: 48px;
+      border-radius: 8px;
       background: #29D4B0;
       color: #FFF;
       font-size: 34px;

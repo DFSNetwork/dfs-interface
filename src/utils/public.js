@@ -1,19 +1,23 @@
 import Decimal from 'decimal.js';
-import { EosModel } from '@/utils/eos';
+import { DApp } from '@/utils/wallet/index';
 import moment from 'moment';
+import QRcode from 'qrcode';
 import store from '@/store';
-import {getJson} from './api'
+// import {getJson} from './api'
+import {get_table_rows} from '@/api/list'
+import imgJson from '@/assets/img/coinJson.json';
 
-let cdnImgJson = localStorage.getItem('ImgJson') ? JSON.parse(localStorage.getItem('ImgJson')) : {}; // CDN 图片配置
-async function getCdnImgJson() {
-  const {status, result} = await getJson()
-  if (!status) {
-    return
-  }
-  cdnImgJson = result;
-  localStorage.setItem('ImgJson', JSON.stringify(cdnImgJson))
-}
-getCdnImgJson();
+let cdnImgJson = imgJson
+// localStorage.getItem('ImgJson') ? JSON.parse(localStorage.getItem('ImgJson')) : {}; // CDN 图片配置
+// async function getCdnImgJson() {
+//   const {status, result} = await getJson()
+//   if (!status) {
+//     return
+//   }
+//   cdnImgJson = result;
+//   localStorage.setItem('ImgJson', JSON.stringify(cdnImgJson))
+// }
+// getCdnImgJson();
 export function getPngLen() {
   return cdnImgJson ? cdnImgJson.png.length : 1
 }
@@ -75,21 +79,14 @@ export function accPow(arg1, arg2) {
 
 // 登录
 export function login(vThis, cb) {
-  EosModel.scatterInit(vThis, () => {
-    // handleScatterOut(cb)
-    EosModel.getIdentity('eos', (err => {
-      cb(err)
+  DApp.scatterInit(vThis, () => {
+    DApp.login((res => {
+      cb(res)
     }));
   });
 }
-// 先退出scatter
-export function handleScatterOut(cb) {
-  EosModel.accountLoginOut(() => {
-    EosModel.getIdentity('eos', (err => cb(err)));
-  });
-}
 // 获取60秒均价
-export function getPrice(cb) {
+export async function getPrice(cb) {
   const baseConfig = store.state.sys.baseConfig;
   const params = {
     code: baseConfig.oracle, // 'jinoracle113',
@@ -98,12 +95,14 @@ export function getPrice(cb) {
     scope: '0',
     table: 'avgprices',
   }
-  EosModel.getTableRows(params, (res) => {
-    const list = res.rows || [];
-    const t = list.find(v => v.key === 60) || {};
-    const price = toFixed(t.price0_avg_price / 10000, 4);
-    cb(price);
-  })
+  const {status, result} = await get_table_rows(params)
+  if (!status || !result.rows.length) {
+    return
+  }
+  const list = result.rows || [];
+  const t = list.find(v => v.key === 60) || {};
+  const price = toFixed(t.price0_avg_price / 10000, 4);
+  cb(price);
 }
 
 // 科学计数法转数值 - 处理 1e-7 这类精度问题
@@ -262,7 +261,6 @@ export function dealMinerData(minnerData) {
   let lastTime = toLocalTime(`${minnerData.last_drip}.000+0000`);
   lastTime = moment(lastTime).valueOf();
   minnerData.lastTime = lastTime;
-  // console.log(minnerData)
   const liq_bal0Arr = minnerData.liq_bal0.split(' ');
   const liq_bal1Arr = minnerData.liq_bal1.split(' ');
   let liq = 0;
@@ -486,8 +484,8 @@ export function getCoin(contract, coin) {
 
 // 处理账号缩略 < 12 隐藏后半部分 | === 12 隐藏中间部分 | 自己账户不处理
 export function dealAccountHide(str) {
-  const scatter = store.state.app.scatter;
-  if (scatter && scatter.identity && scatter.identity.accounts[0].name === str) {
+  const account = store.state.app.account;
+  if (account && account.name && account.name === str) {
     return str
   }
   const t = str.length % 3;
@@ -677,4 +675,16 @@ function handleDealArr(resArr) {
     }
   })
   return uniques;
+}
+
+
+// 二维码生成
+export function QRcodeCode(QRcodeText, tag, width, callback) {
+  const option = {
+    width,
+    errorCorrectionLevel: 'L'
+  };
+  QRcode.toCanvas(tag, QRcodeText, option, (err) => {
+    callback(err);
+  });
 }

@@ -57,8 +57,6 @@ export default {
   },
   data() {
     return {
-      defaultImg: 'https://ndi.340wan.com/eos/eosio.token-eos.png',
-      errorImg: 'this.src="https://ndi.340wan.com/eos/eosio.token-eos.png"',
       subFarmers: [], // 总列表
       lists: [], // 展示的列表
       page: 1,

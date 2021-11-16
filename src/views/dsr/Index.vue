@@ -1,20 +1,11 @@
 <template>
   <div class="dsr">
-    <dsr-info :args="args" :timesmap="timesmap" :claimLoading="claimLoading" :ableClaimNum="ableClaimNum"
-      @listenAllLock="listenAllLock"/>
-    <div class="allClaim flexb">
-      <img class="bgImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/bg/myReward.png" alt="">
-      <div>
-        <div class="subTitle flexa tip">
-          <span>{{ $t('mine.waitClaim') }}</span>
-          <img class="tipIcon ml10" @click="showReWardTip = true" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/tips_icon_btn.svg" alt="">
-        </div>
-        <div class="claimNum dinBold">{{myDepositInfo.showReward || '0.00000000'}} DFS</div>
-      </div>
-      <div class="flexb">
-        <div class="allClaimBtn" v-loading="allClaim" @click="handleClaimAll">{{ $t('bonus.claim') }}</div>
-      </div>
-    </div>
+    <dsr-info :args="args" :timesmap="timesmap"
+      :claimLoading="claimLoading"
+      :ableClaimNum="ableClaimNum"
+      :myDepositInfo="myDepositInfo"
+      @listenAllLock="listenAllLock"
+      @listenUpdate="listenUpdate"/>
     <dsr-list :args="args" @listenUpdate="listenUpdate"
               :myDepositInfo="myDepositInfo" :allLock="allLock"/>
     <dsr-miner-list :args="args" :timesmap="timesmap" :allLock="allLock" :ableClaimNum="ableClaimNum"/>
@@ -35,7 +26,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import { EosModel } from '@/utils/eos';
+import { DApp } from '@/utils/wallet';
 import moment from 'moment';
 import { toFixed, accAdd, accSub, accDiv, toLocalTime, countdown } from '@/utils/public';
 import MinReward from '@/views/market/popup/MinReward'
@@ -54,14 +45,14 @@ export default {
   },
   computed: {
     ...mapState({
-      scatter: state => state.app.scatter,
+      account: state => state.app.account,
       dsrPools: state => state.sys.dsrPools,
     }),
   },
   watch: {
-    scatter: {
+    account: {
       handler: function listen(newVal) {
-        if (newVal.identity) {
+        if (newVal.name) {
           this.handleGetList()
         }
       },
@@ -119,8 +110,8 @@ export default {
         return
       }
       this.allClaim = true;
-      const formName = this.$store.state.app.scatter.identity.accounts[0].name;
-      const permission = this.$store.state.app.scatter.identity.accounts[0].authority;
+      const formName = this.account.name;
+      const permission = this.account.permissions;
       const params = {
         actions: [
           {
@@ -136,16 +127,19 @@ export default {
           },
         ]
       }
-      EosModel.toTransaction(params, (res) => {
+      DApp.toTransaction(params, (err) => {
         this.allClaim = false;
-        if(res.code && JSON.stringify(res.code) !== '{}') {
-          this.$message({
-            message: res.message,
-            type: 'error'
-          });
-          return
+        if (err && err.code == 402) {
+          return;
         }
-        this.$message({
+        if (err) {
+          this.$toast({
+            type: 'fail',
+            message: err.message,
+          })
+          return;
+        }
+        this.$toast({
           message: this.$t('public.success'),
           type: 'success'
         });
@@ -154,23 +148,22 @@ export default {
         }, 1000);
       })
     },
-    handleGetArgs() {
+    async handleGetArgs() {
       const params = {
         "code": "dfsdsrsystem",
         "scope": "dfsdsrsystem",
         "table": "args",
         "json": true,
       }
-      EosModel.getTableRows(params, (res) => {
-        if (!res.rows.length) {
-          return
-        }
-        this.args = res.rows[0];
-        this.handleRunReward()
-      })
+      const {status, result} = await this.$api.get_table_rows(params)
+      if (!status || !result.rows.length) {
+        return
+      }
+      this.args = result.rows[0];
+      this.handleRunReward()
     },
-    handleGetList() {
-      const formName = this.$store.state.app.scatter.identity.accounts[0].name;
+    async handleGetList() {
+      const formName = this.account.name;
       const params = {
         "code": "dfsdsrsystem",
         "scope": "dfsdsrsystem",
@@ -179,28 +172,27 @@ export default {
         "upper_bound": ` ${formName}`,
         "json": true,
       }
-      EosModel.getTableRows(params, (res) => {
-        if (!res.rows.length) {
-          this.myDepositInfo = {}
-          return
-        }
-        const allList = res.rows;
-        allList.forEach((v) => {
-          let accApr = this.handleYearApr(v)
-          this.$set(v, 'buff', accApr);
-          accApr = accAdd(5, accApr);
-          this.$set(v, 'accApr', accApr);
-          const inTime = toLocalTime(`${v.last_drip}.000+0000`)
-          this.$set(v, 'inTime', inTime);
-          const releaseTime = toLocalTime(`${v.release_time}.000+0000`)
-          this.$set(v, 'releaseTime', releaseTime);
-          this.$set(v, 'balance', v.bal.split(' ')[0]);
-          const endT = countdown(releaseTime);
-          this.$set(v, 'isRelease', endT.total < 0);
-        })
-        this.myDepositInfo = allList[0];
-        this.handleRunReward()
+      const {status, result} = await this.$api.get_table_rows(params)
+      if (!status || !result.rows.length) {
+        this.myDepositInfo = {}
+        return
+      }
+      const allList = result.rows;
+      allList.forEach((v) => {
+        let accApr = this.handleYearApr(v)
+        this.$set(v, 'buff', accApr);
+        accApr = accAdd(5, accApr);
+        this.$set(v, 'accApr', accApr);
+        const inTime = toLocalTime(`${v.last_drip}.000+0000`)
+        this.$set(v, 'inTime', inTime);
+        const releaseTime = toLocalTime(`${v.release_time}.000+0000`)
+        this.$set(v, 'releaseTime', releaseTime);
+        this.$set(v, 'balance', v.bal.split(' ')[0]);
+        const endT = countdown(releaseTime);
+        this.$set(v, 'isRelease', endT.total < 0);
       })
+      this.myDepositInfo = allList[0];
+      this.handleRunReward()
     },
     handleYearApr(item) {
       let apr = Math.pow(this.args.aprs, 86400 * 365) - 1
@@ -259,19 +251,20 @@ export default {
           this.$set(v, 'showReward', showReward);
         }, 50);
     },
-    handleGetDfsBalance() {
+    async handleGetDfsBalance() {
       const params = {
         code: 'minedfstoken',
-        coin: 'DFS',
+        symbol: 'DFS',
         decimal: 4,
         account: 'dfspool44444'
       };
-      EosModel.getCurrencyBalance(params, res => {
-        let balance = toFixed('0.0000000000001', params.decimal);
-        (!res || res.length === 0) ? balance : balance = res.split(' ')[0];
-        this.claimLoading = false;
-        this.ableClaimNum = balance;
-      })
+      const {status, result} = await this.$api.get_currency_balance(params);
+      if (!status) {
+        return
+      }
+      const bal = result.split(' ')[0];
+      this.claimLoading = false;
+      this.ableClaimNum = bal;
     },
   }
 }

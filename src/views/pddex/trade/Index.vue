@@ -3,7 +3,7 @@
     <div>
       <div class="symbolInfo flexb">
         <div class="flexa">
-          <img class="coinImg" :src="market.sym1Data.imgUrl" :onerror="errorCoinImg">
+          <img class="coinImg" :src="market.sym1Data.imgUrl" :onerror="$errorImg">
           <!-- <img class="coinImg" src="@/assets/logo.png" alt=""> -->
           <div @click="showLists = true">
             <div class="name">
@@ -142,7 +142,6 @@ export default {
   },
   data() {
     return {
-      errorCoinImg: 'this.src="https://ndi.340wan.com/eos/eosio.token-eos.png"',
       active: 0,
       showLists: false,
       showSet: false,
@@ -157,7 +156,7 @@ export default {
           imgUrl: 'https://cdn.jsdelivr.net/gh/defis-net/material2/coin/eosio.token-eos.svg'
         },
         sym1Data:{
-          imgUrl: 'https://ndi.340wan.com/eos/tethertether-usdt.png'
+          imgUrl: 'https://cdn.jsdelivr.net/gh/defis-net/material2/coin/tethertether-usdt.png'
         }
       },
       showTradeinfo: {},
@@ -251,7 +250,7 @@ export default {
         }]
       }
       DApp.toTransaction(params, (err) => {
-        if (err && err.code === 402) {
+        if (err && err.code == 402) {
           return;
         }
         if (err) {
@@ -291,7 +290,7 @@ export default {
         }]
       }
       DApp.toTransaction(params, (err) => {
-        if (err && err.code === 402) {
+        if (err && err.code == 402) {
           return;
         }
         if (err) {

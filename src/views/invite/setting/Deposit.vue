@@ -151,7 +151,7 @@ export default {
         memo: 'deposit',
       }
       DApp.transfer(params, (err) => {
-        if (err && err.code === 402) {
+        if (err && err.code == 402) {
           return;
         }
         if (err) {

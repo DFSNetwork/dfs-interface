@@ -45,7 +45,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import { EosModel } from '@/utils/eos';
+import { DApp } from '@/utils/wallet';
 
 import ParamsTip from '../dialog/ParamsTip'
 
@@ -69,7 +69,6 @@ export default {
   },
   computed: {
     ...mapState({
-      // scatter: state => state.app.scatter,
       account: state => state.app.account,
     }),
   },
@@ -178,16 +177,19 @@ export default {
           }
         }],
       }
-      EosModel.toTransaction(params, (res) => {
+      DApp.toTransaction(params, (err) => {
         this.loading = false;
-        if(res.code && JSON.stringify(res.code) !== '{}') {
-          this.$message({
-            message: res.message,
-            type: 'error'
-          });
-          return
+        if (err && err.code == 402) {
+          return;
         }
-        this.$message({
+        if (err) {
+          this.$toast({
+            type: 'fail',
+            message: err.message,
+          })
+          return;
+        }
+        this.$toast({
           message: this.$t('public.success'),
           type: 'success'
         });

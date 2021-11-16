@@ -1,8 +1,11 @@
 <template>
   <div class="minerLists">
     <div class="title flexb">
-      <span>{{ $t('mine.minersList') }}</span>
-      <span class="num">{{ $t('mine.totalMiners') }}：{{ allListsLen }}</span>
+      <span class="num">{{ $t('kline.countMks') }}: {{ allListsLen }}</span>
+      <span class="flexa">
+        <span>{{ $t('kline.rdTips') }}</span>
+        <img class="tipImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/tips_icon_btn.svg">
+      </span>
     </div>
     <div class="lists">
       <div class="list" v-for="(v, i) in showLists" :key="i">
@@ -33,9 +36,11 @@
 </template>
 
 <script>
-import { dealRewardV3 } from '@/utils/logic';
+// import { dealRewardV3 } from '@/utils/logic';
 import { dealMinerData } from '@/utils/public';
 import { sellToken } from '@/utils/logic';
+
+import { getReward } from '@/views/dfsMine/dfsMine'
 
 export default {
   props: {
@@ -54,7 +59,17 @@ export default {
       showLists: [],
       timerSec: null,
       timerRun: null,
+      swapBal: {},
+      allBal: {},
     }
+  },
+  mounted() {
+    this.handleGetBalPools('dfs')
+    this.handleGetBalPools('eos')
+    this.handleGetBalPools('usdt')
+    this.handleGetBal('dfs')
+    this.handleGetBal('eos')
+    this.handleGetBal('usdt')
   },
   beforeDestroy() {
     clearTimeout(this.timerSec)
@@ -75,22 +90,86 @@ export default {
     }
   },
   methods: {
+    async handleGetBalPools(type = "total") {
+      const params = {
+        code: 'minedfstoken',
+        symbol: 'DFS',
+        decimal: 4,
+      }
+      if (type === 'dfs') {
+        params.account = 'dfspool11111'
+      } else if (type === 'eos') {
+        params.account = 'dfspool22222'
+      } else if (type === 'usdt') {
+        params.account = 'dfspool33333'
+      }
+      const {status, result} = await this.$api.get_currency_balance(params);
+      if (!status) {
+        return
+      }
+      const bal = result;
+      if (type === 'dfs') {
+        this.allBal.dfsPoolsBal = parseFloat(bal) + ''
+      } else if (type === 'eos') {
+        this.allBal.eosPoolsBal = parseFloat(bal) + ''
+      } else if (type === 'usdt') {
+        this.allBal.usdtPoolsBal = parseFloat(bal) + ''
+      }
+    },
+    // 获取swap做市余额
+    async handleGetBal(type = "dfs") {
+      const params = {
+        code: 'minedfstoken',
+        symbol: 'DFS',
+        decimal: 4,
+        account: 'defisswapcnt'
+      }
+      if (type === 'eos') {
+        params.code = 'eosio.token'
+        params.symbol = 'EOS'
+      } else if (type === 'usdt') {
+        params.code = 'tethertether'
+        params.symbol = 'USDT'
+      }
+      const {status, result} = await this.$api.get_currency_balance(params);
+      if (!status) {
+        return
+      }
+      const bal = result;
+      if (type === 'dfs') {
+        this.$set(this.swapBal, 'dfsSwapBal', parseFloat(bal) + '')
+      } else if (type === 'eos') {
+        this.$set(this.swapBal, 'eosSwapBal', parseFloat(bal) + '')
+      } else if (type === 'usdt') {
+        this.$set(this.swapBal, 'usdtSwapBal', parseFloat(bal) + '')
+      }
+    },
     async handleGetMiners() {
       if (!this.checkedMarket.mid) {
         return
       }
-      const params = {
-        "code": "miningpool11",
-        "scope": this.checkedMarket.mid,
-        "table": "miners2",
-        limit: 3000,
-        "json": true,
+      let more = true;
+      let next = '';
+      let rows = [];
+      while (more) {
+        const params = {
+          "code": "miningpool11",
+          "scope": this.checkedMarket.mid,
+          "table": "miners2",
+          limit: 100,
+          "json": true,
+          lower_bound: next,
+        }
+        const {status, result} = await this.$api.get_table_rows(params);
+        if (!status) {
+          more = false;
+          continue
+        }
+        more = result.more;
+        next = result.next_key;
+        const rows1 = result.rows || [];
+        rows.push(...rows1)
       }
-      const {status, result} = await this.$api.get_table_rows(params);
-      if (!status) {
-        return
-      }
-      const rows = result.rows || [];
       let newArr = []
       const item = this.checkedMarket
       rows.forEach(v => {
@@ -130,7 +209,47 @@ export default {
       }, 1000);
       this.showLists.forEach(v => {
         dealMinerData(v)
-        const reward = dealRewardV3(v, this.checkedMarket.mid)
+        // const reward = dealRewardV3(v, this.checkedMarket.mid)
+        // this.$set(v, 'reward', reward)
+
+        if (!v.token) {
+          return
+        }
+        const market = this.checkedMarket;
+        let reward = 0
+        if (market.contract0 === 'tethertether' || market.contract1 === 'tethertether') {
+          const num = market.contract0 === 'tethertether' ? parseFloat(v.liq0) : parseFloat(v.liq1) 
+          const reward0 = getReward({
+            poolBal: this.allBal.usdtPoolsBal,
+            swapBal: this.swapBal.usdtSwapBal
+          }, {
+            lastTime: v.lastTime,
+            num
+          })
+          reward = parseFloat(reward || 0) + parseFloat(reward0 || 0);
+        }
+        if (market.contract0 === 'eosio.token' || market.contract1 === 'eosio.token') {
+          const num = market.contract0 === 'eosio.token' ? parseFloat(v.liq0) : parseFloat(v.liq1) 
+          const reward0 = getReward({
+            poolBal: this.allBal.eosPoolsBal,
+            swapBal: this.swapBal.eosSwapBal
+          }, {
+            lastTime: v.lastTime,
+            num
+          })
+          reward = parseFloat(reward || 0) + parseFloat(reward0 || 0);
+        }
+        if (market.contract0 === 'minedfstoken' || market.contract1 === 'minedfstoken') {
+          const num = market.contract0 === 'minedfstoken' ? parseFloat(v.liq0) : parseFloat(v.liq1) 
+          const reward0 = getReward({
+            poolBal: this.allBal.dfsPoolsBal,
+            swapBal: this.swapBal.dfsSwapBal
+          }, {
+            lastTime: v.lastTime,
+            num
+          })
+          reward = parseFloat(reward || 0) + parseFloat(reward0 || 0);
+        }
         this.$set(v, 'reward', reward)
       })
       this.handleRun()
@@ -159,13 +278,11 @@ export default {
 .minerLists{
   color: #333;
   .title{
-    background: #F5F5F5;
-    font-size: 30px;
-    height: 80px;
-    padding: 0 28px;
-    .num{
-      font-size: 24px;
-      color: #999;
+    font-size: 28px;
+    padding: 10px 28px;
+    .tipImg{
+      width: 30px;
+      margin-left: 9px;
     }
   }
 }

@@ -26,7 +26,6 @@
 </template>
 
 <script>
-import { EosModel } from '@/utils/eos';
 import { mapState } from 'vuex';
 import QusForParams from './comp/QusForParams'
 
@@ -66,14 +65,14 @@ export default {
   },
   computed: {
     ...mapState({
-      scatter: state => state.app.scatter,
+      account: state => state.app.account,
       marketLists: state => state.sys.marketLists,
     }),
   },
   watch: {
-    scatter: {
+    account: {
       handler: function listen(newVal) {
-        if (newVal.identity) {
+        if (newVal.name) {
           this.handleGetMyVotes();
         }
       },
@@ -88,28 +87,24 @@ export default {
       })
     },
 
-    handleGetMyVotes() {
+    async handleGetMyVotes() {
       const params = {
         "code": "dfspoolsvote",
         "scope": "dfspoolsvote",
         "table": "voters",
         "json": true,
-        lower_bound: ` ${this.scatter.identity.accounts[0].name}`,
-        upper_bound: ` ${this.scatter.identity.accounts[0].name}`, // 11.bank
-        // lower_bound: ` judy.dfs`,
-        // upper_bound: ` judy.dfs`,
+        lower_bound: ` ${this.account.name}`,
+        upper_bound: ` ${this.account.name}`, // 11.bank
         limit: 10000
       }
-      EosModel.getTableRows(params, (res) => {
-        this.dssGet = true;
-        // console.log('get')
-        const rows = res.rows || [];
-        if (!rows.length) {
-          return
-        }
-        this.myVoteList = rows[0].last_vote;
-        this.vote_power = parseInt(rows[0].vote_power / 10000);
-      })
+      const {status, result} = await this.$api.get_table_rows(params)
+      this.dssGet = true;
+      if (!status || !result.rows.length) {
+        return
+      }
+      const rows = result.rows || [];
+      this.myVoteList = rows[0].last_vote;
+      this.vote_power = parseInt(rows[0].vote_power / 10000);
     },
   }
 }

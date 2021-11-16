@@ -11,7 +11,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import { EosModel } from '@/utils/eos';
+import { DApp } from '@/utils/wallet';
 export default {
   name: '',
   props: {
@@ -24,7 +24,7 @@ export default {
   },
   computed: {
     ...mapState({
-      scatter: state => state.app.scatter,
+      account: state => state.app.account,
     }),
   },
   methods: {
@@ -32,8 +32,8 @@ export default {
       this.$emit('listenClose', false)
     },
     handleSure() {
-      const formName = this.scatter.identity.accounts[0].name;
-      const permission = this.scatter.identity.accounts[0].authority;
+      const formName = this.account.name;
+      const permission = this.account.permissions;
       
       const params = {
         actions: [{
@@ -49,15 +49,18 @@ export default {
           },
         }]
       }
-      EosModel.toTransaction(params, (res) => {
-        if(res.code && JSON.stringify(res.code) !== '{}') {
-          this.$message({
-            message: res.message,
-            type: 'error'
-          });
-          return
+      DApp.toTransaction(params, (err) => {
+        if (err && err.code == 402) {
+          return;
         }
-        this.$message({
+        if (err) {
+          this.$toast({
+            type: 'fail',
+            message: err.message,
+          })
+          return;
+        }
+        this.$toast({
           message: this.$t('public.success'),
           type: 'success'
         });

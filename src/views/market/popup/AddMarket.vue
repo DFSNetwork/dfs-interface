@@ -11,7 +11,7 @@
         <div>
           <div class="bal" @click="handleClickBalan('payNum1')">{{ $t('public.balance') }}：{{ balanceSym0 }} {{ thisMarket.symbol0 }}</div>
           <div class="coinInfo flexa">
-            <img class="coinImg" :src="thisMarket.sym0Data.imgUrl" :onerror="errorCoinImg">
+            <img class="coinImg" :src="thisMarket.sym0Data.imgUrl" :onerror="$errorImg">
             <div class="coin">
               <div class="coinName">{{ thisMarket.symbol0 }}</div>
               <div class="coinContract tip">{{ thisMarket.contract0 }}</div>
@@ -34,7 +34,7 @@
         <div>
           <div class="bal" @click="handleClickBalan('payNum2')">{{ $t('public.balance') }}：{{ balanceSym1 }} {{ thisMarket.symbol1 }}</div>
           <div class="coinInfo flexa">
-            <img class="coinImg" :src="thisMarket.sym1Data.imgUrl" :onerror="errorCoinImg">
+            <img class="coinImg" :src="thisMarket.sym1Data.imgUrl" :onerror="$errorImg">
             <div class="coin">
               <div class="coinName">{{ thisMarket.symbol1 }}</div>
               <div class="coinContract tip">{{ thisMarket.contract1 }}</div>
@@ -78,7 +78,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import { EosModel } from '@/utils/eos';
+import { DApp } from '@/utils/wallet';
 import { toFixed, accAdd, accDiv, accMul } from '@/utils/public';
 import { dealToken, sellToken } from '@/utils/logic';
 
@@ -94,7 +94,6 @@ export default {
   },
   data() {
     return {
-      errorCoinImg: 'this.src="https://ndi.340wan.com/eos/eosio.token-eos.png"',
       balanceSym0: '0.0000',
       balanceSym1: '0.0000',
       payNum1: '',
@@ -112,7 +111,7 @@ export default {
   computed: {
     ...mapState({
       minScreen: state => state.app.minScreen,
-      scatter: state => state.app.scatter,
+      account: state => state.app.account,
       slipPoint: state => state.app.slipPoint,
       baseConfig: state => state.sys.baseConfig,
       marketLists: state => state.sys.marketLists,
@@ -187,9 +186,9 @@ export default {
     }
   },
   watch: {
-    scatter: {
+    account: {
       handler: function listen(newVal) {
-        if (newVal.identity) {
+        if (newVal.name) {
           this.handleBalanTimer();
           this.handleGetAccToken()
         }
@@ -206,7 +205,7 @@ export default {
       return toFixed(n, l)
     },
     // 获取账户当前交易对凭证数量
-    handleGetAccToken() {
+    async handleGetAccToken() {
       if (!this.regInit()) {
         return;
       }
@@ -214,15 +213,16 @@ export default {
         code: this.baseConfig.toAccountSwap,
         scope: this.thisMarket.mid,
         table: 'liquidity',
-        lower_bound: ` ${this.scatter.identity.accounts[0].name}`,
-        upper_bound: ` ${this.scatter.identity.accounts[0].name}`,
+        lower_bound: ` ${this.account.name}`,
+        upper_bound: ` ${this.account.name}`,
         json: true
       }
-      EosModel.getTableRows(params, (res) => {
-        const list = res.rows || [];
-        !list[0] ? this.token = '0' : this.token = `${list[0].token}`;
-        console.log(this.token)
-      })
+      const {status, result} = await this.$api.get_table_rows(params)
+      if (!status || !result.rows.length) {
+        return
+      }
+      const list = result.rows || [];
+      !list[0] ? this.token = '0' : this.token = `${list[0].token}`;
     },
     // 存币做市
     handleAddToken() {
@@ -234,8 +234,8 @@ export default {
       }
       this.loading = true;
       const obj = this.thisMarket;
-      const formName = this.scatter.identity.accounts[0].name;
-      const permission = this.scatter.identity.accounts[0].authority;
+      const formName = this.account.name;
+      const permission = this.account.permissions;
       const params = {
         actions: [
           {
@@ -280,23 +280,26 @@ export default {
           }
         ]
       }
-      EosModel.toTransaction(params, (res) => {
+      DApp.toTransaction(params, (err) => {
         this.loading = false;
-        if(res.code && JSON.stringify(res.code) !== '{}') {
-          this.$message({
-            message: res.message,
-            type: 'error'
-          });
-          return
+        if (err && err.code == 402) {
+          return;
         }
+        if (err) {
+          this.$toast({
+            type: 'fail',
+            message: err.message,
+          })
+          return;
+        }
+        this.$toast({
+          message: this.$t('public.success'),
+          type: 'success'
+        });
         this.handleClose()
         setTimeout(() => {
           this.handleBalanTimer();
         }, 1000);
-        this.$message({
-          message: this.$t('public.success'),
-          type: 'success'
-        });
       })
     },
     // 计算存币获取凭证
@@ -354,7 +357,7 @@ export default {
       this.handleInBy('sym1')
     },
     regInit() {
-      if (this.scatter.identity && this.marketLists.length) {
+      if (this.account.name && this.marketLists.length) {
         return true;
       }
       return false;
@@ -376,23 +379,25 @@ export default {
     async handleGetBalance(next) {
       const params = {
         code: this.thisMarket.contract0,
-        coin: this.thisMarket.symbol0,
-        decimal: this.thisMarket.decimal0
+        symbol: this.thisMarket.symbol0,
+        decimal: this.thisMarket.decimal0,
+        account: this.account.name
       };
       if (next) {
         params.code = this.thisMarket.contract1;
-        params.coin = this.thisMarket.symbol1;
+        params.symbol = this.thisMarket.symbol1;
         params.decimal = this.thisMarket.decimal1;
       }
-      await EosModel.getCurrencyBalance(params, res => {
-        let balance = '0.0000';
-        (!res || res.length === 0) ? balance = '0.0000' : balance = res.split(' ')[0];
-        if (next) {
-          this.balanceSym1 = balance;
-          return;
-        }
-        this.balanceSym0 = balance;
-      })
+      const {status, result} = await this.$api.get_currency_balance(params);
+      if (!status) {
+        return
+      }
+      const balance = result.split(' ')[0]
+      if (next) {
+        this.balanceSym1 = balance;
+        return;
+      }
+      this.balanceSym0 = balance;
     },
   }
 }

@@ -3,18 +3,10 @@
     <div class="flexb info">
       <div class="coin flexa">
         <div class="token flexa">
-          <img class="coinImg" :src="checkedMarket.imgUrl1 || errorCoinImg" :onerror="errorCoinImg">
+          <img class="coinImg" :src="checkedMarket.imgUrl1" :onerror="$errorImg">
           <div class="">
-            <div class="tokenName">{{ checkedMarket.symbol1 }}</div>
+            <div class="tokenName din">{{ checkedMarket.symbol1 }}/{{ checkedMarket.symbol0 }}</div>
             <div class="tokenContract tip">{{ checkedMarket.contract1 }}</div>
-          </div>
-        </div>
-        <img class="add" src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/add.svg" alt="">
-        <div class="token flexa">
-          <img class="coinImg" :src="checkedMarket.imgUrl0 || errorCoinImg" :onerror="errorCoinImg">
-          <div class="">
-            <div class="tokenName">{{ checkedMarket.symbol0 }}</div>
-            <div class="tokenContract tip">{{ checkedMarket.contract0 }}</div>
           </div>
         </div>
       </div>
@@ -23,54 +15,36 @@
         <img v-else @click="handleAddLike" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/star-un.png">
       </div>
     </div>
-    <div class="flexb dinBold price">
-      <div class="flexa">
-        <span v-if="!isExPrice">1 {{ checkedMarket.symbol1 }} ≈ {{ checkedMarket.price }} {{ checkedMarket.symbol0 }}</span>
-        <span v-else>1 {{ checkedMarket.symbol0 }} ≈ {{ exPrice }} {{ checkedMarket.symbol1 }}</span>
-        <span @click="isExPrice = !isExPrice" class="flexa">
-          <img v-if="isExPrice" class="exImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/price_switch_icon_btn_left.svg" alt="">
-          <img v-else class="exImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/price_switch_icon_btn_right.svg" alt="">
-        </span>
+    <!-- 交易对信息 -->
+    <div class="mksInfo flexb din">
+      <div>
+        <div class="mksRate" :class="{
+          'red': parseFloat(checkedMarket.priceRate || 0) < 0
+        }">{{ checkedMarket.priceRate }}</div>
+        <div class="abtPrice tip" v-if="language === 'zh-CN'">¥{{ checkedMarket.aboutPriceCNY }}</div>
+        <div class="abtPrice tip" v-else>${{ checkedMarket.aboutPriceU }}</div>
       </div>
-      <span class="tip dinReg" v-if="language === 'en'">
-        <span>$</span>
-        <span>{{ checkedMarket.aboutPriceU }}</span>
-      </span>
-      <span class="tip dinReg" v-else>
-        <span>¥</span>
-        <span>{{ checkedMarket.aboutPriceCNY }}</span>
-      </span>
-    </div>
-    <div class="flexb rate">
-      <span class="tip dinReg">24H额：{{ handleDealNum(checkedMarket.volume24H || 0) }} {{ checkedMarket.symbol0 }}</span>
-      <span class="green dinBold"
-        :class="{'green': parseFloat(checkedMarket.price_change_rate) > 0,
-                 'red': parseFloat(checkedMarket.price_change_rate) < 0}">
-        {{ checkedMarket.priceRate || '-' }}
-      </span>
-    </div>
-
-    <!-- 详细数据 -->
-    <div class="bg">
-      <div class="item">
-        <div class="subTitle">做市年化收益</div>
-        <div class="num flexa">
-          <span>实时收益：{{ checkedMarket.apy }}%</span>
-          <span class="detail" @click="showApyDetail = true">详情></span>
+      <div>
+        <div class="subInfo flexb">
+          <div class="infoItem">
+            <div class="label">{{ $t('kline.lasterPrice') }}({{ checkedMarket.symbol0 }})</div>
+            <div>{{ checkedMarket.price }}</div>
+          </div>
+          <div class="infoItem">
+            <div class="label">{{ $t('kline.vol') }}({{ checkedMarket.symbol0 }})</div>
+            <div>{{ parseInt(checkedMarket.volume24H || 0) }}</div>
+          </div>
         </div>
-      </div>
-      <div class="item">
-        <div class="subTitle flexa">
-          <span>流动池数量</span>
-          <span class="detail" @click="handleTo('dfsMinePool')">前往矿池></span>
+        <div class="subInfo flexb">
+          <div class="infoItem">
+            <div class="label">{{ $t('kline.apy') }}</div>
+            <div>{{ checkedMarket.apy }}%</div>
+          </div>
+          <div class="infoItem">
+            <div class="label">{{ $t('kline.fees') }}({{ checkedMarket.symbol0 }})</div>
+            <div>{{ handleGetFees(checkedMarket.volume24H) | numToCnt }}</div>
+          </div>
         </div>
-        <div class="num flexa dinReg">
-          {{ checkedMarket.reserve1 }} / {{ checkedMarket.reserve0 }}
-        </div>
-      </div>
-      <div class="flexa subTitle">
-        <span>成为做市商可赚取交易手续费</span>
-        <img class="qusImg" @click="showAboutMarket = true" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/tips_icon_btn.svg" alt="">
       </div>
     </div>
 
@@ -114,7 +88,6 @@ export default {
   },
   data() {
     return {
-      errorCoinImg: 'this.src="https://ndi.340wan.com/eos/eosio.token-eos.png"',
       likeArr: [],
       isExPrice: false,
       showApyDetail: false,
@@ -151,6 +124,10 @@ export default {
     },
   },
   methods: {
+    handleGetFees(num) {
+      const fees = parseFloat(num || 0) * 0.003;
+      return fees.toFixed(this.checkedMarket.decimal0)
+    },
     handleDealNum(num) {
       return dealNum(num)
     },
@@ -180,6 +157,9 @@ export default {
 
     handleCancelLike() {
       if (!this.account.name) {
+        this.$router.push({
+          name: 'loginWallet'
+        })
         return
       }
       const formName = this.account.name;
@@ -199,7 +179,7 @@ export default {
         }]
       }
       DApp.toTransaction(params, (err) => {
-        if (err && err.code === 402) {
+        if (err && err.code == 402) {
           return;
         }
         if (err) {
@@ -220,6 +200,9 @@ export default {
     },
     handleAddLike() {
       if (!this.account.name) {
+        this.$router.push({
+          name: 'loginWallet'
+        })
         return
       }
       const formName = this.account.name;
@@ -239,7 +222,7 @@ export default {
         }]
       }
       DApp.toTransaction(params, (err) => {
-        if (err && err.code === 402) {
+        if (err && err.code == 402) {
           return;
         }
         if (err) {
@@ -264,9 +247,9 @@ export default {
 
 <style lang="scss" scoped>
 .marketInfo{
-  padding: 40px 28px;
+  padding: 20px 28px 20px;
   .info{
-    margin-bottom: 27px;
+    margin-bottom: 10px;
   }
   .coin{
     flex: 1;
@@ -283,6 +266,7 @@ export default {
     }
     .tokenName{
       font-size: 28px;
+      color: #333;
     }
     .tokenContract{
       font-size: 24px;
@@ -351,6 +335,32 @@ export default {
     /deep/ .el-dialog{
       width: 620px;
     }
+  }
+}
+
+.mksRate{
+  font-size: 52px;
+  font-weight: bold;
+  color: #5AAF90;
+  &.red{
+    color: #e54f5d;
+  }
+}
+.abtPrice{
+  font-size: 30px;
+  margin-top: 6px;
+}
+.subInfo{
+  font-size: 24px;
+  margin-bottom: 10px;
+  .infoItem{
+    &:last-child{
+      margin-left: 70px;
+    }
+  }
+  .label{
+    color: #A6A6A6;
+    margin-bottom: 6px;
   }
 }
 </style>

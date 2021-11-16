@@ -1,18 +1,28 @@
 <template>
   <div class="banner">
     <van-swipe class="my-swipe" :autoplay="6000" indicator-color="white">
-      <van-swipe-item>
+      <!-- <van-swipe-item>
         <img class="bannerImg" v-if="language === 'zh-CN'"
           src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/banner1.png">
         <img class="bannerImg" v-else
           src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/banner1-en.png">
-      </van-swipe-item>
+      </van-swipe-item> -->
 
       <van-swipe-item>
-        <img class="bannerImg" v-if="language === 'zh-CN'"
-          src="@/assets/banner/zh-61.png">
-        <img class="bannerImg" v-else
-          src="@/assets/banner/en-61.png">
+        <img class="bannerImg"
+          src="https://cdn.jsdelivr.net/gh/defis-net/material2/banner/new-inviter.png">
+      </van-swipe-item>
+      <van-swipe-item>
+        <img class="bannerImg" @click="handleToObj('town')"
+          src="https://cdn.jsdelivr.net/gh/defis-net/material3/Town-img/login/banner.png">
+      </van-swipe-item>
+      <van-swipe-item>
+        <img class="bannerImg" @click="handleToObj('nft')"
+          src="https://cdn.jsdelivr.net/gh/defis-net/material2/banner/opensky.png">
+      </van-swipe-item>
+      <van-swipe-item>
+        <img class="bannerImg" @click="handleToObj('nft')"
+          src="https://cdn.jsdelivr.net/gh/defis-net/material2/banner/nft-banner-1.png">
       </van-swipe-item>
     </van-swipe>
   </div>
@@ -31,6 +41,12 @@ export default {
     handleToObj(type) {
       if (type === 'trade') {
         location.href = 'https://dfsfans.io/?page=home&tab=play'
+      }
+      if (type === 'nft') {
+        location.href = 'https://dfsopensky.netlify.app/'
+      }
+      if (type === 'town') {
+        location.href = 'https://dfsfarms.netlify.app/'
       }
     }
   }

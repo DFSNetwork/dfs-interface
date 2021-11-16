@@ -88,7 +88,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import { EosModel } from '@/utils/eos';
+import { DApp } from '@/utils/wallet';
 
 import { get_acc_info } from '@/utils/api';
 import ImgCheck from '../dialog/ImgCheck'
@@ -117,15 +117,15 @@ export default {
   },
   computed: {
     ...mapState({
-      scatter: state => state.app.scatter,
+      account: state => state.app.account,
       accInfo: state => state.app.accInfo,
     }),
   },
   watch: {
-    scatter: {
+    account: {
       handler: function sc (newVal) {
-        if (newVal.identity) {
-          this.acc = newVal.identity.accounts[0].name;
+        if (newVal.name) {
+          this.acc = newVal.name;
         }
       },
       deep: true,
@@ -168,8 +168,8 @@ export default {
     },
     // 保存
     handleSave() {
-      const formName = this.scatter.identity.accounts[0].name;
-      const permission = this.scatter.identity.accounts[0].authority;
+      const formName = this.account.name;
+      const permission = this.account.permissions;
       let sex = 2;
       if (this.sex === '男') {
         sex = 1
@@ -194,16 +194,19 @@ export default {
           }
         }]
       }
-      EosModel.toTransaction(params, (res) => {
+      DApp.toTransaction(params, (err) => {
         this.loading = false;
-        if(res.code && JSON.stringify(res.code) !== '{}') {
-          this.$message({
-            message: res.message,
-            type: 'error'
-          });
-          return
+        if (err && err.code == 402) {
+          return;
         }
-        this.$message({
+        if (err) {
+          this.$toast({
+            type: 'fail',
+            message: err.message,
+          })
+          return;
+        }
+        this.$toast({
           message: this.$t('public.success'),
           type: 'success'
         });

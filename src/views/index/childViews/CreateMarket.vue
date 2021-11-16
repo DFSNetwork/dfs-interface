@@ -56,7 +56,7 @@
 
       <div class="btnDiv">
         <el-button class="btn" type="primary" v-loading="loading"
-          v-if="scatter.identity" @click="handleNewMarket" plain>{{ $t('dex.submit') }}</el-button>
+          v-if="account.name" @click="handleNewMarket" plain>{{ $t('dex.submit') }}</el-button>
         <el-button class="btn" type="primary" v-else @click="handleLogin">{{ $t('public.loginPls') }}</el-button>
       </div>
     </div>
@@ -75,7 +75,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import { EosModel } from '@/utils/eos';
+import { DApp } from '@/utils/wallet';
 import { login } from '@/utils/public';
 import MarketList from '@/components/MarketArea';
 
@@ -104,7 +104,7 @@ export default {
   computed: {
     ...mapState({
       // 箭头函数可使代码更简练
-      scatter: state => state.app.scatter,
+      account: state => state.app.account,
       baseConfig: state => state.sys.baseConfig, // 基础配置 - 默认为{}
       marketLists: state => state.sys.marketLists,
     })
@@ -141,8 +141,8 @@ export default {
         return;
       }
       this.loading = true;
-      const formName = this.scatter.identity.accounts[0].name;
-      const permission = this.scatter.identity.accounts[0].authority;
+      const formName = this.account.name;
+      const permission = this.account.permissions;
       const params = {
         actions: [{
           account: 'defisfactory',
@@ -157,21 +157,24 @@ export default {
           }
         }]
       }
-      EosModel.toTransaction(params, (res) => {
+      DApp.toTransaction(params, (err) => {
         this.loading = false;
-        if(res.code && JSON.stringify(res.code) !== '{}') {
-          this.$message({
-            message: res.message,
-            type: 'error'
-          });
-          return
+        if (err && err.code == 402) {
+          return;
         }
-        this.$emit('listenGetMarketsList', true)
-        this.$router.back()
-        this.$message({
+        if (err) {
+          this.$toast({
+            type: 'fail',
+            message: err.message,
+          })
+          return;
+        }
+        this.$toast({
           message: this.$t('public.success'),
           type: 'success'
         });
+        this.$emit('listenGetMarketsList', true)
+        this.$router.back()
       })
     },
   },

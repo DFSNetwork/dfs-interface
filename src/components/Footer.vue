@@ -28,8 +28,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import { EosModel } from '@/utils/eos';
-import { toFixed, accMul } from '@/utils/public';
+import { accMul } from '@/utils/public';
 import DfsInfo from '@/views/home/comp/DfsInfo';
 
 export default {
@@ -175,15 +174,16 @@ export default {
     async handleGetBalance() {
       const params = {
         code: 'eosio.token',
-        coin: 'EOS',
+        symbol: 'EOS',
         decimal: 4,
         account: 'defisswapcnt'
       };
-      await EosModel.getCurrencyBalance(params, res => {
-        let balance = toFixed('0.0000000000001', params.decimal);
-        (!res || res.length === 0) ? balance : balance = res.split(' ')[0];
-        this.poolsEos = accMul(balance, 2).toFixed(4);
-      })
+      const {status, result} = await this.$api.get_currency_balance(params);
+      if (!status) {
+        return
+      }
+      const bal = result.split(' ')[0];
+      this.poolsEos = accMul(bal, 2).toFixed(4);
     },
   },
 }

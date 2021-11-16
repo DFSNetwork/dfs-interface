@@ -6,31 +6,37 @@
     v-model="showNav">
     <div class="morePop">
       <div class="acc flexb">
-        <div>
-          <div @click="handleLogin" v-if="!scatter || !scatter.identity"
-            class="login">{{ $t('more.login') }}</div>
-          <div v-else class="login">{{ scatter.identity.accounts[0].name }}</div>
-          <div class="tip">{{ $t('more.wel') }}</div>
+        <div style="flex:1">
+          <div class="wel">{{ $t('more.wel') }}</div>
+          <div class="flexb" v-if="!account || !account.name">
+            <div class="appLogin" @click="handleLogin('scatter')">{{ $t('newwallet.loginByWallet') }}</div>
+            <div class="appLogin appLogin2" @click="handleLogin('newwallet')">{{ $t('newwallet.loginByPwd') }}</div>
+          </div>
+          <div v-else class="login">{{ account.name }}</div>
         </div>
-        <img v-if="!scatter || !scatter.identity" @click="handleLogin"
-          class="right" src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/acc_right.svg" alt="">
-        <span v-else class="red exit" @click="handleLoginOut">{{ $t('public.loginOut') }}</span>
+        <!-- <img v-if="!account || !account.name" @click="handleLogin"
+          class="right" src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/acc_right.svg" alt=""> -->
+        <span v-if="account && account.name" class="red exit" @click="handleLoginOut">{{ $t('public.loginOut') }}</span>
       </div>
       <!-- list -->
       <div class="lists">
-        <!-- <div class="list switch flexb">
-          <span>免CPU操作</span>
-          <van-switch class="vanSwitch"
-            :value="cpuSwitch" @input="handleSetCpu"
-            size="24px"
-            active-color="#FFF" inactive-color="#eee" />
-        </div> -->
-        <div class="list flexb wel" @click="handleToAbout">
+        <!-- <div class="list flexb wel" @click="handleToAbout">
           <div class="flexa">
             <img class="dfslogo" src="https://cdn.jsdelivr.net/gh/defis-net/material2/coin/minedfstoken-dfs.png">
             <span>{{ $t('more.aboutDfs') }}</span>
           </div>
           <img class="right_to" src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/about_right.svg" alt="">
+        </div> -->
+        <div class="list switch flexb">
+          <span>免CPU操作</span>
+          <span class="rel">
+            <van-switch class="vanSwitch"
+              :value="cpuSwitch" @input="handleSetCpu"
+              size="26px"
+              active-color="#FFF" inactive-color="#FFF"/>
+            <span v-if="cpuSwitch" class="switchInfo infoA" @click="cpuSwitch = !cpuSwitch">ON</span>
+            <span v-else class="switchInfo infoB" @click="cpuSwitch = !cpuSwitch">OFF</span>
+          </span>
         </div>
         <div class="list flexa" @click="handleShowComp('silderSet')">
           <img class="listImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/swap-set.png">
@@ -68,19 +74,22 @@
         <!-- <div class="subTi">联系我们</div> -->
         <div class="flexb item">
           <a href="https://github.com/defis-net" target="_blank">
-            <img src="https://cdn.jsdelivr.net/gh/defis-net/material2/telUs/GitHub.png">
+            <img src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/github2.png">
+          </a>
+          <!-- <a href="https://bihu.com/people/1511717747" target="_blank">
+            <img src="https://cdn.jsdelivr.net/gh/defis-net/material2/telUs/Bihu.png">
+          </a> -->
+          <a href="https://twitter.com/DFSnetworks" target="_blank">
+            <img src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/twitter2.png">
+          </a>
+          <a href="https://t.me/dfsnet" target="_blank">
+            <img src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/telegram2.png">
           </a>
           <a href="https://bihu.com/people/1511717747" target="_blank">
-            <img src="https://cdn.jsdelivr.net/gh/defis-net/material2/telUs/Bihu.png">
-          </a>
-          <a href="https://twitter.com/DFSnetworks" target="_blank">
-            <img src="https://cdn.jsdelivr.net/gh/defis-net/material2/telUs/Twitter.png">
+            <img src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/bihu2.png">
           </a>
         </div>
-        <div class="flexb item">
-          <a href="https://t.me/dfsnet" target="_blank">
-            <img src="https://cdn.jsdelivr.net/gh/defis-net/material2/telUs/Telegram.png">
-          </a>
+        <!-- <div class="flexb item">
           <a v-clipboard:copy="'dfsfarmer'"
             v-clipboard:success="handleCopy"
             v-clipboard:error="handleCopyError">
@@ -89,29 +98,14 @@
           <a href="https://dfsofficial.medium.com/" target="_blank">
             <img src="https://cdn.jsdelivr.net/gh/defis-net/material2/telUs/medium.png">
           </a>
-        </div>
+        </div> -->
       </div>
-
-      <!-- 切换语言 -->
-      <!-- <div class="lang flexb" @click="handleChangeLang()">
-        <span v-if="language === 'zh-CN'">{{ $t('public.switchLang') }}</span>
-        <span v-else>{{ $t('public.switchLang') }}</span>
-        <img class="langImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/lang.svg">
-      </div> -->
-      <!-- versions -->
-      <!-- <div class="flexa version">
-        <span class="flexc" @click="handleToV1('v1')">V1</span>
-        <span class="flexc" @click="handleToV1('v2')">V2</span>
-        <span class="flexc" @click="handleToV1('v3')">V3</span>
-        <span class="flexc" @click="handleToV1('v4')">V4</span>
-        <span class="flexc" @click="handleToV1('v5')">V5</span>
-      </div> -->
     </div>
   </van-popup>
 </template>
 
 <script>
-import { EosModel } from '@/utils/eos';
+import { DApp } from '@/utils/wallet';
 import { mapState } from 'vuex'
 import { login } from '@/utils/public';
 
@@ -121,15 +115,17 @@ export default {
     return {
       showNav: false,
       cpuSwitch: false,
+      wallet: '',
     }
   },
   mounted() {
     this.cpuSwitch = this.freeCpu;
+    this.wallet = localStorage.getItem('WALLET')
   },
   computed: {
     ...mapState({
       language: state => state.app.language,
-      scatter: state => state.app.scatter,
+      account: state => state.app.account,
       freeCpu: state => state.app.freeCpu,
     }),
   },
@@ -138,6 +134,7 @@ export default {
       location.href = "https://defis.network/"
     },
     handleSetCpu(checked) {
+      console.log(checked)
       this.cpuSwitch = checked;
       this.$store.dispatch('setFreeCpu', checked)
     },
@@ -147,9 +144,18 @@ export default {
       this.$store.dispatch('setLanguage', type);
     },
     // 登录
-    handleLogin() {
-      login(this, () => {
-        this.showNav = false;
+    handleLogin(wallet) {
+      this.wallet = wallet;
+      localStorage.setItem('WALLET', wallet)
+      DApp.scatterInit(this, () => {
+        if (wallet === 'newwallet') {
+          this.handleTo('loginWallet')
+          return
+        }
+        login(this, () => {
+          this.showNav = false;
+          this.handleTo('home')
+        })
       })
     },
     handleShowNode() {
@@ -187,8 +193,8 @@ export default {
       this.showNav = false;
     },
     handleLoginOut() {
-      EosModel.accountLoginOut(() => {
-        location.reload()
+      DApp.loginOut(() => {
+        // location.reload()
       })
     },
     // 分享 - 复制文本
@@ -212,11 +218,11 @@ export default {
 
 <style lang="scss" scoped>
 /*iphoneX、iphoneXs*/
-@media only screen and (max-width: 750px) {
-  .exit{
-    display: none !important;
-  }
-}
+// @media only screen and (max-width: 750px) {
+//   .exit{
+//     display: none !important;
+//   }
+// }
 .morePop{
   max-height: 100vh;
   overflow: auto;
@@ -225,16 +231,42 @@ export default {
     width: 20px;
   }
   .red{
-    color: #EB6765;
+    color: #FFF;
+    background: #EB6765;
+    padding: 14px 22px;
+    font-size: 24px;
+    border-radius: 20px;
   }
   .acc{
-    padding: 30px 60px 0px 30px;
+    padding: 30px 15px 0px 30px;
     text-align: left;
+    .wel{
+      margin-bottom: 10px;
+      font-size: 32px;
+      font-weight: 500;
+    }
     .login{
       font-size: 50px;
       font-weight: 500;
       margin-bottom: 10px;
       color: #333;
+    }
+    .appLogin{
+      margin-top: 20px;
+      flex: 1;
+      color: #FFF;
+      background: $color-main;
+      padding: 14px 22px;
+      border-radius: 20px;
+      font-size: 28px;
+      margin-right: 22px;
+      text-align: center;
+      &.appLogin2{
+        color: $color-main;
+        margin-right: 0;
+        background: #FFF;
+        box-shadow: 0px 4px 8px 0px rgba(206,206,206,0.5);
+      }
     }
   }
   .lists{
@@ -282,11 +314,14 @@ export default {
       }
     }
     .switch{
-      background: rgba(#29D4B0, .9);
+      background: rgba(#29D4B0, 1);
       padding: 30px;
       height: 104px;
       border-radius: 12px;
       color: #FFF;
+      .rel{
+        position: relative;
+      }
       .vanSwitch{
         border: 1px solid #FFF;
         /deep/ .van-switch__node{
@@ -294,6 +329,23 @@ export default {
           box-shadow: none;
           border: 1px solid #FFF;
           box-sizing: border-box;
+        }
+      }
+      .switchInfo{
+        font-size: 20px;
+        color: #FFF;
+        position: absolute;
+        &.infoA{
+          color: $color-main;
+          top: 50%;
+          left: 12px;
+          transform: translateY(-60%);
+        }
+        &.infoB{
+          color: #EB6765;
+          top: 50%;
+          right: 10px;
+          transform: translateY(-60%);
         }
       }
     }
@@ -333,21 +385,28 @@ export default {
     }
   }
   .telUs{
-    background: #EEFBF8;
+    // background: #EEFBF8;
     color: $color-main;
     text-align: left;
     margin: 28px;
     border-radius: 12px;
-    padding: 28px;
+    padding: 28px 0;
     .item{
       margin-top: 30px;
       &:first-child{
         margin-top: 0px;
       }
       img{
-        width: 60px;
+        width: 96px;
       }
     }
+  }
+  .exportPrivate{
+    border: 2px solid $color-main;
+    color: $color-main;
+    margin: 30px;
+    height: 80px;
+    border-radius: 20px;
   }
 }
 

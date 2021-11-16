@@ -21,7 +21,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import { EosModel } from '@/utils/eos';
+import { DApp } from '@/utils/wallet';
 import { toFixed, toLocalTime, getMarketTimeLp } from '@/utils/public';
 
 export default {
@@ -61,7 +61,7 @@ export default {
   },
   computed: {
     ...mapState({
-      scatter: state => state.app.scatter,
+      account: state => state.app.account,
       marketLists: state => state.sys.marketLists,
     }),
     aboutEos() {
@@ -78,9 +78,9 @@ export default {
       deep: true,
       immediate: true,
     },
-    scatter: {
+    account: {
       handler: function listen(newVal) {
-        if (newVal.identity) {
+        if (newVal.name) {
           this.handlerGetReward();
         }
       },
@@ -111,16 +111,19 @@ export default {
       const params = {
         actions,
       }
-      EosModel.toTransaction(params, (res) => {
+      DApp.toTransaction(params, (err) => {
         this.claiming = false;
-        if(res.code && JSON.stringify(res.code) !== '{}') {
-          this.$message({
-            message: res.message,
-            type: 'error'
-          });
-          return
+        if (err && err.code == 402) {
+          return;
         }
-        this.$message({
+        if (err) {
+          this.$toast({
+            type: 'fail',
+            message: err.message,
+          })
+          return;
+        }
+        this.$toast({
           message: this.$t('public.success'),
           type: 'success'
         });
@@ -131,8 +134,8 @@ export default {
     },
     handleGetActions() {
       const actions = [];
-      const formName = this.scatter.identity.accounts[0].name;
-      const permission = this.scatter.identity.accounts[0].authority;
+      const formName = this.account.name;
+      const permission = this.account.permissions;
       const keys = Object.keys(this.accMineData);
       keys.forEach(v => {
         if (!this.accMineData[v].bal || !parseFloat(this.accMineData[v].bal)) {
@@ -158,7 +161,7 @@ export default {
     // 获取5分钟均价
     handlerGetLinkPrice() {
       clearTimeout(this.priceTimer)
-      this.priceArr.forEach(v => {
+      this.priceArr.forEach(async v => {
         const params = {
           code: 'defislinkeos',
           scope: v,
@@ -166,22 +169,24 @@ export default {
           json: true,
           limit: 3,
         }
-        EosModel.getTableRows(params, (res) => {
-          const rows = res.rows.find(vv => vv.key === 300) || []
-          if (v === '17') {
-            this.linkPrice.eosPrice = rows.price0_avg_price / 10000;
-          } else {
-            this.linkPrice.yfcPrice = rows.price1_avg_price;
-          }
-          this.handleDealAll();
-        })
+        const {status, result} = await this.$api.get_table_rows(params)
+        if (!status || !result.rows.length) {
+          return
+        }
+        const rows = result.rows.find(vv => vv.key === 300) || []
+        if (v === '17') {
+          this.linkPrice.eosPrice = rows.price0_avg_price / 10000;
+        } else {
+          this.linkPrice.yfcPrice = rows.price1_avg_price;
+        }
+        this.handleDealAll();
       })
       this.priceTimer = setTimeout(() => {
         this.handlerGetLinkPrice();
       }, 300000);
     },
     // 获取args 计算收益
-    handleGetArgs() {
+    async handleGetArgs() {
       clearTimeout(this.argsTimer)
       const params = {
         "code": "yfcyfcgarden",
@@ -190,25 +195,24 @@ export default {
         "json": true,
         limit: 100
       }
-      EosModel.getTableRows(params, (res) => {
-        let rows = res.rows || []
-        if (!rows.length) {
-          return
-        }
-        this.args = rows[0];
-        this.handleDealAll();
-        this.argsTimer = setTimeout(() => {
-          this.handleGetArgs()
-        }, 5000);
-      })
+      const {status, result} = await this.$api.get_table_rows(params)
+      if (!status || !result.rows.length) {
+        return
+      }
+      let rows = result.rows || []
+      this.args = rows[0];
+      this.handleDealAll();
+      this.argsTimer = setTimeout(() => {
+        this.handleGetArgs()
+      }, 5000);
     },
     handlerGetReward() {
-      if (!this.scatter || !this.scatter.identity || this.getAccData) {
+      if (!this.account || !this.account.name || this.getAccData) {
         return
       }
       this.getAccData = true;
-      const formName = this.scatter.identity.accounts[0].name;
-      this.sym.forEach(v => {
+      const formName = this.account.name;
+      this.sym.forEach(async v => {
         const params = {
           code: 'yfcyfcgarden',
           scope: v.coin,
@@ -218,15 +222,17 @@ export default {
           lower_bound: ` ${formName}`,
           upper_bound: ` ${formName}`,
         }
-        EosModel.getTableRows(params, (res) => {
-          const rows = res.rows[0] || {}
-          if (!rows.bal) {
-            return
-          }
-          rows.lastDate = toLocalTime(`${rows.last_drip}.000+0000`)
-          this.accMineData[v.coin] = rows;
-          this.handleDealAll()
-        })
+        const {status, result} = await this.$api.get_table_rows(params)
+        if (!status || !result.rows.length) {
+          return
+        }
+        const rows = result.rows[0] || {}
+        if (!rows.bal) {
+          return
+        }
+        rows.lastDate = toLocalTime(`${rows.last_drip}.000+0000`)
+        this.accMineData[v.coin] = rows;
+        this.handleDealAll()
       })
     },
     handleDealAll() {

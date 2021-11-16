@@ -1,9 +1,11 @@
 <template>
-  <div class="flexs vs">
-    <!-- <img class="star" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/star.png"> -->
-    <div>
+  <div class="vs">
+    <div class="flexa">
+      <img class="timeImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/time.png" alt="">
+      <div class="time dinBold tip">2021-05-27 19:30</div>
+    </div>
+    <div class="main">
       <div class="content">{{ $t('upRecord.v1_1') }}</div>
-      <div class="time tip">2021-05-27 19:30</div>
     </div>
   </div>
 </template>

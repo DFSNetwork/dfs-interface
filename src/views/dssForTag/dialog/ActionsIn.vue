@@ -9,7 +9,7 @@
         </div>
         <div class="iptDiv flexb">
           <div class="coinInfo flex">
-            <div class="coinImg"><img width="100%" :src="thisMarket.imgUrl" :onerror="errorCoinImg" alt=""></div>
+            <div class="coinImg"><img width="100%" :src="thisMarket.imgUrl" :onerror="$errorImg" alt=""></div>
             <div>
               <div class="coin">{{ thisMarket.symbol }}</div>
               <div class="contract tip">{{ thisMarket.contract }}</div>
@@ -65,14 +65,14 @@
       append-to-body
       :show-close="false"
       :visible="showSure">
-      <ActionsInSure :params="sureData" @listenClose="handleClose" @listenSure="handleTransfer"/>
+      <ActionsInSure v-if="showSure" :params="sureData" @listenClose="handleClose" @listenSure="handleTransfer"/>
     </el-dialog>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex';
-import { EosModel } from '@/utils/eos';
+import { DApp } from '@/utils/wallet';
 import { toFixed, accMul, accAdd, accDiv, toLocalTime } from '@/utils/public';
 import ActionsInSure from './ActionsInSure';
 
@@ -82,7 +82,6 @@ export default {
   },
   data() {
     return {
-      errorCoinImg: 'this.src="https://ndi.340wan.com/eos/eosio.token-eos.png"',
       payNum: '',
       balance: '0.0000',
       apr: 5,
@@ -133,7 +132,7 @@ export default {
   },
   computed: {
     ...mapState({
-      scatter: state => state.app.scatter,
+      account: state => state.app.account,
     }),
     timeApr() {
       return this.handleApr(this.value);
@@ -145,9 +144,9 @@ export default {
     }
   },
   watch: {
-    scatter: {
+    account: {
       handler: function listen(newVal) {
-        if (newVal.identity) {
+        if (newVal.name) {
           this.handleBalanTimer();
         }
       },
@@ -187,13 +186,16 @@ export default {
       this.showSure = false;
     },
     handleShowSure() {
+      if (!parseFloat(this.payNum || 0)) {
+        return
+      }
       this.showSure = true;
       let total = accAdd(parseFloat(this.myDepositInfo.bal), this.payNum);
       total = `${toFixed(total, 4)}`;
       this.sureData = {
         payNum: this.payNum,
         dateLong: this.options[Number(this.value)].label,
-        hasNum: this.myDepositInfo.bal,
+        hasNum: this.myDepositInfo.bal || '0.0000',
         total,
         endDate: this.aboutReleasrDate.substr(0, 10),
       }
@@ -221,24 +223,27 @@ export default {
         memo,
         quantity: `${this.payNum} ${this.thisMarket.symbol}`
       }
-      EosModel.transfer(params, (res) => {
+      DApp.transfer(params, (err) => {
         this.loading = false;
-        if(res.code && JSON.stringify(res.code) !== '{}') {
-          this.handleClose();
-          this.$message({
-            message: res.message,
-            type: 'error'
-          });
-          return
+        if (err && err.code == 402) {
+          return;
         }
+        if (err) {
+          this.handleClose();
+          this.$toast({
+            type: 'fail',
+            message: err.message,
+          })
+          return;
+        }
+        this.$toast({
+          message: this.$t('public.success'),
+          type: 'success'
+        });
         this.payNum = '';
         this.handleBalanTimer();
         this.showSure = false;
         this.$emit('listenClose', true)
-        this.$message({
-          message: this.$t('public.success'),
-          type: 'success'
-        });
       })
     },
     // 重启余额定时器
@@ -253,14 +258,16 @@ export default {
     async handleGetBalance() {
       const params = {
         code: this.thisMarket.contract,
-        coin: this.thisMarket.symbol,
-        decimal: this.thisMarket.decimal
+        symbol: this.thisMarket.symbol,
+        decimal: this.thisMarket.decimal,
+        account: this.account.name,
       };
-      await EosModel.getCurrencyBalance(params, res => {
-        let balance = toFixed('0.0000000000001', params.decimal);
-        (!res || res.length === 0) ? balance : balance = res.split(' ')[0];
-        this.balance = balance;
-      })
+      const {status, result} = await this.$api.get_currency_balance(params);
+      if (!status) {
+        return
+      }
+      const bal = result.split(' ')[0];
+      this.balance = bal;
     },
   }
 }

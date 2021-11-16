@@ -31,7 +31,6 @@
 import { mapState } from 'vuex';
 import { SwapRouter, SwapRouterFilter } from '@/utils/swap_router';
 import { toFixed, accMul, dealRouterArr } from '@/utils/public';
-import { DApp } from '@/utils/wallet';
 import LimitTrade from './LimitTrade';
 import MarketTrade from './MarketTrade';
 export default {
@@ -246,27 +245,34 @@ export default {
       this.onChange(num)
     },
     // 获取用户余额
-    handleGetAccBal(type) {
+    async handleGetAccBal(type) {
       let params = {
         code: this.market.contract0,
-        coin: this.market.symbol0,
+        symbol: this.market.symbol0,
+        decimal: this.market.decimal0,
+        account: this.account.name,
       }
       const isSym0 = type !== 'sym1';
       if (!isSym0) {
         params = {
           code: this.market.contract1,
-          coin: this.market.symbol1,
+          symbol: this.market.symbol1,
+          decimal: this.market.decimal1,
+          account: this.account.name,
         }
       }
-      DApp.getCurrencyBalance(params, (res) => {
-        const coin = res.split(' ')[1];
-        if (coin !== this.market.symbol0 && coin !== this.market.symbol1) {
-          return;
-        }
-        const decimal = isSym0 ? this.market.decimal0 : this.market.decimal1;
-        let bal = parseFloat(res || 0).toFixed(decimal);
-        isSym0 ? this.bal0 = bal : this.bal1 = bal;
-      })
+
+      const { status, result } = await this.$api.get_currency_balance(params)
+      if (!status) {
+        return
+      }
+      const coin = result.split(' ')[1];
+      if (coin !== this.market.symbol0 && coin !== this.market.symbol1) {
+        return;
+      }
+      const decimal = isSym0 ? this.market.decimal0 : this.market.decimal1;
+      let bal = parseFloat(result || 0).toFixed(decimal);
+      isSym0 ? this.bal0 = bal : this.bal1 = bal;
     }
   }
 }

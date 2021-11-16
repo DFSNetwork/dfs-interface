@@ -10,7 +10,7 @@
       <div class="licontent">
         <div class="li flexb" v-for="(item, index) in summaryLists" :key="index">
           <div class="flexa">
-            <img class="coinImg" :src="item.imgUrl" :onerror="errorCoinImg">
+            <img class="coinImg" :src="item.imgUrl" :onerror="$errorImg">
             <span>{{ item.symbol }}</span>
           </div>
           <div class="num">{{ Number(item.total).toFixed(5) }}</div>
@@ -34,7 +34,6 @@ export default {
   },
   data() {
     return {
-      errorCoinImg: 'this.src="https://ndi.340wan.com/eos/eosio.token-eos.png"',
     }
   }
 }

@@ -36,6 +36,9 @@ export default {
       helper: '大丰收助手',
       searchMarket1: '搜索市场名称',
       searchMore: '更多代币请搜索查询',
+      tip: '提示',
+      warnTip: '温馨提示',
+      warnTipCnt: 'DFS Swap是去中心化DeFi协议，任何个人或组织均可自由创建市场，币种简介与币种图标是由社区提交，DFS Swap只是代为上传，无法判断币种资料的真实性。同时DFS Swap无法对任何项目作主观判断，无法对投资结果负责，强烈建议您在详细了解项目后再做投资决定。',
     }
   },
   'en': {
@@ -74,6 +77,9 @@ export default {
       helper:'Assistant',
       searchMarket1:'Search market name',
       searchMore:'Please search for more tokens',
+      tip:'tip',
+      warnTip:'Warm Tips',
+      warnTipCnt:'DFS Swap is a decentralized DeFi protocol. Any individual or organization can freely create a market. The currency profile and currency icon are submitted by the community. DFS Swap is only uploaded on behalf of it, and the authenticity of the currency data cannot be judged. At the same time, DFS Swap cannot make subjective judgments on any project and cannot be responsible for the investment results. It is strongly recommended that you make investment decisions after understanding the project in detail. ',
     }
   }
 }

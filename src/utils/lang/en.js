@@ -59,6 +59,7 @@ export default {
   error: {
     insufficient: 'Insufficient {res} resources', // Insufficient {res} resources
     cancel: 'Operation cancelled', // Operation cancelled
+    timeout: 'Transaction timed out, please try again or change node',
   },
   invi: {
     invitation: 'Invitation',
@@ -228,6 +229,8 @@ export default {
     mineApr: 'Forecast annual mining revenue',
     marketFeesApr: 'Estimated annualized fee income',
     marketApr24H: 'Recent 24H fee annualized',
+    coinSupply: 'Supply',
+    price: 'Price'
   },
   node: {
     nodeSet: 'Node Setting',

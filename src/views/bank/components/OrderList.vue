@@ -40,8 +40,8 @@
 </template>
 
 <script>
-import { EosModel } from '@/utils/eos';
-import { toLocalTime, toFixed } from '@/utils/public';
+import { DApp } from '@/utils/wallet';
+import { toLocalTime } from '@/utils/public';
 import { mapState } from 'vuex';
 import moment from 'moment';
 import UsddTip from '@/components/UsddTip';
@@ -60,15 +60,15 @@ export default {
   },
   computed: {
     ...mapState({
-      scatter: state => state.app.scatter,
+      account: state => state.app.account,
       slipPoint: state => state.app.slipPoint,
       baseConfig: state => state.sys.baseConfig,
     }),
   },
   watch: {
-    scatter: {
+    account: {
       handler: function listen(newVal) {
-        if (newVal.identity) {
+        if (newVal.name) {
           this.handleRowsMint()
         }
       },
@@ -83,7 +83,7 @@ export default {
   },
   methods: {
     // 生成列表
-    handleRowsMint() {
+    async handleRowsMint() {
       clearTimeout(this.timer)
       this.handleGetBalance();
       const params = {
@@ -91,29 +91,31 @@ export default {
         scope: this.baseConfig.toAccountJin,
         table: 'debts',
         limit: 1000,
-        lower_bound: ` ${this.scatter.identity.accounts[0].name}`,
-        upper_bound: ` ${this.scatter.identity.accounts[0].name}`,
+        lower_bound: ` ${this.account.name}`,
+        upper_bound: ` ${this.account.name}`,
         key_type: 'i64',
         index_position: 2,
         table_key: 'byname',
         json: true
       }
-      EosModel.getTableRows(params, (res) => {
-        const rows = res.rows || [];
-        const list = rows.filter(v => v.owner === this.scatter.identity.accounts[0].name)
-        list.forEach((v) => {
-          v.ctime = toLocalTime(`${v.create_time}.000+0000`);
-          v.staked = !!Number(v.rex_received.split(' ')[0]);
-          v.ableRedeemDate = toLocalTime(`${v.rex_maturity}.000+0000`);
-          const redeemTime = moment(v.ableRedeemDate).valueOf(); // 解锁时间
-          const nowTime = moment().valueOf(); // 当前时间
-          v.ableRedeem = redeemTime <= nowTime;
-        });
-        this.tableData = list.reverse();
-        this.timer = setTimeout(() => {
-          this.handleRowsMint();
-        }, 20000);
-      })
+      const {status, result} = await this.$api.get_table_rows(params)
+      if (!status || !result.rows.length) {
+        return
+      }
+      const rows = result.rows || [];
+      const list = rows.filter(v => v.owner === this.account.name)
+      list.forEach((v) => {
+        v.ctime = toLocalTime(`${v.create_time}.000+0000`);
+        v.staked = !!Number(v.rex_received.split(' ')[0]);
+        v.ableRedeemDate = toLocalTime(`${v.rex_maturity}.000+0000`);
+        const redeemTime = moment(v.ableRedeemDate).valueOf(); // 解锁时间
+        const nowTime = moment().valueOf(); // 当前时间
+        v.ableRedeem = redeemTime <= nowTime;
+      });
+      this.tableData = list.reverse();
+      this.timer = setTimeout(() => {
+        this.handleRowsMint();
+      }, 20000);
     },
     handleReg(item) {
       // console.log(item)
@@ -142,35 +144,39 @@ export default {
         memo: `redeem: ${item.id}`,
         quantity: item.issue
       }
-      EosModel.transfer(params, (res) => {
-        if(res.code && JSON.stringify(res.code) !== '{}') {
-          this.$message({
-            message: res.message,
-            type: 'error'
-          });
-          return
+      DApp.transfer(params, (err) => {
+        if (err && err.code == 402) {
+          return;
         }
+        if (err) {
+          this.$toast({
+            type: 'fail',
+            message: err.message,
+          })
+          return;
+        }
+        this.$toast({
+          message: this.$t('public.success'),
+          type: 'success'
+        });
         setTimeout(() => {
           this.handleBalanTimer();
           this.handleRowsMint()
         }, 1000);
-        this.$message({
-          message: this.$t('public.success'),
-          type: 'success'
-        });
       })
     },
     async handleGetBalance() {
       const params = {
         code: 'bankofusddv1',
-        coin: 'USDD',
-        decimal: 4
+        symbol: 'USDD',
+        decimal: 4,
       };
-      await EosModel.getCurrencyBalance(params, res => {
-        let balance = toFixed('0.0000000000001', params.decimal);
-        (!res || res.length === 0) ? balance : balance = res.split(' ')[0];
-        this.balanceSym0 = balance;
-      })
+      const {status, result} = await this.$api.get_currency_balance(params);
+      if (!status) {
+        return
+      }
+      const balance = result.split(' ')[0]
+      this.balanceSym0 = balance;
     },
   },
 }

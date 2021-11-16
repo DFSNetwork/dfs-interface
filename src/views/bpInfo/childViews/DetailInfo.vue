@@ -43,13 +43,13 @@ export default {
   },
   computed: {
     ...mapState({
-      scatter: state => state.app.scatter,
+      account: state => state.app.account,
     }),
     isEditor() {
-      if (!this.scatter || !this.scatter.identity) {
+      if (!this.account || !this.account.name) {
         return false;
       }
-      const formName = this.scatter.identity.accounts[0].name;
+      const formName = this.account.name;
       const has = this.editors.find(v => v.owner === formName)
       if (has) {
         return true
@@ -58,9 +58,9 @@ export default {
     }
   },
   watch: {
-    scatter: {
+    account: {
       handler: function st(newVal) {
-        if (newVal.identity) {
+        if (newVal.name) {
           // 用户数据获取
           this.handleGetBal()
         }

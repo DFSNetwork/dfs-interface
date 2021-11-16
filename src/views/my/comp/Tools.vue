@@ -163,11 +163,11 @@ export default {
         return
       }
       if (name === 'usdxVote') {
-        location.href = 'https://usdx.defis.networkgovern/usdc'
+        location.href = 'https://usdx.netlify.app/govern/usdc'
         return
       }
       if (name === 'usdx') {
-        location.href = 'https://usdx.defis.network'
+        location.href = 'https://usdx.netlify.app'
         return
       }
       if (name === 'pdd') {

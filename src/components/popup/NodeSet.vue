@@ -16,7 +16,7 @@
               'red': node.delay >= 3000 || !node.delay,
             }">{{ node.delay || '- ' }}ms</span>
           </div>
-          <span class="tip">{{ node.url }}</span>
+          <span class="tip" v-if="!node.unShowUrl">{{ node.url }}</span>
         </div>
       </div>
       <div class="nodeList flexa" @click="handleCheck(node, nodeList.length)">
@@ -44,22 +44,32 @@ export default {
     return {
       nodeUrl: '',
       nodeList: [
+        // {
+        //   name: 'Default',
+        //   area: 'production',
+        //   protocol: 'https',
+        //   host: 'eos.blockeden.cn', // eospush.tokenpocket.pro
+        //   port: '443',
+        //   url: 'https://eos.blockeden.cn', // https://eospush.tokenpocket.pro
+        //   chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
+        // },
+        // {
+        //   name: 'Default',
+        //   area: 'production',
+        //   protocol: 'https',
+        //   host: 'eos.chains.one', // eospush.tokenpocket.pro
+        //   port: '443',
+        //   url: 'https://eos.chains.one', // https://eospush.tokenpocket.pro
+        //   chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
+        // },
         {
-          name: 'BlockEden',
+          unShowUrl: true,
+          name: 'Default',
           area: 'production',
           protocol: 'https',
-          host: 'eos.blockeden.cn', // eospush.tokenpocket.pro
+          host: '47.99.40.133', // eospush.tokenpocket.pro
           port: '443',
-          url: 'https://eos.blockeden.cn', // https://eospush.tokenpocket.pro
-          chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
-        },
-        {
-          name: 'DFS社区节点',
-          area: 'production',
-          protocol: 'http',
-          host: 'eos.rrdy.com', // eospush.tokenpocket.pro
-          port: '443',
-          url: 'https://eos.rrdy.com', // https://eospush.tokenpocket.pro
+          url: 'https://47.99.40.133', // https://eospush.tokenpocket.pro
           chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
         },
         {

@@ -72,7 +72,7 @@ export default {
     },
     handleToProject(name) {
       if (name === 'usdx') {
-        location.href = 'https://usdx.defis.network/govern/usdc'
+        location.href = 'https://usdx.netlify.app/govern/usdc'
         return
       }
       if (name === 'dcap') {

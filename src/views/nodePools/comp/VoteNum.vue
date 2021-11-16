@@ -27,7 +27,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import { EosModel } from '@/utils/eos';
+import { DApp } from '@/utils/wallet';
 
 import { getJoinActions, getVoteToProxy } from '../js/nodePools';
 
@@ -57,26 +57,29 @@ export default {
   },
   computed: {
     ...mapState({
-      scatter: state => state.app.scatter,
+      account: state => state.app.account,
     }),
   },
   methods: {
     handleJoin() {
-      if (!this.scatter || !this.scatter.identity || this.loadingProxy) {
+      if (!this.account || !this.account.name || this.loadingProxy) {
         return
       }
       this.loadingJoin = true;
       const params = getJoinActions(this.accVoteData)
-      EosModel.toTransaction(params, (res) => {
+      DApp.toTransaction(params, (err) => {
         this.loadingJoin = false;
-        if(res.code && JSON.stringify(res.code) !== '{}') {
-          this.$message({
-            message: res.message,
-            type: 'error'
-          });
-          return
+        if (err && err.code == 402) {
+          return;
         }
-        this.$message({
+        if (err) {
+          this.$toast({
+            type: 'fail',
+            message: err.message,
+          })
+          return;
+        }
+        this.$toast({
           message: this.$t('public.success'),
           type: 'success'
         });
@@ -92,21 +95,24 @@ export default {
     },
     // 执行代理委托
     handleProxy() {
-      if (!this.scatter || !this.scatter.identity || this.loadingProxy) {
+      if (!this.account || !this.account.name || this.loadingProxy) {
         return
       }
       this.loadingProxy = true;
       const params = getVoteToProxy(this.accVoteData)
-      EosModel.toTransaction(params, (res) => {
+      DApp.toTransaction(params, (err) => {
         this.loadingProxy = false;
-        if(res.code && JSON.stringify(res.code) !== '{}') {
-          this.$message({
-            message: res.message,
-            type: 'error'
-          });
-          return
+        if (err && err.code == 402) {
+          return;
         }
-        this.$message({
+        if (err) {
+          this.$toast({
+            type: 'fail',
+            message: err.message,
+          })
+          return;
+        }
+        this.$toast({
           message: this.$t('public.success'),
           type: 'success'
         });

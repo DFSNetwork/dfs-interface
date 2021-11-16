@@ -25,6 +25,20 @@
             src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/switch.png">
       </div>
     </div>
+    <div class="walletTrans flexb">
+      <div class="flexa" @click="handleTo('myTransfer')">
+        <img src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/transfer.png">
+        <span>{{ $t('newwallet.transfer') }}</span>
+      </div>
+      <div class="flexa" @click="handleTo('myReceive')">
+        <img src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/payment.png">
+        <span>{{ $t('newwallet.receive') }}</span>
+      </div>
+      <div class="flexa" @click="handleTo('index')">
+        <img src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/transaction.png">
+        <span>{{ $t('newwallet.trade') }}</span>
+      </div>
+    </div>
     <div class="tools tip item flexb">
       <div class="flexa" @click="hidLess = !hidLess">
         <div class="select">
@@ -97,6 +111,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
   name: 'assetsComp',
   props: {
@@ -119,9 +135,16 @@ export default {
       hidLess: true,
       countByU: true,
       hideAss: false,
+      wallet: '',
     }
   },
+  mounted() {
+    this.wallet = localStorage.getItem('WALLET')
+  },
   computed: {
+    ...mapState({
+      account: state => state.app.account,
+    }),
     allCount() {
       let count = 0;
       this.allBals.forEach(v => {
@@ -147,6 +170,11 @@ export default {
     }
   },
   methods: {
+    handleTo(name) {
+      this.$router.push({
+        name
+      })
+    },
     handleSearch() {
       if (!this.search) {
         this.sArr = this.allBals;
@@ -167,6 +195,23 @@ export default {
     font-size: 24px;
     color: #999;
     text-align: center;
+  }
+  .walletTrans{
+    padding: 0 28px;
+    height: 118px;
+    border-bottom: 1px solid $color-border;
+    font-size: 28px;
+    img{
+      width: 60px;
+      margin-right: 18px;
+    }
+    &>div{
+      // flex: 1;
+      // margin-right: 80px;
+      &:last-child{
+        margin-right: 0;
+      }
+    }
   }
   .item{
     padding: 34px 24px;

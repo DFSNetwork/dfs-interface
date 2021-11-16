@@ -68,7 +68,6 @@ export default {
   },
   computed: {
     ...mapState({
-      scatter: state => state.app.scatter,
     }),
   },
   data() {

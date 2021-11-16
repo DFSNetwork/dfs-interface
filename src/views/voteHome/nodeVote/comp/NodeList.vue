@@ -17,7 +17,7 @@
         <div class="main">
           <div class="flexa">
             <!-- <span class="rank flexc">{{ item.rank }}</span> -->
-            <img class="logo" :src="item.owner !== 'bp.dfs' ? item.logo : voteDefaultImg" :onerror="errorCoinImg">
+            <img class="logo" :src="item.owner !== 'bp.dfs' ? item.logo : voteDefaultImg" :onerror="$errorImg">
             <span class="nodeName">{{ item.owner }}</span>
           </div>
           <div v-if="item.tags && act === 4" class="tags">
@@ -101,7 +101,6 @@ export default {
   data() {
     return {
       voteDefaultImg: 'https://cdn.jsdelivr.net/gh/defis-net/material2/coin/tagtokenmain-tag.png',
-      errorCoinImg: 'this.src="https://ndi.340wan.com/eos/eosio.token-eos.png"',
       isChecked: false,
       lists: [],
       rankLists: [],

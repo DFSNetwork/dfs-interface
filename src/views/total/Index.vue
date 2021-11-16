@@ -26,7 +26,7 @@
         <div class="list" v-for="(item, index) in showArr" :key="index" @click="handleToMarket(item.mid)">
           <div class="coin flexb">
             <span class="coinName">
-              <img class="coinImg" :src="item.img" :onerror="errorCoinImg" alt="">
+              <img class="coinImg" :src="item.img" :onerror="$errorImg" alt="">
               <span>{{ item.symbol }}</span>
             </span>
             <span>{{ $t('apy.exchange24') }}: {{ item.countEos || '—' }}</span>
@@ -106,7 +106,6 @@ export default {
   data() {
     return {
       // loading: true,
-      errorCoinImg: 'this.src="https://ndi.340wan.com/eos/eosio.token-eos.png"',
       topLoading: true,
       sortValue: '3', // 1 - 年化 ｜ 2 - 深度 ｜ 3 - 成交量
       options: [{

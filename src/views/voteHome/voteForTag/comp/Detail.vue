@@ -6,7 +6,7 @@
     <div class="mylist" @click="handleJoin(thisMarket)">
       <div class="symbol flexb">
         <div class="coinInfo flex">
-          <div class="coinImg"><img width="100%" :src="thisMarket.sym0Data.imgUrl" :onerror="errorCoinImg"></div>
+          <div class="coinImg"><img width="100%" :src="thisMarket.sym0Data.imgUrl" :onerror="$errorImg"></div>
           <div>
             <div class="coin">{{ thisMarket.symbol0 }}</div>
             <div class="contract tip">{{ thisMarket.contract0 }}</div>
@@ -14,7 +14,7 @@
         </div>
         <div class="add">+</div>
         <div class="coinInfo flex">
-          <div class="coinImg"><img width="100%" :src="thisMarket.sym1Data.imgUrl" :onerror="errorCoinImg"></div>
+          <div class="coinImg"><img width="100%" :src="thisMarket.sym1Data.imgUrl" :onerror="$errorImg"></div>
           <div>
             <div class="coin">{{ thisMarket.symbol1 }}</div>
             <div class="contract tip">{{ thisMarket.contract1 }}</div>
@@ -63,13 +63,11 @@
 
 <script>
 import { mapState } from 'vuex';
-import { EosModel } from '@/utils/eos';
 import { toLocalTime } from '@/utils/public';
 export default {
   name: 'voteDetail',
   data() {
     return {
-      errorCoinImg: 'this.src="https://ndi.340wan.com/eos/eosio.token-eos.png"',
       mid: '',
       thisMarket: {
         symbol0: 'EOS',
@@ -80,7 +78,7 @@ export default {
           imgUrl: "https://apps.defis.network/static/coin/eosio.token-eos.svg"
         },
         sym1Data: {
-          imgUrl: "https://ndi.340wan.com/eos/minedfstoken-dfs.png"
+          imgUrl: "https://cdn.jsdelivr.net/gh/defis-net/material2/coin/minedfstoken-dfs.png"
         },
       }, // 当前矿池数据
       allVotes: '0',
@@ -126,7 +124,7 @@ export default {
         }
       })
     },
-    handleGetList() {
+    async handleGetList() {
       const params = {
         "code": "vote.tag",
         "scope": this.mid,
@@ -134,24 +132,26 @@ export default {
         "json": true,
         limit: 10000
       }
-      EosModel.getTableRows(params, (res) => {
-        this.getMinersList = false;
-        const rows = res.rows || [];
-        let count = 0
-        rows.forEach(v => {
-          const num = parseInt(v.vote_power / 10000)
-          count = num + Number(count);
-          const voteDate = toLocalTime(`${v.vote_time}.000+0000`)
-          this.$set(v, 'voteNum', num)
-          this.$set(v, 'voteDate', voteDate)
-        });
-        let newArr = rows.sort((a, b) => {
-          return b.voteNum - a.voteNum;
-        })
-        this.allVotes = count;
-        this.allMinersList = newArr;
-        this.handleDealPage()
+      const {status, result} = await this.$api.get_table_rows(params)
+      this.getMinersList = false;
+      if (!status || !result.rows.length) {
+        return
+      }
+      const rows = result.rows || [];
+      let count = 0
+      rows.forEach(v => {
+        const num = parseInt(v.vote_power / 10000)
+        count = num + Number(count);
+        const voteDate = toLocalTime(`${v.vote_time}.000+0000`)
+        this.$set(v, 'voteNum', num)
+        this.$set(v, 'voteDate', voteDate)
+      });
+      let newArr = rows.sort((a, b) => {
+        return b.voteNum - a.voteNum;
       })
+      this.allVotes = count;
+      this.allMinersList = newArr;
+      this.handleDealPage()
     },
     handleDealPage() {
       const start = (this.page - 1) * this.pageSize;

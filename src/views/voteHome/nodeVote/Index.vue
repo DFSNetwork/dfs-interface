@@ -64,7 +64,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import { EosModel } from '@/utils/eos';
+import { DApp } from '@/utils/wallet';
 import moment from 'moment';
 
 import ProxyAcc from './comp/ProxyAcc';
@@ -107,7 +107,7 @@ export default {
   },
   computed: {
     ...mapState({
-      scatter: state => state.app.scatter,
+      account: state => state.app.account,
     }),
     checkedLeng() {
       const list = this.nodeLists.filter(v => v.isChecked)
@@ -119,9 +119,9 @@ export default {
       this.search = ''
       // this.handleCancel()
     },
-    scatter: {
+    account: {
       handler: function listen(newVal) {
-        if (newVal.identity) {
+        if (newVal.name) {
           this.handleGetAccVoteLists();
         }
       },
@@ -156,8 +156,8 @@ export default {
     },
     handleTovote() {
       this.voteLoading = true;
-      const formName = this.scatter.identity.accounts[0].name;
-      const permission = this.scatter.identity.accounts[0].authority;
+      const formName = this.account.name;
+      const permission = this.account.permissions;
       const checkedArr = this.nodeLists.filter(v => v.isChecked);
       const producers = []
       checkedArr.forEach(v => {
@@ -177,23 +177,26 @@ export default {
           }
         }]
       }
-      EosModel.toTransaction(params, (res) => {
+      DApp.toTransaction(params, (err) => {
         this.voteLoading = false
-        if(res.code && JSON.stringify(res.code) !== '{}') {
-          this.$message({
-            message: res.message,
-            type: 'error'
-          });
-          return
+        if (err && err.code == 402) {
+          return;
         }
+        if (err) {
+          this.$toast({
+            type: 'fail',
+            message: err.message,
+          })
+          return;
+        }
+        this.$toast({
+          message: this.$t('public.success'),
+          type: 'success'
+        });
         setTimeout(() => {
           this.handleGetAccVoteLists();
           this.handleGetVoteList()
         }, 2000);
-        this.$message({
-          message: this.$t('public.success'),
-          type: 'success'
-        });
       })
     },
     async handleGetNodeLists() {
@@ -259,10 +262,10 @@ export default {
     },
     // 获取账户已投列表
     async handleGetAccVoteLists() {
-      if (!this.scatter || !this.scatter.identity) {
+      if (!this.account || !this.account.name) {
         return
       }
-      const formName = this.scatter.identity.accounts[0].name;
+      const formName = this.account.name;
       const params = {
         "code":"dfsbpsvoters",
         "scope":"dfsbpsvoters",

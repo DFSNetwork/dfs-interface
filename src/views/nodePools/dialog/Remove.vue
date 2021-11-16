@@ -48,7 +48,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import { EosModel } from '@/utils/eos';
+import { DApp } from '@/utils/wallet';
 import {toLocalTime, toFixed} from '@/utils/public'
 import { getRexActions } from '../js/nodePools'
 import RexLock from './RexLock'
@@ -85,7 +85,7 @@ export default {
   },
   computed: {
     ...mapState({
-      scatter: state => state.app.scatter,
+      account: state => state.app.account,
     }),
     aboutEosNum() {
       const num = this.buy * toFixed(this.rexPrice, 8);
@@ -93,9 +93,9 @@ export default {
     }
   },
   watch: {
-    scatter: {
+    account: {
       handler: function listen(newVal) {
-        if (newVal.identity) {
+        if (newVal.name) {
           // 用户数据获取
           this.handleGetAccRexData()
         }
@@ -106,7 +106,7 @@ export default {
   },
   methods: {
     async handleGetAccRexData() {
-      const formName = this.scatter.identity.accounts[0].name;
+      const formName = this.account.name;
       // const formName = 'eospublicbus';
       const params = {
         code: "eosio",
@@ -167,16 +167,19 @@ export default {
         rex: `${toFixed(this.buy, 4)} REX`,
         getEos: `${this.aboutEosNum} EOS`
       })
-      EosModel.toTransaction(params, (res) => {
+      DApp.toTransaction(params, (err) => {
         this.loading = false;
-        if(res.code && JSON.stringify(res.code) !== '{}') {
-          this.$message({
-            message: res.message,
-            type: 'error'
-          });
-          return
+        if (err && err.code == 402) {
+          return;
         }
-        this.$message({
+        if (err) {
+          this.$toast({
+            type: 'fail',
+            message: err.message,
+          })
+          return;
+        }
+        this.$toast({
           message: this.$t('public.success'),
           type: 'success'
         });

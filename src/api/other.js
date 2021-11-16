@@ -18,6 +18,17 @@ export function getJson() {
     })
   })
 }
+export function getJsonByToken() {
+  return new Promise((resolve, reject) => {
+    // axios.get(`/static/test/tokenInfo.json`).then((res) => {
+    axios.get(`https://www.defis.network/coin/tokenInfo.json`).then((res) => {
+      let result = res.data;
+      resolve({ status: res.status === 200, result });
+    }, err => {
+      reject(err)
+    })
+  })
+}
 
 export function dfsdata() {
   return new Promise((resolve, reject) => {
@@ -32,7 +43,7 @@ export function dfsdata() {
 
 export function orderLists(params) {
   return new Promise((resolve, reject) => {
-    axios.get('https://api.defis.network/dfs/pddex/tradelog', {params}).then((res) => {
+    axios.get('https://api.yfc.one/dfs/pddex/tradelog', {params}).then((res) => {
       let result = Object.assign(res.data, {});
       resolve({ status: res.status === 200, result });
     }, err => {
@@ -43,7 +54,7 @@ export function orderLists(params) {
 
 export function transferLog(params) {
   return new Promise((resolve, reject) => {
-    axios.get('https://api.defis.network/dfs/history/transfer', {params}).then((res) => {
+    axios.get('https://api.yfc.one/dfs/history/transfer', {params}).then((res) => {
       let result = Object.assign(res.data, {});
       resolve({ status: res.status === 200, result });
     }, err => {
@@ -54,7 +65,7 @@ export function transferLog(params) {
 // 用户交易对交易记录
 export function tradelog(params) {
   return new Promise((resolve, reject) => {
-    axios.get('https://api.defis.network/dfs/swap/tradelog', {params}).then((res) => {
+    axios.get('https://api.yfc.one/dfs/swap/tradelog', {params}).then((res) => {
       let result = Object.assign(res.data, {});
       resolve({ status: res.status === 200, result });
     }, err => {
@@ -65,7 +76,7 @@ export function tradelog(params) {
 // 用户做市记录
 export function depositlog(params) {
   return new Promise((resolve, reject) => {
-    axios.get('https://api.defis.network/dfs/swap/depositlog', {params}).then((res) => {
+    axios.get('https://api.yfc.one/dfs/swap/depositlog', {params}).then((res) => {
       let result = Object.assign(res.data, {});
       resolve({ status: res.status === 200, result });
     }, err => {
@@ -77,7 +88,7 @@ export function depositlog(params) {
 // 获取支持Box的交易对 & 当前委托数据
 export function boxMidsAndOrder() {
   return new Promise((resolve, reject) => {
-    axios.get('https://api.defis.network/pddex/info').then((res) => {
+    axios.get('https://api.yfc.one/pddex/info').then((res) => {
       let result = Object.assign(res.data, {});
       resolve({ status: res.status === 200, result });
     }, err => {
@@ -89,7 +100,7 @@ export function boxMidsAndOrder() {
 // 获取节点tag标签
 export function getBpTags() {
   return new Promise((resolve, reject) => {
-    axios.get('https://api.defis.network/dfs/bp/recommends').then((res) => {
+    axios.get('https://api.yfc.one/dfs/bp/recommends').then((res) => {
       let result = Object.assign(res.data, {});
       resolve({ status: res.status === 200, result });
     }, err => {
@@ -101,7 +112,7 @@ export function getBpTags() {
 // 获取PDDEX行情列表
 export function getPddexMarkets() {
   return new Promise((resolve, reject) => {
-    axios.get('https://api.defis.network/dfs/apy/tops2').then((res) => {
+    axios.get('https://api.yfc.one/dfs/apy/tops2').then((res) => {
     // axios.get('http://localhost:8101/apy/tops2').then((res) => {
       let result = unZip(res.data)
       result = Object.assign(JSON.parse(result), {});
@@ -113,10 +124,10 @@ export function getPddexMarkets() {
   })
 }
 
-// 获取USDT价格 https://api.defis.network/static/market/usdtprice
+// 获取USDT价格 https://api.yfc.one/static/market/usdtprice
 export function getUsdtPrice() {
   return new Promise((resolve, reject) => {
-    axios.get('https://api.defis.network/dfs/market/usdtprice').then((res) => {
+    axios.get('https://api.yfc.one/dfs/market/usdtprice').then((res) => {
       let result = Object.assign(res.data, {});
       console.log(result)
       const price = result.usdtprice || 6.5;
@@ -130,7 +141,7 @@ export function getUsdtPrice() {
 
 export function debugApi(params) {
   return new Promise((resolve, reject) => {
-    axios.get('https://api.defis.network/common/set_bug', {params}).then((res) => {
+    axios.get('https://api.yfc.one/common/set_bug', {params}).then((res) => {
       let result = Object.assign(res.data, {});
       resolve({ status: res.status === 200, result });
     }, err => {

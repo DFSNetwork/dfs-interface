@@ -91,7 +91,7 @@ export default {
   },
   computed: {
     ...mapState({
-      scatter: state => state.app.scatter,
+      account: state => state.app.account,
       filterMkLists: state => state.sys.filterMkLists,
     }),
   },
@@ -178,8 +178,8 @@ export default {
         act: this.typeAct,
       }
       let status, result
-      if (this.scatter && this.scatter.identity) {
-        params.user = this.scatter.identity.accounts[0].name;
+      if (this.account && this.account.name) {
+        params.user = this.account.name;
       }
       if (this.typeAct === 0) {
         if (this.filter) {

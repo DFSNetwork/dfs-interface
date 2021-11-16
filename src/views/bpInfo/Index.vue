@@ -34,7 +34,7 @@
       >
       <div class="bpList" v-for="(v, i) in bpLists" :key="i" @click="handleTo(v)">
         <div class="flexa">
-          <img class="bpImg" :src="v.logo || errImg" :onerror="errImg">
+          <img class="bpImg" :src="v.logo" :onerror="$errorImg">
           <div class="name">{{ v.owner }}</div>
         </div>
         <div class="content" v-if="language === 'zh-CN'">{{ v.baseInfo.desc0  || '暂时没有简介'}}</div>
@@ -53,7 +53,6 @@ export default {
   name: 'bpInfo',
   data() {
     return {
-      errImg: 'this.src="https://ndi.340wan.com/eos/eosio.token-eos.png"',
       bpLists: [],
       allBpLists: [],
       loadingMore: false,

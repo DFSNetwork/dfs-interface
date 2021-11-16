@@ -66,19 +66,19 @@
           </div>
           <div class="rankItem flexb dinReg" v-for="(v, index) in followList" :key="`${active}-${index}`" @click="handleToTrade(v)">
             <div class="name flexa">
-              <img class="coinUrl" :src="v.sym1Data.imgUrl" :onerror="errorCoinImg">
+              <img class="coinUrl" :src="v.sym1Data.imgUrl" :onerror="$errorImg">
               <div>
                 <div class="din">
                   <span>{{ v.symbol1 }}</span>
                   <span class="small">/{{ v.symbol0 }}</span>
                 </div>
                 <div class="tip smallTip">
-                  <span v-if="sortPools">{{ $t('pddex.pools') }} {{ handleDealNum(v.poolsNum) }}</span>
+                  <span v-if="sortPools">{{ $t('pddex.pools') }} {{ handleDealNum(v.poolsNum) }} {{ v.symbol0 }}</span>
                   <span v-else-if="sortApy">
                     <span>{{ $t('pddex.apys1') }} {{ parseFloat(v.apy).toFixed(2) }}%</span>
                     <span class="green_p" @click.stop="handleShowApy(v)">详情＞</span>
                   </span>
-                  <span v-else>{{ $t('pddex.amt1') }} {{ handleDealNum(v.volume24H) }}</span>
+                  <span v-else>{{ $t('pddex.amt1') }} {{ handleDealNum(v.volume24H) }} {{ v.symbol0 }}</span>
                 </div>
               </div>
             </div>
@@ -108,19 +108,19 @@
           </div>
           <div class="rankItem flexb dinReg" v-for="(v, index) in cdAreaLists" :key="`${active}-${index}`" @click="handleToTrade(v)">
             <div class="name flexa">
-              <img class="coinUrl" :src="v.sym1Data.imgUrl" :onerror="errorCoinImg">
+              <img class="coinUrl" :src="v.sym1Data.imgUrl" :onerror="$errorImg">
               <div>
                 <div class="din">
                   <span>{{ v.symbol1 }}</span>
                   <span class="small">/{{ v.symbol0 }}</span>
                 </div>
                 <div class="tip smallTip">
-                  <span v-if="sortPools">{{ $t('pddex.pools') }} {{ handleDealNum(v.poolsNum) }}</span>
+                  <span v-if="sortPools">{{ $t('pddex.pools') }} {{ handleDealNum(v.poolsNum) }} {{ v.symbol0 }}</span>
                   <span v-else-if="sortApy">
                     <span>{{ $t('pddex.apys1') }} {{ v.apy }}%</span>
                     <span class="green_p" @click.stop="handleShowApy(v)">详情＞</span>
                   </span>
-                  <span v-else>{{ $t('pddex.amt1') }} {{ handleDealNum(v.volume24H) }}</span>
+                  <span v-else>{{ $t('pddex.amt1') }} {{ handleDealNum(v.volume24H) }}  {{ v.symbol0 }}</span>
                 </div>
               </div>
             </div>
@@ -159,7 +159,7 @@
 import { mapState } from 'vuex';
 import { dealAreaArr } from '@/views/pddex/comp/appLogic';
 import MarketApy from '@/views/market/popup/MarketApy'
-import { dealNum } from '@/utils/public'
+// import { dealNum } from '@/utils/public'
 
 export default {
   name: 'pddexTab',
@@ -176,7 +176,6 @@ export default {
       rankList: [],
       likeArr: [], // 存放接口返回的关注数据
       swapTradeLists: {},
-      errorCoinImg: 'this.src="https://ndi.340wan.com/eos/eosio.token-eos.png"',
       allMarket: localStorage.getItem('allMarket') ? JSON.parse(localStorage.getItem('allMarket')) :{},
       areaLists: ['USDT', 'USDC', 'EOS', 'DFS', 'TAG', 'DFG'],
       cdAreaLists: [],
@@ -240,6 +239,7 @@ export default {
     account: {
       handler: function at(newVal) {
         if (!newVal.name) {
+          this.active = 1;
           return
         }
         this.handleGetLikes();
@@ -349,6 +349,7 @@ export default {
     // 获取关注列表
     async handleGetLikes() {
       if (!this.account.name) {
+        this.active = 1;
         return
       }
       const {status, result} = await this.$api.get_acc_follow();
@@ -431,7 +432,7 @@ export default {
       this.cdAreaLists = this.allMarket[coin];
     },
     handleDealNum(num) {
-      return dealNum(num)
+      return parseInt(num)
     }
   }
 }

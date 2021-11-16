@@ -50,11 +50,11 @@
               <div class="poolName">
                 <span class="coinImg flexa">
                   <span class="flexa">
-                    <img :src="item.sym0Data.imgUrl" :onerror="errorCoinImg">
+                    <img :src="item.sym0Data.imgUrl" :onerror="$errorImg">
                     <span>{{ item.symbol0 }}</span>
                   </span>
                   <span class="flexa">
-                    <img :src="item.sym1Data.imgUrl" :onerror="errorCoinImg">
+                    <img :src="item.sym1Data.imgUrl" :onerror="$errorImg">
                     <span>{{ item.symbol1 }}</span>
                   </span>
                 </span>
@@ -99,7 +99,7 @@
 </template>
 
 <script>
-import { EosModel } from '@/utils/eos';
+import { DApp } from '@/utils/wallet';
 import { mapState } from 'vuex';
 import { getVotePools } from '@/utils/api';
 import Rank from './comp/Rank';
@@ -115,7 +115,6 @@ export default {
     return {
       showRules: false,
       act: 1,
-      errorCoinImg: 'this.src="https://ndi.340wan.com/eos/eosio.token-eos.png"',
       search: '',
       searchList: [],
       checkBox: [],
@@ -157,8 +156,7 @@ export default {
   },
   computed: {
     ...mapState({
-      // dsrPools: state => state.sys.dsrPools,
-      scatter: state => state.app.scatter,
+      account: state => state.app.account,
       marketLists: state => state.sys.marketLists,
     }),
     checkedLeng() {
@@ -182,7 +180,6 @@ export default {
           return
         }
         this.allList = this.handleDealTagMarket(newVal);
-        console.log(this.allList)
         this.listLoading = false;
         this.handlerDealMlVote();
         this.handleSearch();
@@ -196,9 +193,9 @@ export default {
       },
       deep: true,
     },
-    scatter: {
+    account: {
       handler: function listen(newVal) {
-        if (newVal.identity) {
+        if (newVal.name) {
           this.handleGetMyVotes();
         }
       },
@@ -253,8 +250,8 @@ export default {
       checked.forEach(v => {
         pools.push(Number(v.mid))
       })
-      const formName = this.scatter.identity.accounts[0].name;
-      const permission = this.scatter.identity.accounts[0].authority;
+      const formName = this.account.name;
+      const permission = this.account.permissions;
       const params = {
         actions: [
           {
@@ -271,16 +268,19 @@ export default {
           },
         ]
       }
-      EosModel.toTransaction(params, (res) => {
+      DApp.toTransaction(params, (err) => {
         this.voteLoading = false;
-        if(res.code && JSON.stringify(res.code) !== '{}') {
-          this.$message({
-            message: res.message,
-            type: 'error'
-          });
-          return
+        if (err && err.code == 402) {
+          return;
         }
-        this.$message({
+        if (err) {
+          this.$toast({
+            type: 'fail',
+            message: err.message,
+          })
+          return;
+        }
+        this.$toast({
           message: this.$t('public.success'),
           type: 'success'
         });
@@ -292,7 +292,7 @@ export default {
         }, 800);
       })
     },
-    handleGetVotes() {
+    async handleGetVotes() {
       const params = {
         "code": "vote.tag",
         "scope": "vote.tag",
@@ -300,12 +300,14 @@ export default {
         "json": true,
         limit: 10000
       }
-      EosModel.getTableRows(params, (res) => {
-        const rows = res.rows || [];
-        // console.log(rows)
-        this.voteList = rows;
-        this.handlerDealMlVote()
-      })
+      const {status, result} = await this.$api.get_table_rows(params)
+      this.getMinersList = false;
+      if (!status || !result.rows.length) {
+        return
+      }
+      const rows = result.rows || [];
+      this.voteList = rows;
+      this.handlerDealMlVote()
     },
     handlerDealMlVote() {
       if (!this.allList.length) {
@@ -382,26 +384,25 @@ export default {
       this.hisLoading = true;
       this.handleGetMyVotes()
     },
-    handleGetMyVotes() {
+    async handleGetMyVotes() {
       const params = {
         "code": "vote.tag",
         "scope": "vote.tag",
         "table": "voters",
         "json": true,
-        lower_bound: ` ${this.scatter.identity.accounts[0].name}`,
-        upper_bound: ` ${this.scatter.identity.accounts[0].name}`, // 11.bank
+        lower_bound: ` ${this.account.name}`,
+        upper_bound: ` ${this.account.name}`, // 11.bank
         limit: 10000
       }
-      EosModel.getTableRows(params, (res) => {
-        this.hisLoading = false;
-        this.swapGet = true;
-        const rows = res.rows || [];
-        if (!rows.length) {
-          return
-        }
-        this.myVoteList = rows[0].last_vote;
-        this.accNum = parseInt((rows[0].vote_power || 0) / 10000);
-      })
+      const {status, result} = await this.$api.get_table_rows(params)
+      this.hisLoading = false;
+      this.swapGet = true;
+      if (!status || !result.rows.length) {
+        return
+      }
+      const rows = result.rows || [];
+      this.myVoteList = rows[0].last_vote;
+      this.accNum = parseInt((rows[0].vote_power || 0) / 10000);
     },
     handleDealMyVote() {
       const newArr = [];

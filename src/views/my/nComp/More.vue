@@ -79,6 +79,10 @@
           <img class="icon biger" src="https://cdn.jsdelivr.net/gh/defis-net/material2/coin/dfxtokenmain-dfg.png" alt="">
           <div>DFG</div>
         </div>
+        <div class="list" @click="handleToProject('papaya')">
+          <img class="icon" src="https://cdn.jsdelivr.net/gh/defis-net/material2/coin/eos.v2.wei-papaya.png" alt="">
+          <div>木瓜</div>
+        </div>
       </div>
     </div>
   </div>
@@ -116,11 +120,11 @@ export default {
         return
       }
       if (name === 'usdxVote') {
-        location.href = 'https://usdx.defis.network/govern/usdc'
+        location.href = 'https://usdx.netlify.app/govern/usdc'
         return
       }
       if (name === 'usdx') {
-        location.href = 'https://usdx.defis.network/'
+        location.href = 'https://usdx.netlify.app'
         return
       }
       if (name === 'pdd') {
@@ -167,6 +171,9 @@ export default {
       }
       if (name === 'dfg') {
         location.href = 'https://dfgasc.netlify.app'
+      }
+      if (name === 'papaya') {
+        location.href = 'http://v2.papaya.mobi'
       }
     }
   }
