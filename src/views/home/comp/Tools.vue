@@ -32,7 +32,7 @@
               <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/farm1_icon.png">
               <div>{{ $t('invite.myFarm') }}</div>
             </div>
-            <div class="list" @click="handleTo('mineHomeDfs')">
+            <div class="list" @click="handleTo('newPools')">
               <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/mining_icon.png">
               <div>{{ $t('home.mine') }}</div>
             </div>
