@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="list" v-for="(v, i) in pools" :key="i">
+    <div class="list" v-for="(v, i) in pools" :key="i" @click="handleToDetail(v)">
       <div class="info flexb">
         <div class="token flexa">
           <img class="coinImg" :src="v.imgUrl1">
@@ -89,6 +89,14 @@ export default {
     }
   },
   methods: {
+    handleToDetail(item) {
+      this.$router.push({
+        name: 'dfsMinePool',
+        params: {
+          mid: item.mid
+        }
+      })
+    },
     // 获取swap做市余额
     async handleGetBal() {
       const params = {
@@ -257,6 +265,7 @@ export default {
   border-radius: 20px;
   text-align: left;
   font-size: 32px;
+  margin-bottom: 30px;
   .coinImg{
     width: 80px;
     margin-right: 20px;
