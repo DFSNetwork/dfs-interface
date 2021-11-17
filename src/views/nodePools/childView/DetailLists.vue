@@ -1,62 +1,36 @@
 <template>
   <div class="detail">
     <div class="title">
-      <span class="act" v-if="type === 'rex'">{{ $t('sys.coinPool', {coin: this.rSymbol || 'EOS'}) }}</span>
-      <span class="act" v-else>{{ $t('sys.coinLpPool', {coin: `${lpPool.symbol0}/${lpPool.symbol1}`}) }}</span>
+      <span class="act">{{ $t('sys.coinLpPool', {coin: `${lpPool.symbol0}/${lpPool.symbol1}`}) }}</span>
     </div>
-    <div class="list" v-if="type === 'rex'">
-      <div class="poolInfo flexa">
-        <img :src="pool.imgUrl" class="coinImg">
-        <div class="bal">
-          <div class="flexb">
-            <span>{{ $t('nodePools.poolsReward', {token: pool.sym || 'EOS'}) }}</span>
-            <span class="apy">{{ $t('nodePools.apyShort') }}：{{ pool.apy || '0.00' }}%</span>
-          </div>
-          <div class="num din">{{ accVoteData.showReward || '0.00000000' }}</div>
-        </div>
-      </div>
-      <div class="reward">{{ $t('nodePools.poolsBal') }}：{{ pool.bal || `0.0000 ${this.rSymbol}` }}</div>
-    </div>
-    <div class="lpList" v-else>
-      <div class="bgShadow"></div>
-      <div class="list">
-        <div class="poolInfo flexa">
-          <img class="coinImg" :src="lpPool.sym1Data.imgUrl">
-          <div class="bal">
-            <div class="flexb">
-              <span>{{ lpPool.symbol0 }}/{{ lpPool.symbol1 }} {{ $t('nodePools.lpMine') }}</span>
-              <span class="apy">{{ $t('nodePools.apy') }}：{{ lpPool.apy || '0.00' }}%</span>
+    <div class="lpList">
+      <TagRewardInfo :total="accLpData.showReward" @listenUpdate="handleClaim"/>
+      <div class="marketInfo">
+        <div class="coinInfo flexb">
+          <div class="flexa">
+            <img class="logo" :src="lpPool.imgUrl0" >
+            <div>
+              <div class="coinName">{{ lpPool.symbol0 }}</div>
+              <div class="contract tip">{{ lpPool.contract0 }}</div>
             </div>
-            <div class="flexend">
-              <span class="num din">{{ accLpData.showReward || '0.00000000' }}</span>
-              <!-- <span class="red_p flexa" v-if="Number(addBuff)">（
-                <img class="buffImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/buff2.svg">
-                {{ addBuff }}%）</span> -->
+          </div>
+          <img class="addImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/add.svg">
+          <div class="flexa">
+            <img class="logo" :src="lpPool.imgUrl1" >
+            <div>
+              <div class="coinName">{{ lpPool.symbol1 }}</div>
+              <div class="contract tip">{{ lpPool.contract1 }}</div>
             </div>
           </div>
         </div>
-        <div class="reward">{{ $t('nodePools.marketNum') }}：{{ handleDealReserve(lpPool.reserve0) }}/{{ handleDealReserve(lpPool.reserve1) }}</div>
-        <div class="reward">{{ $t('market.myMarkets') }}：{{ handleDealMyLpNum(lpPool) }}</div>
-
-        <!-- <div class="myRank plan">
-          <div class="flexb">
-            <span class="flexa">
-              <span>{{ $t('nodePools.planRank') }}：</span>
-              <el-input-number v-model="planRank" :min="1" :max="150"></el-input-number>
-            </span>
-            <span class="green_p" @click="handleDealToken">{{ $t('nodePools.doing') }}</span>
-          </div>
-          <span>
-            <el-slider
-              :min="1"
-              :max="100"
-              v-model="planRank">
-            </el-slider>
-          </span>
-        </div> -->
-        <!-- <div class="flexb">
-          <span>{{ $t('nodePools.myRank') }}：{{ accLpData.rank || 0 }}</span>
-        </div> -->
+        <div class="apy flexa">
+          <span>{{ $t('apy.title') }}：</span>
+          <span class="dinBold num">{{ apy }}%</span>
+          <span class="green" @click="showApyDetail = true">{{ $t('public.detail') }}></span>
+        </div>
+        <div class="liq dinReg">
+          {{ $t('dex.pools') }}：{{ lpPool.reserve0 }} / {{ lpPool.reserve1 }}
+        </div>
       </div>
     </div>
 
@@ -71,20 +45,13 @@
             <span>{{ item.owner }}</span>
             <span class="flexa">
               <span>{{ $t('mine.earnings') }}：{{ item.showReward || '0.00000000' }} {{ pool.sym }}</span>
-              <!-- <span class="red_p flexa" v-if="Number(item.addBuff)">（
-                <img class="buffImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/buff2.svg">
-                {{ item.addBuff }}%）</span> -->
             </span>
           </div>
-          <div class="flexb" v-if="type === 'rex'">
-            <span>{{ $t('nodePools.allVotes') }}</span>
-            <span>{{ item.stakeEos || '0.0000' }} EOS</span>
-          </div>
-          <div class="flexb" v-else>
+          <div class="flexb">
             <span>{{ $t('nodePools.allRes') }}</span>
             <span>{{ item.sym0 || '0.0000' }} {{lpPool.symbol0}} / {{ item.sym1 || '0.0000'}} {{lpPool.symbol1}}</span>
           </div>
-          <label class="rankImg" v-if="page === 1 && index < 3"><img :src="`https://cdn.jsdelivr.net/gh/defis-net/material/rank/rank${index + 1}.png`" alt=""></label>
+          <!-- <label class="rankImg" v-if="page === 1 && index < 3"><img :src="`https://cdn.jsdelivr.net/gh/defis-net/material/rank/rank${index + 1}.png`" alt=""></label> -->
         </div>
       </template>
 
@@ -107,10 +74,18 @@
       <SureTip v-if="showSure" :params="params"
         @handleSure="handleSure" @handleClose="handleClose"/>
     </el-dialog>
+
+    <van-popup
+      class="popup_p"
+      v-model="showApyDetail">
+      <MarketApy :countApy="apy" :isActual="true"
+                 :aprInfo="aprInfo"/>
+    </van-popup>
   </div>
 </template>
 
 <script>
+import { DApp } from '@/utils/wallet';
 import { mapState } from 'vuex';
 import moment from 'moment';
 
@@ -120,11 +95,13 @@ import { getAccVote, getReward, getLpReward } from '../js/nodePools'
 import { sellToken } from '@/utils/logic';
 
 import SureTip from '@/views/farms/dialog/SureTip';
+import MarketApy from '@/views/market/popup/MarketApy'
+import TagRewardInfo from '@/views/nodePools/childView/TagRewardInfo'
 
 export default {
   name: 'mineLists',
   components: {
-    SureTip
+    SureTip, MarketApy, TagRewardInfo
   },
   data() {
     return {
@@ -158,6 +135,11 @@ export default {
       bal1: '0.0000',
       showSure: false,
       params: {},
+
+
+      apy: '0.00',
+      aprInfo: {},
+      showApyDetail: false,
     }
   },
   mounted() {
@@ -167,6 +149,7 @@ export default {
       this.rSymbol = this.sym.split('-')[1].toUpperCase();
     }
     this.handleGetThisPools()
+    this.handleGetApy()
   },
   beforeDestroy() {
     clearTimeout(this.poolsTimer)
@@ -224,6 +207,59 @@ export default {
     }
   },
   methods: {
+    async handleGetApy() {
+      const params = {
+        mid: this.$route.params.sym
+      };
+      const {status, result} = await this.$api.get_market_info(params)
+      if (!status) {
+        return
+      }
+      this.apy = parseFloat(result.apy || 0).toFixed(2);
+      this.aprInfo = result.apy_detail
+    },
+    handleClaim() {
+      if (!this.account || !this.account.name || this.claim) {
+        return
+      }
+      this.claim = true;
+      const formName = this.account.name;
+      const permission = this.account.permissions;
+      const params = {
+        actions: []
+      }
+      const lpAction = {
+        account: this.baseConfig.nodeMiner,
+        name: 'claim',
+        authorization: [{ 
+          actor: formName,
+          permission,
+        }],
+        data: {
+          user: formName,
+          mid: this.$route.params.sym
+        },
+      }
+      params.actions.push(lpAction)
+      DApp.toTransaction(params, (err) => {
+        this.claim = false;
+        if (err && err.code == 402) {
+          return;
+        }
+        if (err) {
+          this.$toast({
+            type: 'fail',
+            message: err.message,
+          })
+          return;
+        }
+        this.$toast({
+          message: this.$t('public.success'),
+          type: 'success'
+        });
+      })
+    },
+
     handleDealMyLpNum(v) {
       if (!v) {
         return
@@ -591,15 +627,6 @@ export default {
     },
     // 获取LP池子的总TAG数量
     handleAllLpTagNum() {
-      // let count = 0;
-      // this.marketLists.forEach(v => {
-      //   if (v.contract0 === "tagtokenmain" && v.symbol0 === "TAG") {
-      //     count = Number(count) + parseFloat(v.reserve0)
-      //   } else if (v.contract1 === "tagtokenmain" && v.symbol1 === "TAG") {
-      //     count = Number(count) + parseFloat(v.reserve1)
-      //   }
-      // })
-      // return count;
       return this.poolsTagBal;
     },
     handleRunLp() {
@@ -750,6 +777,9 @@ export default {
   font-size: 32px;
   text-align: left;
   margin: 0 0 20px;
+  .count{
+    font-size: 24px;
+  }
   .act{
     color: #333;
     position: relative;
@@ -770,6 +800,43 @@ export default {
 
 .lpList{
   position: relative;
+  .marketInfo{
+    text-align: left;
+    padding: 28px;
+    border-radius: 12px;
+    margin: 30px 0;
+    box-shadow: 4px 4px 10px 4px rgba(230,230,230,0.64);
+    .coinInfo{
+      margin-bottom: 20px;
+      .logo{
+        width: 70px;
+        height: 70px;
+        margin-right: 12px;
+      }
+      .coinName{
+        font-size: 32px;
+      }.contract{
+        font-size: 24px;
+      }
+      .addImg{
+        width: 30px;
+      }
+    }
+    .apy{
+      margin-bottom: 16px;
+      font-size: 28px;
+      .num{
+        font-size: 30px;
+      }
+      .green{
+        color: $color-main;
+        margin-left: 15px;
+      }
+    }
+    .liq{
+      color: #000;
+    }
+  }
   .reward{
     margin: 14px 0;
   }
@@ -818,33 +885,8 @@ export default {
 .mineList{
   margin-top: 25px;
   border: 1px solid #e0e0e0;
-  border-radius: 20px;
-  // padding: 20px;
+  border-radius: 12px;
   position: relative;
-  &.page1{
-    &:nth-child(1) {
-      border: 1px solid rgb(238, 198, 4);
-      box-shadow: 0 0 5px 0px rgba(238, 198, 4, .5);
-    }
-    &:nth-child(2) {
-      border: 1px solid #b1dcff;
-      box-shadow: 0 0 5px 0px rgba(#b1dcff, .5);
-    }
-    &:nth-child(3) {
-      border: 1px solid #8C7853;
-      box-shadow: 0 0 5px 0px rgba(#8C7853, .5);
-    }
-    .rankImg{
-      position: absolute;
-      top: -0px;
-      left: -0px;
-      width: 72px;
-      transform: translate(-47%, -47%) rotate(-45deg);
-      img{
-        width: 100%;
-      }
-    }
-  }
   &>div{
     padding: 20px;
     position: relative;
