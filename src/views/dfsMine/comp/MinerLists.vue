@@ -213,30 +213,30 @@ export default {
         }
         const market = this.thisMarket;
         let reward = 0
-        if (market.contract0 === 'tethertether' || market.contract1 === 'tethertether') {
-          const num = market.contract0 === 'tethertether' ? parseFloat(v.liq_bal0) : parseFloat(v.liq_bal1) 
-          const reward0 = getReward({
-            poolBal: this.allBal.usdtPoolsBal,
-            swapBal: this.swapBal.usdtSwapBal
-          }, {
-            lastTime: v.lastTime,
-            num
-          })
-          reward = parseFloat(reward || 0) + parseFloat(reward0 || 0);
-          // console.log('usdt - ', reward0)
-        }
-        if (market.contract0 === 'eosio.token' || market.contract1 === 'eosio.token') {
-          const num = market.contract0 === 'eosio.token' ? parseFloat(v.liq_bal0) : parseFloat(v.liq_bal1) 
-          const reward0 = getReward({
-            poolBal: this.allBal.eosPoolsBal,
-            swapBal: this.swapBal.eosSwapBal
-          }, {
-            lastTime: v.lastTime,
-            num
-          })
-          reward = parseFloat(reward || 0) + parseFloat(reward0 || 0);
-          // console.log('eos - ', reward0)
-        }
+        // if (market.contract0 === 'tethertether' || market.contract1 === 'tethertether') {
+        //   const num = market.contract0 === 'tethertether' ? parseFloat(v.liq_bal0) : parseFloat(v.liq_bal1) 
+        //   const reward0 = getReward({
+        //     poolBal: this.allBal.usdtPoolsBal,
+        //     swapBal: this.swapBal.usdtSwapBal
+        //   }, {
+        //     lastTime: v.lastTime,
+        //     num
+        //   })
+        //   reward = parseFloat(reward || 0) + parseFloat(reward0 || 0);
+        //   // console.log('usdt - ', reward0)
+        // }
+        // if (market.contract0 === 'eosio.token' || market.contract1 === 'eosio.token') {
+        //   const num = market.contract0 === 'eosio.token' ? parseFloat(v.liq_bal0) : parseFloat(v.liq_bal1) 
+        //   const reward0 = getReward({
+        //     poolBal: this.allBal.eosPoolsBal,
+        //     swapBal: this.swapBal.eosSwapBal
+        //   }, {
+        //     lastTime: v.lastTime,
+        //     num
+        //   })
+        //   reward = parseFloat(reward || 0) + parseFloat(reward0 || 0);
+        //   // console.log('eos - ', reward0)
+        // }
         if (market.contract0 === 'minedfstoken' || market.contract1 === 'minedfstoken') {
           const num = market.contract0 === 'minedfstoken' ? parseFloat(v.liq_bal0) : parseFloat(v.liq_bal1) 
           const reward0 = getReward({
