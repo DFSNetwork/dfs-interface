@@ -43,7 +43,7 @@ export default {
   data() {
     return {
       tagPoolsMid: [602, 665],
-      dfsPoolsMid: [39, 451],
+      dfsPoolsMid: [39, 451, 382, 726, 727],
     }
   },
   computed: {

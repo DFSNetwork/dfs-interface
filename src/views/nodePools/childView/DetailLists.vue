@@ -29,16 +29,16 @@
             </div>
             <div class="flexend">
               <span class="num din">{{ accLpData.showReward || '0.00000000' }}</span>
-              <span class="red_p flexa" v-if="Number(addBuff)">（
+              <!-- <span class="red_p flexa" v-if="Number(addBuff)">（
                 <img class="buffImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/buff2.svg">
-                {{ addBuff }}%）</span>
+                {{ addBuff }}%）</span> -->
             </div>
           </div>
         </div>
         <div class="reward">{{ $t('nodePools.marketNum') }}：{{ handleDealReserve(lpPool.reserve0) }}/{{ handleDealReserve(lpPool.reserve1) }}</div>
         <div class="reward">{{ $t('market.myMarkets') }}：{{ handleDealMyLpNum(lpPool) }}</div>
 
-        <div class="myRank plan">
+        <!-- <div class="myRank plan">
           <div class="flexb">
             <span class="flexa">
               <span>{{ $t('nodePools.planRank') }}：</span>
@@ -53,10 +53,10 @@
               v-model="planRank">
             </el-slider>
           </span>
-        </div>
-        <div class="flexb">
+        </div> -->
+        <!-- <div class="flexb">
           <span>{{ $t('nodePools.myRank') }}：{{ accLpData.rank || 0 }}</span>
-        </div>
+        </div> -->
       </div>
     </div>
 
@@ -71,9 +71,9 @@
             <span>{{ item.owner }}</span>
             <span class="flexa">
               <span>{{ $t('mine.earnings') }}：{{ item.showReward || '0.00000000' }} {{ pool.sym }}</span>
-              <span class="red_p flexa" v-if="Number(item.addBuff)">（
+              <!-- <span class="red_p flexa" v-if="Number(item.addBuff)">（
                 <img class="buffImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/buff2.svg">
-                {{ item.addBuff }}%）</span>
+                {{ item.addBuff }}%）</span> -->
             </span>
           </div>
           <div class="flexb" v-if="type === 'rex'">
@@ -533,18 +533,18 @@ export default {
         const marketNum = sellToken(inData)
         v.sym0 = marketNum.getNum1.toFixed(this.lpPool.decimal0)
         v.sym1 = marketNum.getNum2.toFixed(this.lpPool.decimal1)
-        if (index < 30) {
-          v.weight = 1.3
-          v.addBuff = 30
-        } else if (index < 60) {
-          v.weight = 1.2
-          v.addBuff = 20
-        } else if (index < 100) {
-          v.weight = 1.1
-          v.addBuff = 10
-        } else {
+        // if (index < 30) {
+        //   v.weight = 1.3
+        //   v.addBuff = 30
+        // } else if (index < 60) {
+        //   v.weight = 1.2
+        //   v.addBuff = 20
+        // } else if (index < 100) {
+        //   v.weight = 1.1
+        //   v.addBuff = 10
+        // } else {
           v.weight = 1
-        }
+        // }
       })
       // console.log(rows)
       this.allLists = rows;
@@ -573,7 +573,7 @@ export default {
       const tagNum = this.lpPool.contract1 === "tagtokenmain" ? parseFloat(this.accLpData.sym1) : parseFloat(this.accLpData.sym0)
       const rate = tagNum / allTagNum;
       const lpBal = this.lpPool.bal;
-      const weight = this.accLpData.weight || 1;
+      const weight = 1;
       const nowT = moment().valueOf()
       let lastT = toLocalTime(`${this.accLpData.last_drip}.000+0000`).replace(/-/g, '/')
       lastT = moment(lastT).valueOf()
@@ -632,7 +632,7 @@ export default {
       const num = 0.1;
       const rate = num / allTagNum;
       const lpBal = this.lpPool.bal;
-      const weight = 1.3;
+      const weight = 1;
       const t = 86400 * 365;
       const reward = lpBal - lpBal * Math.pow(0.9999, t * rate * weight);
       

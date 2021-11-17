@@ -13,7 +13,7 @@
       </div>
       <div class="liqs flexa tip">
         <div>{{ $t('dex.pools') }}：</div>
-        <div>{{ parseInt(v.reserve1) }} {{ v.symbol1 }} / {{ parseInt(v.reserve0) }} {{ v.symbol0 }}</div>
+        <div>{{ parseFloat(v.reserve1).toFixed(2) }} {{ v.symbol1 }} / {{ parseFloat(v.reserve0).toFixed(2) }} {{ v.symbol0 }}</div>
       </div>
     </div>
   </div>
@@ -36,6 +36,12 @@ export default {
         mid: 39,
       }, {
         mid: 451,
+      }, {
+        mid: 382,
+      }, {
+        mid: 726,
+      }, {
+        mid: 727,
       }],
       accLiqs: [],
       listsTimer: null,
@@ -134,17 +140,31 @@ export default {
       }
       this.pools.forEach(v => {
         const market = this.marketLists.find(vv => vv.mid === v.mid) || {};
-        this.$set(v, 'reserve0', market.reserve0)
-        this.$set(v, 'reserve1', market.reserve1)
-        this.$set(v, 'liquidity_token', market.liquidity_token)
-        this.$set(v, 'imgUrl0', market.imgUrl0)
-        this.$set(v, 'imgUrl1', market.imgUrl1)
-        this.$set(v, 'symbol0', market.symbol0)
-        this.$set(v, 'symbol1', market.symbol1)
-        this.$set(v, 'decimal0', market.decimal0)
-        this.$set(v, 'decimal1', market.decimal1)
-        this.$set(v, 'contract0', market.contract0)
-        this.$set(v, 'contract1', market.contract1)
+        if (market.contract1 === 'minedfstoken') {
+          this.$set(v, 'reserve0', market.reserve0)
+          this.$set(v, 'reserve1', market.reserve1)
+          this.$set(v, 'liquidity_token', market.liquidity_token)
+          this.$set(v, 'imgUrl0', market.imgUrl0)
+          this.$set(v, 'imgUrl1', market.imgUrl1)
+          this.$set(v, 'symbol0', market.symbol0)
+          this.$set(v, 'symbol1', market.symbol1)
+          this.$set(v, 'decimal0', market.decimal0)
+          this.$set(v, 'decimal1', market.decimal1)
+          this.$set(v, 'contract0', market.contract0)
+          this.$set(v, 'contract1', market.contract1)
+        } else {
+          this.$set(v, 'reserve0', market.reserve1)
+          this.$set(v, 'reserve1', market.reserve0)
+          this.$set(v, 'liquidity_token', market.liquidity_token)
+          this.$set(v, 'imgUrl0', market.imgUrl1)
+          this.$set(v, 'imgUrl1', market.imgUrl0)
+          this.$set(v, 'symbol0', market.symbol1)
+          this.$set(v, 'symbol1', market.symbol0)
+          this.$set(v, 'decimal0', market.decimal1)
+          this.$set(v, 'decimal1', market.decimal0)
+          this.$set(v, 'contract0', market.contract1)
+          this.$set(v, 'contract1', market.contract0)
+        }
       })
       this.handleRunRewardTimer()
     },

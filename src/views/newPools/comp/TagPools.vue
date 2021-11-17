@@ -14,7 +14,7 @@
       <!-- <div class="liqs tip">资金池：{{ v.symbol0 }} / 3460994.26 {{ v.symbol1 }}</div> -->
       <div class="liqs flexa tip">
         <div>{{ $t('dex.pools') }}：</div>
-        <div>{{ parseInt(v.reserve1) }} {{ v.symbol1 }} / {{ parseInt(v.reserve0) }} {{ v.symbol0 }}</div>
+        <div>{{ parseFloat(v.reserve1).toFixed(2) }} {{ v.symbol1 }} / {{ parseFloat(v.reserve0).toFixed(2) }} {{ v.symbol0 }}</div>
       </div>
     </div>
   </div>
@@ -90,10 +90,13 @@ export default {
   },
   methods: {
     handleToDetail(item) {
+      let sym = item.mid;
+      let type = 'lp'
       this.$router.push({
-        name: 'dfsMinePool',
+        name: 'poolDetail',
         params: {
-          mid: item.mid
+          type,
+          sym
         }
       })
     },
