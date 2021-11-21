@@ -32,7 +32,7 @@ export default {
       mineRules1: '1. 买入REX或抵押CPU获得EOS投票票数；',
       mineRules2: '2. 把投票权代理 dfsbpsproxy1；',
       mineRules3: '3. 通过TAG矿池页面操作，即可开启完全无风险的REX、CPU映射挖矿；',
-      mineRules4: '4. 只需无风险质押EOS。即可实现最强的一键多挖；',
+      mineRules4: '4. 只需无风险质押EOS。',
       mineRules5: '5. TAG秋禾，是固定每秒释放0.01枚的纪念币；',
       mineRules6: '6. 其余挖矿币种，来源于乐捐系统的余额。',
       lpMineRelus: 'LP 挖矿规则',
@@ -61,6 +61,9 @@ export default {
       boost: '助力',
       voteMineNew: '投票挖矿',
       lpMineNew: '做市挖矿',
+      join: '加入矿池',
+      nodeInfo: '节点信息',
+      nodeReward: '节点收益',
     }
   },
   'en': {
@@ -96,7 +99,7 @@ export default {
       mineRules1: '1. Buy REX or mortgage CPU to get EOS votes;',
       mineRules2: '2. Delegate voting rights to dfsbpsproxy1;',
       mineRules3: '3. Through the TAG mining pool page operation, you can start completely risk-free REX, CPU mapping mining;',
-      mineRules4: '4. Just stake EOS without risk. You can achieve the strongest one-click multiple mining;',
+      mineRules4: '4. Just stake EOS without risk.',
       mineRules5: '5. TAG Qiuhe is a commemorative coin with a fixed release of 0.01 per second;',
       mineRules6: '6. The remaining mining currencies are derived from the balance of the Le Donation System. ',
       lpMineRelus:'LP mining rules',
@@ -125,6 +128,7 @@ export default {
       boost: 'Boost',
       voteMineNew:'Vote mining',
       lpMineNew:'market making mining',
+      join: 'Join',
     }
   }
 }

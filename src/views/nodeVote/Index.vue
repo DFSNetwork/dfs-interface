@@ -7,21 +7,21 @@
       <AccVote :accVoteData="accVoteData" @listenUpdata="handleGetAccVote"/>
 
       <div class="nodeInfo">
-        <div class="title">节点信息</div>
+        <div class="title">{{ $t('nodePools.nodeInfo') }}</div>
         <div class="flexb">
           <div class="item">
             <div class="num din">{{ proxyData.eosNum }}</div>
-            <div class="subTip">总票数（EOS）</div>
+            <div class="subTip">{{ $t('nodePools.allVote') }}（EOS）</div>
           </div>
           <div class="item">
             <div class="num din">{{ yearApr }}%</div>
-            <div class="subTip">投票实时年化</div>
+            <div class="subTip">{{ $t('nodePools.apy') }}</div>
           </div>
         </div>
       </div>
 
       <div class="reward">
-        <div class="title">节点收益</div>
+        <div class="title">{{ $t('nodePools.nodeReward') }}</div>
         <div class="flexs rInfo">
           <div>
             <div class="rItem" v-for="(v, index) in Object.keys(poolsData)" :key="index">
@@ -34,17 +34,17 @@
       </div>
 
       <div class="rules">
-        <div>1. 买入REX或抵押CPU获得EOS投票票数；</div>
-        <div>2. 把投票权代理 dfsbpsproxy1；</div>
-        <div>3. 通过TAG矿池页面操作，即可开启完全无风险的REX、CPU映射挖矿；</div>
-        <div>4. 只需无风险质押EOS。</div>
-        <div>5. TAG秋禾，是固定每秒释放0.01枚的纪念币；</div>
+        <div>{{ $t('nodePools.mineRules1') }}</div>
+        <div>{{ $t('nodePools.mineRules2') }}</div>
+        <div>{{ $t('nodePools.mineRules3') }}</div>
+        <div>{{ $t('nodePools.mineRules4') }}</div>
+        <div>{{ $t('nodePools.mineRules5') }}</div>
       </div>
 
       <div class="nullDiv">
         <div class="btns flexb">
-          <div class="btn flexc" @click="handleShow('sell')">减少投票量</div>
-          <div class="btn add flexc" @click="handleShow('buy')">增加投票量</div>
+          <div class="btn flexc" @click="handleShow('sell')">{{ $t('nodePools.desVote') }}</div>
+          <div class="btn add flexc" @click="handleShow('buy')">{{ $t('nodePools.addVote') }}</div>
         </div>
       </div>
     </div>

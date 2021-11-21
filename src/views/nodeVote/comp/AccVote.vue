@@ -6,7 +6,7 @@
       @click="handleProxy">{{ $t('nodePools.proxyToHis') }}</div>
     <div class="btn flexc" v-else-if="accVoteData.showJoinBtn"
       v-loading="loadingJoin"
-      @click="handleJoin">加入矿池</div>
+      @click="handleJoin">{{ $t('nodePools.join') }}</div>
     <div class="btn flexc" v-else 
       v-loading="loadingJoin"
       @click="$emit('listenUpdata', 'acc'); showManage = !showManage">{{ $t('nodePools.manage') }}</div>
