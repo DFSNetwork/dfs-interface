@@ -13,7 +13,7 @@
 
       <div class="lists">
         <div class="title flexb">
-          <span>矿池列表</span>
+          <span>{{ $t('mine.poolsList') }}</span>
           <!-- <span class="flexa">
             <span class="tip">挖矿规则</span>
             <img class="qus" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/tips_icon_btn.svg">

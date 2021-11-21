@@ -111,7 +111,6 @@ export default {
         }
         params.actions.push(lpAction)
       })
-      console.log(params)
       DApp.toTransaction(params, (err) => {
         this.claim = false;
         if (err && err.code == 402) {

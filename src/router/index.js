@@ -626,6 +626,20 @@ const constantRouter = [
       },
     ],
   },
+  // 节点投票挖矿
+  {
+    path: '/node-vote-pool',
+    component: Layout,
+    redirect: '/',
+    children: [
+      { // 我的页面
+        path: '/',
+        name: 'nodeVotePool',
+        component: () => import(/* webpackChunkName: "home" */ '@/views/nodeVote/Index.vue'),
+        meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noTab: true },
+      },
+    ],
+  },
   // 邀请返佣
   {
     path: '/testscan',

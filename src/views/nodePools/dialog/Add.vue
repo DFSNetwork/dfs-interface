@@ -247,7 +247,7 @@ export default {
       width: 100%;
       background: #29d4b0;
       color: #fff;
-      border-radius: 40px;
+      border-radius: 12px;
       font-size: 30px;
     }
   }

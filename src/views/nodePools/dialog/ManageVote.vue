@@ -25,6 +25,10 @@ export default {
       default: function avd() {
         return {}
       }
+    },
+    showType: {
+      type: String,
+      default: 'buy'
     }
   },
   components: {
@@ -39,6 +43,7 @@ export default {
   },
   mounted() {
     this.handleGetRexData()
+    this.showType === 'buy' ? this.tab = 1 : this.tab = 2
   },
   methods: {
     listenUpdata() {
@@ -65,7 +70,7 @@ export default {
 
 <style lang="scss" scoped>
 .manageVote{
-  padding: 26px;
+  padding: 24px 40px;
   text-align: left;
   font-size: 27px;
   color: #333;
