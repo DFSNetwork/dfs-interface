@@ -29,7 +29,7 @@
               <div class="subTip">≈{{ poolsData[v].aboutEos || '0.0000' }} EOS</div>
             </div>
           </div>
-          <div class="btn flexc" v-loading="claim" @click="handleClaimAll">领取收益</div>
+          <div class="btn flexc" v-loading="claim" @click="handleClaimAll">{{ $t('nodePools.claimReward') }}</div>
         </div>
       </div>
 

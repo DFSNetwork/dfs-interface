@@ -64,6 +64,7 @@ export default {
       join: '加入矿池',
       nodeInfo: '节点信息',
       nodeReward: '节点收益',
+      claimReward: '领取收益',
     }
   },
   'en': {
@@ -129,6 +130,9 @@ export default {
       voteMineNew:'Vote mining',
       lpMineNew:'market making mining',
       join: 'Join',
+      nodeInfo:'Node Information',
+      nodeReward:'Node revenue',
+      claimReward:'Receive income',
     }
   }
 }
