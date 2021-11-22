@@ -46,10 +46,9 @@
               <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/dss_icon.png">
               <div>DSS</div>
             </div>
-            <div class="list" @click="handleTo('investment')">
-              <!-- <img class="hot" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/new.png"> -->
-              <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/date_icon.png">
-              <div>{{ $t('home.investment') }}</div>
+            <div class="list" @click="handleTo('nodeVotePool')">
+              <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/node_icon.png">
+              <div>{{ $t('tab.nodeVote') }}</div>
             </div>
             <div class="list" @click="handleTo('inviter')">
               <!-- <img class="hot" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/new.png"> -->
@@ -87,9 +86,10 @@
               <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/note_icon.png">
               <div>{{ $t('home.diary') }}</div>
             </div>
-            <div class="list" @click="handleTo('nodeVotePool')">
-              <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/node_icon.png">
-              <div>{{ $t('tab.nodeVote') }}</div>
+            <div class="list" @click="handleTo('investment')">
+              <!-- <img class="hot" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/new.png"> -->
+              <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/date_icon.png">
+              <div>{{ $t('home.investment') }}</div>
             </div>
             <div class="list"></div>
           </div>
