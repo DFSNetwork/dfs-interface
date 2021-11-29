@@ -270,9 +270,11 @@ export function dealMarketLists(list, topLists) {
   // console.log(tag_price, eos_price, prices)
   list.forEach((item) => {
     let v = item;
-    if (v.contract0 === 'bgbgbgbgbgbg' || v.contract0 === 'betdicetoken' || v.contract0 === 'sportbetsbet'
+    if (v.contract0 === 'bgbgbgbgbgbg' || v.contract0 === 'betdicetoken' 
+    //  || v.contract0 === 'sportbetsbet'
      || v.contract0 === 'betasharetkn' || v.contract0 === 'betacorecash' || v.contract0 === 'betkingtoken'
-     || v.contract1 === 'bgbgbgbgbgbg' || v.contract1 === 'betdicetoken' || v.contract1 === 'sportbetsbet'
+     || v.contract1 === 'bgbgbgbgbgbg' || v.contract1 === 'betdicetoken' 
+    //  || v.contract1 === 'sportbetsbet'
      || v.contract1 === 'betasharetkn' || v.contract1 === 'betacorecash' || v.contract1 === 'betkingtoken') {
       return
     }
