@@ -44,7 +44,7 @@ import { mapState } from 'vuex';
 import { DApp } from '@/utils/wallet';
 import Withdraw from '../dialog/Withdraw';
 import { get_balance } from '@/utils/api'
-import { toLocalTime, getMarketTime, toFixed } from '@/utils/public';
+import { toLocalTime, getMarketTime, toFixed, timeToParse } from '@/utils/public';
 
 export default {
   name: 'myFinancial',
@@ -122,7 +122,6 @@ export default {
         return
       }
       this.maxReward = result.split(' ')[0];
-      // console.log(this.maxReward)
     },
     handleClose(type) {
       this.showWithdraw = false;
@@ -177,14 +176,28 @@ export default {
       if (!Number(this.args.aprs) || !Number(this.finTime.total) || !Number(this.price)) {
         return
       }
-      const lastTime = getMarketTime(this.accDepInfo.lastTime, 'tamp')
-      const apyAcc = Math.pow(this.args.aprs, lastTime.total / 1000) - 1;
+      // 获取最近一次操作到现在的时间 ms
+      const lastTime = timeToParse() - timeToParse(`${this.accDepInfo.last_drip}.000+0000`)
+      // 计算aprs
+      const apyAcc = Math.pow(this.args.aprs, parseInt(lastTime / 1000)) - 1;
+      // YFC价格
       const yfcPrice = this.price;
+      // EOS转化成YFC
       const yfcNum = parseFloat(this.accDepInfo.bal || 0) / yfcPrice;
+      // 计算收益
       let reward = yfcNum * apyAcc;
       if (Number(reward) > Number(this.maxReward)) {
         reward = this.maxReward;
       }
+      // console.log('------------')
+      // console.log('time', parseInt(lastTime / 1000))
+      // console.log('aprs', this.args.aprs)
+      // console.log('yfcPrice', yfcPrice)
+      // console.log('EOSNum', this.accDepInfo.bal)
+      // console.log('yfcNum', yfcNum)
+      // console.log('reward', reward)
+      // console.log('------------')
+
       this.$set(this.accDepInfo, 'reward', toFixed(reward, 8))
       this.handleRewardRun()
     },

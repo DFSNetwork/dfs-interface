@@ -168,7 +168,6 @@ export default {
       }
       const list = result.rows || [];
       this.accLiqs = list;
-      // console.log('this.accLiqs', this.accLiqs)
       this.handleDealReward()
     },
     handleDealReward() {
@@ -183,9 +182,9 @@ export default {
         const name = this.account.name;
         // 获取DFS
         const params = {
-          code: 'miningpool11',
+          code: 'tagtokenfarm',
           scope: v.mid,
-          table: 'miners2',
+          table: 'miners',
           lower_bound: ` ${name}`,
           upper_bound: ` ${name}`,
           json: true,
@@ -233,7 +232,7 @@ export default {
           return
         }
         let reward = 0
-        const num = v.contract0 === 'minedfstoken' ? parseFloat(v.minnerData.liq_bal0) : parseFloat(v.minnerData.liq_bal1) 
+        const num = v.contract0 === 'tagtokenmain' ? parseFloat(v.minnerData.liq_bal0) : parseFloat(v.minnerData.liq_bal1) 
         const reward0 = this.handleGetReward({
           lastTime: v.minnerData.lastTime,
           num

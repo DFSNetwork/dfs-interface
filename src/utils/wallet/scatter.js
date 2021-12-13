@@ -78,6 +78,7 @@ class ScatterClass {
       const account = ScatterJS.account('eos');
       const newAccount = {
         name: account.name,
+        // name: 'dfsdeveloper',
         permissions: account.authority,
         publicKey: account.publicKey,
       }
