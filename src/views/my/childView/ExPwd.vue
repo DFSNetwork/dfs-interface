@@ -15,8 +15,8 @@
         v-model="newpwd"
         :type="pwdType" :placeholder="$t('newwallet.iptNewPwd')" />
       <span class="green" @click="handleExType">
-        <img v-if="pwdType === 'password'" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/pwd-show.png">
-        <img v-else src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/pwd-hide.png">
+        <img v-if="pwdType === 'password'" src="https://leafy-kataifi-c6d825.netlify.app/dfs/pwd-show.png">
+        <img v-else src="https://leafy-kataifi-c6d825.netlify.app/dfs/pwd-hide.png">
       </span>
     </div>
     <div class="item flexb" :class="{'border': iptAct === 3, 'error': newpwd2Error}">
@@ -26,8 +26,8 @@
         v-model="newpwd2"
         :type="pwdType" :placeholder="$t('newwallet.iptNewPwd2')" />
       <span class="green" @click="handleExType">
-        <img v-if="pwdType === 'password'" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/pwd-show.png">
-        <img v-else src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/pwd-hide.png">
+        <img v-if="pwdType === 'password'" src="https://leafy-kataifi-c6d825.netlify.app/dfs/pwd-show.png">
+        <img v-else src="https://leafy-kataifi-c6d825.netlify.app/dfs/pwd-hide.png">
       </span>
     </div>
 

@@ -2,11 +2,11 @@
   <div class="mineHome">
     <div class="flexb nav">
       <div class="flexc item" :class="{'act': act === 0}" @click="handleAct(0)">
-        <img class="tokenLogo" src="https://cdn.jsdelivr.net/gh/defis-net/material2/coin/minedfstoken-dfs.png">
+        <img class="tokenLogo" src="https://leafy-kataifi-c6d825.netlify.app/coin/minedfstoken-dfs.png">
         <span>矿池</span>
       </div>
       <div class="flexc item" :class="{'act': act === 1}" @click="handleAct(1)">
-        <img class="tokenLogo" src="https://cdn.jsdelivr.net/gh/defis-net/material2/coin/tagtokenmain-tag.png">
+        <img class="tokenLogo" src="https://leafy-kataifi-c6d825.netlify.app/coin/tagtokenmain-tag.png">
         <span>矿池</span>
       </div>
       <div class="flexc item" :class="{'act': act === 2}" @click="handleAct(2)">

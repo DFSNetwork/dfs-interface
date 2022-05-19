@@ -1,7 +1,7 @@
 <template>
   <div class="pool">
     <div class="banner">
-      <img width="100%" src="https://cdn.jsdelivr.net/gh/defis-net/material/banner/nodePools.png">
+      <img width="100%" src="https://storied-crepe-e5e65c.netlify.app/banner/nodePools.png">
     </div>
     <div class="main">
       <AccVote :accVoteData="accVoteData" @listenUpdata="handleGetAccVote"/>

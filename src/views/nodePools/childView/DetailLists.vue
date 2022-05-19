@@ -14,7 +14,7 @@
               <div class="contract tip">{{ lpPool.contract0 }}</div>
             </div>
           </div>
-          <img class="addImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/add.svg">
+          <img class="addImg" src="https://storied-crepe-e5e65c.netlify.app/svg/add.svg">
           <div class="flexa">
             <img class="logo" :src="lpPool.imgUrl1" >
             <div>
@@ -51,7 +51,7 @@
             <span>{{ $t('nodePools.allRes') }}</span>
             <span>{{ item.sym0 || '0.0000' }} {{lpPool.symbol0}} / {{ item.sym1 || '0.0000'}} {{lpPool.symbol1}}</span>
           </div>
-          <!-- <label class="rankImg" v-if="page === 1 && index < 3"><img :src="`https://cdn.jsdelivr.net/gh/defis-net/material/rank/rank${index + 1}.png`" alt=""></label> -->
+          <!-- <label class="rankImg" v-if="page === 1 && index < 3"><img :src="`https://storied-crepe-e5e65c.netlify.app/rank/rank${index + 1}.png`" alt=""></label> -->
         </div>
       </template>
 

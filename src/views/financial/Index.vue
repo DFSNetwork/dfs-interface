@@ -1,8 +1,8 @@
 <template>
   <div class="financial">
     <div class="banner">
-      <img v-if="$store.state.app.language === 'en'" src="https://cdn.jsdelivr.net/gh/defis-net/material/financial/financial2-en.png" alt="">
-      <img v-else src="https://cdn.jsdelivr.net/gh/defis-net/material/financial/financial2.png" alt="">
+      <img v-if="$store.state.app.language === 'en'" src="https://storied-crepe-e5e65c.netlify.app/financial/financial2-en.png" alt="">
+      <img v-else src="https://storied-crepe-e5e65c.netlify.app/financial/financial2.png" alt="">
       <div class="main flexb">
         <div>
           <div>{{ $t('financial.assigned') }}</div>

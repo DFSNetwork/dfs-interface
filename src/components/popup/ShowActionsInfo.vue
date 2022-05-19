@@ -1,6 +1,6 @@
 <template>
   <div class="info">
-    <img class="close" @click="handleClose" src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/sd_icon_btn.svg">
+    <img class="close" @click="handleClose" src="https://storied-crepe-e5e65c.netlify.app/svg/sd_icon_btn.svg">
     <div class="title">{{ $t('newwallet.tradeDtl') }}</div>
     <div class="actsMethods">{{ $t('newwallet.useContract') }} </div>
     <div class="datas">
@@ -20,7 +20,7 @@
     <div class="flexa" @click="handleUnshowNext">
       <div class="checkBox" :class="{'act': next}">
         <img v-if="next"
-        src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/checked.png">
+        src="https://storied-crepe-e5e65c.netlify.app/icon/checked.png">
       </div>
       <span>{{ $t('newwallet.nextUn') }}</span>
     </div>

@@ -11,7 +11,7 @@
       <div class="list flexa" v-for="(item, index) in lists" :key="index"
         @click="handleCheckedNode(item)">
         <div class="rankDiv dinBold flexc" v-if="act !== 3 && act !== 4">
-          <img v-if="index < 3" :src="`https://cdn.jsdelivr.net/gh/defis-net/material/rank/voteRank${index+1}.png`" alt="">
+          <img v-if="index < 3" :src="`https://storied-crepe-e5e65c.netlify.app/rank/voteRank${index+1}.png`" alt="">
           <span v-else>{{index + 1}}</span>
         </div>
         <div class="main">
@@ -26,7 +26,7 @@
           <div class="tip data flexb" v-if="act !== 4">
             <div class="flexa dinReg">
               <span class="voteIcon flexc">
-                <img class="small" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/money.png" alt="">
+                <img class="small" src="https://storied-crepe-e5e65c.netlify.app/icon/money.png" alt="">
               </span>
               <span>{{ parseInt(item.voteNum) | numeralFormat }} EOS</span>
             </div>
@@ -37,12 +37,12 @@
           </div>
           <div class="tip data flexb" v-if="act !== 4">
             <div class="flexa">
-              <img class="voteIcon" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/vote.png" alt="">
+              <img class="voteIcon" src="https://storied-crepe-e5e65c.netlify.app/icon/vote.png" alt="">
               <span class="dinReg">{{ item.dfsVote || '0' }} DFS</span>
               <span class="green" @click.stop="handleToDetail(item)">{{ $t('public.detail') }}></span>
             </div>
             <div class="flexa dinReg">
-              <img class="voteIcon" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/earth.png" alt="">
+              <img class="voteIcon" src="https://storied-crepe-e5e65c.netlify.app/icon/earth.png" alt="">
               <a class="tip websize" :href="item.url" target="_blank" rel="noopener noreferrer">
                 {{ handleDealUrl(item.url) }}
               </a>
@@ -51,7 +51,7 @@
         </div>
         <div class="checkBoxDiv flexc">
           <div class="checkBox flexc" :class="{'isChecked': item.isChecked}">
-            <img v-if="item.isChecked" class="checkedImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/checked.png" alt="">
+            <img v-if="item.isChecked" class="checkedImg" src="https://storied-crepe-e5e65c.netlify.app/icon/checked.png" alt="">
           </div>
         </div>
       </div>
@@ -100,7 +100,7 @@ export default {
   },
   data() {
     return {
-      voteDefaultImg: 'https://cdn.jsdelivr.net/gh/defis-net/material2/coin/tagtokenmain-tag.png',
+      voteDefaultImg: 'https://leafy-kataifi-c6d825.netlify.app/coin/tagtokenmain-tag.png',
       isChecked: false,
       lists: [],
       rankLists: [],

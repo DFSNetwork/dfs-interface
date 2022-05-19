@@ -1,17 +1,17 @@
 <template>
   <div class="like">
-    <img class="close" @click="handleClose(false)" src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/sd_icon_btn.svg" alt="">
+    <img class="close" @click="handleClose(false)" src="https://storied-crepe-e5e65c.netlify.app/svg/sd_icon_btn.svg" alt="">
     <div class="title">{{ $t('fundation.likeTitle') }}</div>
     <div class="flexb bal dinReg">
       <span>{{ $t('public.balance') }}: {{ bal }}</span>
       <span class="flexa">
         <span>{{ $t('fundation.aboutFundation') }}：{{ about }} </span>
-        <img class="love" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/newlike1.png" alt="">
+        <img class="love" src="https://storied-crepe-e5e65c.netlify.app/icon/newlike1.png" alt="">
       </span>
     </div>
     <div class="flexb infoDiv">
       <div class="coinDiv flexb">
-        <img src="https://cdn.jsdelivr.net/gh/defis-net/material2/coin/tagtokenmain-tag.png">
+        <img src="https://leafy-kataifi-c6d825.netlify.app/coin/tagtokenmain-tag.png">
         <div class="coin">
           <div class="coinName">TAG</div>
           <div class="contract tip">tagtokenmain</div>

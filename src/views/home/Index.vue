@@ -8,8 +8,8 @@
     <Rank />
     <!-- <DfsCoin /> -->
     <div class="fullBtn" v-if="canFull" @click="handleFullScreen">
-      <img v-if="fullScreen" src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/min.png">
-      <img v-else src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/full.png">
+      <img v-if="fullScreen" src="https://leafy-kataifi-c6d825.netlify.app/icon/min.png">
+      <img v-else src="https://leafy-kataifi-c6d825.netlify.app/icon/full.png">
     </div>
   </div>
 </template>

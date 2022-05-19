@@ -5,7 +5,7 @@
       v-model="showNav">
       <div class="navList">
         <img class="close" @click="showNav = false"
-          src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/sd_icon_btn.svg" alt="">
+          src="https://storied-crepe-e5e65c.netlify.app/svg/sd_icon_btn.svg" alt="">
         <div class="title">{{ $t('dex.TradeSet') }}</div>
         <div class="item">
           <div class="subTitle flexb">

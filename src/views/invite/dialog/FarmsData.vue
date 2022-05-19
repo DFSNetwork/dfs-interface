@@ -1,7 +1,7 @@
 <template>
   <div class="farmsData">
     <img class="close" @click="handleClose(false)"
-      src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/sd_icon_btn.svg" alt="">
+      src="https://storied-crepe-e5e65c.netlify.app/svg/sd_icon_btn.svg" alt="">
     <div class="title">{{ $t('invite.farmsData') }}</div>
     <div class="main">
       <div>{{ $t('invite.farmDataTip1') }}</div>

@@ -47,7 +47,7 @@ export default {
     src() {
       const coin = this.tokenName.toLowerCase()
       const contract = this.contract;
-      const src = `https://cdn.jsdelivr.net/gh/defis-net/material2/coin/${contract}-${coin}.png`
+      const src = `https://leafy-kataifi-c6d825.netlify.app/coin/${contract}-${coin}.png`
       return src
     },
     price() {

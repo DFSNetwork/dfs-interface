@@ -7,14 +7,14 @@
           <div class="flexb item">
             <div class="flexa" @click="handleShowRules('minout')">
               <span>{{ $t('dex.minGet') }}</span>
-              <img class="tipImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/tips_icon_btn.svg">
+              <img class="tipImg" src="https://storied-crepe-e5e65c.netlify.app/icon/tips_icon_btn.svg">
             </div>
             <div class="num din">{{ info.minOut }}</div>
           </div>
           <div class="flexb item">
             <div class="flexa" @click="handleShowRules('rate')">
               <span>{{ $t('dex.priceSlip') }}</span>
-              <img class="tipImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/tips_icon_btn.svg">
+              <img class="tipImg" src="https://storied-crepe-e5e65c.netlify.app/icon/tips_icon_btn.svg">
             </div>
             <div class="num green din" :class="{
               'yellow': Number(info.priceRate) > 5,
@@ -24,7 +24,7 @@
           <div class="flexb item">
             <div class="flexa" @click="handleShowRules('fee')">
               <span>{{ $t('public.fee') }}</span>
-              <img class="tipImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/tips_icon_btn.svg">
+              <img class="tipImg" src="https://storied-crepe-e5e65c.netlify.app/icon/tips_icon_btn.svg">
             </div>
             <div class="num din">{{ info.fees }}</div>
           </div>
@@ -33,10 +33,10 @@
               <div class="flexa" v-if="routePath.length > 2"
                 @click="handleShowMoreRoute()">
                 <span>{{ $t('dex.moreRoute') }}</span>
-                <img class="tipImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/important.png">
+                <img class="tipImg" src="https://leafy-kataifi-c6d825.netlify.app/icon/important.png">
               </div>
             </div>
-            <img class="tradeSet" @click="handleShowTools" src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/stepupIcon.png" alt="">
+            <img class="tradeSet" @click="handleShowTools" src="https://leafy-kataifi-c6d825.netlify.app/icon/stepupIcon.png" alt="">
           </div>
         </div>
       </van-collapse-item>

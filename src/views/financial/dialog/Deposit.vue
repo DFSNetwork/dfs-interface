@@ -1,14 +1,14 @@
 <template>
   <div class="deposit">
     <img class="close" @click="handleClose(false)"
-      src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/sd_icon_btn.svg">
+      src="https://storied-crepe-e5e65c.netlify.app/svg/sd_icon_btn.svg">
     <div class="title">{{ $t('financial.depositTitle') }}</div>
     <div class="content">
       <div>
         <div class="bal dinReg" @click="handleClickMax">{{ $t('public.balance') }}：{{ bal }} EOS</div>
         <div class="flexb">
           <div class="flexa coinInfo">
-            <img class="coinImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/coin/eosio.token-eos.svg" alt="">
+            <img class="coinImg" src="https://leafy-kataifi-c6d825.netlify.app/coin/eosio.token-eos.svg" alt="">
             <div>
               <div class="coinName">EOS</div>
               <div class="contract tip">eosio.token</div>

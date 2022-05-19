@@ -20,7 +20,7 @@
           </div>
           <img class="stealSign" v-if="!v.isSigned"
             @click="handleSign(v, i)"
-            src="https://cdn.jsdelivr.net/gh/defis-net/material2/farm/stealSign.png">
+            src="https://leafy-kataifi-c6d825.netlify.app/farm/stealSign.png">
         </div>
       </van-list>
     </div>

@@ -17,11 +17,11 @@
           </div>
           <div class="flexa">
             <div class="star flexc" v-if="!isLike"
-              @click="handleAddLike"><img src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/star-un.png" alt=""></div>
+              @click="handleAddLike"><img src="https://storied-crepe-e5e65c.netlify.app/icon/star-un.png" alt=""></div>
             <div class="star flexc" v-else
-              @click="handleCancelLike"><img src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/star-is.png" alt=""></div>
-            <div class="kline flexc" @click="handleToKline"><img src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/pddkline.png" alt=""></div>
-            <div class="tools flexc" @click="showSet = true"><img src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/setting.png" alt=""></div>
+              @click="handleCancelLike"><img src="https://storied-crepe-e5e65c.netlify.app/icon/star-is.png" alt=""></div>
+            <div class="kline flexc" @click="handleToKline"><img src="https://storied-crepe-e5e65c.netlify.app/icon/pddkline.png" alt=""></div>
+            <div class="tools flexc" @click="showSet = true"><img src="https://storied-crepe-e5e65c.netlify.app/icon/setting.png" alt=""></div>
           </div>
         </div>
         <div class="flexb content">
@@ -52,13 +52,13 @@
     <!-- 订单信息 -->
     <div class="orders">
       <div class="allOrder flexa" @click="handleTo('pddexOrder')">
-        <img class="allImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/allOrder.png" alt="">
+        <img class="allImg" src="https://storied-crepe-e5e65c.netlify.app/icon/allOrder.png" alt="">
         <span>{{ $t('pddex.allOrder') }}</span>
       </div>
       <van-tabs class="myTabs" sticky v-model="active" color="#29D4B0">
         <van-tab :title="$t('pddex.curOrder')">
           <div class="noData tip" v-if="!orderList.length">
-            <img class="noDataPng" src="https://cdn.jsdelivr.net/gh/defis-net/material/noData/noOrder.png" alt="">
+            <img class="noDataPng" src="https://storied-crepe-e5e65c.netlify.app/noData/noOrder.png" alt="">
             <div>{{ $t('public.noData') }}</div>
           </div>
           <div class="list" v-for="(v, i) in orderList" :key="`order-${i}`">
@@ -145,10 +145,10 @@ export default {
         symbol1: 'USDT',
         contract1: 'tethertether',
         sym0Data:{
-          imgUrl: 'https://cdn.jsdelivr.net/gh/defis-net/material2/coin/eosio.token-eos.svg'
+          imgUrl: 'https://leafy-kataifi-c6d825.netlify.app/coin/eosio.token-eos.svg'
         },
         sym1Data:{
-          imgUrl: 'https://cdn.jsdelivr.net/gh/defis-net/material2/coin/tethertether-usdt.png'
+          imgUrl: 'https://leafy-kataifi-c6d825.netlify.app/coin/tethertether-usdt.png'
         }
       },
       showTradeinfo: {},

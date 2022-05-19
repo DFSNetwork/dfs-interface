@@ -150,16 +150,16 @@ export default {
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        background-image: url('https://cdn.jsdelivr.net/gh/defis-net/material/dex/enter_solid_default.svg');
+        background-image: url('https://storied-crepe-e5e65c.netlify.app/dex/enter_solid_default.svg');
         background-repeat: no-repeat;
         background-size: cover;
         &.payFocus{
-          background-image: url('https://cdn.jsdelivr.net/gh/defis-net/material/dex/enter_solid_up.svg');
+          background-image: url('https://storied-crepe-e5e65c.netlify.app/dex/enter_solid_up.svg');
           background-repeat: no-repeat;
           background-size: cover;
         }
         &.getFocus{
-          background-image: url('https://cdn.jsdelivr.net/gh/defis-net/material/dex/enter_solid_up.svg');
+          background-image: url('https://storied-crepe-e5e65c.netlify.app/dex/enter_solid_up.svg');
           background-repeat: no-repeat;
           background-size: cover;
           transform: translate(-50%, -50%) rotate(180deg);

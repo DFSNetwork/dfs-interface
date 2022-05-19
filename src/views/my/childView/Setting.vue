@@ -2,7 +2,7 @@
   <div class="setting">
     <div class="title flexb">
       <span class="back flexa" @click="$router.back()">
-        <img src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/back.png" alt="">
+        <img src="https://storied-crepe-e5e65c.netlify.app/icon/back.png" alt="">
       </span>
       <span>{{ $t('my.setting') }}</span>
       <span class="back"></span>
@@ -15,40 +15,40 @@
           <div class="name">{{ accInfo.nick || account.name }}</div>
           <div class="tip flexa">
             <span>ID: {{ account.name }}</span>
-            <!-- <img class="copy" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/copy.png"> -->
+            <!-- <img class="copy" src="https://leafy-kataifi-c6d825.netlify.app/dfs/copy.png"> -->
           </div>
         </div>
       </div>
-      <img class="right" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/itemRight.png">
+      <img class="right" src="https://storied-crepe-e5e65c.netlify.app/icon/itemRight.png">
     </div>
 
     <div class="exportPrivate flexb"
       @click="showPwd = true"
       v-if="wallet === 'newwallet' && account.name">
       <div class="flexa">
-        <img class="icon" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/exportPrivite1.png" alt="">
+        <img class="icon" src="https://leafy-kataifi-c6d825.netlify.app/dfs/exportPrivite1.png" alt="">
         <span>{{ $t('my.exPriveKey') }}</span>
       </div>
-      <img class="right" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/itemRight.png">
+      <img class="right" src="https://storied-crepe-e5e65c.netlify.app/icon/itemRight.png">
     </div>
     <div class="exportPrivate flexb"
       @click="$router.push({name: 'myExpwd'})"
       v-if="wallet === 'newwallet' && account.name">
       <div class="flexa">
-        <img class="icon" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/password1.png" alt="">
+        <img class="icon" src="https://leafy-kataifi-c6d825.netlify.app/dfs/password1.png" alt="">
         <span>{{ $t('my.exPwd') }}</span>
       </div>
-      <img class="right" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/itemRight.png">
+      <img class="right" src="https://storied-crepe-e5e65c.netlify.app/icon/itemRight.png">
     </div>
     <div class="exportPrivate flexb"
       @click="showUpAcc = true"
       v-if="wallet === 'newwallet' && account.name && !account.isSelf">
     <!-- <div class="exportPrivate flexb" @click="showUpAcc = true"> -->
       <div class="flexa">
-        <img class="icon" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/upAcc1.png" alt="">
+        <img class="icon" src="https://leafy-kataifi-c6d825.netlify.app/dfs/upAcc1.png" alt="">
         <span>{{ $t('my.upAcc') }}</span>
       </div>
-      <img class="right" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/itemRight.png">
+      <img class="right" src="https://storied-crepe-e5e65c.netlify.app/icon/itemRight.png">
     </div>
 
     <van-popup class="popup_p"

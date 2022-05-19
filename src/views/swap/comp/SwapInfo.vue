@@ -12,7 +12,7 @@
           <div>
             <div class="name flexa">
               <span>{{ tokenA.symbol }}</span>
-              <img class="selectImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/inverted.png">
+              <img class="selectImg" src="https://leafy-kataifi-c6d825.netlify.app/dfs/inverted.png">
             </div>
             <div class="contract tip">{{ tokenA.contract }}</div>
           </div>
@@ -30,8 +30,8 @@
     <!-- 上下币种切换 -->
     <div class="exchange">
       <div class="border flexc" :class="{'payFocus': payFocus, 'getFocus': getFocus}" @click="handleExchange">
-        <img class="iconImg" v-if="!direction" src="https://cdn.jsdelivr.net/gh/defis-net/material/dex/switch_down.svg">
-        <img class="iconImg" v-else src="https://cdn.jsdelivr.net/gh/defis-net/material/dex/switch_up.svg">
+        <img class="iconImg" v-if="!direction" src="https://storied-crepe-e5e65c.netlify.app/dex/switch_down.svg">
+        <img class="iconImg" v-else src="https://storied-crepe-e5e65c.netlify.app/dex/switch_up.svg">
       </div>
     </div>
 
@@ -47,7 +47,7 @@
           <div>
             <div class="name flexa">
               <span>{{ tokenB.symbol }}</span>
-              <img class="selectImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/inverted.png">
+              <img class="selectImg" src="https://leafy-kataifi-c6d825.netlify.app/dfs/inverted.png">
             </div>
             <div class="contract tip">{{ tokenB.contract }}</div>
           </div>
@@ -68,8 +68,8 @@
         <span v-if="!priceEX">1 {{ tokenB.symbol }} = {{ outPrice }} {{ tokenA.symbol }}</span>
         <span v-else>1 {{ tokenA.symbol }} = {{ inPrice }} {{ tokenB.symbol }}</span>
         <span class="flexa" @click="priceEX = !priceEX">
-          <img class="iconImg small" v-if="priceEX" src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/price_switch_icon_btn_left.svg" alt="">
-          <img class="iconImg small" v-else src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/price_switch_icon_btn_right.svg" alt="">
+          <img class="iconImg small" v-if="priceEX" src="https://leafy-kataifi-c6d825.netlify.app/icon/price_switch_icon_btn_left.svg" alt="">
+          <img class="iconImg small" v-else src="https://leafy-kataifi-c6d825.netlify.app/icon/price_switch_icon_btn_right.svg" alt="">
         </span>
       </span>
     </div>
@@ -129,13 +129,13 @@ export default {
         contract: 'eosio.token',
         symbol: 'EOS',
         decimal: '4',
-        imgUrl: 'https://cdn.jsdelivr.net/gh/defis-net/material2/coin/eosio.token-eos.svg',
+        imgUrl: 'https://leafy-kataifi-c6d825.netlify.app/coin/eosio.token-eos.svg',
       },
       tokenB: {
         contract: 'tethertether',
         symbol: 'USDT',
         decimal: '4',
-        imgUrl: 'https://cdn.jsdelivr.net/gh/defis-net/material2/coin/tethertether-usdt.png',
+        imgUrl: 'https://leafy-kataifi-c6d825.netlify.app/coin/tethertether-usdt.png',
       },
       balA: '0.0000',
       balB: '0.0000',
@@ -599,16 +599,16 @@ export default {
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      background-image: url('https://cdn.jsdelivr.net/gh/defis-net/material/dex/enter_solid_default.svg');
+      background-image: url('https://storied-crepe-e5e65c.netlify.app/dex/enter_solid_default.svg');
       background-repeat: no-repeat;
       background-size: cover;
       &.payFocus{
-        background-image: url('https://cdn.jsdelivr.net/gh/defis-net/material/dex/enter_solid_up.svg');
+        background-image: url('https://storied-crepe-e5e65c.netlify.app/dex/enter_solid_up.svg');
         background-repeat: no-repeat;
         background-size: cover;
       }
       &.getFocus{
-        background-image: url('https://cdn.jsdelivr.net/gh/defis-net/material/dex/enter_solid_down.svg');
+        background-image: url('https://storied-crepe-e5e65c.netlify.app/dex/enter_solid_down.svg');
         background-repeat: no-repeat;
         background-size: cover;
       }

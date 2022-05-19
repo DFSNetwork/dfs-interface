@@ -44,7 +44,7 @@
             <span>{{ $t('vote.vote') }}</span>
             <span>{{ item.voteNum }}</span>
           </div>
-          <label class="rankImg" v-if="page === 1 && index < 3"><img :src="`https://cdn.jsdelivr.net/gh/defis-net/material/rank/rank${index + 1}.png`" alt=""></label>
+          <label class="rankImg" v-if="page === 1 && index < 3"><img :src="`https://storied-crepe-e5e65c.netlify.app/rank/rank${index + 1}.png`" alt=""></label>
         </div>
       </template>
 
@@ -78,7 +78,7 @@ export default {
           imgUrl: "https://apps.defis.network/static/coin/eosio.token-eos.svg"
         },
         sym1Data: {
-          imgUrl: "https://cdn.jsdelivr.net/gh/defis-net/material2/coin/minedfstoken-dfs.png"
+          imgUrl: "https://leafy-kataifi-c6d825.netlify.app/coin/minedfstoken-dfs.png"
         },
       }, // 当前矿池数据
       allVotes: '0',

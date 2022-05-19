@@ -9,15 +9,15 @@
         <div class="name flexb">
           <div class="flexa">
             <span>{{ accInfo.nick || id }}</span>
-            <img v-if="accInfo.sex == 0" class="sex" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/sex0.png" alt="">
-            <img v-if="accInfo.sex == 1" class="sex" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/sex1.png" alt="">
+            <img v-if="accInfo.sex == 0" class="sex" src="https://storied-crepe-e5e65c.netlify.app/icon/sex0.png" alt="">
+            <img v-if="accInfo.sex == 1" class="sex" src="https://storied-crepe-e5e65c.netlify.app/icon/sex1.png" alt="">
           </div>
           <div class="followDiv">
             <span class="fans flexc" v-if="!isFollow" @click="handleFollow">关注</span>
             <span class="follow flexc" v-else @click="showCancel = true">已关注</span>
           </div>
           <!-- <img class="set" @click="$router.push({name: 'setInfo'})"
-            src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/set.png" alt=""> -->
+            src="https://storied-crepe-e5e65c.netlify.app/icon/set.png" alt=""> -->
         </div>
         <div class="account flexa">
           <span
@@ -28,7 +28,7 @@
             v-clipboard:copy="id"
             v-clipboard:success="onCopy"
             v-clipboard:error="onError"
-            src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/copy.png" alt="">
+            src="https://storied-crepe-e5e65c.netlify.app/icon/copy.png" alt="">
         </div>
       </div>
     </div>
@@ -90,8 +90,8 @@ export default {
       id: '',
       accFansInfo: {},
       accInfo: {
-        avatar: "https://cdn.jsdelivr.net/gh/defis-net/material2/coin/tagtokenmain-tag.png",
-        cover: "https://cdn.jsdelivr.net/gh/defis-net/material/accBanner/banner0.png",
+        avatar: "https://leafy-kataifi-c6d825.netlify.app/coin/tagtokenmain-tag.png",
+        cover: "https://storied-crepe-e5e65c.netlify.app/accBanner/banner0.png",
         desc: "",
         nick: "",
         sex: 2,
@@ -134,8 +134,8 @@ export default {
     handleMounted() {
       this.id = this.$route.params.id;
       this.accInfo = {
-        avatar: "https://cdn.jsdelivr.net/gh/defis-net/material2/coin/tagtokenmain-tag.png",
-        cover: "https://cdn.jsdelivr.net/gh/defis-net/material/accBanner/banner0.png",
+        avatar: "https://leafy-kataifi-c6d825.netlify.app/coin/tagtokenmain-tag.png",
+        cover: "https://storied-crepe-e5e65c.netlify.app/accBanner/banner0.png",
         desc: "",
         nick: "",
         sex: 2,

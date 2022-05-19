@@ -1,9 +1,9 @@
 <template>
   <div class="upAcc">
     <div class="banner">
-      <img class="bg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/upgrade.png">
+      <img class="bg" src="https://leafy-kataifi-c6d825.netlify.app/dfs/upgrade.png">
       <div class="title">
-        <img class="new" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/new_upacc.png" >
+        <img class="new" src="https://leafy-kataifi-c6d825.netlify.app/dfs/new_upacc.png" >
         <div>{{ $t('newwallet.upAcc') }}</div>
         <div class="subTitle">{{ $t('newwallet.upAccTip') }}</div>
       </div>

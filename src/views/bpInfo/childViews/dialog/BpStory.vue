@@ -1,11 +1,11 @@
 <template>
   <div class="story">
     <img class="close" @click="handleClose()"
-      src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/sd_icon_btn.svg" alt="">
+      src="https://storied-crepe-e5e65c.netlify.app/svg/sd_icon_btn.svg" alt="">
     <div class="title">{{ story.title }}</div>
     <div class="actor tip flexb">
       <span class="flexend">
-        <img class="artImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/bpInfo/art.png" alt="">
+        <img class="artImg" src="https://storied-crepe-e5e65c.netlify.app/bpInfo/art.png" alt="">
         <span>{{ story.editor }}</span>
       </span>
       <span>{{ story.lTime }}</span>

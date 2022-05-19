@@ -10,8 +10,8 @@
         @loadedmetadata="handleLoaded"
         ref="myaudio"></audio>
       <div class="audioStyle flexa" @click.stop="handleToPlay(i)">
-        <img v-if="duration && duration[i] ? !duration[i].isPlaying : true" class="img" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/audio.png" alt="">
-        <img v-else class="img" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/audio.gif" alt="">
+        <img v-if="duration && duration[i] ? !duration[i].isPlaying : true" class="img" src="https://storied-crepe-e5e65c.netlify.app/icon/audio.png" alt="">
+        <img v-else class="img" src="https://storied-crepe-e5e65c.netlify.app/icon/audio.gif" alt="">
         <span v-if="duration && duration[i] && duration[i].mins > 0">{{ duration[i].mins }}'</span>
         <span>{{ duration && duration[i] ? duration[i].secs : '00' }}''</span>
       </div>

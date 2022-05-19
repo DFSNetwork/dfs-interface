@@ -18,37 +18,37 @@
         <div class="flexa">
           <span class="flexa" @click="handleSortVol">
             <span>{{ $t('pddex.amt') }}</span>
-            <img class="sortCoin" v-if="sortVol === 0" src="https://cdn.jsdelivr.net/gh/defis-net/material2/pddex/sort_default.png" alt="">
-            <img class="sortCoin" v-else-if="sortVol === 1" src="https://cdn.jsdelivr.net/gh/defis-net/material2/pddex/sort_down.png" alt="">
-            <img class="sortCoin" v-else src="https://cdn.jsdelivr.net/gh/defis-net/material2/pddex/sort_up.png" alt="">
+            <img class="sortCoin" v-if="sortVol === 0" src="https://leafy-kataifi-c6d825.netlify.app/pddex/sort_default.png" alt="">
+            <img class="sortCoin" v-else-if="sortVol === 1" src="https://leafy-kataifi-c6d825.netlify.app/pddex/sort_down.png" alt="">
+            <img class="sortCoin" v-else src="https://leafy-kataifi-c6d825.netlify.app/pddex/sort_up.png" alt="">
           </span>
           <span class="flexa" @click="handleSortPools">
             <span>{{ $t('pddex.pools') }}</span>
-            <img class="sortCoin" v-if="sortPools === 0" src="https://cdn.jsdelivr.net/gh/defis-net/material2/pddex/sort_default.png" alt="">
-            <img class="sortCoin" v-else-if="sortPools === 1" src="https://cdn.jsdelivr.net/gh/defis-net/material2/pddex/sort_down.png" alt="">
-            <img class="sortCoin" v-else src="https://cdn.jsdelivr.net/gh/defis-net/material2/pddex/sort_up.png" alt="">
+            <img class="sortCoin" v-if="sortPools === 0" src="https://leafy-kataifi-c6d825.netlify.app/pddex/sort_default.png" alt="">
+            <img class="sortCoin" v-else-if="sortPools === 1" src="https://leafy-kataifi-c6d825.netlify.app/pddex/sort_down.png" alt="">
+            <img class="sortCoin" v-else src="https://leafy-kataifi-c6d825.netlify.app/pddex/sort_up.png" alt="">
           </span>
           <span class="flexa" @click="handleSortApy">
             <span>{{ $t('pddex.apys') }}</span>
-            <img class="sortCoin" v-if="sortApy === 0" src="https://cdn.jsdelivr.net/gh/defis-net/material2/pddex/sort_default.png" alt="">
-            <img class="sortCoin" v-else-if="sortApy === 1" src="https://cdn.jsdelivr.net/gh/defis-net/material2/pddex/sort_down.png" alt="">
-            <img class="sortCoin" v-else src="https://cdn.jsdelivr.net/gh/defis-net/material2/pddex/sort_up.png" alt="">
+            <img class="sortCoin" v-if="sortApy === 0" src="https://leafy-kataifi-c6d825.netlify.app/pddex/sort_default.png" alt="">
+            <img class="sortCoin" v-else-if="sortApy === 1" src="https://leafy-kataifi-c6d825.netlify.app/pddex/sort_down.png" alt="">
+            <img class="sortCoin" v-else src="https://leafy-kataifi-c6d825.netlify.app/pddex/sort_up.png" alt="">
           </span>
         </div>
         <div class="rateDivS">
           <span class="flexa" @click="handleSortPrice">
             <span>{{ $t('pddex.newPrice') }}</span>
-            <img class="sortCoin noMargin" v-if="sortPrice === 0" src="https://cdn.jsdelivr.net/gh/defis-net/material2/pddex/sort_default.png" alt="">
-            <img class="sortCoin noMargin" v-else-if="sortPrice === 1" src="https://cdn.jsdelivr.net/gh/defis-net/material2/pddex/sort_down.png" alt="">
-            <img class="sortCoin noMargin" v-else src="https://cdn.jsdelivr.net/gh/defis-net/material2/pddex/sort_up.png" alt="">
+            <img class="sortCoin noMargin" v-if="sortPrice === 0" src="https://leafy-kataifi-c6d825.netlify.app/pddex/sort_default.png" alt="">
+            <img class="sortCoin noMargin" v-else-if="sortPrice === 1" src="https://leafy-kataifi-c6d825.netlify.app/pddex/sort_down.png" alt="">
+            <img class="sortCoin noMargin" v-else src="https://leafy-kataifi-c6d825.netlify.app/pddex/sort_up.png" alt="">
           </span>
         </div>
         <div class="rateDiv">
           <span class="flexa" @click="handleSortRate">
             <span>{{ $t('pddex.rate') }}</span>
-            <img class="sortCoin noMargin" v-if="sortRate === 0" src="https://cdn.jsdelivr.net/gh/defis-net/material2/pddex/sort_default.png" alt="">
-            <img class="sortCoin noMargin" v-else-if="sortRate === 1" src="https://cdn.jsdelivr.net/gh/defis-net/material2/pddex/sort_down.png" alt="">
-            <img class="sortCoin noMargin" v-else src="https://cdn.jsdelivr.net/gh/defis-net/material2/pddex/sort_up.png" alt="">
+            <img class="sortCoin noMargin" v-if="sortRate === 0" src="https://leafy-kataifi-c6d825.netlify.app/pddex/sort_default.png" alt="">
+            <img class="sortCoin noMargin" v-else-if="sortRate === 1" src="https://leafy-kataifi-c6d825.netlify.app/pddex/sort_down.png" alt="">
+            <img class="sortCoin noMargin" v-else src="https://leafy-kataifi-c6d825.netlify.app/pddex/sort_up.png" alt="">
           </span>
         </div>
       </div>
@@ -60,7 +60,7 @@
         <div class="rankList" v-if="active === 0">
           <div class="loading_p flexc" v-if="!getLike"><van-loading type="spinner" color="#29D4B0"/></div>
           <div class="noDate tip" v-if="!followList.length && getLike">
-            <img class="noDataPng" src="https://cdn.jsdelivr.net/gh/defis-net/material/noData/noStar.png" alt="">
+            <img class="noDataPng" src="https://storied-crepe-e5e65c.netlify.app/noData/noStar.png" alt="">
             <div>{{ $t('pddex.noFollow') }}</div>
             <div class="toFollow flexc" @click="active = 1">{{ $t('pddex.add') }}</div>
           </div>
@@ -103,7 +103,7 @@
         </div>
         <div class="rankList" v-else>
           <div class="noDate tip" v-loading="unGetAllMarket" v-if="!cdAreaLists.length">
-            <img class="noDataPng" src="https://cdn.jsdelivr.net/gh/defis-net/material/noData/noStar.png" alt="">
+            <img class="noDataPng" src="https://storied-crepe-e5e65c.netlify.app/noData/noStar.png" alt="">
             <div>{{ $t('public.noData') }}</div>
           </div>
           <div class="rankItem flexb dinReg" v-for="(v, index) in cdAreaLists" :key="`${active}-${index}`" @click="handleToTrade(v)">

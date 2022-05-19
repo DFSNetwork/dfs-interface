@@ -1,7 +1,7 @@
 <template>
   <div class="routePath">
     <img class="close" @click="handleClose"
-      src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/sd_icon_btn.svg" alt="">
+      src="https://storied-crepe-e5e65c.netlify.app/svg/sd_icon_btn.svg" alt="">
     <div class="title">{{ $t('dex.moreRoute') }}</div>
     <div class="content">
       <div class="subTitle">本次路径兑换</div>

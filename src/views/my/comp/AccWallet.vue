@@ -7,7 +7,7 @@
       <div class="has">
         <div class="subTitle flexa" @click="showTip = true">
           <span>{{ $t('my.dfsAssets') }}</span>
-          <!-- <img class="tipIcon" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/tips_icon_btn.svg"> -->
+          <!-- <img class="tipIcon" src="https://storied-crepe-e5e65c.netlify.app/icon/tips_icon_btn.svg"> -->
         </div>
         <div>
           <span class="num dinBold">{{ allDfs | numberTofixed}}</span>

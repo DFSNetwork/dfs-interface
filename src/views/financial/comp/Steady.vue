@@ -42,7 +42,7 @@ export default {
       list: [{
         coin: 'EOS',
         contract: 'eosio.token',
-        coinImg: 'https://cdn.jsdelivr.net/gh/defis-net/material2/coin/eosio.token-eos.svg',
+        coinImg: 'https://leafy-kataifi-c6d825.netlify.app/coin/eosio.token-eos.svg',
         apy: '0.00',
         lockTime: 4,
         desc: 'riskLow',

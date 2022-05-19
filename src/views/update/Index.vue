@@ -1,7 +1,7 @@
 <template>
   <div class="update">
     <div class="title flexa">
-      <img class="mail" src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/mail.png">
+      <img class="mail" src="https://leafy-kataifi-c6d825.netlify.app/icon/mail.png">
       <span>{{ $t('upRecord.title') }}</span>
     </div>
     <V5 />

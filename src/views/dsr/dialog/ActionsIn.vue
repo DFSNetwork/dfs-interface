@@ -92,7 +92,7 @@ export default {
         symbol: 'DFS',
         contract: 'minedfstoken',
         decimal: 4,
-        imgUrl: 'https://cdn.jsdelivr.net/gh/defis-net/material2/coin/minedfstoken-dfs.png'
+        imgUrl: 'https://leafy-kataifi-c6d825.netlify.app/coin/minedfstoken-dfs.png'
       },
       options: [{
         value: '0',

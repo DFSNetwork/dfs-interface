@@ -203,8 +203,8 @@ export function get_acc_info(user) {
       let result = {};
       if (!res.data.rows.length) {
         result = {
-          avatar: "https://cdn.jsdelivr.net/gh/defis-net/material2/coin/tagtokenmain-tag.png",
-          cover: "https://cdn.jsdelivr.net/gh/defis-net/material/accBanner/banner1.png",
+          avatar: "https://leafy-kataifi-c6d825.netlify.app/coin/tagtokenmain-tag.png",
+          cover: "https://storied-crepe-e5e65c.netlify.app/accBanner/banner1.png",
           desc: "",
           nick: "",
           sex: 2,

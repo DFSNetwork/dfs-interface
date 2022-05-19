@@ -2,7 +2,7 @@
   <div class="setInfo">
     <div class="title flexb">
       <span class="back flexa" @click="$router.back()">
-        <img src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/back.png" alt="">
+        <img src="https://storied-crepe-e5e65c.netlify.app/icon/back.png" alt="">
       </span>
       <span>{{ $t('my.editInfo') }}</span>
       <span class="back"></span>
@@ -11,7 +11,7 @@
     <!-- 主要编辑内容 -->
     <div class="mainView">
       <div class="headImgItem" @click="handleShowImgCheck('head')">
-        <img class="headImg" :src="avatar || 'https://cdn.jsdelivr.net/gh/defis-net/material2/coin/eosio.token-eos.svg'">
+        <img class="headImg" :src="avatar || 'https://leafy-kataifi-c6d825.netlify.app/coin/eosio.token-eos.svg'">
         <div class="checkBtn">
           <span class="checkHead">{{ $t('my.headImg') }}</span>
         </div>
@@ -24,7 +24,7 @@
             :label="$t('my.accName')"
             :placeholder="$t('my.accName')"
           />
-          <img class="rightIcon" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/itemRight.png" alt="">
+          <img class="rightIcon" src="https://storied-crepe-e5e65c.netlify.app/icon/itemRight.png" alt="">
         </div>
         <div class="flexb item account">
           <van-field
@@ -44,7 +44,7 @@
             :placeholder="$t('my.sex')"
             @click="showPicker = true"
           />
-          <img class="rightIcon" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/itemRight.png" alt="">
+          <img class="rightIcon" src="https://storied-crepe-e5e65c.netlify.app/icon/itemRight.png" alt="">
         </div>
         <div class="flexb item">
           <van-field
@@ -53,14 +53,14 @@
             :label="$t('my.desc')"
             :placeholder="$t('my.desc')"
           />
-          <img class="rightIcon" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/itemRight.png" alt="">
+          <img class="rightIcon" src="https://storied-crepe-e5e65c.netlify.app/icon/itemRight.png" alt="">
         </div>
         <div class="flexb item bgItem" @click="handleShowImgCheck('bg')">
           <div class="flexb">
             <span>{{ $t('my.bgImg') }}</span>
-            <img class="bgImg" :src="cover || 'https://cdn.jsdelivr.net/gh/defis-net/material/accBanner/banner0.png'" alt="">
+            <img class="bgImg" :src="cover || 'https://storied-crepe-e5e65c.netlify.app/accBanner/banner0.png'" alt="">
           </div>
-          <img class="rightIcon" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/itemRight.png" alt="">
+          <img class="rightIcon" src="https://storied-crepe-e5e65c.netlify.app/icon/itemRight.png" alt="">
         </div>
 
         <div class="btnDiv">

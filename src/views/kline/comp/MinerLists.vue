@@ -4,7 +4,7 @@
       <span class="num">{{ $t('kline.countMks') }}: {{ allListsLen }}</span>
       <span class="flexa">
         <span>{{ $t('kline.rdTips') }}</span>
-        <img class="tipImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/tips_icon_btn.svg">
+        <img class="tipImg" src="https://storied-crepe-e5e65c.netlify.app/icon/tips_icon_btn.svg">
       </span>
     </div>
     <div class="lists">

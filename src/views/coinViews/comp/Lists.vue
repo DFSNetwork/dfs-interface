@@ -6,7 +6,7 @@
         <div class="listOld" v-if="item.transType === -1">
           <div class="flexb name">
               <span>{{ (item.fromx) }}</span>
-              <span class="flexc"><img class="exchange" src="https://cdn.jsdelivr.net/gh/defis-net/material/dex/exchange.svg" alt=""></span>
+              <span class="flexc"><img class="exchange" src="https://storied-crepe-e5e65c.netlify.app/dex/exchange.svg" alt=""></span>
               <span>{{ (item.tox) }}</span>
           </div>
           <div class="price flexb">

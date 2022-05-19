@@ -1,6 +1,6 @@
 <template>
   <div class="deposit">
-    <img class="close" @click="handleClose(false)" src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/close-black.png">
+    <img class="close" @click="handleClose(false)" src="https://leafy-kataifi-c6d825.netlify.app/icon/close-black.png">
     <div class="title" v-if="actType === 'create'">{{ $t('invest.createIn') }}</div>
     <div class="title" v-else>{{ $t('invest.deposit') }}</div>
 
@@ -143,7 +143,7 @@ export default {
         mid: 17,
         symbol: 'EOS',
         contract: 'eosio.token',
-        logo: 'https://cdn.jsdelivr.net/gh/defis-net/material2/coin/eosio.token-eos.svg',
+        logo: 'https://leafy-kataifi-c6d825.netlify.app/coin/eosio.token-eos.svg',
       },
       showPopover: false,
       bal: '0.0000',

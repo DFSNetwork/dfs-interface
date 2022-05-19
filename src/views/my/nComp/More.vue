@@ -8,19 +8,19 @@
       </div>
       <div class="lists flexa">
         <div class="list" @click="handleTo('history', {mid: 39})">
-          <img class="icon big" src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/swapHis.png" alt="">
+          <img class="icon big" src="https://leafy-kataifi-c6d825.netlify.app/icon/swapHis.png" alt="">
           <div>{{ $t('sys.tradeHis') }}</div>
         </div>
         <div class="list" @click="handleTo('MarketHis', {mid: 39})">
-          <img class="icon" src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/marketHis.png" alt="">
+          <img class="icon" src="https://leafy-kataifi-c6d825.netlify.app/icon/marketHis.png" alt="">
           <div>{{ $t('sys.marketHis') }}</div>
         </div>
         <div class="list" @click="handleTo('pddexOrder')">
-          <img class="icon" src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/order.png" alt="">
+          <img class="icon" src="https://leafy-kataifi-c6d825.netlify.app/icon/order.png" alt="">
           <div>{{ $t('sys.myOrders') }}</div>
         </div>
         <div class="list" @click="handleTo('myMarketList')">
-          <img class="icon big" src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/myMarket.png" alt="">
+          <img class="icon big" src="https://leafy-kataifi-c6d825.netlify.app/icon/myMarket.png" alt="">
           <div>{{ $t('sys.myMarkets') }}</div>
         </div>
       </div>
@@ -30,19 +30,19 @@
       <div class="title">常用应用</div>
       <div class="lists flexa">
         <div class="list" @click="handleTo('mineHomeDfs')">
-          <img class="icon" src="https://cdn.jsdelivr.net/gh/defis-net/material2/coin/minedfstoken-dfs.png" alt="">
+          <img class="icon" src="https://leafy-kataifi-c6d825.netlify.app/coin/minedfstoken-dfs.png" alt="">
           <div>{{ $t('sys.coinPool', {coin: 'DFS'}) }}</div>
         </div>
         <div class="list" @click="handleTo('mineHomeTag')">
-          <img class="icon" src="https://cdn.jsdelivr.net/gh/defis-net/material2/coin/tagtokenmain-tag.png" alt="">
+          <img class="icon" src="https://leafy-kataifi-c6d825.netlify.app/coin/tagtokenmain-tag.png" alt="">
           <div>{{ $t('sys.coinPool', {coin: 'TAG'}) }}</div>
         </div>
         <div class="list" @click="handleTo('dssHomeDfs')">
-          <img class="icon" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/dss.png" alt="">
+          <img class="icon" src="https://leafy-kataifi-c6d825.netlify.app/dfs/dss.png" alt="">
           <div>DSS</div>
         </div>
         <div class="list" @click="handleToProject('dtoken')">
-          <img class="icon" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/Graph@2x.png" alt="">
+          <img class="icon" src="https://leafy-kataifi-c6d825.netlify.app/dfs/Graph@2x.png" alt="">
           <div>{{ $t('sys.dcap') }}</div>
         </div>
       </div>
@@ -53,34 +53,34 @@
       <div class="title">社区项目</div>
       <div class="lists flexa">
         <div class="list" @click="handleToProject('diary')">
-          <img class="icon" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/note.png" alt="">
+          <img class="icon" src="https://leafy-kataifi-c6d825.netlify.app/dfs/note.png" alt="">
           <div>{{ $t('sys.diary') }}</div>
-          <!-- <img class="beta hot" src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/hot.png" alt=""> -->
+          <!-- <img class="beta hot" src="https://leafy-kataifi-c6d825.netlify.app/icon/hot.png" alt=""> -->
         </div>
         <div class="list" @click="handleToProject('dfc')">
-          <img class="icon" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/dfc1.png" alt="">
+          <img class="icon" src="https://leafy-kataifi-c6d825.netlify.app/dfs/dfc1.png" alt="">
           <div>{{ $t('my.windmill') }}</div>
         </div>
         <div class="list" @click="handleToProject('kline')">
-          <img class="icon" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/kline.png" alt="">
+          <img class="icon" src="https://leafy-kataifi-c6d825.netlify.app/dfs/kline.png" alt="">
           <div>{{ $t('sys.kline') }}</div>
         </div>
         <div class="list" @click="handleToProject('eosdefi')">
-          <img class="icon" src="https://cdn.jsdelivr.net/gh/defis-net/material2/coin/djftokenmain-djf.png" alt="">
+          <img class="icon" src="https://leafy-kataifi-c6d825.netlify.app/coin/djftokenmain-djf.png" alt="">
           <div>DJF</div>
         </div>
       </div>
       <div class="lists flexa">
         <div class="list" @click="handleToProject('usdx')">
-          <img class="icon biger" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/usdx.png" alt="">
+          <img class="icon biger" src="https://leafy-kataifi-c6d825.netlify.app/dfs/usdx.png" alt="">
           <div>USDX</div>
         </div>
         <div class="list" @click="handleToProject('dfg')">
-          <img class="icon biger" src="https://cdn.jsdelivr.net/gh/defis-net/material2/coin/dfxtokenmain-dfg.png" alt="">
+          <img class="icon biger" src="https://leafy-kataifi-c6d825.netlify.app/coin/dfxtokenmain-dfg.png" alt="">
           <div>DFG</div>
         </div>
         <div class="list" @click="handleToProject('papaya')">
-          <img class="icon" src="https://cdn.jsdelivr.net/gh/defis-net/material2/coin/eos.v2.wei-papaya.png" alt="">
+          <img class="icon" src="https://leafy-kataifi-c6d825.netlify.app/coin/eos.v2.wei-papaya.png" alt="">
           <div>木瓜</div>
         </div>
       </div>

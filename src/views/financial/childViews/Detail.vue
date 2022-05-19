@@ -2,14 +2,14 @@
   <div class="detail">
     <div class="title flexb">
       <span class="back flexa" @click="$router.back()">
-        <img src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/back.png" alt="">
+        <img src="https://storied-crepe-e5e65c.netlify.app/icon/back.png" alt="">
       </span>
       <span>{{ $t('financial.detail') }}</span>
       <span class="back"></span>
     </div>
     <!-- 币种 -->
     <div class="coinData flexa">
-      <img class="coinImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/coin/eosio.token-eos.svg" alt="">
+      <img class="coinImg" src="https://leafy-kataifi-c6d825.netlify.app/coin/eosio.token-eos.svg" alt="">
       <div class="coinInfo">
         <div class="coinName">EOS</div>
         <div class="contract tip">eosio.token</div>
@@ -22,14 +22,14 @@
           <div class="tip subTitle">{{ $t('financial.apy') }}</div>
           <div class="num dinBold">{{ apy }}%</div>
           <div class="type flexa tip">
-            <img src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/kline.png" alt="">
+            <img src="https://storied-crepe-e5e65c.netlify.app/icon/kline.png" alt="">
             <span>{{ $t('financial.status1') }}</span>
           </div>
         </div>
         <div class="time">
           <div class="tip subTitle flexa">
             <span>{{ $t('financial.date1') }}</span>
-            <img @click="showTip = true" class="tipImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/dex/tips_icon_btn.svg" alt="">
+            <img @click="showTip = true" class="tipImg" src="https://storied-crepe-e5e65c.netlify.app/dex/tips_icon_btn.svg" alt="">
           </div>
           <div class="date dinBold">{{ $t('financial.day', {days: 4}) }}</div>
           <div class="count">

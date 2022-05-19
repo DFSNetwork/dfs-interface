@@ -15,7 +15,7 @@
           <span>{{ parseInt(node.num_votes || 0) }} EOS</span>
         </div>
         <div class="flexa">
-          <img class="coin" src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/earth.svg">
+          <img class="coin" src="https://storied-crepe-e5e65c.netlify.app/svg/earth.svg">
           <a class="tip websize" :href="node.url" target="_blank" rel="noopener noreferrer">
             {{ handleDealUrl(node.url || '') }}
           </a>
@@ -44,7 +44,7 @@
             <span>{{ $t('vote.vote') }}</span>
             <span>{{ item.voteNum }}</span>
           </div>
-          <label class="rankImg" v-if="page === 1 && index < 3"><img :src="`https://cdn.jsdelivr.net/gh/defis-net/material/rank/rank${index + 1}.png`" alt=""></label>
+          <label class="rankImg" v-if="page === 1 && index < 3"><img :src="`https://storied-crepe-e5e65c.netlify.app/rank/rank${index + 1}.png`" alt=""></label>
         </div>
       </template>
 
@@ -70,7 +70,7 @@ export default {
   name: 'voteDetail',
   data() {
     return {
-      voteDefaultImg: 'https://cdn.jsdelivr.net/gh/defis-net/material2/coin/tagtokenmain-tag.png',
+      voteDefaultImg: 'https://leafy-kataifi-c6d825.netlify.app/coin/tagtokenmain-tag.png',
       owner: '',
       allVotes: '0',
       allMinersList: [],

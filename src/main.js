@@ -19,8 +19,8 @@ Vue.use(VueClipboard)
 Vue.use(VueWorker)
 
 Vue.prototype.$api = api
-Vue.prototype.$errorImg = 'this.src="https://cdn.jsdelivr.net/gh/defis-net/material2/coin/unknown.png"';
-Vue.prototype.$defaultAccImg = 'this.src="https://cdn.jsdelivr.net/gh/defis-net/material2/farm/defaultAcc.png"';
+Vue.prototype.$errorImg = 'this.src="https://leafy-kataifi-c6d825.netlify.app/coin/unknown.png"';
+Vue.prototype.$defaultAccImg = 'this.src="https://leafy-kataifi-c6d825.netlify.app/farm/defaultAcc.png"';
 Vue.config.productionTip = false
 
 // 国际化 - 语言

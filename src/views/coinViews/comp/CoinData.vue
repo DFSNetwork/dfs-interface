@@ -4,7 +4,7 @@
     <div class="title flexb">
       <div class="flexc" @click="showMarketList = true">
         <span class="act">{{ checkedMarket.symbol1 }}-{{ checkedMarket.symbol0 }}</span>
-        <img class="iconImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/dex/down.svg" alt="">
+        <img class="iconImg" src="https://storied-crepe-e5e65c.netlify.app/dex/down.svg" alt="">
       </div>
     </div>
     <div class="poolsInfo" v-loading="listLoading && changeLoading">

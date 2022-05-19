@@ -1,7 +1,7 @@
 <template>
   <div class="farmDeposit">
     <img class="close" @click="handleClose(false)"
-      src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/sd_icon_btn.svg" alt="">
+      src="https://storied-crepe-e5e65c.netlify.app/svg/sd_icon_btn.svg" alt="">
     <div class="title">{{ $t('invite.deposit') }}</div>
 
     <div class="coinInfo">

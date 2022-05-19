@@ -15,17 +15,17 @@
           <div v-else class="login">{{ account.name }}</div>
         </div>
         <!-- <img v-if="!account || !account.name" @click="handleLogin"
-          class="right" src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/acc_right.svg" alt=""> -->
+          class="right" src="https://storied-crepe-e5e65c.netlify.app/svg/acc_right.svg" alt=""> -->
         <span v-if="account && account.name" class="red exit" @click="handleLoginOut">{{ $t('public.loginOut') }}</span>
       </div>
       <!-- list -->
       <div class="lists">
         <!-- <div class="list flexb wel" @click="handleToAbout">
           <div class="flexa">
-            <img class="dfslogo" src="https://cdn.jsdelivr.net/gh/defis-net/material2/coin/minedfstoken-dfs.png">
+            <img class="dfslogo" src="https://leafy-kataifi-c6d825.netlify.app/coin/minedfstoken-dfs.png">
             <span>{{ $t('more.aboutDfs') }}</span>
           </div>
-          <img class="right_to" src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/about_right.svg" alt="">
+          <img class="right_to" src="https://storied-crepe-e5e65c.netlify.app/svg/about_right.svg" alt="">
         </div> -->
         <div class="list switch flexb">
           <span>免CPU操作</span>
@@ -39,32 +39,32 @@
           </span>
         </div>
         <div class="list flexa" @click="handleShowComp('silderSet')">
-          <img class="listImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/swap-set.png">
+          <img class="listImg" src="https://leafy-kataifi-c6d825.netlify.app/dfs/swap-set.png">
           <span>{{ $t('dex.TradeSet') }}</span>
         </div>
         <div class="list flexa" @click="handleShowNode">
-          <img class="listImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/node-set.png">
+          <img class="listImg" src="https://leafy-kataifi-c6d825.netlify.app/dfs/node-set.png">
           <span>{{ $t('node.nodeSet') }}</span>
         </div>
         <div class="list flexa" @click="handleTo('createMarket')">
-          <img class="listImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/create_set.svg">
+          <img class="listImg" src="https://storied-crepe-e5e65c.netlify.app/svg/create_set.svg">
           <span>{{ $t('dex.addMarket') }}</span>
         </div>
         <div class="list flexa" @click="handleToPro('docs')">
-          <img class="listImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/tutorial_set.svg">
+          <img class="listImg" src="https://storied-crepe-e5e65c.netlify.app/svg/tutorial_set.svg">
           <span>{{ $t('more.faq') }}</span>
         </div>
         <div class="list flexa" @click="handleShowComp('warn')">
-          <img class="listImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/safe_set.svg">
+          <img class="listImg" src="https://storied-crepe-e5e65c.netlify.app/svg/safe_set.svg">
           <span>{{ $t('public.warnTip') }}</span>
         </div>
         <div class="list lang flexb">
           <div class="flexc" :class="{'act': language === 'zh-CN'}" @click="handleChangeLang('zh-CN')">
-            <img src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/lang-zh.png">
+            <img src="https://leafy-kataifi-c6d825.netlify.app/dfs/lang-zh.png">
             <span>简体中文</span>
           </div>
           <div class="flexc" :class="{'act': language === 'en'}" @click="handleChangeLang('en')">
-            <img src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/lang-en.png">
+            <img src="https://leafy-kataifi-c6d825.netlify.app/dfs/lang-en.png">
             <span>English</span>
           </div>
         </div>
@@ -74,29 +74,29 @@
         <!-- <div class="subTi">联系我们</div> -->
         <div class="flexb item">
           <a href="https://github.com/defis-net" target="_blank">
-            <img src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/github2.png">
+            <img src="https://leafy-kataifi-c6d825.netlify.app/dfs/github2.png">
           </a>
           <!-- <a href="https://bihu.com/people/1511717747" target="_blank">
-            <img src="https://cdn.jsdelivr.net/gh/defis-net/material2/telUs/Bihu.png">
+            <img src="https://leafy-kataifi-c6d825.netlify.app/telUs/Bihu.png">
           </a> -->
           <a href="https://twitter.com/DFSnetworks" target="_blank">
-            <img src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/twitter2.png">
+            <img src="https://leafy-kataifi-c6d825.netlify.app/dfs/twitter2.png">
           </a>
           <a href="https://t.me/dfsnet" target="_blank">
-            <img src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/telegram2.png">
+            <img src="https://leafy-kataifi-c6d825.netlify.app/dfs/telegram2.png">
           </a>
           <a href="https://bihu.com/people/1511717747" target="_blank">
-            <img src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/bihu2.png">
+            <img src="https://leafy-kataifi-c6d825.netlify.app/dfs/bihu2.png">
           </a>
         </div>
         <!-- <div class="flexb item">
           <a v-clipboard:copy="'dfsfarmer'"
             v-clipboard:success="handleCopy"
             v-clipboard:error="handleCopyError">
-            <img src="https://cdn.jsdelivr.net/gh/defis-net/material2/telUs/WeChat.png">
+            <img src="https://leafy-kataifi-c6d825.netlify.app/telUs/WeChat.png">
           </a>
           <a href="https://dfsofficial.medium.com/" target="_blank">
-            <img src="https://cdn.jsdelivr.net/gh/defis-net/material2/telUs/medium.png">
+            <img src="https://leafy-kataifi-c6d825.netlify.app/telUs/medium.png">
           </a>
         </div> -->
       </div>

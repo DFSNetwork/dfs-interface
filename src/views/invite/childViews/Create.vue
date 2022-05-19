@@ -2,7 +2,7 @@
   <div class="create">
     <div class="title flexb">
       <span class="back flexa" @click="$router.back()">
-        <img src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/back.png" alt="">
+        <img src="https://storied-crepe-e5e65c.netlify.app/icon/back.png" alt="">
       </span>
       <span>{{ $t('invite.create') }}</span>
       <span class="back"></span>
@@ -12,9 +12,9 @@
     <div class="farm">
       <div class="infoImg flexc">
         <img v-if="language === 'zh-CN'"
-          src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/createTitleBg.png">
+          src="https://leafy-kataifi-c6d825.netlify.app/dfs/createTitleBg.png">
         <img v-else
-          src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/createTitleBg-en.png">
+          src="https://leafy-kataifi-c6d825.netlify.app/dfs/createTitleBg-en.png">
         <span>{{ $t('invite.farmInfo') }}</span>
       </div>
 
@@ -48,7 +48,7 @@
         <div class="name">{{ $t('invite.bg') }}</div>
         <div class="addImg flexc" @click="handleShowImgCheck('bg')" v-if="!cover">
           <div>
-            <img class="add" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/create.png">
+            <img class="add" src="https://leafy-kataifi-c6d825.netlify.app/dfs/create.png">
             <div>{{ $t('invite.setBg') }}</div>
           </div>
         </div>
@@ -95,7 +95,7 @@ export default {
 
       // 表单参数
       cover: '', // 背景
-      avatar: 'https://cdn.jsdelivr.net/gh/defis-net/material2/coin/eosio.token-eos.svg', // 头像 
+      avatar: 'https://leafy-kataifi-c6d825.netlify.app/coin/eosio.token-eos.svg', // 头像 
       nick: '', // 昵称
       slogon: '', // 口号
       desc: '', // 简介

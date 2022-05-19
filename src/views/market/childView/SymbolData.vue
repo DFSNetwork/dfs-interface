@@ -17,7 +17,7 @@
           <div>
             <div class="subTitle flexa">
               <span>{{ $t('mine.waitClaim') }}</span>
-              <img class="tipIcon ml10" @click="showReWardTip = true" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/tips_icon_btn.svg" alt="">
+              <img class="tipIcon ml10" @click="showReWardTip = true" src="https://storied-crepe-e5e65c.netlify.app/icon/tips_icon_btn.svg" alt="">
             </div>
             <div class="claimNum">{{ accMineData.showReward || '0.00000000' }} DFS</div>
           </div>
@@ -70,7 +70,7 @@
                           'red':  sym0AndSy1 ? parseFloat(marketRewardSym1) < 0 : parseFloat(marketRewardSym0) < 0}">
               ({{ sym0AndSy1 ? marketRewardSym1 : marketRewardSym0 }})
             </span>
-            <img class="qusTip" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/tips_icon_btn.svg" @click="showMarketTip = !showMarketTip">
+            <img class="qusTip" src="https://storied-crepe-e5e65c.netlify.app/icon/tips_icon_btn.svg" @click="showMarketTip = !showMarketTip">
           </div>
           <div class="flexa">
             <span>{{ $t('market.marketTime') }}: </span>
@@ -119,7 +119,7 @@
             <span>{{ $t('dex.pools') }}</span>
             <span>{{ item.liq_bal0 | numToShot }} / {{ item.liq_bal1 | numToShot }}</span>
           </div>
-          <label class="rankImg" v-if="page === 1 && index < 3"><img :src="`https://cdn.jsdelivr.net/gh/defis-net/material/rank/rank${index + 1}.png`" alt=""></label>
+          <label class="rankImg" v-if="page === 1 && index < 3"><img :src="`https://storied-crepe-e5e65c.netlify.app/rank/rank${index + 1}.png`" alt=""></label>
         </div>
       </template>
       <el-pagination

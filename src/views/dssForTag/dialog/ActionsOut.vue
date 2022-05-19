@@ -44,7 +44,7 @@ export default {
         symbol: 'TAG',
         contract: 'tagtokenmain',
         decimal: 8,
-        imgUrl: 'https://cdn.jsdelivr.net/gh/defis-net/material2/coin/tagtokenmain-tag.png'
+        imgUrl: 'https://leafy-kataifi-c6d825.netlify.app/coin/tagtokenmain-tag.png'
       },
       loading: false,
     }

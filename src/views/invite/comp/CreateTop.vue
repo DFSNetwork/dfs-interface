@@ -1,15 +1,15 @@
 <template>
   <div class="createTop">
     <img class="bg" v-if="language === 'zh-CN'"
-      src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/createTop-en.png">
+      src="https://leafy-kataifi-c6d825.netlify.app/dfs/createTop-en.png">
     <img class="bg" v-else
-      src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/createTop.png">
+      src="https://leafy-kataifi-c6d825.netlify.app/dfs/createTop.png">
     <div class="info">
       <div class="infoImg flexc">
         <img v-if="language === 'zh-CN'"
-          src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/createTitleBg.png">
+          src="https://leafy-kataifi-c6d825.netlify.app/dfs/createTitleBg.png">
         <img v-else
-          src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/createTitleBg-en.png">
+          src="https://leafy-kataifi-c6d825.netlify.app/dfs/createTitleBg-en.png">
         <span>{{ $t('invite.farmDesc') }}</span>
       </div>
       <div class="item flexs">

@@ -1,7 +1,7 @@
 <template>
   <div class="voteMain">
     <!-- <div class="banner">
-      <img class="bgImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/banner/bpVote.png" alt="">
+      <img class="bgImg" src="https://storied-crepe-e5e65c.netlify.app/banner/bpVote.png" alt="">
     </div> -->
     <div class="accVoteNum_p">
       <div class="mainTitle flexb">

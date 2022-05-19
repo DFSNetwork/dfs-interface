@@ -1,7 +1,7 @@
 <template>
   <div v-loading="loading">
     <div class="banner">
-      <img class="bannerImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/banner/dss.png" alt="">
+      <img class="bannerImg" src="https://storied-crepe-e5e65c.netlify.app/banner/dss.png" alt="">
     </div>
     <div class="mt40">
       <div class="dataInfo">
@@ -34,7 +34,7 @@
           <span>{{ $t('mine.waitClaim') }}</span>
           <span class="green">{{ myDepositInfo.showReward }}</span>
           <span>DFS</span>
-          <img class="tipIcon ml10" @click="showReWardTip = true" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/tips_icon_btn.svg" alt="">
+          <img class="tipIcon ml10" @click="showReWardTip = true" src="https://storied-crepe-e5e65c.netlify.app/icon/tips_icon_btn.svg" alt="">
         </div>
         <div class="allClaimBtn flexc"
           @click="handleClaimAll"

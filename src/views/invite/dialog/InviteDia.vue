@@ -2,14 +2,14 @@
   <div class="inviteDia">
     <img
       class="shareBg" v-if="language === 'zh-CN'"
-      src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/inviteBg1.png"
+      src="https://leafy-kataifi-c6d825.netlify.app/dfs/inviteBg1.png"
     />
     <img
       class="shareBg" v-else
-      src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/inviteBg1-en.png"
+      src="https://leafy-kataifi-c6d825.netlify.app/dfs/inviteBg1-en.png"
     />
     <img class="close" @click="handleClose"
-      src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/close-white.png">
+      src="https://leafy-kataifi-c6d825.netlify.app/dfs/close-white.png">
     <div class="content">
       <div>{{ $t('invite.address') }}</div>
       <div class="address din">{{ link }}</div>

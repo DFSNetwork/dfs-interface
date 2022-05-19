@@ -1,13 +1,13 @@
 <template>
   <div class="scoreDiv">
-    <img class="close" @click="handleClose" src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/sd_icon_btn.svg" alt="">
+    <img class="close" @click="handleClose" src="https://storied-crepe-e5e65c.netlify.app/svg/sd_icon_btn.svg" alt="">
     <div class="title">{{$t('bpInfo.title')}}</div>
     <div class="content">
       <div class="addTitle flexb">
         <span>{{$t('bpInfo.title')}}</span>
         <span class="flexa">
           <van-field class="tleIpt" v-model="title" :placeholder="$t('bpInfo.titleTip')"/>
-          <img class="right" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/itemRight.png" alt="">
+          <img class="right" src="https://storied-crepe-e5e65c.netlify.app/icon/itemRight.png" alt="">
         </span>
       </div>
       <div class="accMsg">

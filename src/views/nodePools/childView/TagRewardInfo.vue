@@ -9,7 +9,7 @@
       <div class="tip dinReg">≈${{ aboutPrice }} </div>
     </div>
     <div class="claim flexa">
-      <!-- <img class="tipImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/tips_icon_btn.svg"> -->
+      <!-- <img class="tipImg" src="https://storied-crepe-e5e65c.netlify.app/icon/tips_icon_btn.svg"> -->
       <div class="btn flexc" @click="handleClaimAll">{{ $t('mine.claimAll') }}</div>
     </div>
   </div>

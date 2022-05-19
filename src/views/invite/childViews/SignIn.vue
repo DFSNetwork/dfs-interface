@@ -2,7 +2,7 @@
   <div class="signIn">
     <div class="title flexb">
       <span class="back flexa" @click="$router.back()">
-        <img src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/back.png" alt="">
+        <img src="https://storied-crepe-e5e65c.netlify.app/icon/back.png" alt="">
       </span>
       <span>{{ $t('invite.signReward') }}</span>
       <span class="back"></span>
@@ -18,7 +18,7 @@
         <span>{{ $t('invite.has2') }}</span>
       </div>
       <div class="signTip flexc">
-        <img src="https://cdn.jsdelivr.net/gh/defis-net/material2/farm/rewardIcon.png">
+        <img src="https://leafy-kataifi-c6d825.netlify.app/farm/rewardIcon.png">
         <div>{{ $t('invite.subTip') }}</div>
       </div>
     </div>

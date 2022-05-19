@@ -91,18 +91,18 @@ export default {
   // width: 690px;
   height: 106px;
   &.swap2{
-    background-image: url('https://cdn.jsdelivr.net/gh/defis-net/material2/icon/swap.png');
+    background-image: url('https://leafy-kataifi-c6d825.netlify.app/icon/swap.png');
     background-size: 101%;
     background-repeat: no-repeat;
   }
   &.pddex{
-    background-image: url('https://cdn.jsdelivr.net/gh/defis-net/material2/icon/pddex.png');
+    background-image: url('https://leafy-kataifi-c6d825.netlify.app/icon/pddex.png');
     background-size: 101%;
     background-repeat: no-repeat;
     background-position: 0px -1px;
   }
   &.market{
-    background-image: url('https://cdn.jsdelivr.net/gh/defis-net/material2/icon/market.png');
+    background-image: url('https://leafy-kataifi-c6d825.netlify.app/icon/market.png');
     background-size: 101%;
     background-repeat: no-repeat;
     background-position: -1px 0;
@@ -123,7 +123,7 @@ export default {
     background-image: none !important;
     &::before{
       content: '';
-      background-image: url('https://cdn.jsdelivr.net/gh/defis-net/material/svg/checked.svg');
+      background-image: url('https://storied-crepe-e5e65c.netlify.app/svg/checked.svg');
       background-repeat: no-repeat;
       background-size: 100%;
       position: absolute;

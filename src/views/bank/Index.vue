@@ -60,8 +60,8 @@
             <span v-if="!exRate">1{{ thisMarket1.symbol }} = {{ tradeInfo.aboutPrice || '-' }}{{ thisMarket0.symbol }}</span>
             <span v-else>1{{ thisMarket0.symbol }} = {{ tradeInfo.aboutPriceSym0 || '-' }}{{ thisMarket1.symbol }}</span>
             <span @click="exRate =!exRate">
-              <img class="iconImg" v-if="!exRate" src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/price_switch_icon_btn_left.svg" alt="">
-              <img class="iconImg" v-else src="https://cdn.jsdelivr.net/gh/defis-net/material2/icon/price_switch_icon_btn_right.svg" alt="">
+              <img class="iconImg" v-if="!exRate" src="https://leafy-kataifi-c6d825.netlify.app/icon/price_switch_icon_btn_left.svg" alt="">
+              <img class="iconImg" v-else src="https://leafy-kataifi-c6d825.netlify.app/icon/price_switch_icon_btn_right.svg" alt="">
             </span>
           </span>
         </div>
@@ -122,7 +122,7 @@ export default {
       thisMarket0: {
         symbol: 'USDT',
         contract: 'tethertether',
-        imgUrl: 'https://cdn.jsdelivr.net/gh/defis-net/material2/coin/tethertether-usdt.png',
+        imgUrl: 'https://leafy-kataifi-c6d825.netlify.app/coin/tethertether-usdt.png',
         decimal: 4
       },
       thisMarket1: {
@@ -154,7 +154,7 @@ export default {
         {
           symbol: 'USDT',
           contract: 'tethertether',
-          imgUrl: 'https://cdn.jsdelivr.net/gh/defis-net/material2/coin/tethertether-usdt.png',
+          imgUrl: 'https://leafy-kataifi-c6d825.netlify.app/coin/tethertether-usdt.png',
           decimal: 4
         },
       ]

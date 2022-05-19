@@ -1,6 +1,6 @@
 <template>
   <div class="toFundation">
-    <img class="close" @click="handleClose()" src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/sd_icon_btn.svg">
+    <img class="close" @click="handleClose()" src="https://storied-crepe-e5e65c.netlify.app/svg/sd_icon_btn.svg">
     <div class="title">
       <span v-if="$route.name !== 'nodePools'">{{ $t('fundation.funTran') }}</span>
       <span v-else>乐捐助力</span>
@@ -39,7 +39,7 @@
         <div class="info flexb">
           <span>{{ $t('fundation.memoshort') }}</span>
           <span class="randomSpan flexa" @click="handleRandom">
-            <img src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/refresh.png">
+            <img src="https://storied-crepe-e5e65c.netlify.app/icon/refresh.png">
             <span>{{ $t('fundation.random') }}</span>
           </span>
         </div>

@@ -9,11 +9,11 @@
         <div class="name flexb">
           <div class="flexa">
             <span>{{ accInfo.nick || id }}</span>
-            <img v-if="accInfo.sex == 0" class="sex" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/sex0.png" alt="">
-            <img v-if="accInfo.sex == 1" class="sex" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/sex1.png" alt="">
+            <img v-if="accInfo.sex == 0" class="sex" src="https://storied-crepe-e5e65c.netlify.app/icon/sex0.png" alt="">
+            <img v-if="accInfo.sex == 1" class="sex" src="https://storied-crepe-e5e65c.netlify.app/icon/sex1.png" alt="">
           </div>
           <img class="set" @click="$router.push({name: 'setInfo'})"
-            src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/set.png" alt="">
+            src="https://storied-crepe-e5e65c.netlify.app/icon/set.png" alt="">
         </div>
         <div class="account flexa">
           <span
@@ -24,7 +24,7 @@
             v-clipboard:copy="id"
             v-clipboard:success="onCopy"
             v-clipboard:error="onError"
-            src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/copy.png" alt="">
+            src="https://storied-crepe-e5e65c.netlify.app/icon/copy.png" alt="">
         </div>
         <div class="intro" @click="showInfo = true">{{ accInfo.desc || $t('my.noDesc') }}</div>
       </div>

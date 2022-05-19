@@ -2,25 +2,25 @@
   <div class="header flexb">
     <div class="tools flexb">
       <div class="logoDiv" :class="{'ani': ani}" @click="handleToIndex" @dblclick="handleDbClick">
-        <img class="logo" src="https://cdn.jsdelivr.net/gh/defis-net/material2/coin/minedfstoken-dfs.png">
+        <img class="logo" src="https://leafy-kataifi-c6d825.netlify.app/coin/minedfstoken-dfs.png">
       </div>
       <span class="create flexc" @click="showVote = true">
         <span>{{ $t('vote.vote') }}</span>
-        <img class="downdraw" src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/down.svg" alt="">
+        <img class="downdraw" src="https://storied-crepe-e5e65c.netlify.app/svg/down.svg" alt="">
       </span>
       <span class="create flexc" @click="showPools = true">
         <span>{{ $t('mine.pools') }}</span>
-        <img class="downdraw" src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/down.svg" alt="">
+        <img class="downdraw" src="https://storied-crepe-e5e65c.netlify.app/svg/down.svg" alt="">
       </span>
       <span class="create flexc" @click="showDss = true">
         <span>DSS</span>
-        <img class="downdraw" src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/down.svg" alt="">
+        <img class="downdraw" src="https://storied-crepe-e5e65c.netlify.app/svg/down.svg" alt="">
       </span>
       <span class="create flexc" @click="showApps = true">
         <span>APPS</span>
-        <img class="downdraw" src="https://cdn.jsdelivr.net/gh/defis-net/material/svg/down.svg" alt="">
+        <img class="downdraw" src="https://storied-crepe-e5e65c.netlify.app/svg/down.svg" alt="">
       </span>
-      <span class="create flexc more" @click="handleShowNav"><img class="svgIcon" src="https://cdn.jsdelivr.net/gh/defis-net/material/dex/menu_icon.svg" alt=""></span>
+      <span class="create flexc more" @click="handleShowNav"><img class="svgIcon" src="https://storied-crepe-e5e65c.netlify.app/dex/menu_icon.svg" alt=""></span>
     </div>
 
     <el-dialog class="mydialog showApps"

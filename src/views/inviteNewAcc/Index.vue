@@ -1,12 +1,12 @@
 <template>
   <div class="inviter">
-    <img class="banner" src="https://cdn.jsdelivr.net/gh/defis-net/material2/banner/inviter.png">
+    <img class="banner" src="https://leafy-kataifi-c6d825.netlify.app/banner/inviter.png">
     <div class="main">
       <div class="card">
         <div class="title flexa">
           <span>{{ $t('newwallet.invite') }}</span>
           <img class="tips" @click="showInviteTip = true"
-            src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/tips_icon_btn.svg">
+            src="https://storied-crepe-e5e65c.netlify.app/icon/tips_icon_btn.svg">
         </div>
         <div class="flexb item">
           <span class="label">{{ $t('newwallet.inviLink') }}</span>
@@ -15,7 +15,7 @@
             v-clipboard:success="onCopy"
             v-clipboard:error="onError">
             <span class="dinReg link">{{ link }}</span>
-            <img class="copyImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/copy.png">
+            <img class="copyImg" src="https://leafy-kataifi-c6d825.netlify.app/dfs/copy.png">
           </div>
         </div>
         <div class="btnDiv flexb">

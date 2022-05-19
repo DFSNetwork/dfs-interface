@@ -6,7 +6,7 @@
       :scrollable="false"
       background="#FFF">
         <template v-slot:left-icon>
-          <img class="nImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/notice_icon.png">
+          <img class="nImg" src="https://leafy-kataifi-c6d825.netlify.app/dfs/notice_icon.png">
         </template>
         <van-swipe
           vertical

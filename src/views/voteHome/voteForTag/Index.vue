@@ -1,14 +1,14 @@
 <template>
   <div class="voteMain">
     <!-- <div class="banner">
-      <img class="bgImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/banner/bpVote.png" alt="">
+      <img class="bgImg" src="https://storied-crepe-e5e65c.netlify.app/banner/bpVote.png" alt="">
     </div> -->
     <div class="accVoteNum_p">
       <div class="mainTitle flexb">
         <span class="act">{{ $t('nodePools.tagVote', {coin: 'TAG'}) }}</span>
         <span class="flexa rulesTip tip" @click="showRules = !showRules">
           <span>{{ $t('vote.voteRules') }}</span>
-          <img class="tipIcon" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/tips_icon_btn.svg" alt="">
+          <img class="tipIcon" src="https://storied-crepe-e5e65c.netlify.app/icon/tips_icon_btn.svg" alt="">
         </span>
       </div>
       <div class="info " v-loading="!swapGet">
@@ -34,14 +34,14 @@
           <span :class="{'act': act === 3}" @click="handleChangeTab(3)">{{ $t('vote.voted') }}</span>
         </div>
         <div class="search flexc">
-          <img class="searchImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/search.png" alt="">
+          <img class="searchImg" src="https://storied-crepe-e5e65c.netlify.app/icon/search.png" alt="">
           <el-input @input="handleSearch"
             v-model="search" :placeholder="$t('sys.searchMarket')"></el-input>
         </div>
       </div>
       <div v-if="act !== 2" class="voteLists" v-loading="listLoading || hisLoading">
         <div class="noData tip" v-if="!searchList.length">
-          <img class="noDataImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/noData.png" alt="">
+          <img class="noDataImg" src="https://storied-crepe-e5e65c.netlify.app/icon/noData.png" alt="">
           <div class="noDataTip">{{ $t('public.noData') }}</div>
         </div>
         <template  v-for="(item, index) in searchList">
@@ -60,7 +60,7 @@
                 </span>
               </div>
               <div class="num flexa">
-                <img class="voteIcon" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/vote.png" alt="">
+                <img class="voteIcon" src="https://storied-crepe-e5e65c.netlify.app/icon/vote.png" alt="">
                 <span>{{ item.total_votes || '0' }}</span>
                 <span class="tip small">（{{ item.votesRate || '0.00' }}%）</span>
                 <span class="green" @click.stop="handleToDetail(item)">{{ $t('public.detail') }}></span>
@@ -68,7 +68,7 @@
             </div>
             <div v-if="act !== 3" class="select flexc" :class="{'active': item.isChecked}">
               <!-- <span class="el-icon-check"></span> -->
-              <img v-if="item.isChecked" class="checkedImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/checked.png" alt="">
+              <img v-if="item.isChecked" class="checkedImg" src="https://storied-crepe-e5e65c.netlify.app/icon/checked.png" alt="">
             </div>
           </div>
         </template>

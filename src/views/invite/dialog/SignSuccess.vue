@@ -1,6 +1,6 @@
 <template>
   <div class="signSuccess">
-    <img class="bg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/farm/signSuccess.png" >
+    <img class="bg" src="https://leafy-kataifi-c6d825.netlify.app/farm/signSuccess.png" >
     <div class="main">
       <div class="title">{{ $t('invite.helpSignSuccess') }}</div>
       <div class="get flexa">{{ $t('invite.hasGetReward') }}</div>
@@ -12,7 +12,7 @@
       <div class="btn flexc" @click="handleToBrowser">{{ $t('invite.look') }}</div>
     </div>
     <img class="close" @click="handleClose"
-      src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/close-white.png" >
+      src="https://leafy-kataifi-c6d825.netlify.app/dfs/close-white.png" >
   </div>
 </template>
 

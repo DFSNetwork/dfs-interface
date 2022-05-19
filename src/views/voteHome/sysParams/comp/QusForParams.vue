@@ -2,14 +2,14 @@
   <div class="qus">
     <div class="qusTitle flexb">
       <span>{{ $t('sysParams.qusTitle') }}</span>
-      <img @click="showRules = !showRules" class="tipIcon" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/tips_icon_btn.svg" alt="">
+      <img @click="showRules = !showRules" class="tipIcon" src="https://storied-crepe-e5e65c.netlify.app/icon/tips_icon_btn.svg" alt="">
     </div>
     <!-- <div class="qusSubTitle">当前 30% DSS + 10%乐捐 + 60% LP挖矿。</div> -->
     <div class="options">
       <div class="item flexa" v-for="(v, i) in options" :key="i" @click="handleCheck(v.mid)"
         :class="{'active': check === v.mid}">
         <div class="checkDiv flexc">
-          <img v-if="check === v.mid" class="checkedImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/checked.png" alt="">
+          <img v-if="check === v.mid" class="checkedImg" src="https://storied-crepe-e5e65c.netlify.app/icon/checked.png" alt="">
         </div>
         <div class="main">
           <div class="">

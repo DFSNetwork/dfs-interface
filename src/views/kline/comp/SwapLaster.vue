@@ -16,7 +16,7 @@
           <span>{{ $t('kline.swap') }}</span>
           <div class="flexa dinReg">
             <span>{{ v.qin }}</span>
-            <img class="swapLasterImg" src="https://cdn.jsdelivr.net/gh/defis-net/material2/dfs/swapLaster.png" alt="">
+            <img class="swapLasterImg" src="https://leafy-kataifi-c6d825.netlify.app/dfs/swapLaster.png" alt="">
             <span>{{ v.qout }}</span>
           </div>
         </div>

@@ -1,25 +1,25 @@
 <template>
   <div class="bpInfo">
     <div class="banner">
-      <img class="banImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/bpInfo/banner1.png" alt="">
+      <img class="banImg" src="https://storied-crepe-e5e65c.netlify.app/bpInfo/banner1.png" alt="">
       <div class="typeDiv">
         <div class="flexb">
           <div class="flexa">
-            <img src="https://cdn.jsdelivr.net/gh/defis-net/material/bpInfo/type2.png" alt="">
+            <img src="https://storied-crepe-e5e65c.netlify.app/bpInfo/type2.png" alt="">
             <span>出块出得好</span>
           </div>
           <div class="flexc">
-            <img src="https://cdn.jsdelivr.net/gh/defis-net/material/bpInfo/type2.png" alt="">
+            <img src="https://storied-crepe-e5e65c.netlify.app/bpInfo/type2.png" alt="">
             <span>节点速度快</span>
           </div>
         </div>
         <div class="flexb item">
           <div class="flexa">
-            <img src="https://cdn.jsdelivr.net/gh/defis-net/material/bpInfo/type3.png" alt="">
+            <img src="https://storied-crepe-e5e65c.netlify.app/bpInfo/type3.png" alt="">
             <span>社区超给力</span>
           </div>
           <div class="flexc">
-            <img src="https://cdn.jsdelivr.net/gh/defis-net/material/bpInfo/type4.png" alt="">
+            <img src="https://storied-crepe-e5e65c.netlify.app/bpInfo/type4.png" alt="">
             <span>技术猛如虎</span>
           </div>
         </div>
@@ -185,7 +185,7 @@ export default {
   }
 }
 .bpInfo{
-  // background-image: url('https://cdn.jsdelivr.net/gh/defis-net/material/bpInfo/banner.png');
+  // background-image: url('https://storied-crepe-e5e65c.netlify.app/bpInfo/banner.png');
   background-repeat: no-repeat;
   background-size: contain;
   min-height: 700px;

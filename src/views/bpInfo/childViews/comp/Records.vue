@@ -12,7 +12,7 @@
           <div class="rTitle">{{ v.title }}</div>
           <div class="rTime tip">{{ v.lTime }}</div>
           <div class="flexs">
-            <img class="artImg" src="https://cdn.jsdelivr.net/gh/defis-net/material/bpInfo/art.png" alt="">
+            <img class="artImg" src="https://storied-crepe-e5e65c.netlify.app/bpInfo/art.png" alt="">
             <div class="subContent tip">{{ v.content }}</div>
           </div>
         </div>

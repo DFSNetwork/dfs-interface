@@ -26,11 +26,11 @@
             <div class="time tip">{{handleToLocalTime(item.dealTime)}}</div>
             <div class="flexa replyDiv tip">
               <span class="flexa">
-                <img src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/newlike.png" alt="">
+                <img src="https://storied-crepe-e5e65c.netlify.app/icon/newlike.png" alt="">
                 <span>{{ item.likeNum }}</span>
               </span>
               <span class="flexa right">
-                <img src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/reply.png" alt="">
+                <img src="https://storied-crepe-e5e65c.netlify.app/icon/reply.png" alt="">
                 <span>{{ item.replyNum }}</span>
               </span>
             </div>
@@ -68,7 +68,7 @@ export default {
   },
   data() {
     return {
-      errorCoinImg: 'this.src="https://cdn.jsdelivr.net/gh/defis-net/material/icon/pig.png"',
+      errorCoinImg: 'this.src="https://storied-crepe-e5e65c.netlify.app/icon/pig.png"',
       id: '',
       loadingMore: false,
       finished: false,
@@ -76,8 +76,8 @@ export default {
       pagesize: 20,
       lists: [],
       accInfo: {
-        avatar: "https://cdn.jsdelivr.net/gh/defis-net/material2/coin/tagtokenmain-tag.png",
-        cover: "https://cdn.jsdelivr.net/gh/defis-net/material/accBanner/banner0.png",
+        avatar: "https://leafy-kataifi-c6d825.netlify.app/coin/tagtokenmain-tag.png",
+        cover: "https://storied-crepe-e5e65c.netlify.app/accBanner/banner0.png",
         desc: "",
         nick: "",
         sex: 2,
