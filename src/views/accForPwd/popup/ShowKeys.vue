@@ -70,11 +70,14 @@ export default {
       this.$emit('listenClose', false)
     },
     handleRandom() {
-      DApp.randomKey((pri, pub) => {
-        this.pri = pri;
-        this.pub = pub;
-        this.$emit('update', pub)
-        // console.log(pri, pub)
+      localStorage.setItem('WALLET', 'newwallet')
+      DApp.scatterInit(this, () => {
+        DApp.randomKey((pri, pub) => {
+          this.pri = pri;
+          this.pub = pub;
+          this.$emit('update', pub)
+          // console.log(pri, pub)
+        })
       })
     },
     onCopy() {
