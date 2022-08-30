@@ -8,13 +8,13 @@ const requireApi = require.context(
 	/.js$/
 )
 
-let module = {}
+let module2 = {}
 requireApi.keys().forEach((key)=>{
 	if(key === './index.js' || key === './axios.js') return
-	Object.assign(module,requireApi(key))
+	Object.assign(module2,requireApi(key))
 })
 
-export default module
+export default module2
 
 // 取代
 // import { get_list } from './list'
