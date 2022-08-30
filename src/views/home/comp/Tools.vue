@@ -17,8 +17,13 @@
       <van-swipe class="my-swipe" :loop="false" indicator-color="#29D4B0">
         <van-swipe-item>
           <div class="lists flexb">
-            <div class="list" @click="handleToPro('town')">
+            <div class="list" @click="handleTo('newPools')">
               <img class="hot" src="https://leafy-kataifi-c6d825.netlify.app/dfs/new.png">
+              <img class="iconImg" src="https://leafy-kataifi-c6d825.netlify.app/dfs/mining_icon.png">
+              <div>{{ $t('home.mine') }}</div>
+            </div>
+            <div class="list" @click="handleToPro('town')">
+              <!-- <img class="hot" src="https://leafy-kataifi-c6d825.netlify.app/dfs/new.png"> -->
               <img class="iconImg" src="https://venerable-semolina-21a376.netlify.app//Town-img/login/windmill_icon.png">
               <div>{{ $t('home.township') }}</div>
             </div>
@@ -28,13 +33,8 @@
               <div>NFT</div>
             </div>
             <div class="list" @click="handleTo('invite')">
-              <!-- <img class="hot" src="https://leafy-kataifi-c6d825.netlify.app/dfs/new.png"> -->
               <img class="iconImg" src="https://leafy-kataifi-c6d825.netlify.app/dfs/farm1_icon.png">
               <div>{{ $t('invite.myFarm') }}</div>
-            </div>
-            <div class="list" @click="handleTo('newPools')">
-              <img class="iconImg" src="https://leafy-kataifi-c6d825.netlify.app/dfs/mining_icon.png">
-              <div>{{ $t('home.mine') }}</div>
             </div>
           </div>
           <div class="lists flexb">

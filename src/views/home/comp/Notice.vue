@@ -68,8 +68,8 @@ export default {
       }, {
         title: 'home.homeUi1',
       }],
-      top3: [[{}, {}, {}], [{}, {}, {}]],
-      hotArr: [451, 722, 17, 894, 1035, 665]
+      top3: [[{}, {}, {}]],
+      hotArr: [451, 17, 665]
     }
   },
   computed: {
@@ -150,8 +150,7 @@ export default {
       }
     }
     .symInfo{
-      padding-right: 10px;
-      max-width: 35%;
+      // max-width: 35%;
       position: relative;
       padding-bottom: 10px;
       &:last-child{
