@@ -276,8 +276,8 @@ export default {
         const decimal = this.thisMarket.decimal1 > 4 ? 4 : this.thisMarket.decimal1 ;
         return `${t}${toFixed(sym1, decimal)} ${this.thisMarket.symbol1}`
       }
-      const t = sym0 > 0 ? '+' : ''
       const sym0 = accSub(parseFloat(this.nowMarket.getNum1), this.marketData[0]);
+      const t = sym0 > 0 ? '+' : ''
       const decimal = this.thisMarket.decimal0 > 4 ? 4 : this.thisMarket.decimal0 ;
       return `${t}${toFixed(sym0, decimal)} ${this.thisMarket.symbol0}`
     },
