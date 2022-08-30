@@ -67,7 +67,7 @@ export default {
   data() {
     return {
       allLists: [],
-      lists: [{}],
+      lists: [],
       page: 1,
       pageSize: 20,
       timer: null,
