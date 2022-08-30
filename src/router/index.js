@@ -624,6 +624,12 @@ const constantRouter = [
         component: () => import(/* webpackChunkName: "home" */ '@/views/newPools/Index.vue'),
         meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noTab: true },
       },
+      {
+        path: 'eos/:mid',
+        name: 'eosMine',
+        component: () => import(/* webpackChunkName: "home" */ '@/views/newPools/childViews/EosMine.vue'),
+        meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noTab: true },
+      }
     ],
   },
   // 节点投票挖矿

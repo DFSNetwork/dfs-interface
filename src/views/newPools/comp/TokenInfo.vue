@@ -29,6 +29,7 @@ export default {
       contracts: {
         DFS: 'minedfstoken',
         TAG: 'tagtokenmain',
+        EOS: 'eosio.token',
       },
       supply: '0.0000',
     }
@@ -47,7 +48,10 @@ export default {
     src() {
       const coin = this.tokenName.toLowerCase()
       const contract = this.contract;
-      const src = `https://leafy-kataifi-c6d825.netlify.app/coin/${contract}-${coin}.png`
+      let src = `https://leafy-kataifi-c6d825.netlify.app/coin/${contract}-${coin}.png`
+      if (contract === 'eosio.token') {
+        src = `https://leafy-kataifi-c6d825.netlify.app/coin/${contract}-${coin}.svg`
+      }
       return src
     },
     price() {

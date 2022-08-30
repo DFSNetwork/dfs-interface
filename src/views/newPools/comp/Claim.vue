@@ -19,6 +19,13 @@
         </div>
         <div class="tip">≈${{ tagAbt }}</div>
       </div>
+      <div class="numDiv">
+        <div class="num flexend">
+          <span class="dinBold">{{ handleToFixed(eosTotal, 4) }}</span>
+          <span class="token dinReg">EOS</span>
+        </div>
+        <div class="tip">≈${{ eosAbt }}</div>
+      </div>
     </div>
 
     <div class="claimBtn flexc" @click="handleClaim">{{ $t('mine.claimAll') }}</div>
@@ -38,12 +45,17 @@ export default {
     tagTotal: {
       type: String,
       default: '0.0000'
+    },
+    eosTotal: {
+      type: String,
+      default: '0.0000'
     }
   },
   data() {
     return {
       tagPoolsMid: [602, 665],
       dfsPoolsMid: [39, 451, 382, 726, 727],
+      eosPoolsMid: [17],
     }
   },
   computed: {
@@ -62,6 +74,12 @@ export default {
       const price = this.coinPrices.find(v => v.coin === 'TAG') || {price: 0}
       const p = price.price
       const abt = this.tagTotal * p;
+      return toFixed(abt, 2)
+    },
+    eosAbt() {
+      const price = this.coinPrices.find(v => v.coin === 'EOS') || {price: 0}
+      const p = price.price
+      const abt = this.eosTotal * p;
       return toFixed(abt, 2)
     }
   },
@@ -111,6 +129,21 @@ export default {
         }
         params.actions.push(lpAction)
       })
+      this.eosPoolsMid.forEach(v => {
+        const actions = {
+          account: 'miningpool11',
+          name: 'claim2',
+          authorization: [{
+            actor: formName, // 转账者
+            permission,
+          }],
+          data: {
+            user: formName,
+            mid: v,
+          }
+        }
+        params.actions.push(actions)
+      })
       DApp.toTransaction(params, (err) => {
         this.claim = false;
         if (err && err.code == 402) {
@@ -147,6 +180,9 @@ export default {
 }
 .nums{
   margin: 20px 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 30px;
   .numDiv{
     flex: 1;
     margin-right: 30px;

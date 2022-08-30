@@ -11,7 +11,7 @@
         <van-swipe
           vertical
           class="notice-swipe"
-          :autoplay="3000"
+          :autoplay="5000"
           :show-indicators="false"
         >
           <van-swipe-item v-for="(item, i) in voices" :key="i">{{ $t(`${item.title}`) }}</van-swipe-item>
@@ -20,7 +20,7 @@
 
     <div class="flexb lists">
       <van-swipe class="my-swipe" :autoplay="6000" indicator-color="#29d4b0">
-        <van-swipe-item class="flexb" v-for="(top, index) in top3" :key="`top${index}`">
+        <van-swipe-item class="flexb grid" v-for="(top, index) in top3" :key="`top${index}`">
           <div class="symInfo" v-for="(v, i) in top"
             @click="handleTo(v)"
             :key="`sym-${i}`">
@@ -64,6 +64,8 @@ export default {
   data() {
     return {
       voices: [{
+        title: 'home.homeUi2',
+      }, {
         title: 'home.homeUi1',
       }],
       top3: [[{}, {}, {}], [{}, {}, {}]],
@@ -130,6 +132,7 @@ export default {
     .notice-swipe {
       height: 32px;
       line-height: 32px;
+      text-align: left;
     }
   }
   .lists{
@@ -172,6 +175,11 @@ export default {
         font-size: 26px;
       }
     }
+  }
+  .grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 30px;
   }
 }
 </style>

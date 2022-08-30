@@ -4,11 +4,13 @@
       <img width="100%" src="https://leafy-kataifi-c6d825.netlify.app/banner/mining.png">
     </div>
     <div class="main">
-      <Claim :dfsTotal="dfsTotal" :tagTotal="tagTotal"/>
+      <Claim :dfsTotal="dfsTotal" :tagTotal="tagTotal" :eosTotal="eosTotal"
+        @listenUpdata="handleUpdate"/>
 
       <div class="tokenInfo">
         <TokenInfo :tokenName="'DFS'" />
         <TokenInfo :tokenName="'TAG'" />
+        <!-- <TokenInfo :tokenName="'EOS'" /> -->
       </div>
 
       <div class="lists">
@@ -19,9 +21,9 @@
             <img class="qus" src="https://storied-crepe-e5e65c.netlify.app/icon/tips_icon_btn.svg">
           </span> -->
         </div>
-
-        <DfsPools @totalClaim="handleDfsClaim"/>
-        <TagPools @totalClaim="handleTagClaim"/>
+        <EosPools ref="EosPools" @totalClaim="handleEosClaim"/>
+        <DfsPools ref="DfsPools" @totalClaim="handleDfsClaim"/>
+        <TagPools ref="TagPools" @totalClaim="handleTagClaim"/>
       </div>
     </div>
   </div>
@@ -32,23 +34,38 @@ import Claim from '@/views/newPools/comp/Claim'
 import TokenInfo from '@/views/newPools/comp/TokenInfo'
 import DfsPools from '@/views/newPools/comp/DfsPools'
 import TagPools from '@/views/newPools/comp/TagPools'
+import EosPools from '@/views/newPools/comp/EosPools'
 export default {
   name: 'newPools',
   components: {
-    Claim, TokenInfo, DfsPools, TagPools
+    Claim, TokenInfo, DfsPools, TagPools, EosPools,
   },
   data() {
     return {
       dfsTotal: '0.0000',
       tagTotal: '0.0000',
+      eosTotal: '0.0000',
     }
   },
   methods: {
+    handleUpdate() {
+      this.$refs.EosPools.handleGetBalPools()
+      this.$refs.EosPools.handleGetLiqs()
+
+      this.$refs.DfsPools.handleGetBalPools()
+      this.$refs.DfsPools.handleGetLiqs()
+
+      this.$refs.TagPools.handleGetBalPools()
+      this.$refs.TagPools.handleGetLiqs()
+    },
     handleDfsClaim(total) {
       this.dfsTotal = total + '';
     },
     handleTagClaim(total) {
       this.tagTotal = total + '';
+    },
+    handleEosClaim(total) {
+      this.eosTotal = total + '';
     }
   }
 }
