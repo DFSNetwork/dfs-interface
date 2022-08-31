@@ -351,19 +351,19 @@ export default {
   }
   .area{
     height: 70px;
-    /deep/ .van-tab{
+    :deep(.van-tab) {
       font-size: 26px;
     }
-    /deep/ .van-tabs__wrap{
+    :deep(.van-tabs__wrap){
       height: 70px;
       .van-tab{
         padding: 0 28px;
       }
     }
-    /deep/ .van-tabs__nav{
+    :deep(.van-tabs__nav){
       padding: 0 0;
     }
-    /deep/ .van-tabs__line{
+    :deep(.van-tabs__line){
       height: 2px;
       width: 52px;
       bottom: 0px;
@@ -376,7 +376,7 @@ export default {
     .searchImg{
       width: 30px;
     }
-    /deep/ .van-cell{
+    :deep(.van-cell){
       padding-left: 16px;
       background-color: transparent;
     }

@@ -59,7 +59,7 @@ export default {
   border-radius: 20px;
   overflow: hidden;
   padding: 10px 0;
-  /deep/ .van-swipe-item{
+  :deep(.van-swipe-item){
     width: 100%;
     padding: 0 28px;
     box-sizing: border-box;

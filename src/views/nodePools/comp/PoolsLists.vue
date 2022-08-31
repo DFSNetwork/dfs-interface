@@ -565,7 +565,7 @@ export default {
   }
 }
 
-/deep/ .el-input-number{
+:deep(.el-input-number) {
   // overflow: hidden;
   position: relative;
   height: 62px;
@@ -590,7 +590,7 @@ export default {
     }
   }
 }
-/deep/ .el-slider__runway{
+:deep(.el-slider__runway){
   margin: 30px 0;
   .el-slider__button-wrapper{
     height: 60px;
@@ -604,7 +604,7 @@ export default {
 }
 
 .myDialog{
-  /deep/ .el-dialog{
+  :deep(.el-dialog) {
     position: relative;
     margin: auto;
     width: 590px;
@@ -624,7 +624,7 @@ export default {
 
 .mkListDia{
   // animation: none;
-  /deep/ .el-dialog{
+  :deep(.el-dialog) {
     border-radius:12px 12px 0px 0px;
     position: relative;
     margin: auto;

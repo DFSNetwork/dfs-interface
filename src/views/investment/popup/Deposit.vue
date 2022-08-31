@@ -386,7 +386,7 @@ export default {
       margin-bottom: 20px;
     }
     .sltCoin{
-      /deep/ .van-popover__wrapper{
+      :deep( .van-popover__wrapper){
         display: block;
         flex: 1;
       }
@@ -401,7 +401,7 @@ export default {
       padding: 28px;
       height: 100px;
       box-sizing: border-box;
-      /deep/ .van-field__control{
+      :deep( .van-field__control){
         font-size: 32px;
       }
     }

@@ -411,8 +411,7 @@ export default {
 }
 
 .mkListDia{
-  // animation: none;
-  /deep/ .el-dialog{
+  :deep(.el-dialog) {
     border-radius:12px 12px 0px 0px;
     position: relative;
     margin: auto;
@@ -425,7 +424,7 @@ export default {
   }
 }
 .myDialog{
-  /deep/ .el-dialog{
+  :deep(.el-dialog) {
     position: relative;
     margin: auto;
     width: 570px;
@@ -436,7 +435,7 @@ export default {
     }
   }
   &.apy{
-    /deep/ .el-dialog{
+    :deep(.el-dialog) {
       width: 620px;
     }
   }

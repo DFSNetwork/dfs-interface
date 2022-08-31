@@ -138,13 +138,13 @@ export default {
   position: relative;
   z-index: 0;
   margin: -90px 6px 30px;
-  /deep/ .van-collapse,
-  /deep/ .van-collapse-item{
+  :deep( .van-collapse),
+  :deep( .van-collapse-item){
     &::after{
       display: none;
     }
   }
-  /deep/ .van-collapse-item__content{
+  :deep( .van-collapse-item__content){
     padding: 0;
   }
   .hidInfo{

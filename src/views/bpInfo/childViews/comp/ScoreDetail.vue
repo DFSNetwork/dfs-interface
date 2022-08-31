@@ -95,7 +95,7 @@ export default {
       width: 14px;
       margin: 5px 4px;
     }
-    /deep/ .van-icon{
+    :deep(.van-icon){
       margin: 5px 4px;
       color: #959AA5;
     }

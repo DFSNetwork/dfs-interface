@@ -1003,7 +1003,7 @@ export default {
   text-align: right;
   margin-top: 20px;
   font-size: 26px;
-  /deep/ .el-pager{
+  :deep(.el-pager) {
     li.active{
       color: #07D79B;
     }
@@ -1014,7 +1014,7 @@ export default {
       font-size: 26px;
     }
   }
-  /deep/ .btn-prev, /deep/ .btn-next{
+  :deep(.btn-prev), :deep(.btn-next) {
     &:hover {
       color: #07D79B;
     }
@@ -1024,7 +1024,7 @@ export default {
   }
 }
 .myDialog{
-  /deep/ .el-dialog{
+  :deep(.el-dialog) {
     position: relative;
     margin: auto;
     width: 570px;
@@ -1035,7 +1035,7 @@ export default {
     }
   }
   &.apy{
-    /deep/ .el-dialog{
+    :deep(.el-dialog) {
       width: 620px;
     }
   }

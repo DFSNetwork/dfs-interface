@@ -689,7 +689,7 @@ export default {
       text-align: left;
       box-sizing: border-box;
       .tools{
-        /deep/ .van-popover__wrapper{
+        :deep( .van-popover__wrapper){
           .settingImg{
             width: 52px;
             margin-left: 50px;

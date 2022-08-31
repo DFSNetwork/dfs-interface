@@ -213,7 +213,7 @@ export default {
       &::after{
         display: none;
       }
-      /deep/ .van-field__control{
+      :deep( .van-field__control){
         text-align: right;
       }
     }

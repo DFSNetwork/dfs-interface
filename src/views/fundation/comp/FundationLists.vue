@@ -619,7 +619,7 @@ export default {
   .mr0{
     margin-right: 0px;
   }
-  /deep/ .el-select{
+  :deep(.el-select) {
     border-radius: 10px;
     .el-input__suffix-inner{
       display: flex;
@@ -639,7 +639,7 @@ export default {
       }
     }
   }
-  /deep/ .el-scrollbar{
+  :deep(.el-scrollbar) {
     .el-select-dropdown__item{
       height: 50px;
       display: flex;

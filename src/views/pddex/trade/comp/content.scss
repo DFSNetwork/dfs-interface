@@ -13,27 +13,27 @@
     padding-left: 30px;
     color: #a6a6a6;
   }
-  /deep/ .van-stepper{
+  :deep( .van-stepper){
     font-size: 20px;
     height: 65px;
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
-  /deep/ .van-stepper__input{
+  :deep( .van-stepper__input){
     font-size: 30px;
     background: #FFF;
     width: calc(100% - 180px);
     height: 65px;
   }
-  /deep/ .van-stepper__minus, /deep/.van-stepper__plus{
+  :deep( .van-stepper__minus), :deep(.van-stepper__plus){
     color: #07c160;
     background: #FFF;
     height: 65px;
     width: 65px;
     border-right: 2px solid #eee;
   }
-  /deep/.van-stepper__plus{
+  :deep(.van-stepper__plus){
     color: #ee0a24;
     border-left: 2px solid #eee;
     border-right: 0px ;
@@ -50,11 +50,11 @@
     display: flex;
     align-items: center;
     padding: 0 15px 0 30px;
-    /deep/ .van-field__control{
+    :deep( .van-field__control){
       font-size: 28px;
     }
   }
-  /deep/ .van-hairline--top-bottom::after{
+  :deep( .van-hairline--top-bottom::after){
     border: 0 !important;
   }
 }
@@ -77,14 +77,14 @@
     height: 30px;
     border-radius: 20px;
   }
-  /deep/ .van-slider__button{
+  :deep( .van-slider__button){
     width: 40px;
     height: 40px;
     background: url('https://storied-crepe-e5e65c.netlify.app/icon/slider-buy.png') no-repeat;
     background-size: cover;
   }
   &.sellSlider{
-    /deep/ .van-slider__button{
+    :deep( .van-slider__button){
       width: 40px;
       height: 40px;
       background: url('https://storied-crepe-e5e65c.netlify.app/icon/slider.png') no-repeat;

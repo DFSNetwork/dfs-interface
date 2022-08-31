@@ -495,10 +495,10 @@ export default {
       .star{
         font-size: 20px;
         margin-bottom: 6px;
-        /deep/ .van-icon{
+        :deep(.van-icon){
           margin: 3px;
         }
-        /deep/ .van-rate__icon{
+        :deep(.van-rate__icon){
           font-size: 20px;
         }
       }

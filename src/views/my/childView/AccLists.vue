@@ -347,7 +347,7 @@ export default {
       width: 26px;
       margin-right: 16px;
     }
-    /deep/ .van-cell{
+    :deep( .van-cell){
       background: #F5F6F6;
       height: 100%;
       padding: 0;

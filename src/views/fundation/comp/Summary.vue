@@ -129,7 +129,7 @@ export default {
   }
 }
 .mydialog{
-  /deep/ .el-dialog{
+  :deep(.el-dialog) {
     border-radius: 12px;
     width: 650px;
     margin-top: 15vh !important;

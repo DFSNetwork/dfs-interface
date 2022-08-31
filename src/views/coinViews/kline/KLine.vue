@@ -197,7 +197,7 @@ export default {
   z-index: 999;
   text-align: center;
 
-  /deep/ .mint-spinner-snake {
+  :deep(.mint-spinner-snake) {
     margin: auto;
   }
 }

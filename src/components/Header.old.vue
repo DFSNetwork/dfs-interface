@@ -284,7 +284,7 @@ export default {
   }
 }
 .mydialog{
-  /deep/ .el-dialog{
+  :deep(.el-dialog) {
     border-radius: 10px;
     width: 150px;
     margin-top: 90px !important;
@@ -299,26 +299,26 @@ export default {
     }
   }
   &.showApps{
-    /deep/ .el-dialog{
+    :deep(.el-dialog) {
       width: 200px;
       margin-right: 100px;
     }
   }
   &.showDss{
-    /deep/ .el-dialog{
+    :deep(.el-dialog) {
       width: 200px;
       margin-right: 210px;
     }
   }
   &.showPools{
-    /deep/ .el-dialog{
+    :deep(.el-dialog) {
       width: 180px;
       margin-left: 230px;
     }
   }
 
   &.showVote{
-    /deep/ .el-dialog{
+    :deep(.el-dialog) {
       width: 200px;
       margin-left: 80px;
     }
@@ -350,7 +350,7 @@ export default {
   }
 }
 .showEggCss{
-  /deep/ .el-dialog{
+  :deep(.el-dialog) {
     width: 564px;
     border-radius: 16px;
     .el-dialog__header{

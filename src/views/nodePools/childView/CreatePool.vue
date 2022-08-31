@@ -224,14 +224,13 @@ export default {
       line-height: normal;
       color: #2F3F52;
     }
-    /deep/ .el-form-item{
+    :deep(.el-form-item){
       // margin-bottom: 5px;
       &:last-child{
         margin-bottom: 0px;
       }
     }
-
-    /deep/ .el-input{
+    :deep(.el-input) {
       background-color: transparent;
       height: 94px;
       display: flex;
@@ -296,7 +295,7 @@ export default {
 }
 .mkListDia{
   // animation: none;
-  /deep/ .el-dialog{
+  :deep(.el-dialog) {
     position: absolute;
     bottom: 0px;
     margin: 0px;
@@ -308,7 +307,7 @@ export default {
     }
   }
   &.pcList{
-    /deep/ .el-dialog{
+    :deep(.el-dialog) {
       position: relative;
       margin: auto;
       width: 670px;

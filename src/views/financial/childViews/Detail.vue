@@ -310,7 +310,7 @@ export default {
   }
 }
 .mydialog{
-  /deep/ .el-dialog{
+  :deep(.el-dialog) {
     width: 697px;
   }
 }

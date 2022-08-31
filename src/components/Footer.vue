@@ -194,7 +194,7 @@ export default {
   margin-left: 15px;
 }
 .dialog{
-  /deep/ .el-dialog{
+  :deep(.el-dialog) {
     margin-top: 10vh !important;
     width: 600px;
     .el-dialog__header,

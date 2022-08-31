@@ -331,7 +331,7 @@ export default {
   position: relative;
   box-sizing: border-box;
   .mydialog,.nodeDialog{
-    /deep/ .el-dialog{
+    :deep(.el-dialog) {
       border-radius: 12px;
       width: 480px;
       margin-top: 15vh !important;
@@ -345,7 +345,7 @@ export default {
     }
   }
   .nodeDialog{
-    /deep/ .el-dialog{
+    :deep(.el-dialog) {
       width: 680px;
       .el-dialog__body{
         font-size: 26px;

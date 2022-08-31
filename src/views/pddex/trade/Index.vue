@@ -571,7 +571,7 @@ export default {
           height: 400px;
         }
       }
-      /deep/ .van-tabs__wrap{
+      :deep(.van-tabs__wrap){
         width: 200px;
         .van-tab--active{
           padding-left: 20px;

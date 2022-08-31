@@ -314,7 +314,7 @@ export default {
     }
     .ipt{
       height: 90px;
-      /deep/ .el-input__inner{
+      :deep(.el-input__inner) {
         color: $color-black;
         border: 0px;
         font-size: 32px;

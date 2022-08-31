@@ -46,7 +46,7 @@
       &::after{
         border: 0px;
       }
-      /deep/ .van-field__control{
+      :deep(.van-field__control) {
         text-align: right;
       }
     }

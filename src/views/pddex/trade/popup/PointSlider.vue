@@ -130,7 +130,7 @@ export default {
       overflow: hidden;
       .numIpt{
         padding: 0px;
-        /deep/ .van-field__control{
+        :deep(.van-field__control){
           height: 60px;
           padding-right: 20px;
           text-align: right;

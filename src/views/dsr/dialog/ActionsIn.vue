@@ -320,7 +320,7 @@ export default {
       .inputDiv{
         flex: 4;
         .elIpt{
-          /deep/ .el-input__inner{
+          :deep(.el-input__inner) {
             color: $color-black;
             border: 0px;text-align: right;
             font-size: 52px;
@@ -336,7 +336,7 @@ export default {
       .select{
         height: 60px
       }
-      /deep/ .el-select{
+      :deep(.el-select) {
         .el-input__suffix-inner{
           display: flex;
           align-items: center;
@@ -354,7 +354,7 @@ export default {
           }
         }
       }
-      /deep/ .el-scrollbar{
+      :deep(.el-scrollbar) {
         .el-select-dropdown__item{
           height: 50px;
           display: flex;
@@ -412,7 +412,7 @@ export default {
   }
 }
 .myDialog{
-  /deep/ .el-dialog{
+  :deep(.el-dialog) {
     position: relative;
     margin: auto;
     width: 650px;

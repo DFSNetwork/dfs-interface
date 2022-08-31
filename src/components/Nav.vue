@@ -105,7 +105,7 @@ export default {
 .nav{
   position: relative;
   font-size: 24px;
-  /deep/ .el-dialog{
+  :deep(.el-dialog) {
     position: absolute;
     border-radius: 24px 0px 24px 24px;
     right: 40px;

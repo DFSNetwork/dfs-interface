@@ -285,7 +285,7 @@ export default {
   color: #000;
   padding: 0 10px 0 0;
   margin-top: 10px;
-  /deep/ .van-popover__wrapper{
+  :deep(.van-popover__wrapper){
     display: block;
   }
   .direction{

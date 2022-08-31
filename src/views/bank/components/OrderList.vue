@@ -251,7 +251,7 @@ export default {
 
 .mkListDia{
   // animation: none;
-  /deep/ .el-dialog{
+  :deep(.el-dialog){
     position: absolute;
     bottom: 0px;
     margin: 0px;
@@ -263,7 +263,7 @@ export default {
     }
   }
   &.pcList{
-    /deep/ .el-dialog{
+    :deep(.el-dialog){
       position: relative;
       margin: auto;
       width: 670px;

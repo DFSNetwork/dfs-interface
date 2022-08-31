@@ -142,10 +142,10 @@ export default {
     .my-swipe{
       width: 100%;
       padding-bottom: 20px;
-      /deep/ .van-swipe__indicators{
+      :deep(.van-swipe__indicators){
         bottom: 5px;
       }
-      /deep/ .van-swipe__indicator{
+      :deep(.van-swipe__indicator){
         background: #999999;
       }
     }

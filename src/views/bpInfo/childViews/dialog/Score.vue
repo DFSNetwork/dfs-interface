@@ -266,7 +266,7 @@ export default {
       margin-top: 15px;
       color: #FFBE00;
     }
-    /deep/ .van-rate__icon{
+    :deep(.van-rate__icon){
       font-size: 60px;
       margin-right: 30px;
     }
@@ -301,7 +301,7 @@ export default {
     .iptDiv{
       flex: 1;
       .input{
-        /deep/ .el-input__inner{
+        :deep(.el-input__inner){
           width: 100%;
           color: $color-black;
           border: 0px;

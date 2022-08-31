@@ -27,7 +27,7 @@ export default {
 <style lang="scss" scoped>
 .slipTip{
   color: #070707;
-  /deep/ .el-dialog{
+  :deep(.el-dialog) {
     border-radius: 8px;
     .el-dialog__header{
       padding: 0;

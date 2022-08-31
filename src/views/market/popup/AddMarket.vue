@@ -450,7 +450,7 @@ export default {
       .iptDiv{
         flex: 2;;
         .elIpt{
-          /deep/ .el-input__inner{
+          :deep(.el-input__inner) {
             color: $color-black;
             border: 0px;text-align: right;
             font-size: 50px;

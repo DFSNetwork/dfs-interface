@@ -213,7 +213,7 @@ export default {
     text-align: right;
     margin-top: 20px;
     font-size: 26px;
-    /deep/ .el-pager{
+    :deep(.el-pager) {
       li.active{
         color: #07D79B;
       }
@@ -224,7 +224,7 @@ export default {
         font-size: 26px;
       }
     }
-    /deep/ .btn-prev, /deep/ .btn-next{
+    :deep(.btn-prev), :deep(.btn-next) {
       &:hover {
         color: #07D79B;
       }
@@ -234,7 +234,7 @@ export default {
     }
   }
 
-  /deep/ .el-input-number{
+  :deep(.el-input-number) {
     overflow: hidden;
     position: relative;
     height: 62px;
@@ -258,7 +258,7 @@ export default {
       }
     }
   }
-  /deep/ .el-slider__runway{
+  :deep(.el-slider__runway){
     margin: 30px 0;
     .el-slider__button-wrapper{
       height: 60px;

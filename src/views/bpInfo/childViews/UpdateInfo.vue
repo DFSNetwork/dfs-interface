@@ -89,7 +89,7 @@ export default {
       font-size: 32px;
       font-weight: normal;
       color: #29D4B0;
-      /deep/ .van-popove{
+      :deep(.van-popove){
         display: block !important;
       }
     }

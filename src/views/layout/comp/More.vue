@@ -324,7 +324,7 @@ export default {
       }
       .vanSwitch{
         border: 1px solid #FFF;
-        /deep/ .van-switch__node{
+        :deep( .van-switch__node){
           background: #67DEC5;
           box-shadow: none;
           border: 1px solid #FFF;

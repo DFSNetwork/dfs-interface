@@ -397,7 +397,7 @@ export default {
       margin-bottom: 38px;
       // border-bottom: 1px solid #eee;
       padding: 20px;
-      /deep/ .van-cell::after{
+      :deep(.van-cell::after){
         border: 0;
       }
       .input{
@@ -470,7 +470,7 @@ export default {
     .inputDiv{
       flex: 3;
       .elIpt{
-        /deep/ .el-input__inner{
+        :deep(.el-input__inner) {
           color: $color-black;
           border: 0px;text-align: right;
           font-size: 52px;
@@ -494,7 +494,7 @@ export default {
 .mkListDia{
   // animation: none;
   z-index: 10000 !important;
-  /deep/ .el-dialog{
+  :deep(.el-dialog) {
     z-index: 10000;
     position: absolute;
     bottom: 0px;
@@ -507,7 +507,7 @@ export default {
     }
   }
   &.pcList{
-    /deep/ .el-dialog{
+    :deep(.el-dialog) {
       position: relative;
       margin: auto;
       width: 670px;

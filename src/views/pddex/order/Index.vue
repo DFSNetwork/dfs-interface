@@ -386,7 +386,7 @@ export default {
       margin-left: 10px;
     }
   }
-  /deep/ .van-dropdown-menu__bar{
+  :deep(.van-dropdown-menu__bar){
     box-shadow: none;
   }
   .orderLists{

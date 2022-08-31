@@ -197,12 +197,12 @@ export default {
   .my-swipe{
     padding-bottom: 16px;
     margin-bottom: 26px;
-    /deep/ .van-swipe__track{
+    :deep( .van-swipe__track){
       padding: 22px 0px 32px;
       background: #FFF;
       box-sizing: border-box;
     }
-    /deep/ .van-swipe__indicator{
+    :deep( .van-swipe__indicator){
       background: #999999;
     }
   }

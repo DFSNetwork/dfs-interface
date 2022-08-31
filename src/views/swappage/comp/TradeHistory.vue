@@ -313,7 +313,7 @@ export default {
 
 .mkListDia{
   // animation: none;
-  /deep/ .el-dialog{
+  :deep(.el-dialog) {
     position: absolute;
     bottom: 0px;
     margin: 0px;
@@ -325,7 +325,7 @@ export default {
     }
   }
   &.pcList{
-    /deep/ .el-dialog{
+    :deep(.el-dialog) {
       position: relative;
       margin: auto;
       width: 670px;
@@ -340,7 +340,7 @@ export default {
   margin-bottom: 30px;
   font-size: 26px;
   padding-right: 30px;
-  /deep/ .el-pager{
+  :deep(.el-pager) {
     li.active{
       color: #07D79B;
     }
@@ -351,7 +351,7 @@ export default {
       font-size: 26px;
     }
   }
-  /deep/ .btn-prev, /deep/ .btn-next{
+  :deep(.btn-prev), :deep(.btn-next) {
     &:hover {
       color: #07D79B;
     }

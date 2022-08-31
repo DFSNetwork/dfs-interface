@@ -264,7 +264,7 @@ export default {
       &.accipt{
         max-width: 200px;
       }
-      /deep/ .van-field__control{
+      :deep(.van-field__control) {
         font-size: 32px;
         color: #333;
       }

@@ -271,7 +271,7 @@ export default {
     .searchIpt{
       padding: 0 0px;
       width: 150px;
-      /deep/ .van-field__control{
+      :deep(.van-field__control){
         text-align: center;
       }
     }

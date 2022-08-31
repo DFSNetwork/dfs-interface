@@ -225,7 +225,7 @@ export default {
     }
   }
 
-  /deep/ .van-cell{
+  :deep(.van-cell) {
     .van-field__control{
       text-align: right;
       font-size: 32px;
@@ -246,7 +246,7 @@ export default {
     border: 0px;
     font-size: 30px;
     background: #F5F5F5;
-    /deep/ .van-field__control{
+    :deep(.van-field__control){
       text-align: left;
       font-size: 32px;
     }

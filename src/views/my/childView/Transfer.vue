@@ -259,7 +259,7 @@ export default {
       &::after{
         display: none;
       }
-      /deep/ .van-field__control{
+      :deep(.van-field__control){
         font-size: 28px;
       }
     }

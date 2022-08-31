@@ -56,16 +56,16 @@ export default {
     height: 116px;
     border-top: 1px solid $color-border;
     border-bottom: 1px solid $color-border;
-    /deep/ .van-tabs{
+    :deep( .van-tabs){
       flex: 1;
     }
-    /deep/ .van-tab--active{
+    :deep( .van-tab--active){
       font-weight: 500;
     }
-    /deep/ .van-tabs__wrap{
+    :deep( .van-tabs__wrap){
       height: auto;
     }
-    /deep/ .van-tabs__nav{
+    :deep( .van-tabs__nav){
       padding: 0;
       height: 116px;
       justify-content: space-between;

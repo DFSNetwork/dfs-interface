@@ -420,7 +420,7 @@ export default {
           top: 50%;
           transform: translateY(-50%);
         }
-        /deep/ .el-input{
+        :deep(.el-input) {
           .el-input__inner{
             flex: 1;
             text-align: center;
@@ -474,7 +474,7 @@ export default {
 
 .mkListDia{
   // animation: none;
-  /deep/ .el-dialog{
+  :deep(.el-dialog) {
     width: 600px;
     .el-dialog__body,
     .el-dialog__header{
@@ -483,7 +483,7 @@ export default {
     }
   }
   &.pcList{
-    /deep/ .el-dialog{
+    :deep(.el-dialog) {
       position: relative;
       border-radius:30px;
     }

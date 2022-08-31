@@ -89,7 +89,7 @@ export default {
     }
   }
   .dialog{
-    /deep/ .el-dialog__header{
+    :deep(.el-dialog__header) {
       padding: 0;
     }
     .title{

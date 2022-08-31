@@ -459,7 +459,7 @@ export default {
 }
 .rankTabs{
   font-size: 28px;
-  /deep/ .van-sticky{
+  :deep( .van-sticky){
     display: none;
   }
   .subTitle{
@@ -492,13 +492,13 @@ export default {
       left: 0;
       bottom: 1px;
     }
-    /deep/ .van-tab--active{
+    :deep( .van-tab--active){
       font-weight: 500;
     }
-    /deep/ .van-tabs__wrap{
+    :deep( .van-tabs__wrap){
       height: auto;
     }
-    /deep/ .van-tabs__nav{
+    :deep( .van-tabs__nav){
       padding: 0;
       height: auto;
       font-size: 26px;
@@ -619,7 +619,7 @@ export default {
 }
 
 .myDialog{
-  /deep/ .el-dialog{
+  :deep(.el-dialog) {
     position: relative;
     margin: auto;
     width: 570px;
@@ -630,7 +630,7 @@ export default {
     }
   }
   &.apy{
-    /deep/ .el-dialog{
+    :deep(.el-dialog) {
       width: 620px;
     }
   }

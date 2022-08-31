@@ -312,7 +312,7 @@ export default {
       border: 1px solid #e3e3e3;
       border-radius: 10px;
     }
-    /deep/ .el-select{
+    :deep(.el-select) {
       border-radius: 10px;
       .el-input__suffix-inner{
         display: flex;
@@ -332,7 +332,7 @@ export default {
         }
       }
     }
-    /deep/ .el-scrollbar{
+    :deep(.el-scrollbar) {
       .el-select-dropdown__item{
         height: 50px;
         display: flex;

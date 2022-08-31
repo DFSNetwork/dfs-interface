@@ -321,7 +321,7 @@ export default {
 }
 
 .myDialog{
-  /deep/ .el-dialog{
+  :deep(.el-dialog) {
     position: relative;
     margin: auto;
     width: 570px;
@@ -332,7 +332,7 @@ export default {
     }
   }
   &.apy{
-    /deep/ .el-dialog{
+    :deep(.el-dialog) {
       width: 620px;
     }
   }

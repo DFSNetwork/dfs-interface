@@ -159,10 +159,10 @@ export default {
       left: 0;
       bottom: 3px;
     }
-    /deep/ .van-tab--active{
+    :deep(.van-tab--active){
       font-weight: bold;
     }
-    /deep/ .van-tabs__nav{
+    :deep(.van-tabs__nav){
       padding-bottom: 0;
       .van-tab{
         font-size: 32px;

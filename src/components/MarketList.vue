@@ -233,7 +233,7 @@ export default {
   }
   .iptSearch{
     padding: 0 40px;
-    /deep/ .el-input__inner{
+    :deep(.el-input__inner){
       font-size: 28px;
       height: 88px;
       border: 0px;
@@ -243,7 +243,7 @@ export default {
       padding-left: 28px;
     }
     &.other{
-      /deep/ .el-input__inner{
+      :deep(.el-input__inner){
         background:#fff;
         border: 1px solid #000;
       }

@@ -154,7 +154,7 @@ export default {
 }
 .myDialog{
   // animation: none;
-  /deep/ .el-dialog{
+  :deep(.el-dialog) {
     width: 700px;
     border-radius:12px;
     .el-dialog__body,

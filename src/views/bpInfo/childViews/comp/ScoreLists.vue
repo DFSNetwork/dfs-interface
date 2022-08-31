@@ -207,7 +207,7 @@ export default {
     }
     .scoreType{
       font-size: 22px;
-      /deep/ .van-rate__icon{
+      :deep(.van-rate__icon){
         font-size: 20px;
       }
     }

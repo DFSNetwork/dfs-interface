@@ -288,7 +288,7 @@ export default {
       margin-top: 72px;
       font-weight: 500;
     }
-    /deep/ .van-field--disabled{
+    :deep( .van-field--disabled){
       .van-field__label{
         color: #666;
       }
@@ -296,7 +296,7 @@ export default {
         color: #999;
       }
     }
-    /deep/ .van-cell{
+    :deep( .van-cell){
       height: 100%;
       font-size: 28px;
       padding-left: 0;
@@ -308,13 +308,13 @@ export default {
         display: none;
       }
     }
-    /deep/ .van-field__control{
+    :deep( .van-field__control){
       text-align: right;
     }
   }
 }
 .mydialog{
-  /deep/ .el-dialog{
+  :deep(.el-dialog) {
     width: 700px;
   }
 }

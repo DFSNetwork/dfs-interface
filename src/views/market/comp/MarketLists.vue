@@ -256,7 +256,7 @@ export default {
 }
 .mkListDia{
   // animation: none;
-  /deep/ .el-dialog{
+  :deep(.el-dialog) {
     border-radius:12px 12px 0px 0px;
     position: relative;
     margin: auto;

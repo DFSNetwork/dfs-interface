@@ -296,10 +296,10 @@ export default {
       margin: 0px 0 10px;
       font-size: 30px;
       margin-bottom: 6px;
-      /deep/ .van-rate{
+      :deep(.van-rate){
         margin: 0 10px;
       }
-      /deep/ .van-rate__icon{
+      :deep(.van-rate__icon){
         font-size: 20px;
       }
       .small{

@@ -304,7 +304,7 @@ export default {
     &::after{
       border: 0;
     }
-    /deep/ .van-cell__title{
+    :deep( .van-cell__title){
       color: #333;
       font-size: 30px;
       font-weight: 500;

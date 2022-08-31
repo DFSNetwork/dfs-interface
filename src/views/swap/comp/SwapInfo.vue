@@ -579,7 +579,7 @@ export default {
         flex: 1;
         .ipt{
           padding: 0 0 0 15px;
-          /deep/ .van-field__control{
+          :deep(.van-field__control){
             font-size: 52px;
             text-align: right;
           }

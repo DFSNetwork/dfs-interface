@@ -1053,7 +1053,7 @@ export default {
       .inputDiv{
         flex: 2;;
         .elIpt{
-          /deep/ .el-input__inner{
+          :deep(.el-input__inner) {
             color: $color-black;
             border: 0px;text-align: right;
             font-size: 52px;
@@ -1244,7 +1244,7 @@ export default {
 }
 .mkListDia{
   // animation: none;
-  /deep/ .el-dialog{
+  :deep(.el-dialog) {
     position: absolute;
     bottom: 0px;
     margin: 0px;
@@ -1256,7 +1256,7 @@ export default {
     }
   }
   &.pcList{
-    /deep/ .el-dialog{
+    :deep(.el-dialog) {
       position: relative;
       margin: auto;
       width: 670px;

@@ -78,7 +78,7 @@ export default {
     .ipt{
       background: rgba(0,0,0,0);
       padding: 0;
-      /deep/ .van-field__control{
+      :deep(.van-field__control) {
         padding: 0;
       }
     }

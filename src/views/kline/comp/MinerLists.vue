@@ -304,7 +304,7 @@ export default {
   }
 }
 .page{
-  /deep/ .van-pagination__item{
+  :deep( .van-pagination__item){
     color: #333;
     &::after{
       border: 0px;
@@ -314,7 +314,7 @@ export default {
       background: #29D4B0;
     }
   }
-  /deep/ .van-pagination__item--active{
+  :deep( .van-pagination__item--active){
     color: #fff;
     background: #29D4B0;
   }

@@ -130,11 +130,11 @@ export default {
     font-size: 32px;
     border-bottom: 1px solid rgba(220, 220, 220, .3);
     .tleIpt{
-      /deep/ .van-field__control{
+      :deep(.van-field__control){
         text-align: right;
       }
     }
-    /deep/ .van-cell::after{
+    :deep(.van-cell::after){
       border: 0;
     }
     .right{

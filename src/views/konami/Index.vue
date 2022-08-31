@@ -69,7 +69,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-/deep/ .el-dialog{
+:deep(.el-dialog) {
   width: 564px;
   border-radius: 16px;
   .el-dialog__header{
