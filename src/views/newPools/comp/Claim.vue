@@ -97,53 +97,62 @@ export default {
       const params = {
         actions: []
       }
-
-      this.dfsPoolsMid.forEach(v => {
-        const actions = {
-          account: 'miningpool11',
-          name: 'claim2',
-          authorization: [{
-            actor: formName, // 转账者
-            permission,
-          }],
-          data: {
-            user: formName,
-            mid: v,
+      if (parseFloat(this.dfsTotal || 0) > 0.0001) {
+        this.dfsPoolsMid.forEach(v => {
+          const actions = {
+            account: 'miningpool11',
+            name: 'claim2',
+            authorization: [{
+              actor: formName, // 转账者
+              permission,
+            }],
+            data: {
+              user: formName,
+              mid: v,
+            }
           }
-        }
-        params.actions.push(actions)
-      })
-      
-      this.tagPoolsMid.forEach(v => {
-        const lpAction = {
-          account: this.baseConfig.nodeMiner,
-          name: 'claim',
-          authorization: [{ 
-            actor: formName,
-            permission,
-          }],
-          data: {
-            user: formName,
-            mid: v
-          },
-        }
-        params.actions.push(lpAction)
-      })
-      this.eosPoolsMid.forEach(v => {
-        const actions = {
-          account: 'miningpool11',
-          name: 'claim2',
-          authorization: [{
-            actor: formName, // 转账者
-            permission,
-          }],
-          data: {
-            user: formName,
-            mid: v,
+          params.actions.push(actions)
+        })
+      }
+      if (parseFloat(this.tagTotal || 0) > 0.00000001) {
+        this.tagPoolsMid.forEach(v => {
+          const lpAction = {
+            account: this.baseConfig.nodeMiner,
+            name: 'claim',
+            authorization: [{ 
+              actor: formName,
+              permission,
+            }],
+            data: {
+              user: formName,
+              mid: v
+            },
           }
-        }
-        params.actions.push(actions)
-      })
+          params.actions.push(lpAction)
+        })
+      }
+      if (parseFloat(this.eosTotal || 0) > 0.0001) {
+        this.eosPoolsMid.forEach(v => {
+          const actions = {
+            account: 'miningpool11',
+            name: 'claim2',
+            authorization: [{
+              actor: formName, // 转账者
+              permission,
+            }],
+            data: {
+              user: formName,
+              mid: v,
+            }
+          }
+          params.actions.push(actions)
+        })
+      }
+      if (!params.actions.length) {
+        this.$toast(this.$t('public.noReward'))
+        return
+      }
+      console.log(params)
       DApp.toTransaction(params, (err) => {
         this.claim = false;
         if (err && err.code == 402) {

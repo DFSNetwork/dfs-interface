@@ -33,6 +33,8 @@ export default {
     copyFail: '复制失败!',
     loading: '加载中...',
     noMore: '没有更多了',
+    noReward: '暂无可领取收益',
+    minLess: '不足 0.0001 {coin}',
   },
   more: {
     aboutDfs: '关于DFS',

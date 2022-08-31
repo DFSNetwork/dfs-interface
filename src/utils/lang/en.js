@@ -33,6 +33,8 @@ export default {
     copyFail: 'Copy Error!',
     loading: 'Loading...',
     noMore: 'No More',
+    noReward: 'No income currently available',
+    minLess: 'less than 0.0001 {coin}',
   },
   more: {
     aboutDfs: 'About DFS',

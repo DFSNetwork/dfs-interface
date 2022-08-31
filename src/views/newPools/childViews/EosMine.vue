@@ -142,6 +142,10 @@ export default {
       if (!this.account || !this.account.name || this.claim) {
         return
       }
+      if (this.reward < 0.0001) {
+        this.$toast(this.$t('public.minLess', {coin: 'EOS'}))
+        return
+      }
       this.claim = true;
       const formName = this.account.name;
       const permission = this.account.permissions;
