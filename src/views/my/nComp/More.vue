@@ -52,25 +52,6 @@
     <div class="tools">
       <div class="title">社区项目</div>
       <div class="lists flexa">
-        <div class="list" @click="handleToProject('diary')">
-          <img class="icon" src="https://leafy-kataifi-c6d825.netlify.app/dfs/note.png" alt="">
-          <div>{{ $t('sys.diary') }}</div>
-          <!-- <img class="beta hot" src="https://leafy-kataifi-c6d825.netlify.app/icon/hot.png" alt=""> -->
-        </div>
-        <div class="list" @click="handleToProject('dfc')">
-          <img class="icon" src="https://leafy-kataifi-c6d825.netlify.app/dfs/dfc1.png" alt="">
-          <div>{{ $t('my.windmill') }}</div>
-        </div>
-        <div class="list" @click="handleToProject('kline')">
-          <img class="icon" src="https://leafy-kataifi-c6d825.netlify.app/dfs/kline.png" alt="">
-          <div>{{ $t('sys.kline') }}</div>
-        </div>
-        <div class="list" @click="handleToProject('eosdefi')">
-          <img class="icon" src="https://leafy-kataifi-c6d825.netlify.app/coin/djftokenmain-djf.png" alt="">
-          <div>DJF</div>
-        </div>
-      </div>
-      <div class="lists flexa">
         <div class="list" @click="handleToProject('usdx')">
           <img class="icon biger" src="https://leafy-kataifi-c6d825.netlify.app/dfs/usdx.png" alt="">
           <div>USDX</div>
@@ -78,10 +59,6 @@
         <div class="list" @click="handleToProject('dfg')">
           <img class="icon biger" src="https://leafy-kataifi-c6d825.netlify.app/coin/dfxtokenmain-dfg.png" alt="">
           <div>DFG</div>
-        </div>
-        <div class="list" @click="handleToProject('papaya')">
-          <img class="icon" src="https://leafy-kataifi-c6d825.netlify.app/coin/eos.v2.wei-papaya.png" alt="">
-          <div>木瓜</div>
         </div>
       </div>
     </div>

@@ -3,6 +3,7 @@ export default {
   'zh-CN': {
     upRecord: {
       title: '更新记录',
+      v6_1: '修复了一些问题',
       v5_1: 'DFS和TAG矿池调整预告:',
       v5_2: 'DeFi挖矿从去年的DeFi之夏到如今已经热度褪去。',
       v5_3: '我们利用流动性挖矿的方式，完成了项目的启动和DFS代币的分发。',
@@ -27,6 +28,7 @@ export default {
   'en': {
     upRecord: {
       title: 'Update Logs',
+      v6_1: 'Some issues have been fixed',
       v5_1:'DFS and TAG mining pool adjustment notice:',
       v5_2:'DeFi mining has faded from the DeFi summer of last year to now. ',
       v5_3:'We have completed the launch of the project and the distribution of DFS tokens by using liquidity mining. ',

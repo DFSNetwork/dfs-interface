@@ -50,10 +50,10 @@
           <img class="listImg" src="https://storied-crepe-e5e65c.netlify.app/svg/create_set.svg">
           <span>{{ $t('dex.addMarket') }}</span>
         </div>
-        <div class="list flexa" @click="handleToPro('docs')">
+        <!-- <div class="list flexa" @click="handleToPro('docs')">
           <img class="listImg" src="https://storied-crepe-e5e65c.netlify.app/svg/tutorial_set.svg">
           <span>{{ $t('more.faq') }}</span>
-        </div>
+        </div> -->
         <div class="list flexa" @click="handleShowComp('warn')">
           <img class="listImg" src="https://storied-crepe-e5e65c.netlify.app/svg/safe_set.svg">
           <span>{{ $t('public.warnTip') }}</span>

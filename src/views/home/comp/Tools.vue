@@ -64,33 +64,36 @@
               <img class="iconImg" src="https://leafy-kataifi-c6d825.netlify.app/dfs/usdx_icon.png">
               <div>USDX</div>
             </div>
-            <div class="list" @click="handleToPro('suggestions')">
-              <img class="iconImg" src="https://leafy-kataifi-c6d825.netlify.app/dfs/fundation_icon.png">
-              <div>{{ $t('home.issues') }}</div>
-            </div>
             <div class="list" @click="handleTo('financial')">
               <img class="iconImg" src="https://leafy-kataifi-c6d825.netlify.app/dfs/financial_icon.png">
               <div>{{ $t('home.financial') }}</div>
             </div>
-            <div class="list" @click="handleToPro('kline')">
-              <img class="iconImg" src="https://leafy-kataifi-c6d825.netlify.app/dfs/kline_icon.png">
-              <div>{{ $t('sys.kline') }}</div>
-            </div>
-          </div>
-          <div class="lists flexb">
             <div class="list" @click="handleToPro('dcap')">
               <img class="iconImg" src="https://leafy-kataifi-c6d825.netlify.app/dfs/dtoken_icon.png">
               <div>{{ $t('sys.dcap') }}</div>
             </div>
-            <div class="list" @click="handleToPro('record')">
+            <div class="list"></div>
+          </div>
+          <div class="lists flexb">
+            <!-- <div class="list" @click="handleToPro('suggestions')">
+              <img class="iconImg" src="https://leafy-kataifi-c6d825.netlify.app/dfs/fundation_icon.png">
+              <div>{{ $t('home.issues') }}</div>
+            </div> -->
+            <!-- <div class="list" @click="handleToPro('kline')">
+              <img class="iconImg" src="https://leafy-kataifi-c6d825.netlify.app/dfs/kline_icon.png">
+              <div>{{ $t('sys.kline') }}</div>
+            </div> -->
+            <!-- <div class="list" @click="handleToPro('record')">
               <img class="iconImg" src="https://leafy-kataifi-c6d825.netlify.app/dfs/note_icon.png">
               <div>{{ $t('home.diary') }}</div>
-            </div>
-            <div class="list" @click="handleTo('investment')">
-              <!-- <img class="hot" src="https://leafy-kataifi-c6d825.netlify.app/dfs/new.png"> -->
+            </div> -->
+            <!-- <div class="list" @click="handleTo('investment')">
               <img class="iconImg" src="https://leafy-kataifi-c6d825.netlify.app/dfs/date_icon.png">
               <div>{{ $t('home.investment') }}</div>
-            </div>
+            </div> -->
+            <div class="list"></div>
+            <div class="list"></div>
+            <div class="list"></div>
             <div class="list"></div>
           </div>
         </van-swipe-item>

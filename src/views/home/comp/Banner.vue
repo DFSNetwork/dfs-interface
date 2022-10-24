@@ -12,7 +12,7 @@
         <img class="bannerImg"
           src="https://leafy-kataifi-c6d825.netlify.app/banner/new-inviter.png">
       </van-swipe-item>
-      <van-swipe-item>
+      <!-- <van-swipe-item>
         <img class="bannerImg" @click="handleToObj('town')"
           src="https://venerable-semolina-21a376.netlify.app//Town-img/login/banner.png">
       </van-swipe-item>
@@ -23,7 +23,7 @@
       <van-swipe-item>
         <img class="bannerImg" @click="handleToObj('nft')"
           src="https://leafy-kataifi-c6d825.netlify.app/banner/nft-banner-1.png">
-      </van-swipe-item>
+      </van-swipe-item> -->
     </van-swipe>
   </div>
 </template>

@@ -20,7 +20,7 @@
       <div class="list flexb" v-for="(v, i) in rankArr" :key="`rank-${i}`"
         @click="handleToTrade(v)">
         <div class="flexa dinReg">
-          <img class="symCoin" :src="v.imgUrl1">
+          <img class="symCoin" :src="v.imgUrl1" :onerror="$errorImg">
           <div>
             <div class="symName din">
               <span>{{ v.symbol1 }}</span>
