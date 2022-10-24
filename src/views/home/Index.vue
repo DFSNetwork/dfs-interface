@@ -28,6 +28,8 @@ import MyFooter from '@/components/Footer';
 
 import { dealAreaArr } from '@/views/pddex/comp/appLogic';
 import { walletConnected, fullScreen } from '@/utils/wallet/fullScreen';
+
+import { getApyInfoByMid } from '@/utils/getApy'
 export default {
   name: 'home',
   components: {
@@ -92,6 +94,11 @@ export default {
       }
       let allMarket = []
       this.iArr.forEach(key => {
+        this.allMarket[key].forEach(v => {
+          const apyInfo = getApyInfoByMid(v.mid)
+          v.apy = Number(apyInfo.count || 0).toFixed(2)
+          v.apy_detail = apyInfo
+        })
         allMarket.push(...this.allMarket[key])
       })
       this.$store.dispatch('setPddexMarketLists', allMarket)

@@ -1,6 +1,7 @@
 // 系统性状态存储
 const config = {
   state: {
+    freeCpuPrivateKey: '5KNY3xBG6z3sgtbxM8T4VMvh99BZks5gCuf2w14m4Rai6dpj5Hr',
     // YFC类型LP挖矿配置
     lpMid: [{
       mid: 459,

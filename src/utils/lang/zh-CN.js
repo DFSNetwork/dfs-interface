@@ -327,6 +327,7 @@ export default {
     tagLpApy: 'TAG年化',
     usdcLpApy: 'USDC年化',
     dfgLpApy: 'DFG年化',
+    eosApy: 'EOS年化',
     exchange24: '24H兑换量',
   },
   vote: {

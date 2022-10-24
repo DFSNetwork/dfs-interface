@@ -181,6 +181,7 @@ export default {
       account: state => state.app.account,
       baseConfig: state => state.sys.baseConfig,
       marketLists: state => state.sys.marketLists,
+      marketLists2: state => state.config.marketLists,
     }),
   },
   watch: {
@@ -227,15 +228,19 @@ export default {
   },
   methods: {
     async handleGetApy() {
-      const params = {
-        mid: this.thisMarket.mid
-      };
-      const {status, result} = await this.$api.get_market_info(params)
-      if (!status) {
-        return
-      }
-      this.countApy = parseFloat(result.apy || 0).toFixed(2);
-      this.aprInfo = result.apy_detail
+      const info = this.marketLists2.find(v => v.mid == this.$route.params.mid) || {}
+      this.apy = parseFloat(info.apy || 0).toFixed(2);
+      this.aprInfo = info.apy_detail
+      // const params = {
+      //   mid: this.thisMarket.mid
+      // };
+      // const {status, result} = await this.$api.get_market_info(params)
+      // if (!status) {
+      //   return
+      // }
+      // console.log('handleGetApy', result)
+      // this.countApy = parseFloat(result.apy || 0).toFixed(2);
+      // this.aprInfo = result.apy_detail
     },
     handleClose() {
       this.showMarketList = false;

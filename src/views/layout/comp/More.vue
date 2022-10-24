@@ -34,8 +34,8 @@
               :value="cpuSwitch" @input="handleSetCpu"
               size="26px"
               active-color="#FFF" inactive-color="#FFF"/>
-            <span v-if="cpuSwitch" class="switchInfo infoA" @click="cpuSwitch = !cpuSwitch">ON</span>
-            <span v-else class="switchInfo infoB" @click="cpuSwitch = !cpuSwitch">OFF</span>
+            <span v-if="cpuSwitch" class="switchInfo infoA" @click="handleSetCpu(!cpuSwitch)">ON</span>
+            <span v-else class="switchInfo infoB" @click="handleSetCpu(!cpuSwitch)">OFF</span>
           </span>
         </div>
         <div class="list flexa" @click="handleShowComp('silderSet')">
@@ -137,6 +137,7 @@ export default {
       console.log(checked)
       this.cpuSwitch = checked;
       this.$store.dispatch('setFreeCpu', checked)
+      console.log(this.freeCpu)
     },
     handleChangeLang(lang) {
       let type = lang;

@@ -169,7 +169,7 @@ export default {
   data() {
     return {
       active: 0,
-      coinName: 'USDT',
+      coinName: 'EOS',
       followList: [], // 关注展示列表
       tradeRankList: [], // 成交量排行
       tradeList: [],
@@ -177,7 +177,7 @@ export default {
       likeArr: [], // 存放接口返回的关注数据
       swapTradeLists: {},
       allMarket: localStorage.getItem('allMarket') ? JSON.parse(localStorage.getItem('allMarket')) :{},
-      areaLists: ['USDT', 'USDC', 'EOS', 'DFS', 'TAG', 'DFG'],
+      areaLists: ['EOS', 'USDT', 'USDC', 'DFS', 'TAG', 'DFG'],
       cdAreaLists: [],
 
       // 排序
@@ -220,6 +220,13 @@ export default {
     allMarket: {
       handler: function am() {
         this.handleDealLike()
+      },
+      deep: true,
+      immediate: true
+    },
+    marketLists: {
+      handler: function am() {
+        this.handleDealArea()
       },
       deep: true,
       immediate: true
@@ -418,6 +425,11 @@ export default {
         }
         coin = coin === 'BTC' ? coin = 'PBTC' : coin;
         const arr = dealAreaArr(result[key] || [], coin)
+        arr.forEach(v => {
+          const info = this.marketLists.find(vv => vv.mid == v.mid) || {};
+          v.apy = info.apy;
+          v.apy_detail = info.apy_detail
+        });
         lists[coin] = arr;
       })
       this.allMarket = lists;

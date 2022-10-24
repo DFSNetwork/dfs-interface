@@ -10,6 +10,7 @@
 <script>
 import { mapState } from 'vuex';
 import { dealAreaArr } from '@/views/pddex/comp/appLogic';
+import { getApyInfoByMid } from '@/utils/getApy'
 
 export default {
   name: 'pddex',
@@ -59,6 +60,11 @@ export default {
         }
         coin = coin === 'BTC' ? coin = 'PBTC' : coin;
         const arr = dealAreaArr(result[key] || [], coin)
+        arr.forEach(v => {
+          const apyInfo = getApyInfoByMid(v.mid)
+          v.apy = Number(apyInfo.count || 0).toFixed(2)
+          v.apy_detail = apyInfo
+        })
         lists[coin] = arr;
       })
       this.allMarket = lists;

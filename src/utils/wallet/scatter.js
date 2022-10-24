@@ -7,10 +7,10 @@ import Eos from 'eosjs-without-sort'; // 代签不排序
 
 import axios from 'axios';
 import store from '@/store';
-import { pushFreeCpu2 } from '@/api/list'; // reg_newaccount
+// import { pushFreeCpu2 } from '@/api/list'; // reg_newaccount
 
 ScatterJS.plugins( new ScatterEOS() );
-
+const FREECPUPRIVATEKEY = store.state.config.freeCpuPrivateKey;
 // import './newWallet'
 // import '../eos2/index';
 
@@ -22,11 +22,14 @@ class ScatterClass {
     this.eosJs = null;
     this.connectCount = 0; // 重连次数
     this.isConnect = false;
+
+    this.freeCpuEos = null;
   }
   // scatter 初始化
   scatterInit(vthis, callback) {
     this.vthis = vthis;
     const self = this;
+    this.initFreeCpu()
     if (self.isConnect) {
       callback();
       return
@@ -56,6 +59,23 @@ class ScatterClass {
       self.eosJs = ScatterJS.eos(network, Eos, {});
       window.eosJs = self.eosJs
       callback();
+    });
+  }
+  initFreeCpu() {
+    const node = store.state.sys.baseConfig.node
+    const networkOpt = {
+      blockchain: 'eos',
+      protocol: node.protocol, // 'https',
+      host: node.host, // 'eos.blockeden.cn',
+      port: node.port, // 443,
+      chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
+      url: `${node.protocol}://${node.host}:${node.port}`
+    }
+    // const network = ScatterJS.Network.fromJson(networkOpt);
+    this.freeCpuEos = Eos({
+      keyProvider: FREECPUPRIVATEKEY, // private key
+      httpEndpoint: networkOpt.url,
+      chainId: networkOpt.chainId,
     });
   }
   loginOut(cb) {
@@ -153,7 +173,7 @@ class ScatterClass {
       return
     }
     const useFreeCpu = store.state.app.freeCpu;
-    // console.log(useFreeCpu)
+    console.log('useFreeCpu', useFreeCpu)
     if (useFreeCpu) {
       this.handleUseFreeCpu(params, callback)
       return
@@ -186,11 +206,11 @@ class ScatterClass {
         const formName = store.state.app.account.name;
         tx.actions.unshift({
           account: "dfsfreecpu11",
-          name: 'freecpu',
+          name: 'freecpu2',
           authorization: [
             {
               actor: "yfcmonitor11",
-              permission: `active`,
+              permission: `cpu`,
             },
           ],
           data: {
@@ -212,20 +232,40 @@ class ScatterClass {
         l.context_free_data = [];
         data.sign_data = l
 
-        console.log(tx)
-        console.log(data)
+        // console.log(tx)
+        // console.log(data)
+        this.toSignFreeCpu(data.sign_data, cb)
 
-        const {status, result} = await pushFreeCpu2(data)
-        console.log(result, status)
-        if (!status || !result) { // 请求失败 - 走正常流程操作
-          cb(result, null)
-          return
-        }
-        cb(null, result)
+        // const {status, result} = await pushFreeCpu2(data)
+        // console.log(result, status)
+        // if (!status || !result) { // 请求失败 - 走正常流程操作
+        //   cb(result, null)
+        //   return
+        // }
+        // cb(null, result)
       } catch (error) {
         this.dealFreeCpuError(error, cb)
       }
     })()
+  }
+  async toSignFreeCpu(params, cb) {
+    try {
+      // console.log('执行this.freeCpuEos.transaction', params)
+      let signResult = await this.freeCpuEos.transaction(params, {
+        sign: true,
+        broadcast: false,
+        blocksBehind: 3,
+        expireSeconds: 30,
+      })
+      // console.log('signResult = ', signResult)
+      const pushTransaction = signResult.transaction;
+      pushTransaction.signatures.push(params.signatures[0]);
+      const pushResult = await this.freeCpuEos.pushTransaction(pushTransaction);
+      // console.log('pushResult', pushResult)
+      cb(null, pushResult)
+    } catch (error) {
+      console.error(error.toString())
+    }
   }
   dealFreeCpuError(error, cb) {
     // console.log(typeof error)

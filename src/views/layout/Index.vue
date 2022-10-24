@@ -55,6 +55,7 @@ import { get_tag_lp_mids } from '@/utils/minerLogic';
 import { fullScreen } from '@/utils/wallet/fullScreen';
 
 import '@/utils/DfsMineData'
+import '@/utils/getApy'
 
 export default {
   name: 'layout',

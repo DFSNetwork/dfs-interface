@@ -35,6 +35,10 @@
         <span>{{ $t('apy.dfgLpApy') }}：</span>
         <span>{{ `${parseFloat(aprInfo.dfgApy).toFixed(2)}%` }}</span>
       </div>
+      <div class="flexa" v-if="parseFloat(aprInfo.eosApy || 0) > 0.01">
+        <span>{{ $t('apy.eosApy') }}：</span>
+        <span>{{ `${parseFloat(aprInfo.eosApy).toFixed(2)}%` }}</span>
+      </div>
       <div class="flexa total">
         <span>{{ $t('info.totalApr') }}：</span>
         <span>{{ countApy }}%</span>

@@ -199,6 +199,7 @@ export default {
       filterMkLists: state => state.sys.filterMkLists,
       marketLists: state => state.sys.marketLists,
       poolsTagBal: state => state.sys.poolsTagBal,
+      marketLists2: state => state.config.marketLists,
     }),
     addBuff() {
       let buff = (this.accLpData.weight || 1) - 1;
@@ -208,15 +209,19 @@ export default {
   },
   methods: {
     async handleGetApy() {
-      const params = {
-        mid: this.$route.params.sym
-      };
-      const {status, result} = await this.$api.get_market_info(params)
-      if (!status) {
-        return
-      }
-      this.apy = parseFloat(result.apy || 0).toFixed(2);
-      this.aprInfo = result.apy_detail
+      const info = this.marketLists2.find(v => v.mid == this.$route.params.sym) || {}
+      this.apy = parseFloat(info.apy || 0).toFixed(2);
+      this.aprInfo = info.apy_detail
+
+      // const params = {
+      //   mid: this.$route.params.sym
+      // };
+      // const {status, result} = await this.$api.get_market_info(params)
+      // if (!status) {
+      //   return
+      // }
+      // this.apy = parseFloat(result.apy || 0).toFixed(2);
+      // this.aprInfo = result.apy_detail
     },
     handleClaim() {
       if (!this.account || !this.account.name || this.claim) {

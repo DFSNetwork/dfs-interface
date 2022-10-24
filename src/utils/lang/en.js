@@ -326,6 +326,7 @@ export default {
     tagLpApy: 'TAG APR',
     usdcLpApy: 'USDC APR',
     dfgLpApy: 'DFG APR',
+    eosApy: 'EOS APR',
     exchange24: '24H Volume',
   },
   vote: {

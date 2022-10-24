@@ -57,6 +57,10 @@
               <div class="num">{{ `${item.dfgApy}%` }}</div>
               <div class="tip">{{ $t('apy.dfgLpApy') }}</div>
             </div>
+            <div v-if="parseFloat(item.eosApy)">
+              <div class="num">{{ `${item.eosApy}%` }}</div>
+              <div class="tip">{{ $t('apy.eosApy') }}</div>
+            </div>
           </div>
           <div class="flexb total">
             <span>{{ $t('info.totalApr') }}</span>

@@ -45,7 +45,7 @@
       <div class="apy flexa">
         <span>{{ $t('apy.title') }}：</span>
         <span class="dinBold num">{{ apy }}%</span>
-        <!-- <span class="green" @click="showApyDetail = true">{{ $t('public.detail') }}></span> -->
+        <span class="green" @click="showApyDetail = true">{{ $t('public.detail') }}></span>
       </div>
       <div class="liq dinReg">
         {{ $t('dex.pools') }}：{{ lpPool.reserve0 }} / {{ lpPool.reserve1 }}
@@ -53,6 +53,14 @@
     </div>
 
     <MinerLists :lpPool="lpPool" :poolsBal="poolsBal" :swapBal="swapBal + ''"/>
+
+
+    <van-popup
+      class="popup_p"
+      v-model="showApyDetail">
+      <MarketApy :countApy="apy" :isActual="true"
+                 :aprInfo="aprInfo"/>
+    </van-popup>
   </div>
 </template>
 
@@ -65,14 +73,16 @@ import { sellToken } from '@/utils/logic';
 import { getReward } from '@/views/dfsMine/dfsMine'
 import CountTo from 'vue-count-to'
 import MinerLists from './MinerLists'
+import MarketApy from '@/views/market/popup/MarketApy'
 
 export default {
   name: 'eosMine',
   components: {
-    CountTo, MinerLists
+    CountTo, MinerLists, MarketApy
   },
   data() {
     return {
+      showApyDetail: false,
       oldReward: 0,
       reward: 0,
       lpPool: {
@@ -98,6 +108,7 @@ export default {
       account: state => state.app.account,
       coinPrices: (state) => state.sys.coinPrices,
       filterMkLists: state => state.sys.filterMkLists,
+      marketLists2: state => state.config.marketLists,
     }),
     aboutPrice() {
       const dfsPriceObj = this.coinPrices.find(v => v.coin === 'EOS');
@@ -106,15 +117,21 @@ export default {
       return parseFloat(about || 0).toFixed(2)
     },
     apy() {
-      const num = 1;
-      const rate = num / this.swapBal;
-      const lpBal = this.poolsBal;
-      const t = 86400 * 365;
-      const weight = 1
-      const reward = lpBal - lpBal * Math.pow(0.9999, t * rate * weight);
-      const apy = reward / num * 100
-      return parseFloat(apy || 0).toFixed(2)
+      const info = this.marketLists2.find(v => v.mid == this.$route.params.mid) || {}
+      return parseFloat(info.apy || 0).toFixed(2);
+      // const num = 1;
+      // const rate = num / this.swapBal;
+      // const lpBal = this.poolsBal;
+      // const t = 86400 * 365;
+      // const weight = 1
+      // const reward = lpBal - lpBal * Math.pow(0.9999, t * rate * weight);
+      // const apy = reward / num * 100
+      // return parseFloat(apy || 0).toFixed(2)
     },
+    aprInfo() {
+      const info = this.marketLists2.find(v => v.mid == this.$route.params.mid) || {}
+      return info.apy_detail
+    }
   },
   watch: {
     filterMkLists: {
