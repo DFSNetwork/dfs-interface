@@ -10,7 +10,16 @@ let poolTag = 0,
 
 export function getApyInfoByMid(mid) {
   const marketLists = store.state.config.marketLists || [];
-  const info = marketLists.find(v => v.mid == mid)
+  const info = marketLists.find(v => v.mid == mid) || {}
+  if (!info.mid) {
+    return {
+      count: 0,
+      feesApy: 0,
+      eosApy: 0,
+      tagLpApy: 0,
+      dfsApy: 0
+    }
+  }
   const feesApy = calcFeesApy(info)
   const eosApy = calcEos2UsdtApy(info)
   const tagApy = calcTagPoolApy(info)
