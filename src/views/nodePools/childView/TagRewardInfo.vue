@@ -9,6 +9,7 @@
       <div class="tip dinReg">≈${{ aboutPrice }} </div>
     </div>
     <div class="claim flexa">
+      <div class="myLoading flexc" v-if="isClaim"><van-loading type="spinner" color="#29D4B0"/></div>
       <!-- <img class="tipImg" src="https://storied-crepe-e5e65c.netlify.app/icon/tips_icon_btn.svg"> -->
       <div class="btn flexc" @click="handleClaimAll">{{ $t('mine.claimAll') }}</div>
     </div>
@@ -24,6 +25,11 @@ export default {
     total: {
       type: String,
       default: '0.0000'
+    }
+  },
+  data() {
+    return {
+      isClaim: false,
     }
   },
   computed: {
@@ -65,6 +71,7 @@ export default {
     padding-top: 5px;
   }
   .claim{
+    position: relative;
     .tipImg{
       width: 32px;
       margin-right: 15px;

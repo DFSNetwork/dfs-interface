@@ -28,7 +28,10 @@
       </div>
     </div>
 
-    <div class="claimBtn flexc" @click="handleClaim">{{ $t('mine.claimAll') }}</div>
+    <div class="claimBtn">
+      <div class="myLoading flexc" v-if="isClaim"><van-loading type="spinner" color="#29D4B0"/></div>
+      <div class="claimBtn flexc" @click="handleClaim">{{ $t('mine.claimAll') }}</div>
+    </div>
   </div>
 </template>
 
@@ -56,6 +59,7 @@ export default {
       tagPoolsMid: [602, 665],
       dfsPoolsMid: [39, 451, 382, 726, 727],
       eosPoolsMid: [17],
+      isClaim: false,
     }
   },
   computed: {
@@ -88,10 +92,10 @@ export default {
       return toFixed(num, len)
     },
     handleClaim() {
-      if (!this.account || !this.account.name || this.claim) {
+      if (!this.account || !this.account.name || this.isClaim) {
         return
       }
-      this.claim = true;
+      this.isClaim = true;
       const formName = this.account.name;
       const permission = this.account.permissions;
       const params = {
@@ -154,7 +158,7 @@ export default {
       }
       console.log(params)
       DApp.toTransaction(params, (err) => {
-        this.claim = false;
+        this.isClaim = false;
         if (err && err.code == 402) {
           return;
         }
@@ -219,5 +223,6 @@ export default {
   color: #FFF;
   font-size: 40px;
   border-radius: 16px;
+  position: relative;
 }
 </style>

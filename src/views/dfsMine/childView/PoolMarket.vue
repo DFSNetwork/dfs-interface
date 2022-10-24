@@ -10,7 +10,7 @@
       <span class="toVote" @click="handleTo('vote')">{{ $t('vote.toVote') }}</span>
     </div>
 
-    <RewardInfo v-else :total="accMiner.showReward" @listenUpdate="handleClaim"/>
+    <RewardInfo v-else ref="RewardInfo" :total="accMiner.showReward" @listenUpdate="handleClaim"/>
     <div class="marketInfo">
       <div class="coinInfo flexb">
         <div class="flexa">
@@ -400,8 +400,9 @@ export default {
       const params = {
         actions
       }
+      this.$refs.RewardInfo.isClaim = true;
       DApp.toTransaction(params, (err) => {
-        this.loading = false;
+        this.$refs.RewardInfo.isClaim = false;
         if (err && err.code == 402) {
           this.$emit('listenUpdate', true)
           return;

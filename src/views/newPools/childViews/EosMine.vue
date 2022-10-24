@@ -20,6 +20,7 @@
         <div class="tip dinReg">≈${{ aboutPrice }}</div>
       </div>
       <div class="claim flexa">
+        <div class="myLoading flexc" v-if="isClaim"><van-loading type="spinner" color="#29D4B0"/></div>
         <div class="btn flexc" @click="handleClaim">{{ $t('mine.claimAll') }}</div>
       </div>
     </div>
@@ -94,7 +95,7 @@ export default {
       poolsBal: '0.0000', // 分配池 中EOS的数量
       minnerData: {},
       timer: null,
-      claim: false,
+      isClaim: false,
     }
   },
   created() {
@@ -156,14 +157,14 @@ export default {
   },
   methods: {
     handleClaim() {
-      if (!this.account || !this.account.name || this.claim) {
+      if (!this.account || !this.account.name || this.isClaim) {
         return
       }
       if (this.reward < 0.0001) {
         this.$toast(this.$t('public.minLess', {coin: 'EOS'}))
         return
       }
-      this.claim = true;
+      this.isClaim = true;
       const formName = this.account.name;
       const permission = this.account.permissions;
       const params = {
@@ -183,7 +184,7 @@ export default {
       }
       params.actions.push(actions)
       DApp.toTransaction(params, (err) => {
-        this.claim = false;
+        this.isClaim = false;
         if (err && err.code == 402) {
           return;
         }
@@ -369,6 +370,7 @@ export default {
       padding-top: 5px;
     }
     .claim{
+      position: relative;
       .tipImg{
         width: 32px;
         margin-right: 15px;

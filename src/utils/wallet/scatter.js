@@ -173,7 +173,7 @@ class ScatterClass {
       return
     }
     const useFreeCpu = store.state.app.freeCpu;
-    console.log('useFreeCpu', useFreeCpu)
+    // console.log('useFreeCpu', useFreeCpu)
     if (useFreeCpu) {
       this.handleUseFreeCpu(params, callback)
       return

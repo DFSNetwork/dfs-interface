@@ -129,9 +129,9 @@ export default {
       const permission = this.account.permissions;
       const actions = [];
       this.lists.forEach(item => {
-        if (!item.reward || Number(item.reward) < Number(this.minReward)) {
-          return
-        }
+        // if (!item.reward || Number(item.reward) < Number(this.minReward)) {
+        //   return
+        // }
         actions.push({
           account: 'miningpool11',
           name: 'claim2',

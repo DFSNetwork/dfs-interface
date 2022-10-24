@@ -4,7 +4,7 @@
       <span class="act">{{ $t('sys.coinLpPool', {coin: `${lpPool.symbol0}/${lpPool.symbol1}`}) }}</span>
     </div>
     <div class="lpList">
-      <TagRewardInfo :total="accLpData.showReward" @listenUpdate="handleClaim"/>
+      <TagRewardInfo ref="RewardInfo" :total="accLpData.showReward" @listenUpdate="handleClaim"/>
       <div class="marketInfo">
         <div class="coinInfo flexb">
           <div class="flexa">
@@ -224,10 +224,9 @@ export default {
       // this.aprInfo = result.apy_detail
     },
     handleClaim() {
-      if (!this.account || !this.account.name || this.claim) {
+      if (!this.account || !this.account.name || this.$refs.RewardInfo.isClaim) {
         return
       }
-      this.claim = true;
       const formName = this.account.name;
       const permission = this.account.permissions;
       const params = {
@@ -246,8 +245,9 @@ export default {
         },
       }
       params.actions.push(lpAction)
+      this.$refs.RewardInfo.isClaim = true;
       DApp.toTransaction(params, (err) => {
-        this.claim = false;
+        this.$refs.RewardInfo.isClaim = false;
         if (err && err.code == 402) {
           return;
         }
