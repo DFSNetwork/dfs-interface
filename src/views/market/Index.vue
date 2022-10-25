@@ -229,7 +229,7 @@ export default {
   methods: {
     async handleGetApy() {
       const info = this.marketLists2.find(v => v.mid == this.$route.params.mid) || {}
-      this.apy = parseFloat(info.apy || 0).toFixed(2);
+      this.countApy = parseFloat(info.apy || 0).toFixed(2);
       this.aprInfo = info.apy_detail
       // const params = {
       //   mid: this.thisMarket.mid

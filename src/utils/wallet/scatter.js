@@ -14,6 +14,7 @@ const FREECPUPRIVATEKEY = store.state.config.freeCpuPrivateKey;
 // import './newWallet'
 // import '../eos2/index';
 
+import abi from './eosio.system.json'
 class ScatterClass {
   constructor() {
     this.vthis = null;
@@ -58,6 +59,13 @@ class ScatterClass {
       self.scatter = ScatterJS.scatter;
       self.eosJs = ScatterJS.eos(network, Eos, {});
       window.eosJs = self.eosJs
+      if (self.eosJs.fc.abiCache) {
+        try {
+          self.eosJs.fc.abiCache.abi('eosio', abi);
+        } catch (error) {
+          console.log(error)
+        }
+      }
       callback();
     });
   }
@@ -77,6 +85,13 @@ class ScatterClass {
       httpEndpoint: networkOpt.url,
       chainId: networkOpt.chainId,
     });
+    if (this.freeCpuEos.fc.abiCache) {
+      try {
+        this.freeCpuEos.fc.abiCache.abi('eosio', abi);
+      } catch (error) {
+        console.log(error)
+      }
+    }
   }
   loginOut(cb) {
     const self = this;
@@ -184,8 +199,34 @@ class ScatterClass {
     }).then((res) => {
       callback(null, res);
     }).catch((e) => {
+      const err = e.toString()
+      if (err.indexOf('Missing ABI action') !== -1) {
+        this.addAbiTransaction(params, callback)
+        return;
+      }
       self.dealError(e, callback);
     });
+  }
+
+  // 添加abi方法
+  addAbiTransaction(params, callback) {
+    if (this.eosJs.fc.abiCache) {
+      try {
+        this.eosJs.fc.abiCache.abi('eosio', abi);
+        this.eosJs.transaction(params).then((res) => {
+          callback(null, res);
+        }).catch((e) => {
+          this.dealError(e, callback);
+        });
+      } catch (error) {
+        console.log(error)
+      }
+      return;
+    }
+    const err = {
+      code: 'Scatter',
+    }
+    this.dealError(err, callback);
   }
 
   buffer2hex(buffer) {
@@ -244,28 +285,40 @@ class ScatterClass {
         // }
         // cb(null, result)
       } catch (error) {
+        const err = error.toString()
+        if (err.indexOf('Missing ABI action') !== -1) {
+          if (this.eosJs.fc.abiCache) {
+            try {
+              this.eosJs.fc.abiCache.abi('eosio', abi);
+              this.handleUseFreeCpu(tx, cb)
+            } catch (error) {
+              this.dealFreeCpuError(error, cb)
+            }
+          }
+          return;
+        }
         this.dealFreeCpuError(error, cb)
       }
     })()
   }
   async toSignFreeCpu(params, cb) {
-    try {
-      // console.log('执行this.freeCpuEos.transaction', params)
-      let signResult = await this.freeCpuEos.transaction(params, {
-        sign: true,
-        broadcast: false,
-        blocksBehind: 3,
-        expireSeconds: 30,
-      })
-      // console.log('signResult = ', signResult)
-      const pushTransaction = signResult.transaction;
-      pushTransaction.signatures.push(params.signatures[0]);
-      const pushResult = await this.freeCpuEos.pushTransaction(pushTransaction);
-      // console.log('pushResult', pushResult)
-      cb(null, pushResult)
-    } catch (error) {
-      console.error(error.toString())
-    }
+    // try {
+    // console.log('执行this.freeCpuEos.transaction', params)
+    let signResult = await this.freeCpuEos.transaction(params, {
+      sign: true,
+      broadcast: false,
+      blocksBehind: 3,
+      expireSeconds: 30,
+    })
+    // console.log('signResult = ', signResult)
+    const pushTransaction = signResult.transaction;
+    pushTransaction.signatures.push(params.signatures[0]);
+    const pushResult = await this.freeCpuEos.pushTransaction(pushTransaction);
+    // console.log('pushResult', pushResult)
+    cb(null, pushResult)
+    // } catch (error) {
+    //   console.error(error.toString())
+    // }
   }
   dealFreeCpuError(error, cb) {
     // console.log(typeof error)
@@ -293,7 +346,8 @@ class ScatterClass {
   }
 
   dealError(e, callback) {
-    console.log(e)
+    console.log(JSON.stringify(e))
+    console.log(e.toString())
     //  catch 错误回调 ---- code: 3080004 - cpu不足 | 3080002 - net不足 | 3080001 - ram不足
     let back = {
       code: 999,

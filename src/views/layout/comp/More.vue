@@ -14,19 +14,10 @@
           </div>
           <div v-else class="login">{{ account.name }}</div>
         </div>
-        <!-- <img v-if="!account || !account.name" @click="handleLogin"
-          class="right" src="https://storied-crepe-e5e65c.netlify.app/svg/acc_right.svg" alt=""> -->
         <span v-if="account && account.name" class="red exit" @click="handleLoginOut">{{ $t('public.loginOut') }}</span>
       </div>
       <!-- list -->
       <div class="lists">
-        <!-- <div class="list flexb wel" @click="handleToAbout">
-          <div class="flexa">
-            <img class="dfslogo" src="https://leafy-kataifi-c6d825.netlify.app/coin/minedfstoken-dfs.png">
-            <span>{{ $t('more.aboutDfs') }}</span>
-          </div>
-          <img class="right_to" src="https://storied-crepe-e5e65c.netlify.app/svg/about_right.svg" alt="">
-        </div> -->
         <div class="list switch flexb">
           <span>免CPU操作</span>
           <span class="rel">
@@ -50,10 +41,10 @@
           <img class="listImg" src="https://storied-crepe-e5e65c.netlify.app/svg/create_set.svg">
           <span>{{ $t('dex.addMarket') }}</span>
         </div>
-        <!-- <div class="list flexa" @click="handleToPro('docs')">
+        <div class="list flexa" @click="handleShowComp('resource')">
           <img class="listImg" src="https://storied-crepe-e5e65c.netlify.app/svg/tutorial_set.svg">
-          <span>{{ $t('more.faq') }}</span>
-        </div> -->
+          <span>{{ $t('resource.manage') }}</span>
+        </div>
         <div class="list flexa" @click="handleShowComp('warn')">
           <img class="listImg" src="https://storied-crepe-e5e65c.netlify.app/svg/safe_set.svg">
           <span>{{ $t('public.warnTip') }}</span>
@@ -108,6 +99,7 @@
 import { DApp } from '@/utils/wallet';
 import { mapState } from 'vuex'
 import { login } from '@/utils/public';
+import Bus from '@/utils/bus'
 
 export default {
   name: 'more',
@@ -190,7 +182,11 @@ export default {
       this.showNav = false;
     },
     handleShowComp(type) {
-      this.$emit('listenShowComp', type)
+      if (type === 'resource') {
+        Bus.$emit('showResource', true)
+      } else {
+        this.$emit('listenShowComp', type)
+      }
       this.showNav = false;
     },
     handleLoginOut() {

@@ -22,6 +22,7 @@ import upRecord from './appsLang/upRecord'
 import kline from './appsLang/kline'
 import newwallet from './appsLang/newwallet'
 import invest from './appsLang/invest'
+import resource from './appsLang/resource'
 
 Vue.use(VueI18n);
 
@@ -43,7 +44,8 @@ const messages = {
     ...kline['zh-CN'],
     ...newwallet['zh-CN'],
     ...invest['zh-CN'],
-    ...sys['zh-CN']
+    ...sys['zh-CN'],
+    ...resource['zh-CN'],
   },
   en: { // 英文包
     ...enLocale,
@@ -62,7 +64,8 @@ const messages = {
     ...kline['en'],
     ...newwallet['en'],
     ...invest['en'],
-    ...sys['en']
+    ...sys['en'],
+    ...resource['en'],
   },
 };
 const i18n = new VueI18n({

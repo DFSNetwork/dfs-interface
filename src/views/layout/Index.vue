@@ -26,6 +26,7 @@
 
     <warm-tip :showWarm="showWarm" @listenClose="handleClose" />
 
+    <ResourceManage />
 
     <van-popup class="popup_p"
       style="width: 700px"
@@ -48,6 +49,7 @@ import NodeSet from '@/components/popup/NodeSet';
 import WarmTip from '@/components/WarmTip';
 import Tabbar from './comp/Tabbar';
 import ExportPrivateKey from '@/views/accForPwd/popup/ExportPrivateKey'
+import ResourceManage from '@/components/resourceManage/Index'
 
 import { get_acc_info, get_balance } from '@/utils/api';
 import { dealMarketLists } from '@/utils/logic';
@@ -69,6 +71,7 @@ export default {
     WarmTip,
     Tabbar,
     ExportPrivateKey,
+    ResourceManage,
   },
   data() {
     return {
