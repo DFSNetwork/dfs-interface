@@ -6,6 +6,7 @@
     </div>
 
     <div class="lists">
+      <div class="myLoading flexc" v-if="loading"><van-loading type="spinner" color="#29D4B0"/></div>
       <div class="list" v-for="(v, i) in minersArr" :key="i">
         <div class="flexb">
           <span class="name">{{ v.miner }}</span>
@@ -78,12 +79,14 @@ export default {
 
       secTimer: null,
       runTimer: null,
+      loading: true,
 
       // 本地缓存
       dfsPoolsJson: localStorage.getItem('dfsPoolsJson') ? JSON.parse(localStorage.getItem('dfsPoolsJson')) : {},
     };
   },
   mounted() {
+    this.handleDealLocal()
     this.handleGetMinersLists()
   },
   beforeDestroy() {
@@ -135,6 +138,7 @@ export default {
         return;
       }
       this.allMinersList = lists;
+      this.loading = false;
       this.handleCurrentChange();
     },
     async handleGetMinersLists() {
@@ -159,6 +163,7 @@ export default {
         lists.push(...result.rows)
       }
       this.unDealArr = lists;
+      this.loading = false;
       this.handleDealMiners()
     },
     handleDealMiners() {
@@ -305,6 +310,10 @@ export default {
         margin-right: 9px;
       }
     }
+  }
+  .lists{
+    position: relative;
+    min-height: 300px;
   }
   .list {
     margin: 20px 0;

@@ -39,6 +39,7 @@
       <span class="tip count">{{ $t('nodePools.allMinerNum') }}：{{allLists.length}}</span>
     </div>
     <div class="lists">
+      <div class="myLoading flexc" v-if="loading"><van-loading type="spinner" color="#29D4B0"/></div>
       <template v-for="(item, index) in lists">
         <div class="mineList" :class="{'page1': page === 1}" :key="index">
           <div class="flexb mb10">
@@ -51,7 +52,6 @@
             <span>{{ $t('nodePools.allRes') }}</span>
             <span>{{ item.sym0 || '0.0000' }} {{lpPool.symbol0}} / {{ item.sym1 || '0.0000'}} {{lpPool.symbol1}}</span>
           </div>
-          <!-- <label class="rankImg" v-if="page === 1 && index < 3"><img :src="`https://storied-crepe-e5e65c.netlify.app/rank/rank${index + 1}.png`" alt=""></label> -->
         </div>
       </template>
 
@@ -140,6 +140,7 @@ export default {
       apy: '0.00',
       aprInfo: {},
       showApyDetail: false,
+      loading: true,
     }
   },
   mounted() {
@@ -413,6 +414,7 @@ export default {
         const stakeEos = v.staked / 10000;
         this.$set(v, 'stakeEos', stakeEos.toFixed(4))
       });
+      this.loading = false
       this.allLists = rows;
       this.lists = rows.slice(0, this.pageSize);
       this.handleListReward()
@@ -437,6 +439,7 @@ export default {
         const stakeEos = v.staked / 10000;
         this.$set(v, 'stakeEos', stakeEos.toFixed(4))
       });
+      this.loading = false
       this.allLists = rows;
       this.lists = rows.slice(0, this.pageSize);
       this.handleListReward()
@@ -588,6 +591,7 @@ export default {
         // }
       })
       // console.log(rows)
+      this.loading = false;
       this.allLists = rows;
       this.lists = rows.slice(0, this.pageSize);
       this.handleGetRank()
@@ -886,6 +890,8 @@ export default {
 }
 .lists{
   margin-bottom: 30px;
+  min-height: 300px;
+  position: relative;
 }
 .mineList{
   margin-top: 25px;
