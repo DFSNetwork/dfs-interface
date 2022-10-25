@@ -4,6 +4,7 @@
       get-container="#app"
       v-model="showResource">
       <div class="resource">
+        <img class="close" @click="showResource = false" src="https://storied-crepe-e5e65c.netlify.app/svg/sd_icon_btn.svg">
         <div class="title">{{ $t('resource.manage') }}</div> 
         <div class="infos">
           <div class="info flexc">
@@ -135,6 +136,13 @@ export default {
 .resource{
   padding: 20px 40px 30px;
   font-size: 28px;
+  position: relative;
+  .close{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 24px;
+  }
   .title{
     font-size: 32px;
     font-weight: 600;

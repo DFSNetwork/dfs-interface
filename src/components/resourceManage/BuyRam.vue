@@ -1,5 +1,6 @@
 <template>
   <div class="buyRam">
+    <img class="close" @click="$emit('listenClose')" src="https://storied-crepe-e5e65c.netlify.app/svg/sd_icon_btn.svg">
     <div class="title">{{ $t('resource.manage') }}</div>
     <div class="info">
       <div class="flexb">
@@ -298,6 +299,13 @@ export default {
 .buyRam{
   font-size: 28px;
   padding: 20px 40px 30px;
+  position: relative;
+  .close{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 24px;
+  }
   .title{
     font-size: 32px;
     font-weight: 600;
