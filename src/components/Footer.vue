@@ -114,11 +114,6 @@ export default {
       }
       this.showImg = true;
     },
-    clickOnDFSInfoData() {
-      this.$router.push({
-        name: 'total',
-      })
-    },
     // 获取总发行量
     async handleGetDfsInfoData() {
       const {status, result} = await this.$api.get_swap_summary();

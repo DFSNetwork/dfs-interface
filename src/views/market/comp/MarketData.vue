@@ -249,7 +249,7 @@ export default {
     }
   },
   methods: {
-    handleTo(name = 'withdraw') {
+    handleTo(name) {
       this.$router.push({
         name,
         params: {

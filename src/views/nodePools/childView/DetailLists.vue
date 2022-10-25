@@ -94,7 +94,7 @@ import { getCoin, toLocalTime, toFixed } from '@/utils/public'
 import { getAccVote, getReward, getLpReward } from '../js/nodePools'
 import { sellToken } from '@/utils/logic';
 
-import SureTip from '@/views/farms/dialog/SureTip';
+import SureTip from '@/components/SureTip'
 import MarketApy from '@/views/market/popup/MarketApy'
 import TagRewardInfo from '@/views/nodePools/childView/TagRewardInfo'
 

@@ -59,45 +59,9 @@ const constantRouter = [
         meta: { title: 'DeFis-Network', noAcc: true, noFooter: true },
       },
       {
-        path: 'withdraw/:mid',
-        name: 'withdraw',
-        component: () => import(/* webpackChunkName: "home" */ '@/views/market/comp/Withdraw.vue'),
-        meta: { title: 'DeFis-Network', noAcc: true, noTab: true },
-      },
-      {
-        path: '/pools',
-        name: 'pools',
-        component: () => import(/* webpackChunkName: "home" */ '@/views/market/childView/PoolsData.vue'),
-        meta: { title: 'DeFis-Network', noAcc: true },
-      },
-      {
-        path: '/pools/:mid',
-        name: 'poolsMarket',
-        component: () => import(/* webpackChunkName: "home" */ '@/views/market/childView/SymbolData.vue'),
-        meta: { title: 'DeFis-Network', noAcc: true },
-      },
-      {
-        path: '/bank',
-        name: 'bank',
-        component: () => import(/* webpackChunkName: "home" */ '@/views/bank/Index.vue'),
-        meta: { title: 'DeFis-Network' },
-      },
-      {
-        path: '/tutorial',
-        name: 'tutorial',
-        component: () => import(/* webpackChunkName: "home" */ '@/views/index/childViews/Tutorial.vue'),
-        meta: { title: 'DeFis-Network', noAcc: true},
-      },
-      {
         path: '/dss',
         name: 'dss',
         component: () => import(/* webpackChunkName: "home" */ '@/views/dsr/Index.vue'),
-        meta: { title: 'DeFis-Network', noAcc: true },
-      },
-      {
-        path: '/total',
-        name: 'total',
-        component: () => import(/* webpackChunkName: "home" */ '@/views/total/Index.vue'),
         meta: { title: 'DeFis-Network', noAcc: true },
       },
       {
@@ -105,18 +69,6 @@ const constantRouter = [
         name: 'createMarket',
         component: () => import(/* webpackChunkName: "home" */ '@/views/index/childViews/CreateMarket.vue'),
         meta: { title: 'DeFis-Network', noNav: true, noHeader: true, noFooter: true },
-      },
-      {
-        path: '/farms',
-        name: 'farms',
-        component: () => import(/* webpackChunkName: "home" */ '@/views/farms/Index.vue'),
-        meta: { title: 'DeFis-Network', noAcc: true },
-      },
-      {
-        path: '/coin-views/:mid',
-        name: 'coinViews',
-        component: () => import(/* webpackChunkName: "home" */ '@/views/coinViews/Index.vue'),
-        meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true},
       },
       { // 乐捐系统
         path: '/fundation',
@@ -574,44 +526,44 @@ const constantRouter = [
     ],
   },
   // 定投
-  {
-    path: '/investment',
-    component: Layout,
-    redirect: '/',
-    children: [
-      {
-        path: '/',
-        component: () => import(/* webpackChunkName: "home" */ '@/views/investment/Layout'),
-        meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noHeader: true },
-        children: [
-          { // 定投页面
-            path: '/',
-            name: 'investment',
-            component: () => import(/* webpackChunkName: "home" */ '@/views/investment/Index.vue'),
-            meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noHeader: true, noTab: true },
-          },
-          { // 我的定投页面
-            path: 'my-inverst',
-            name: 'myInverst',
-            component: () => import(/* webpackChunkName: "home" */ '@/views/investment/child/MyInverst.vue'),
-            meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noHeader: true, noTab: true },
-          },
-          { // 我的定投页面
-            path: 'inverst-rank',
-            name: 'inverstRank',
-            component: () => import(/* webpackChunkName: "home" */ '@/views/investment/child/InverstRank.vue'),
-            meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noHeader: true, noTab: true },
-          },
-          { // 规则
-            path: 'rules',
-            name: 'inverstRules',
-            component: () => import(/* webpackChunkName: "home" */ '@/views/investment/child/Rules.vue'),
-            meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noHeader: true, noTab: true },
-          },
-        ]
-      },
-    ],
-  },
+  // {
+  //   path: '/investment',
+  //   component: Layout,
+  //   redirect: '/',
+  //   children: [
+  //     {
+  //       path: '/',
+  //       component: () => import(/* webpackChunkName: "home" */ '@/views/investment/Layout'),
+  //       meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noHeader: true },
+  //       children: [
+  //         { // 定投页面
+  //           path: '/',
+  //           name: 'investment',
+  //           component: () => import(/* webpackChunkName: "home" */ '@/views/investment/Index.vue'),
+  //           meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noHeader: true, noTab: true },
+  //         },
+  //         { // 我的定投页面
+  //           path: 'my-inverst',
+  //           name: 'myInverst',
+  //           component: () => import(/* webpackChunkName: "home" */ '@/views/investment/child/MyInverst.vue'),
+  //           meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noHeader: true, noTab: true },
+  //         },
+  //         { // 我的定投页面
+  //           path: 'inverst-rank',
+  //           name: 'inverstRank',
+  //           component: () => import(/* webpackChunkName: "home" */ '@/views/investment/child/InverstRank.vue'),
+  //           meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noHeader: true, noTab: true },
+  //         },
+  //         { // 规则
+  //           path: 'rules',
+  //           name: 'inverstRules',
+  //           component: () => import(/* webpackChunkName: "home" */ '@/views/investment/child/Rules.vue'),
+  //           meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noHeader: true, noTab: true },
+  //         },
+  //       ]
+  //     },
+  //   ],
+  // },
   // 减产矿池
   {
     path: '/newPools',
@@ -643,20 +595,6 @@ const constantRouter = [
         name: 'nodeVotePool',
         component: () => import(/* webpackChunkName: "home" */ '@/views/nodeVote/Index.vue'),
         meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noTab: true },
-      },
-    ],
-  },
-  // 邀请返佣
-  {
-    path: '/testscan',
-    component: Layout,
-    redirect: '/',
-    children: [
-      { // 我的页面
-        path: '/',
-        name: 'testscan',
-        component: () => import(/* webpackChunkName: "home" */ '@/views/accForPwd/test.vue'),
-        meta: { title: 'DeFis-Network', noAcc: true, noNav: true, noFooter: true, noHeader: true, noTab: true },
       },
     ],
   },

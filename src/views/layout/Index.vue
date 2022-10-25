@@ -41,7 +41,6 @@
 import { mapState } from 'vuex'
 import HeaderTools from '@/components/Header';
 import MyFooter from '@/components/Footer';
-// import Nav from '@/components/Nav';
 import Nav from '@/views/layout/comp/More';
 import SlipPointTools from '@/components/SlipPointTools';
 import InviAcc from '@/components/InviAcc';

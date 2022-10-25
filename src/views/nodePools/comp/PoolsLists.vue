@@ -135,7 +135,7 @@ import { toFixed, countdown } from '@/utils/public';
 import { sellToken } from '@/utils/logic';
 import { mapState } from 'vuex';
 
-import SureTip from '@/views/farms/dialog/SureTip';
+import SureTip from '@/components/SureTip'
 import MineRules from '../dialog/MineRules';
 import Boost from '../dialog/Boost';
 import AddMarket from '@/views/market/popup/AddMarket'

@@ -54,7 +54,6 @@ export default {
   },
   methods: {
     onSelect(action) {
-      console.log(action)
       const lang = action.lang;
       this.$i18n.locale = lang;
       this.$store.dispatch('setLanguage', lang);
