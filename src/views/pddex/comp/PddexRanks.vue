@@ -169,7 +169,7 @@ export default {
   data() {
     return {
       active: 0,
-      coinName: 'EOS',
+      coinName: 'USDT',
       followList: [], // 关注展示列表
       tradeRankList: [], // 成交量排行
       tradeList: [],
@@ -177,7 +177,7 @@ export default {
       likeArr: [], // 存放接口返回的关注数据
       swapTradeLists: {},
       allMarket: localStorage.getItem('allMarket') ? JSON.parse(localStorage.getItem('allMarket')) :{},
-      areaLists: ['EOS', 'USDT', 'USDC', 'DFS', 'TAG', 'DFG'],
+      areaLists: ['USDT', 'EOS', 'DFS', 'TAG', 'USDC', 'DFG'],
       cdAreaLists: [],
 
       // 排序
