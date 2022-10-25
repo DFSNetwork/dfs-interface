@@ -20,7 +20,7 @@
     <div class="item">
       <div class="label flexa">
         <span>{{ $t('dex.poolNum') }}</span>
-        <span class="green" @click="handleTo('dfsMinePool')">{{ $t('pools.toPool') }}></span>
+        <span class="green" @click="handleToPool(checkedMarket)">{{ $t('pools.toPool') }}></span>
       </div>
       <div class="flexa dinReg">
         {{ checkedMarket.reserve1 }} / {{ checkedMarket.reserve0 }}
@@ -81,11 +81,21 @@ export default {
     },
   },
   methods: {
-    handleTo(name) {
+    handleToPool(v) {
+      let name = 'dfsMinePool'
+      const poolNames = this.$store.state.config.poolNames;
+      Object.keys(poolNames).forEach(key => {
+        const status = poolNames[key].includes(Number(v.mid))
+        if (status) {
+          name = key;
+        }
+      })
       this.$router.push({
         name,
         params: {
-          mid: this.checkedMarket.mid
+          mid: this.checkedMarket.mid,
+          type: 'lp',
+          sym: this.checkedMarket.mid,
         }
       })
     }

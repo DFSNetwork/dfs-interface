@@ -1,6 +1,11 @@
 // 系统性状态存储
 const config = {
   state: {
+    poolNames: {
+      // dfsMinePool: [],
+      poolDetail: [602, 665],
+      eosMine: [17],
+    },
     freeCpuPrivateKey: '5KNY3xBG6z3sgtbxM8T4VMvh99BZks5gCuf2w14m4Rai6dpj5Hr',
     // YFC类型LP挖矿配置
     lpMid: [{

@@ -45,7 +45,7 @@
     <div class="poolInfo" v-if="market.mid">
       <div class="flexa piTitle">
         <span>{{ $t('dex.poolNum') }}</span>
-        <span class="green" @click="handleTo('dfsMinePool')">{{ $t('pools.toPool') }}></span>
+        <span class="green" @click="handleToPool">{{ $t('pools.toPool') }}></span>
       </div>
       <div class="dinReg">{{ market.reserve0 }} / {{ market.reserve1 }}</div>
     </div>
@@ -106,6 +106,25 @@ export default {
     }
   },
   methods: {
+    handleToPool() {
+      let name = 'dfsMinePool'
+      const poolNames = this.$store.state.config.poolNames;
+      Object.keys(poolNames).forEach(key => {
+        const status = poolNames[key].includes(Number(this.market.mid))
+        if (status) {
+          name = key;
+        }
+      })
+      console.log(name)
+      this.$router.push({
+        name,
+        params: {
+          mid: this.market.mid,
+          type: 'lp',
+          sym: this.market.mid,
+        }
+      })
+    },
     handleTo(name) {
       this.$router.push({
         name,

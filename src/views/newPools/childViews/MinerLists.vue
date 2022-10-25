@@ -5,10 +5,11 @@
       <span class="tip count">{{ $t('nodePools.allMinerNum') }}：{{allLists.length}}</span>
     </div>
     <div class="lists">
+      <div class="myLoading flexc" v-if="loading"><van-loading type="spinner" color="#29D4B0"/></div>
       <div class="mineList" v-for="(item, index) in lists" :key="index">
         <div class="flexb mb10">
           <span>{{ item.owner }}</span>
-          <span class="flexa">
+          <span class="flexa din">
             <span>
               {{ $t('mine.earnings') }}：
               <CountTo :start-val='item.oldReward'
@@ -71,6 +72,7 @@ export default {
       page: 1,
       pageSize: 20,
       timer: null,
+      loading: true,
     }
   },
   mounted() {
@@ -121,6 +123,7 @@ export default {
         let lastTime = toLocalTime(`${v.last_drip}.000+0000`);
         v.lastTime = moment(lastTime).valueOf();
       })
+      this.loading = false;
       this.allLists = rows;
       this.lists = rows.slice(0, this.pageSize);
       this.handleListReward();
@@ -184,6 +187,8 @@ export default {
   }
   .lists{
     margin-bottom: 30px;
+    min-height: 200px;
+    position: relative;
   }
   .mineList{
     margin-top: 25px;

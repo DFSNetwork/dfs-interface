@@ -1,7 +1,7 @@
 <template>
   <div>
     <div :class="`tipDiv marketReward`" v-if="Number(token)"
-     @click="handleTo('dfsMinePool')">
+     @click="handleToPool">
       <div class="flexb">
         <div class="flexa symbolInfo">
           <img class="imgCoin" :src="thisMarket.sym0Data.imgUrl" :onerror="$errorImg"/>
@@ -254,6 +254,24 @@ export default {
         name,
         params: {
           mid: this.thisMarket.mid
+        }
+      })
+    },
+    handleToPool() {
+      let name = 'dfsMinePool'
+      const poolNames = this.$store.state.config.poolNames;
+      Object.keys(poolNames).forEach(key => {
+        const status = poolNames[key].includes(Number(this.thisMarket.mid))
+        if (status) {
+          name = key;
+        }
+      })
+      this.$router.push({
+        name,
+        params: {
+          mid: this.thisMarket.mid,
+          type: 'lp',
+          sym: this.thisMarket.mid,
         }
       })
     },

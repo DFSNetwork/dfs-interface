@@ -46,7 +46,7 @@
           <div class="item">
             <div class="subTitle tip">
               <span>{{ $t('dex.poolNum') }}</span>
-              <span class="green_p" @click="handleTo('dfsMinePool')">{{ $t('pools.toPool') }}></span>
+              <span class="green_p" @click="handleToPool">{{ $t('pools.toPool') }}></span>
             </div>
             <div class="num din">
               <span>{{ thisMarket.reserve0 }} / {{ thisMarket.reserve1 }}</span>
@@ -262,6 +262,24 @@ export default {
 
       this.handleGetAccToken();
       this.handleBeforeDestroy();
+    },
+    handleToPool() {
+      let name = 'dfsMinePool'
+      const poolNames = this.$store.state.config.poolNames;
+      Object.keys(poolNames).forEach(key => {
+        const status = poolNames[key].includes(Number(this.thisMarket.mid))
+        if (status) {
+          name = key;
+        }
+      })
+      this.$router.push({
+        name,
+        params: {
+          mid: this.thisMarket.mid,
+          type: 'lp',
+          sym: this.thisMarket.mid,
+        }
+      })
     },
     handleTo(name) {
       this.$router.push({

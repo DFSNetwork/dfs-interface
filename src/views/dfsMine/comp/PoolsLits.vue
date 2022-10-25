@@ -114,10 +114,20 @@ export default {
   },
   methods: {
     handleToMarket(item) {
+      let name = 'dfsMinePool'
+      const poolNames = this.$store.state.config.poolNames;
+      Object.keys(poolNames).forEach(key => {
+        const status = poolNames[key].includes(Number(item.mid))
+        if (status) {
+          name = key;
+        }
+      })
       this.$router.push({
-        name: 'dfsMinePool',
+        name,
         params: {
-          mid: item.mid
+          mid: item.mid,
+          type: 'lp',
+          sym: item.mid,
         }
       })
     },

@@ -192,10 +192,20 @@ export default {
     },
     handleMarketChange(item) {
       this.handleClose()
-      this.$router.replace({
-        name: 'dfsMinePool',
+      let name = 'dfsMinePool'
+      const poolNames = this.$store.state.config.poolNames;
+      Object.keys(poolNames).forEach(key => {
+        const status = poolNames[key].includes(Number(item.mid))
+        if (status) {
+          name = key;
+        }
+      })
+      this.$router.push({
+        name,
         params: {
-          mid: item.mid
+          mid: item.mid,
+          type: 'lp',
+          sym: item.mid,
         }
       })
     },

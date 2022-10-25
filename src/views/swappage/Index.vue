@@ -171,7 +171,7 @@
       <div class="flexb">
         <div>
           <span>{{ $t('dex.poolNum') }}</span>
-          <span class="marketNow" @click="handleTo('dfsMinePool')">{{ $t('pools.toPool') }} ></span>
+          <span class="marketNow" @click="handleToPool">{{ $t('pools.toPool') }} ></span>
         </div>
         <div class="flexa usddTip" v-if="showTip" @click="showUsddTip = true">
           <img class="tipIcon" src="https://storied-crepe-e5e65c.netlify.app/dex/tip.svg" alt="">
@@ -587,6 +587,24 @@ export default {
         name,
         params: {
           mid: this.bestPath.mid
+        }
+      })
+    },
+    handleToPool() {
+      let name = 'dfsMinePool'
+      const poolNames = this.$store.state.config.poolNames;
+      Object.keys(poolNames).forEach(key => {
+        const status = poolNames[key].includes(Number(this.bestPath.mid))
+        if (status) {
+          name = key;
+        }
+      })
+      this.$router.push({
+        name,
+        params: {
+          mid: this.bestPath.mid,
+          type: 'lp',
+          sym: this.bestPath.mid,
         }
       })
     },
