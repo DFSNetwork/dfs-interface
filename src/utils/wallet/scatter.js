@@ -1,20 +1,15 @@
 // scatter 链接钱包
 import ScatterJS from 'scatterjs-core';
-// import ScatterEOS from 'scatterjs-plugin-eosjs2';
 import ScatterEOS from 'scatterjs-plugin-eosjs';
 import Eos from 'eosjs-without-sort'; // 代签不排序
-// import { isTpWallet } from '@/utils/wallet/fullScreen'; // tokenpocket JS
 
 import axios from 'axios';
 import store from '@/store';
-// import { pushFreeCpu2 } from '@/api/list'; // reg_newaccount
+import Bus from '@/utils/bus';
+import abi from './eosio.system.json'
 
 ScatterJS.plugins( new ScatterEOS() );
 const FREECPUPRIVATEKEY = store.state.config.freeCpuPrivateKey;
-// import './newWallet'
-// import '../eos2/index';
-
-import abi from './eosio.system.json'
 class ScatterClass {
   constructor() {
     this.vthis = null;
@@ -79,7 +74,6 @@ class ScatterClass {
       chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
       url: `${node.protocol}://${node.host}:${node.port}`
     }
-    // const network = ScatterJS.Network.fromJson(networkOpt);
     this.freeCpuEos = Eos({
       keyProvider: FREECPUPRIVATEKEY, // private key
       httpEndpoint: networkOpt.url,
@@ -96,7 +90,6 @@ class ScatterClass {
   loginOut(cb) {
     const self = this;
     self.scatter.forgetIdentity()
-    // location.reload()
     cb()
   }
   // login
@@ -129,7 +122,6 @@ class ScatterClass {
       account: params.account || store.state.app.account.name,
     }
     const https = store.state.sys.baseConfig.node.url;
-    // console.log(https)
     axios.post(`${https}/v1/chain/get_currency_balance`, JSON.stringify(newParams)).then((res) => {
       if (!res.data.length) {
         callback(`${Number(0).toFixed(params.decimal)} ${params.symbol}`);
@@ -229,10 +221,6 @@ class ScatterClass {
     this.dealError(err, callback);
   }
 
-  buffer2hex(buffer) {
-    return Array.from(buffer, (x) => ('00' + x.toString(16)).slice(-2)).join('')
-  }
-
   handleUseFreeCpu(tx, cb) {
     (async () => {
       try {
@@ -258,10 +246,6 @@ class ScatterClass {
             user: formName
           },
         })
-        // tx.actions[0].authorization.unshift({
-        //   actor: "iq3rwbsfcqlv",
-        //   permission: `active`,
-        // })
         let pushTransactionArgs = await this.eosJs.transaction(tx, {
           // ...txh,
           sign: true,
@@ -272,18 +256,9 @@ class ScatterClass {
         l.signatures = p.transaction.signatures;
         l.context_free_data = [];
         data.sign_data = l
-
         // console.log(tx)
         // console.log(data)
         this.toSignFreeCpu(data.sign_data, cb)
-
-        // const {status, result} = await pushFreeCpu2(data)
-        // console.log(result, status)
-        // if (!status || !result) { // 请求失败 - 走正常流程操作
-        //   cb(result, null)
-        //   return
-        // }
-        // cb(null, result)
       } catch (error) {
         const err = error.toString()
         if (err.indexOf('Missing ABI action') !== -1) {
@@ -302,23 +277,16 @@ class ScatterClass {
     })()
   }
   async toSignFreeCpu(params, cb) {
-    // try {
-    // console.log('执行this.freeCpuEos.transaction', params)
     let signResult = await this.freeCpuEos.transaction(params, {
       sign: true,
       broadcast: false,
       blocksBehind: 3,
       expireSeconds: 30,
     })
-    // console.log('signResult = ', signResult)
     const pushTransaction = signResult.transaction;
     pushTransaction.signatures.push(params.signatures[0]);
     const pushResult = await this.freeCpuEos.pushTransaction(pushTransaction);
-    // console.log('pushResult', pushResult)
     cb(null, pushResult)
-    // } catch (error) {
-    //   console.error(error.toString())
-    // }
   }
   dealFreeCpuError(error, cb) {
     // console.log(typeof error)
@@ -346,79 +314,96 @@ class ScatterClass {
   }
 
   dealError(e, callback) {
-    console.log(JSON.stringify(e))
-    console.log(e.toString())
+    // console.log(JSON.stringify(e))
+    // console.log(e.toString())
     //  catch 错误回调 ---- code: 3080004 - cpu不足 | 3080002 - net不足 | 3080001 - ram不足
     let back = {
       code: 999,
       message: 'fails!',
     };
-    try {
-      if (typeof (e) === 'object') {
-        if (e.code === 402) {
-          back = {
-            code: '402',
+    let deal = [
+      [ // 用户取消操作
+        (code) => {
+          const codes = [402]
+          return codes.includes(Number(code))
+        },
+        () => {
+          return {
+            code: 402,
             message: 'User rejected the signature request',
           }
         }
-      }
-      if (typeof (e) === 'string') {
-        const err = JSON.parse(e);
-        // CPU 不足
-        if (err.error.code === 3080004) {
-          back = {
-            code: 3080004,
-            message: 'Insufficient CPU resources',
+      ],
+      [ // 资源不足
+        (code) => {
+          const codes = [3080004, 3080002, 3080001]
+          return codes.includes(Number(code))
+        },
+        (tErr) => {
+          Bus.$emit('showResInsufficient', tErr.code == 3080001 ? 'RAM' : 'CPU')
+          return {
+            code: 402,
+            message: '资源不足'
           }
         }
-        // NET 不足
-        if (err.error.code === 3080002) {
-          back = {
-            code: 3080002,
-            message: 'Insufficient Net resources',
-          }
-        }
-        // RAM 不足
-        if (err.error.code === 3080001) {
-          back = {
-            code: 3080001,
-            message: 'Insufficient RAM resources',
-          }
-        }
-        // 交易超时
-        if (err.error.code === 3080006) {
-          back = {
+      ],
+      [ // 交易超时
+        (code) => {
+          const codes = [3080006]
+          return codes.includes(Number(code))
+        },
+        () => {
+          return {
             code: 3080006,
             message: this.vthis.$t('error.timeout'),
           }
         }
-        if (err.error.code === 3050003 || err.error.code === 3010010) {
-          // 滑点过高导致
-          const detail = err.error.details;
+      ],
+      [
+        (code) => {
+          const codes = [3050003, 3010010]
+          return codes.includes(Number(code))
+        },
+        (tErr) => {
+          const detail = tErr.details;
           if (detail[0].message.indexOf('INSUFFICIENT_OUTPUT_AMOUNT') !== -1) {
-            back = {
+            return {
               code: 3050003,
               message: '滑点过高',
             }
-          } else if (detail[0].message.indexOf('Invalid packed transaction') !== -1) { // 用户取消操作
-            back = {
+          }
+          if (detail[0].message.indexOf('Invalid packed transaction') !== -1) { // 用户取消操作
+            return {
               code: 402,
               message: '用户取消',
             }
-          } else {
-            back = {
-              code: err.error.code,
-              message: detail[0].message,
-            }
+          }
+          return {
+            code: tErr.code,
+            message: detail[0].message,
           }
         }
+      ]
+    ]
+    try {
+      const typeofStatus = typeof (e);
+      let dErr = e;
+      if (typeofStatus === 'string') {
+        const tErr = JSON.parse(e)
+        dErr = tErr.error ? tErr.error : tErr;
+      }
+      // console.log(dErr, 'dErr')
+
+      const findErr = deal.find(v => v[0](dErr.code))
+      if (findErr) {
+        back = findErr[1](dErr)
       }
       callback(back, null);
     } catch (error) {
       if (e === '操作已取消') {
         back = {
           code: 402,
-          message: 'Cancel',
+          message: 'User rejected the signature request',
         }
       }
       callback(back, null);

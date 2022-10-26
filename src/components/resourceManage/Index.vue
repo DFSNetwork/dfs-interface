@@ -36,6 +36,13 @@
         @listenClose="handleClose"
         @listenUpdate="handleGetAccInfo"/>
     </van-popup>
+    
+    <van-popup class="popup_p popupCpu" v-model="showResInsufficient" get-container="#app">
+      <ResInsufficient :types="insufficientType"
+        @listenClose="handleClose"
+        @listenTo="handleGoTo"
+        />
+    </van-popup>
   </div>
 </template>
 
@@ -44,17 +51,21 @@ import Bus from '@/utils/bus'
 import { mapState } from 'vuex'
 import BuyRam from '@/components/resourceManage/BuyRam'
 import LeaseCpu from '@/components/resourceManage/LeaseCpu'
+import ResInsufficient from '@/components/resourceManage/ResInsufficient.vue'
 export default {
   name: 'resourceManage',
   components: {
     BuyRam,
     LeaseCpu,
+    ResInsufficient,
   },
   data() {
     return {
       showResource: false,
       showCpu: false,
       showRam: false,
+      showResInsufficient: false,
+      insufficientType: 'CPU',
       cpuRate: '100.00',
       netRate: '100.00',
       ramRate: '0.00',
@@ -65,9 +76,14 @@ export default {
     Bus.$on('showResource', (status) => {
       this.showResource = status
     })
+    Bus.$on('showResInsufficient', (type) => {
+      this.showResInsufficient = true;
+      this.insufficientType = type
+    })
   },
   beforeDestroy() {
     Bus.$off('showResource')
+    Bus.$off('showResInsufficient')
   },
   computed: {
     ...mapState({
@@ -93,9 +109,18 @@ export default {
     }
   },
   methods: {
+    handleGoTo() {
+      this.showResInsufficient = false;
+      if (this.insufficientType === 'CPU') {
+        this.showCpu = true;
+        return
+      }
+      this.showRam = true;
+    },
     handleClose() {
       this.showCpu = false;
       this.showRam = false;
+      this.showResInsufficient = false;
     },
     async handleGetAccInfo() {
       const {status, result} = await this.$api.get_account(this.account.name);

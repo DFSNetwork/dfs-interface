@@ -20,6 +20,9 @@ export default {
       sell: '卖出',
       buyNum: '购买金额',
       sellRam: '卖出RAM',
+      cpuErr: '您的CPU/NET资源不足，请前往租赁',
+      ramErr: '您的RAM资源不足，请先购买',
+      goNow: '立即前往',
     }
   },
   'en': {
@@ -42,6 +45,9 @@ export default {
       sell: 'Sell',
       buyNum: 'Amount',
       sellRam: 'Sell RAM',
+      cpuErr: 'Your CPU/NET resources are insufficient, please go to lease',
+      ramErr: 'Your RAM resources are insufficient, please buy first',
+      goNow: 'Go now',
     }
   }
 }

@@ -520,6 +520,7 @@ export default {
       } else {
         params.memo = `${params.memo}:2`
       }
+      console.log(params)
       DApp.transfer(params, (err) => {
         this.loading = false;
         if (err && err.code == 402) {
