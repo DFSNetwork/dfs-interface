@@ -54,6 +54,7 @@ export default {
     }
     this.handleSetLang();
     this.handleResize();
+    console.log(1)
   },
   mounted(){
     this.handleEnvReLoad();
