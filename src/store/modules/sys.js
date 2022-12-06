@@ -7,9 +7,9 @@ const sys = {
         name: 'Default',
         area: 'production',
         protocol: 'https',
-        host: '47.99.40.133', // eospush.tokenpocket.pro
+        host: '18.139.219.215', // eospush.tokenpocket.pro
         port: '443',
-        url: 'https://47.99.40.133', // https://eospush.tokenpocket.pro
+        url: 'https://18.139.219.215', // https://eospush.tokenpocket.pro
         chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
       },
     },
@@ -56,9 +56,9 @@ const sys = {
         name: 'Default',
         area: 'production',
         protocol: 'https',
-        host: '47.99.40.133', // eospush.tokenpocket.pro
+        host: '18.139.219.215', // eospush.tokenpocket.pro
         port: '443',
-        url: 'https://47.99.40.133', // https://eospush.tokenpocket.pro
+        url: 'https://18.139.219.215', // https://eospush.tokenpocket.pro
         chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
       },
       toAccountSwap: 'defisswapcnt', // 主交易 swap 合约
@@ -88,9 +88,9 @@ const sys = {
         name: 'Default',
         area: 'production',
         protocol: 'https',
-        host: '47.99.40.133', // eospush.tokenpocket.pro
+        host: '18.139.219.215', // eospush.tokenpocket.pro
         port: '443',
-        url: 'https://47.99.40.133', // https://eospush.tokenpocket.pro
+        url: 'https://18.139.219.215', // https://eospush.tokenpocket.pro
         chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
       },
       toAccountSwap: 'defisswapcnt', // 主交易 swap 合约
