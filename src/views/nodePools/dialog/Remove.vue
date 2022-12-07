@@ -122,7 +122,7 @@ export default {
       if (!status) {
         return
       }
-      // console.log(result)
+      console.log(result)
       if (!result.rows.length) {
         return
       }
@@ -133,14 +133,14 @@ export default {
       let ableRex = parseFloat(rows.matured_rex);
       lists.forEach(v => {
         const nowT = moment().valueOf()
-        const dateTime = toLocalTime(`${v.key}.000+0000`)
+        const dateTime = toLocalTime(`${v.first}.000+0000`)
         this.$set(v, 'dateTime', dateTime)
         const rexT = moment(dateTime.replace(/-/g, '/')).valueOf()
         // console.log(nowT, rexT)
         if (nowT >= rexT) {
-          ableRex = parseFloat(v.value) + parseFloat(ableRex)
+          ableRex = parseFloat(v.second) + parseFloat(ableRex)
         } else {
-          this.$set(v, 'num', (v.value/10000).toFixed(4))
+          this.$set(v, 'num', (v.second/10000).toFixed(4))
         }
       });
       this.rexLockLists = lists.filter(v => v.num)
