@@ -26,10 +26,10 @@
         </span>
         <div>{{ $t('tabbar.trade') }}</div>
       </div>
-      <div class="bar" :class="{'act': $route.name === 'fundation'}"
+      <div class="bar"
         @click="handleToPro('shining')">
         <span class="myCoin flexc">
-          <img class="myCoinImg" v-if="$route.name !== 'fundation'" src="https://leafy-kataifi-c6d825.netlify.app/dfs/fun2-un.png">
+          <img class="myCoinImg" v-if="$route.name !== 'shining'" src="https://leafy-kataifi-c6d825.netlify.app/dfs/fun2-un.png">
           <img class="myCoinImg" v-else src="https://leafy-kataifi-c6d825.netlify.app/dfs/fun2.png">
         </span>
         <div>{{ $t('home.shining') }}</div>
