@@ -27,21 +27,13 @@
         <div>{{ $t('tabbar.trade') }}</div>
       </div>
       <div class="bar" :class="{'act': $route.name === 'fundation'}"
-        @click="handleTo('fundation')">
+        @click="handleToPro('shining')">
         <span class="myCoin flexc">
           <img class="myCoinImg" v-if="$route.name !== 'fundation'" src="https://leafy-kataifi-c6d825.netlify.app/dfs/fun2-un.png">
           <img class="myCoinImg" v-else src="https://leafy-kataifi-c6d825.netlify.app/dfs/fun2.png">
         </span>
-        <div>{{ $t('home.community') }}</div>
+        <div>{{ $t('home.shining') }}</div>
       </div>
-      <!-- <div class="bar" :class="{'act': $route.name === 'financial'}"
-        @click="handleTo('financial')">
-        <span class="myCoin flexc">
-          <img class="myCoinImg" v-if="$route.name !== 'financial'" src="https://storied-crepe-e5e65c.netlify.app/tabbar/money-un.png">
-          <img class="myCoinImg" v-else src="https://storied-crepe-e5e65c.netlify.app/tabbar/money.png">
-        </span>
-        <div>{{ $t('financial.tab') }}</div>
-      </div> -->
       <div class="bar" :class="{'act': $route.name === 'myCenter'}"
         @click="handleTo('myCenter')">
         <span class="myCoin flexc">
@@ -71,6 +63,9 @@ export default {
         name
       })
     },
+    handleToPro() {
+      location.href = 'https://dfs-shining.netlify.app'
+    }
   }
 }
 </script>
@@ -130,6 +125,10 @@ export default {
         //   margin: auto;
         //   height: 64px;
         // }
+        .shining{
+          height: 50px;
+          width: 50px;
+        }
       }
     }
   }

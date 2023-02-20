@@ -64,6 +64,8 @@ export default {
   data() {
     return {
       voices: [{
+        title: 'home.homeUi3'
+      }, {
         title: 'home.homeUi2',
       }, {
         title: 'home.homeUi1',

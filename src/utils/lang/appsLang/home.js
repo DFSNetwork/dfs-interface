@@ -12,6 +12,7 @@ export default {
       homeUi: '大丰收首页全新升级！',
       homeUi1:'小目标 1 DFS = 1 EOS',
       homeUi2:'支持基金会的yield+活动,做市EOS/USDT即可领取yield+的奖励。',
+      homeUi3:'Web3社交协议Shining和金库上线了!',
       rankUp: '涨幅榜',
       rankVol: '成交榜',
       rankApy: '年化榜',
@@ -35,6 +36,9 @@ export default {
       inviter: '邀请返佣',
       investment: '定投大厅',
       township: '风车小镇',
+      donate: '捐款',
+      shining: '闪灵',
+      vault: '金库',
     }
   },
   'en': {
@@ -49,6 +53,7 @@ export default {
       homeUi:'Great Harvest Homepage is newly upgraded! ',
       homeUi1:'A Small Target 1 DFS = 1 EOS',
       homeUi2:'Support the foundation\'s yield+ activities, and make the market for EOS/USDT to receive yield+ rewards.',
+      homeUi3:'Web3 social protocol Shining and treasury are online!',
       rankUp:'Top Gainers',
       rankVol:'VOL Rank',
       rankApy: 'APY Rank',
@@ -72,6 +77,9 @@ export default {
       inviter:'Rebate',
       investment:'Investment',
       township: 'Township',
+      donate: 'Donate',
+      shining: 'Shining',
+      vault: 'Vault',
     }
   }
 }

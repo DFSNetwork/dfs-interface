@@ -22,6 +22,16 @@
               <img class="iconImg" src="https://leafy-kataifi-c6d825.netlify.app/dfs/mining_icon.png">
               <div>{{ $t('home.mine') }}</div>
             </div>
+            <div class="list" @click="handleToPro('shining')">
+              <img class="hot" src="https://leafy-kataifi-c6d825.netlify.app/dfs/new.png">
+              <img class="iconImg" src="https://leafy-kataifi-c6d825.netlify.app/dfs/fun2.png">
+              <div>{{ $t('home.shining') }}</div>
+            </div>
+            <div class="list" @click="handleToPro('vault')">
+              <img class="hot" src="https://leafy-kataifi-c6d825.netlify.app/dfs/new.png">
+              <img class="iconImg small" src="@/assets/img/vault2.png">
+              <div>{{ $t('home.vault') }}</div>
+            </div>
             <div class="list" @click="handleToPro('town')">
               <!-- <img class="hot" src="https://leafy-kataifi-c6d825.netlify.app/dfs/new.png"> -->
               <img class="iconImg" src="https://venerable-semolina-21a376.netlify.app//Town-img/login/windmill_icon.png">
@@ -31,16 +41,6 @@
               <!-- <img class="hot" src="https://leafy-kataifi-c6d825.netlify.app/dfs/new.png"> -->
               <img class="iconImg" src="https://leafy-kataifi-c6d825.netlify.app/icon/NFT.png">
               <div>NFT</div>
-            </div>
-            <div class="list" @click="handleTo('invite')">
-              <img class="iconImg" src="https://leafy-kataifi-c6d825.netlify.app/dfs/farm1_icon.png">
-              <div>{{ $t('invite.myFarm') }}</div>
-            </div>
-          </div>
-          <div class="lists flexb">
-            <div class="list" @click="handleTo('vote')">
-              <img class="iconImg" src="https://leafy-kataifi-c6d825.netlify.app/dfs/vote_icon.png">
-              <div>{{ $t('home.vote') }}</div>
             </div>
             <div class="list" @click="handleTo('dssHomeDfs')">
               <img class="iconImg" src="https://leafy-kataifi-c6d825.netlify.app/dfs/dss_icon.png">
@@ -72,9 +72,18 @@
               <img class="iconImg" src="https://leafy-kataifi-c6d825.netlify.app/dfs/dtoken_icon.png">
               <div>{{ $t('sys.dcap') }}</div>
             </div>
-            <div class="list"></div>
-          </div>
-          <div class="lists flexb">
+            <div class="list" @click="handleTo('invite')">
+              <img class="iconImg" src="https://leafy-kataifi-c6d825.netlify.app/dfs/farm1_icon.png">
+              <div>{{ $t('invite.myFarm') }}</div>
+            </div>
+            <div class="list" @click="handleTo('vote')">
+              <img class="iconImg" src="https://leafy-kataifi-c6d825.netlify.app/dfs/vote_icon.png">
+              <div>{{ $t('home.vote') }}</div>
+            </div>
+            <div class="list" @click="handleTo('fundation')">
+              <img class="iconImg" src="https://leafy-kataifi-c6d825.netlify.app/dfs/fun2.png">
+              <div>{{ $t('home.donate') }}</div>
+            </div>
             <!-- <div class="list" @click="handleToPro('suggestions')">
               <img class="iconImg" src="https://leafy-kataifi-c6d825.netlify.app/dfs/fundation_icon.png">
               <div>{{ $t('home.issues') }}</div>
@@ -91,10 +100,6 @@
               <img class="iconImg" src="https://leafy-kataifi-c6d825.netlify.app/dfs/date_icon.png">
               <div>{{ $t('home.investment') }}</div>
             </div> -->
-            <div class="list"></div>
-            <div class="list"></div>
-            <div class="list"></div>
-            <div class="list"></div>
           </div>
         </van-swipe-item>
       </van-swipe>
@@ -143,6 +148,12 @@ export default {
       }
       if (name === 'town') {
         location.href = 'https://dfsfarms.netlify.app'
+      }
+      if (name === 'shining') {
+        location.href = 'https://dfs-shining.netlify.app'
+      }
+      if (name === 'vault') {
+        location.href = 'https://dfs-shining.netlify.app/vault'
       }
     }
   }
@@ -212,6 +223,9 @@ export default {
   .lists{
     margin-bottom: 28px;
     text-align: center;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 30px 20px;
     &:last-child{
       margin-bottom: 0px;
     }
@@ -223,6 +237,9 @@ export default {
     .iconImg{
       width: 60px;
       margin-bottom: 8px;
+      &.small{
+        width: 50px;
+      }
     }
     .hot{
       position: absolute;
