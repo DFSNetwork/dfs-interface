@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="//at.alicdn.com/t/font_793623_lhlp71zylj.css">
   <link rel="stylesheet" href="/static/font/font.css">
   <!-- <link rel="stylesheet" href="https://resource1.dfs.land/element-ui/theme-chalk/index.css"> -->
+  <link rel="manifest" href="/manifest.json">
   <title>DeFis-Network</title>
   <style>
     @media screen and (min-width: 751px) {
@@ -194,5 +195,9 @@
     src="https://resource1.dfs.land/chart_library/charting_library.min.js"></script>
   <!-- <script type="text/javascript" src="https://resource2.dfs.land/coin/coinJson.js"></script> -->
 </body>
-
+<script>
+  if('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js', { scope: '/' });
+  }
+  </script>
 </html>

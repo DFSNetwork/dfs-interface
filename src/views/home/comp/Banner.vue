@@ -14,7 +14,7 @@
       </van-swipe-item>
       <!-- <van-swipe-item>
         <img class="bannerImg" @click="handleToObj('town')"
-          src="https://resource3.dfs.land//Town-img/login/banner.png">
+          src="https://resource3.dfs.land/Town-img/login/banner.png">
       </van-swipe-item>
       <van-swipe-item>
         <img class="bannerImg" @click="handleToObj('nft')"

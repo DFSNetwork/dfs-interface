@@ -1,0 +1,17 @@
+{
+    "lang": "en-us",
+    "name": "DFS Swap",
+    "short_name": "DFS Swap",
+    "description": "A decentralized token exchange",
+    "start_url": "/",
+    "background_color": "#2f3d58",
+    "theme_color": "#2f3d58",
+    "orientation": "any",
+    "display": "standalone",
+    "icons": [
+        {
+            "src": "/app-icon.png",
+            "sizes": "512x512"
+        }
+    ]
+}

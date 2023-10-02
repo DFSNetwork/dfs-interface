@@ -34,7 +34,7 @@
             </div>
             <div class="list" @click="handleToPro('town')">
               <!-- <img class="hot" src="https://resource2.dfs.land/dfs/new.png"> -->
-              <img class="iconImg" src="https://resource3.dfs.land//Town-img/login/windmill_icon.png">
+              <img class="iconImg" src="https://resource3.dfs.land/Town-img/login/windmill_icon.png">
               <div>{{ $t('home.township') }}</div>
             </div>
             <div class="list" @click="handleToPro('nft')">
