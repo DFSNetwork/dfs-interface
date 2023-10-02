@@ -150,10 +150,10 @@ export default {
         location.href = 'https://dfsfarms.netlify.app'
       }
       if (name === 'shining') {
-        location.href = 'https://dfs-shining.netlify.app'
+        location.href = 'https://shining.dfs.land'
       }
       if (name === 'vault') {
-        location.href = 'https://dfs-shining.netlify.app/vault'
+        location.href = 'https://shining.dfs.land/vault'
       }
     }
   }

@@ -64,7 +64,7 @@ export default {
       })
     },
     handleToPro() {
-      location.href = 'https://dfs-shining.netlify.app'
+      location.href = 'https://shining.dfs.land'
     }
   }
 }
