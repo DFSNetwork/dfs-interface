@@ -5,9 +5,9 @@ self.addEventListener('install', event => {
   event.waitUntil((async () => {
     const cache = await caches.open(CACHE_NAME);
     cache.addAll([
-      '/',
-      '/converter.js',
-      '/favicon.ico'
+      'https://resource1.dfs.land',
+      'https://resource2.dfs.land',
+      'https://resource3.dfs.land'
     ]);
   })());
 });
