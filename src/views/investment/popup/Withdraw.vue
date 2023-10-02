@@ -1,6 +1,6 @@
 <template>
   <div class="wthdraw">
-    <img class="close" @click="handleClose(false)" src="https://leafy-kataifi-c6d825.netlify.app/icon/close-black.png">
+    <img class="close" @click="handleClose(false)" src="https://resource2.dfs.land/icon/close-black.png">
     <div class="title">{{ $t('invest.withdraw') }}</div>
     <div class="main">
       <div class="flexb balDiv">
@@ -9,7 +9,7 @@
       </div>
       <div class="coin flexb">
         <div class="flexa">
-          <img class="logo" src="https://leafy-kataifi-c6d825.netlify.app/coin/tethertether-usdt.png">
+          <img class="logo" src="https://resource2.dfs.land/coin/tethertether-usdt.png">
           <div>
             <div class="name dinBold">USDT</div>
             <div class="dinReg tip cts">tethertether</div>

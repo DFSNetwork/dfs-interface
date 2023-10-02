@@ -9,7 +9,7 @@
       >
       <div class="bpList flexa" v-for="(v, i) in bpLists" :key="i" @click="handleTo(v)">
         <div class="rankDiv dinBold flexc">
-          <img v-if="i < 3" :src="`https://storied-crepe-e5e65c.netlify.app/rank/voteRank${i+1}.png`" alt="">
+          <img v-if="i < 3" :src="`https://resource1.dfs.land/rank/voteRank${i+1}.png`" alt="">
           <span v-else>{{i + 1}}</span>
         </div>
         <div class="flexs" style="flex: 1">
@@ -29,7 +29,7 @@
             <div class="data flexb">
               <div class="flexa dinReg">
                 <span class="voteIcon flexc">
-                  <img class="small" src="https://storied-crepe-e5e65c.netlify.app/icon/money.png" alt="">
+                  <img class="small" src="https://resource1.dfs.land/icon/money.png" alt="">
                 </span>
                 <span>{{ parseInt(v.voteNum) | numeralFormat }} EOS</span>
               </div>
@@ -40,11 +40,11 @@
             </div>
             <div class="data flexb">
               <div class="flexa">
-                <img class="voteIcon" src="https://storied-crepe-e5e65c.netlify.app/icon/vote.png" alt="">
+                <img class="voteIcon" src="https://resource1.dfs.land/icon/vote.png" alt="">
                 <span class="dinReg">{{ v.dfsVote || '0' }} DFS</span>
               </div>
               <div class="flexa dinReg">
-                <img class="voteIcon" src="https://storied-crepe-e5e65c.netlify.app/icon/earth.png" alt="">
+                <img class="voteIcon" src="https://resource1.dfs.land/icon/earth.png" alt="">
                 <a class="tip websize" :href="v.url" target="_blank" rel="noopener noreferrer">
                   {{ handleDealUrl(v.url) }}
                 </a>

@@ -1,7 +1,7 @@
 <template>
   <div v-loading="loading">
     <div class="banner">
-      <img class="bannerImg" src="https://storied-crepe-e5e65c.netlify.app/banner/tagDss.png" alt="">
+      <img class="bannerImg" src="https://resource1.dfs.land/banner/tagDss.png" alt="">
     </div>
     <div class="mt40">
       <div class="dataInfo">
@@ -34,7 +34,7 @@
           <span>{{ $t('mine.waitClaim') }}</span>
           <span class="green">{{ myDepositInfo.showReward }}</span>
           <span>TAG</span>
-          <img class="tipIcon ml10" @click="showReWardTip = true" src="https://storied-crepe-e5e65c.netlify.app/icon/tips_icon_btn.svg" alt="">
+          <img class="tipIcon ml10" @click="showReWardTip = true" src="https://resource1.dfs.land/icon/tips_icon_btn.svg" alt="">
         </div>
         <div class="allClaimBtn flexc"
           @click="handleClaimAll"

@@ -1,7 +1,7 @@
 <template>
   <div class="export">
     <img class="close" @click="handleClose"
-      src="https://leafy-kataifi-c6d825.netlify.app/icon/close-black.png">
+      src="https://resource2.dfs.land/icon/close-black.png">
     <div class="title">{{ $t('newwallet.safeTip') }}</div>
     <div class="tips">
       {{ $t('newwallet.safeTip1') }}
@@ -13,7 +13,7 @@
         v-clipboard:success="onCopy"
         v-clipboard:error="onError">
         <span>{{ $t('newwallet.copy') }}</span>
-        <img src="https://leafy-kataifi-c6d825.netlify.app/dfs/copy.png">
+        <img src="https://resource2.dfs.land/dfs/copy.png">
       </div>
     </div>
     <div class="btn flexc" @click="handleClose">{{ $t('newwallet.known') }}</div>

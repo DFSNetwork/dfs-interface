@@ -1,11 +1,11 @@
 <template>
   <div class="nodeSet">
-    <img class="close" @click="handleClose" src="https://storied-crepe-e5e65c.netlify.app/svg/sd_icon_btn.svg">
+    <img class="close" @click="handleClose" src="https://resource1.dfs.land/svg/sd_icon_btn.svg">
     <div class="title">{{ $t('node.nodeSet') }}</div>
     <div class="content">
       <div class="nodeList flexa" v-for="(node, index) in nodeList" :key="index" @click="handleCheck(node, index)">
         <div class="checkBox" :class="{'checked': radio === index}">
-          <img class="checkBoxImg" v-if="radio === index" src="https://storied-crepe-e5e65c.netlify.app/icon/checked.png">
+          <img class="checkBoxImg" v-if="radio === index" src="https://resource1.dfs.land/icon/checked.png">
         </div>
         <div class="icon">
           <div class="">
@@ -21,7 +21,7 @@
       </div>
       <div class="nodeList flexa" @click="handleCheck(node, nodeList.length)">
         <div class="checkBox" :class="{'checked': radio === nodeList.length}">
-          <img class="checkBoxImg" v-if="radio === nodeList.length" src="https://storied-crepe-e5e65c.netlify.app/icon/checked.png">
+          <img class="checkBoxImg" v-if="radio === nodeList.length" src="https://resource1.dfs.land/icon/checked.png">
         </div>
         <div class="icon flexa">
           <span class="tip">{{ $t('node.slef') }}：</span>

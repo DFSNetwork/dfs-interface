@@ -11,7 +11,7 @@
         <span class="">{{ $t('nodePools.lpMineNew') }}</span>
         <span class="mineRule flexa" @click="handleShowRules('lp')">
           <span>{{ $t('miningRules.rules') }}</span>
-          <img class="tipIcon" src="https://storied-crepe-e5e65c.netlify.app/icon/tips_icon_btn.svg" alt="">
+          <img class="tipIcon" src="https://resource1.dfs.land/icon/tips_icon_btn.svg" alt="">
         </span>
       </div>
       <div class="lpList" v-if="lpLists.length">
@@ -32,7 +32,7 @@
                     {{ accLpData[`${v.mid}`] ? accLpData[`${v.mid}`].showReward || '0.00000000' : '0.00000000' }}
                   </span>
                   <span class="red_p flexa" v-if="Number(handleAddBuff(accLpData[`${v.mid}`]))">（
-                    <img class="buffImg" src="https://storied-crepe-e5e65c.netlify.app/svg/buff2.svg">
+                    <img class="buffImg" src="https://resource1.dfs.land/svg/buff2.svg">
                     {{ handleAddBuff(accLpData[`${v.mid}`]) }}%）</span>
                 </div>
               </div>
@@ -67,7 +67,7 @@
         <span class="">{{ $t('nodePools.voteMineNew') }}</span>
         <span class="mineRule flexa" @click="handleShowRules('rex')">
           <span>{{ $t('miningRules.rules') }}</span>
-          <img class="tipIcon" src="https://storied-crepe-e5e65c.netlify.app/icon/tips_icon_btn.svg" alt="">
+          <img class="tipIcon" src="https://resource1.dfs.land/icon/tips_icon_btn.svg" alt="">
         </span>
       </div>
       <div class="list" v-for="(item, index) in poolsLists" :key="index"  @click="handleToDetailLists(item, 'rex')">

@@ -6,7 +6,7 @@
       <div class="kTitle flexb">
         <span>{{ $t('kline.klinePrice') }}</span>
         <div class="flexa warn" @click="showWarn = true">
-          <img class="warnImg" src="https://leafy-kataifi-c6d825.netlify.app/icon/warn.png" >
+          <img class="warnImg" src="https://resource2.dfs.land/icon/warn.png" >
           <span>{{ $t('sys.tip') }}</span>
         </div>
       </div>
@@ -50,8 +50,8 @@ export default {
         // mid: 17,
         symbol0: 'EOS',
         symbol1: 'USDT',
-        imgUrl0: 'https://leafy-kataifi-c6d825.netlify.app/coin/eosio.token-eos.svg',
-        imgUrl1: 'https://leafy-kataifi-c6d825.netlify.app/coin/tethertether-usdt.png',
+        imgUrl0: 'https://resource2.dfs.land/coin/eosio.token-eos.svg',
+        imgUrl1: 'https://resource2.dfs.land/coin/tethertether-usdt.png',
       }
     }
   },

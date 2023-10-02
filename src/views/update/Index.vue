@@ -1,7 +1,7 @@
 <template>
   <div class="update">
     <div class="title flexa">
-      <img class="mail" src="https://leafy-kataifi-c6d825.netlify.app/icon/mail.png">
+      <img class="mail" src="https://resource2.dfs.land/icon/mail.png">
       <span>{{ $t('upRecord.title') }}</span>
     </div>
     <V6 />

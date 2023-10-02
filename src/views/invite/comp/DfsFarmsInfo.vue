@@ -7,7 +7,7 @@
       <div class="title flexa">
         <span>{{ $t('invite.farmsData') }}</span>
         <img class="tipIcon" @click="showTip = true"
-          src="https://leafy-kataifi-c6d825.netlify.app/icon/tip.png">
+          src="https://resource2.dfs.land/icon/tip.png">
       </div>
       <div class="flexb li">
         <div>

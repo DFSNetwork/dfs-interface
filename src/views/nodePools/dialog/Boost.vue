@@ -1,6 +1,6 @@
 <template>
   <div class="diaBoost">
-    <img class="close" @click="handleClose()" src="https://storied-crepe-e5e65c.netlify.app/svg/sd_icon_btn.svg">
+    <img class="close" @click="handleClose()" src="https://resource1.dfs.land/svg/sd_icon_btn.svg">
     <div class="imgDiv flexc">
       <img class="logo" :src="boostData.imgUrl" :onerror="$errorImg">
     </div>
@@ -14,11 +14,11 @@
     </div>
     <div class="btnDiv flexb">
       <div class="btn flexc" @click="handleTo('market')">
-        <img src="https://storied-crepe-e5e65c.netlify.app/svg/market.svg" alt="">
+        <img src="https://resource1.dfs.land/svg/market.svg" alt="">
         <span>去做市</span>
       </div>
       <div class="btn flexc red" @click="handleTo('fundation')">
-        <img src="https://storied-crepe-e5e65c.netlify.app/icon/newlike1.png" alt="">
+        <img src="https://resource1.dfs.land/icon/newlike1.png" alt="">
         <span>去乐捐</span>
       </div>
     </div>

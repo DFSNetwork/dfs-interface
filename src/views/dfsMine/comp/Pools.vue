@@ -1,7 +1,7 @@
 <template>
   <div class="pools">
     <div class="dfsInfo flexa">
-      <img class="coin" src="https://leafy-kataifi-c6d825.netlify.app/coin/minedfstoken-dfs.png">
+      <img class="coin" src="https://resource2.dfs.land/coin/minedfstoken-dfs.png">
       <div>
         <div class="coinName din">DFS</div>
         <div>{{ $t('dfsMine.totalLiq') }}</div>
@@ -26,10 +26,10 @@
       <div class="total dinBold">{{ totalBal }}</div>
       <div class="vil">
         <div class="green">{{ $t('dfsMine.reservoir') }}</div>
-        <img class="down" src="https://leafy-kataifi-c6d825.netlify.app/dfs/down-black.png">
+        <img class="down" src="https://resource2.dfs.land/dfs/down-black.png">
         <div class="flexc tip spdNum" @click="showSpeed = true">
           <span>{{ speed }} DFS/{{ $t('dfsMine.sec') }}</span>
-          <img class="tipImg" src="https://storied-crepe-e5e65c.netlify.app/icon/tips_icon_btn.svg">
+          <img class="tipImg" src="https://resource1.dfs.land/icon/tips_icon_btn.svg">
         </div>
       </div>
       <div class="subPools flexb">

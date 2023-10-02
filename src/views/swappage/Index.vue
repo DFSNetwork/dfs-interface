@@ -30,8 +30,8 @@
           </div>
           <div class="exchange">
             <div class="border flexc" :class="{'payFocus': payIptFocus, 'getFocus': getIptFocus}" @click="handleExchange">
-              <img class="iconImg" v-if="!direction" src="https://storied-crepe-e5e65c.netlify.app/dex/switch_down.svg">
-              <img class="iconImg" v-else src="https://storied-crepe-e5e65c.netlify.app/dex/switch_up.svg">
+              <img class="iconImg" v-if="!direction" src="https://resource1.dfs.land/dex/switch_down.svg">
+              <img class="iconImg" v-else src="https://resource1.dfs.land/dex/switch_up.svg">
             </div>
           </div>
           <div class="sym0Data" :class="{'focus': getIptFocus}">
@@ -64,8 +64,8 @@
               <span v-if="!exRate">1{{ thisMarket1.symbol }} = {{ tradeInfo.aboutPrice || '-' }}{{ thisMarket0.symbol }}</span>
               <span v-else>1{{ thisMarket0.symbol }} = {{ tradeInfo.aboutPriceSym0 || '-' }}{{ thisMarket1.symbol }}</span>
               <span class="flexa" @click="exRate =!exRate">
-                <img class="iconImg small" v-if="!exRate" src="https://leafy-kataifi-c6d825.netlify.app/icon/price_switch_icon_btn_left.svg" alt="">
-                <img class="iconImg small" v-else src="https://leafy-kataifi-c6d825.netlify.app/icon/price_switch_icon_btn_right.svg" alt="">
+                <img class="iconImg small" v-if="!exRate" src="https://resource2.dfs.land/icon/price_switch_icon_btn_left.svg" alt="">
+                <img class="iconImg small" v-else src="https://resource2.dfs.land/icon/price_switch_icon_btn_right.svg" alt="">
               </span>
             </span>
           </div>
@@ -79,12 +79,12 @@
 
           <div class="linkTo flexb">
             <span class="flexc">
-              <img src="https://storied-crepe-e5e65c.netlify.app/svg/market.svg">
+              <img src="https://resource1.dfs.land/svg/market.svg">
               <span @click="handleTo('myMarketList')">{{ $t('market.myMarkets') }}</span>
               <i class="el-icon-arrow-right"></i>
             </span>
             <span class="flexc">
-              <img src="https://storied-crepe-e5e65c.netlify.app/svg/record.svg">
+              <img src="https://resource1.dfs.land/svg/record.svg">
               <span @click="handleToHistory">{{ $t('dex.tradeHistory') }}</span>
               <i class="el-icon-arrow-right"></i>
             </span>
@@ -104,7 +104,7 @@
                 trigger="click">
                 <!-- 你的交易将会回滚，如果在确认前有很大的价格变化 -->
                 <div class="qusTip">{{ $t('dex.qusTip1') }}</div>
-                <span slot="reference" class="flexc ml10"><img width="100%" src="https://storied-crepe-e5e65c.netlify.app/icon/tips_icon_btn.svg" alt=""></span>
+                <span slot="reference" class="flexc ml10"><img width="100%" src="https://resource1.dfs.land/icon/tips_icon_btn.svg" alt=""></span>
               </el-popover>
             </span>
             <span class="din">{{ tradeInfo.minOut }}</span>
@@ -119,7 +119,7 @@
                 trigger="click">
                 <!-- 根据交易量的多少，成交价与市价的差异 -->
                 <div class="qusTip">{{ $t('dex.qusTip2') }}</div>
-                <span slot="reference" class="flexc ml10"><img width="100%" src="https://storied-crepe-e5e65c.netlify.app/icon/tips_icon_btn.svg" alt=""></span>
+                <span slot="reference" class="flexc ml10"><img width="100%" src="https://resource1.dfs.land/icon/tips_icon_btn.svg" alt=""></span>
               </el-popover>
             </span>
             <span class="flexa" v-if="!isOgxSwap">
@@ -128,7 +128,7 @@
                           'red': Number(tradeInfo.priceRate) > 10}">
                 {{ tradeInfo.priceRate }}%
               </span>
-              <!-- <img class="tradeSet" @click="handleShowTools" src="https://storied-crepe-e5e65c.netlify.app/svg/swapSet.svg" alt=""> -->
+              <!-- <img class="tradeSet" @click="handleShowTools" src="https://resource1.dfs.land/svg/swapSet.svg" alt=""> -->
             </span>
             <span v-else>无滑点交易</span>
           </div>
@@ -142,7 +142,7 @@
                 trigger="click">
                 <!-- 每笔交易的（0.30%）会给到流动性提供者 -->
                 <div class="qusTip">{{ $t('dex.qusTip3') }}</div>
-                <span slot="reference" class="flexc ml10"><img width="100%" src="https://storied-crepe-e5e65c.netlify.app/icon/tips_icon_btn.svg" alt=""></span>
+                <span slot="reference" class="flexc ml10"><img width="100%" src="https://resource1.dfs.land/icon/tips_icon_btn.svg" alt=""></span>
               </el-popover>
             </span>
             <span class="din">{{fees}} {{ thisMarket0.symbol }}</span>
@@ -151,10 +151,10 @@
             <div>
               <span class="flexa" v-if="isMoreRouter" @click="showMoreRouter = true">
                 <span class="tip">多路径转换</span>
-                <img class="moreRouterIcon" src="https://leafy-kataifi-c6d825.netlify.app/icon/important.png" alt="">
+                <img class="moreRouterIcon" src="https://resource2.dfs.land/icon/important.png" alt="">
               </span>
             </div>
-            <img class="tradeSet" @click="handleShowTools" src="https://leafy-kataifi-c6d825.netlify.app/icon/stepupIcon.png" alt="">
+            <img class="tradeSet" @click="handleShowTools" src="https://resource2.dfs.land/icon/stepupIcon.png" alt="">
           </div>
         </div>
       </el-collapse-transition>
@@ -164,7 +164,7 @@
       <div> 当前为Organix兑换模式 </div>
       <div class="flexa priceUpdate" v-if="ogxPrices.length">
         <span>价格更新时间: {{ ogxPrices[0].time }}</span>
-        <img @click="showOgxTip = true" src="https://storied-crepe-e5e65c.netlify.app/icon/tips_icon_btn.svg" alt="">
+        <img @click="showOgxTip = true" src="https://resource1.dfs.land/icon/tips_icon_btn.svg" alt="">
       </div>
     </div>
     <div class="pool" v-else-if="marketLists.length && bestPath">
@@ -174,7 +174,7 @@
           <span class="marketNow" @click="handleToPool">{{ $t('pools.toPool') }} ></span>
         </div>
         <div class="flexa usddTip" v-if="showTip" @click="showUsddTip = true">
-          <img class="tipIcon" src="https://storied-crepe-e5e65c.netlify.app/dex/tip.svg" alt="">
+          <img class="tipIcon" src="https://resource1.dfs.land/dex/tip.svg" alt="">
           <span>{{ $t('public.warmPrompt') }}</span>
         </div>
       </div>
@@ -1104,16 +1104,16 @@ export default {
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      background-image: url('https://storied-crepe-e5e65c.netlify.app/dex/enter_solid_default.svg');
+      background-image: url('https://resource1.dfs.land/dex/enter_solid_default.svg');
       background-repeat: no-repeat;
       background-size: cover;
       &.payFocus{
-        background-image: url('https://storied-crepe-e5e65c.netlify.app/dex/enter_solid_up.svg');
+        background-image: url('https://resource1.dfs.land/dex/enter_solid_up.svg');
         background-repeat: no-repeat;
         background-size: cover;
       }
       &.getFocus{
-        background-image: url('https://storied-crepe-e5e65c.netlify.app/dex/enter_solid_down.svg');
+        background-image: url('https://resource1.dfs.land/dex/enter_solid_down.svg');
         background-repeat: no-repeat;
         background-size: cover;
       }

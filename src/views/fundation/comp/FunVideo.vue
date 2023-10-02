@@ -3,7 +3,7 @@
     <div v-for="(v, i) in src" :key="i">
       <video class="myVideo" controls>
         <source :src="v">
-        <!-- <source src="https://storied-crepe-e5e65c.netlify.app/video/JingleBellRock.mp4"> -->
+        <!-- <source src="https://resource1.dfs.land/video/JingleBellRock.mp4"> -->
         <!-- 您的浏览器不支持 video 标签。 -->
       </video>
     </div>

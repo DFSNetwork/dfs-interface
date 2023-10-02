@@ -6,7 +6,7 @@
         <div class="flexa symbolInfo">
           <img class="imgCoin" :src="thisMarket.sym0Data.imgUrl" :onerror="$errorImg"/>
           <span>{{ thisMarket.symbol0 }}</span>
-          <span class="and"><img src="https://storied-crepe-e5e65c.netlify.app/svg/add.svg" alt=""></span>
+          <span class="and"><img src="https://resource1.dfs.land/svg/add.svg" alt=""></span>
           <img class="imgCoin" :src="thisMarket.sym1Data.imgUrl" :onerror="$errorImg"/>
           <span>{{ thisMarket.symbol1 }}</span>
         </div>
@@ -48,8 +48,8 @@
                          'red': parseFloat(sym1Reward1) < 0}"
             >{{ sym1Reward1 }}</span>
         </span>
-        <img  @click.stop="handleChangeRewardType" class="qusTip" src="https://storied-crepe-e5e65c.netlify.app/dex/price_switch_icon_green_left.svg" alt="">
-        <img class="qusTip" src="https://storied-crepe-e5e65c.netlify.app/icon/tips_icon_btn.svg" @click.stop="showMarketTip = !showMarketTip">
+        <img  @click.stop="handleChangeRewardType" class="qusTip" src="https://resource1.dfs.land/dex/price_switch_icon_green_left.svg" alt="">
+        <img class="qusTip" src="https://resource1.dfs.land/icon/tips_icon_btn.svg" @click.stop="showMarketTip = !showMarketTip">
       </div>
       <div class="flexa">
         <span>{{ $t('market.marketTime') }}: </span>

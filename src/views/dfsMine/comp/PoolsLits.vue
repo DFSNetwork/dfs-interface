@@ -3,7 +3,7 @@
     <div class="title flexb">
       <span>{{ $t('mine.poolsList') }}</span>
       <!-- <div class="flexa rules">
-        <img class="tipImg" src="https://storied-crepe-e5e65c.netlify.app/icon/tips_icon_btn.svg">
+        <img class="tipImg" src="https://resource1.dfs.land/icon/tips_icon_btn.svg">
         <span>挖矿规则</span>
       </div> -->
     </div>

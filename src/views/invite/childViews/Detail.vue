@@ -1,7 +1,7 @@
 <template>
   <div class="farmDetail">
     <div class="farmInfo">
-      <img class="bgImg" :src="farmInfo.bg || 'https://leafy-kataifi-c6d825.netlify.app/dfs/farmDefaultBg.png'" />
+      <img class="bgImg" :src="farmInfo.bg || 'https://resource2.dfs.land/dfs/farmDefaultBg.png'" />
       <div class="template">
         <div class="flexb">
           <div class="flexa topDiv">
@@ -12,7 +12,7 @@
             </div>
           </div>
           <div class="flexa tools">
-            <img @click="showShare = true" src="https://leafy-kataifi-c6d825.netlify.app/farm/invite.png" alt="">
+            <img @click="showShare = true" src="https://resource2.dfs.land/farm/invite.png" alt="">
             <van-popover v-model="showPopover"
               v-if="joinName === dName || account.name === dName"
               placement="bottom-end"
@@ -26,7 +26,7 @@
                   @click="showLeave = true">{{ $t('invite.leave') }}</div>
               </div>
               <template #reference>
-                <img class="settingImg" src="https://leafy-kataifi-c6d825.netlify.app/farm/setting1.png" alt="">
+                <img class="settingImg" src="https://resource2.dfs.land/farm/setting1.png" alt="">
               </template>
             </van-popover>
           </div>
@@ -37,18 +37,18 @@
             <img v-if="farmInfo.wx" class="linkImg"
               v-clipboard:copy="farmInfo.wx"
               v-clipboard:success="onCopy"
-              v-clipboard:error="onError" src="https://leafy-kataifi-c6d825.netlify.app/farm/wx.png">
+              v-clipboard:error="onError" src="https://resource2.dfs.land/farm/wx.png">
             <img v-if="farmInfo.tg" class="linkImg"
               v-clipboard:copy="farmInfo.tg"
               v-clipboard:success="onCopy"
-              v-clipboard:error="onError" src="https://leafy-kataifi-c6d825.netlify.app/farm/tg.png">
+              v-clipboard:error="onError" src="https://resource2.dfs.land/farm/tg.png">
             <img v-if="farmInfo.qq" class="linkImg"
               v-clipboard:copy="farmInfo.qq"
               v-clipboard:success="onCopy"
-              v-clipboard:error="onError" src="https://leafy-kataifi-c6d825.netlify.app/farm/qq.png">
+              v-clipboard:error="onError" src="https://resource2.dfs.land/farm/qq.png">
           </div>
           <div class="signBtn flexa" @click="handleTo('signIn')">
-            <img src="https://leafy-kataifi-c6d825.netlify.app/farm/rewardIcon.png">
+            <img src="https://resource2.dfs.land/farm/rewardIcon.png">
             <span>{{ $t('invite.signReward') }}</span>
           </div>
         </div>
@@ -58,14 +58,14 @@
     <!-- 农场数据 -->
     <div class="totalData flexb">
       <div class="flexc">
-        <img src="https://leafy-kataifi-c6d825.netlify.app/farm/wealth.png">
+        <img src="https://resource2.dfs.land/farm/wealth.png">
         <div>
           <div class="num din">${{ parseFloat(farmInfo.wealth).toFixed(4) }}</div>
           <div class="tip">{{ $t('invite.farmWealth') }}</div>
         </div>
       </div>
       <div class="flexc">
-        <img src="https://leafy-kataifi-c6d825.netlify.app/farm/farmsNum.png">
+        <img src="https://resource2.dfs.land/farm/farmsNum.png">
         <div>
           <div class="num din">{{ farmInfo.farmers }}</div>
           <div class="tip">{{ $t('invite.farmersNum') }}</div>
@@ -102,7 +102,7 @@
         </div>
         <div class="percent">
           <img class="percentImg" :style="`transform: translateX(${tTimes.percent}%);`"
-            src="https://leafy-kataifi-c6d825.netlify.app/icon/percentImg.png"
+            src="https://resource2.dfs.land/icon/percentImg.png"
           />
         </div>
         <div class="small green_p">{{ $t('invite.doing') }}</div>
@@ -112,7 +112,7 @@
           <div class="tip flexa">
             <span>{{ $t('invite.aboutReward') }}</span>
             <img class="tipIcon" @click="showClaimTip = true"
-              src="https://leafy-kataifi-c6d825.netlify.app/dfs/tipIcon.png"
+              src="https://resource2.dfs.land/dfs/tipIcon.png"
             />
           </div>
           <div class="num dinBold">
@@ -131,7 +131,7 @@
           <div class="tip flexa">
             <span>{{ $t('invite.ableClaim') }}</span>
             <img class="tipIcon" @click="showClaimTip = true"
-              src="https://leafy-kataifi-c6d825.netlify.app/dfs/tipIcon.png"
+              src="https://resource2.dfs.land/dfs/tipIcon.png"
             />
           </div>
           <div class="num dinBold">
@@ -781,7 +781,7 @@ export default {
     margin: 20px auto 20px;
     height: 300px;
     width: 690px;
-    background-image: url("https://leafy-kataifi-c6d825.netlify.app/dfs/rewardBg.png");
+    background-image: url("https://resource2.dfs.land/dfs/rewardBg.png");
     background-repeat: no-repeat;
     background-size: contain;
     padding: 20px 26px 34px;

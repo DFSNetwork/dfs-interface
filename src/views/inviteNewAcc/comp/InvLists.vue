@@ -3,7 +3,7 @@
     <div class="card">
       <div class="title flexa">
         <span>{{ $t('newwallet.inviRcd') }}</span>
-        <!-- <img class="tips" src="https://storied-crepe-e5e65c.netlify.app/icon/tips_icon_btn.svg"> -->
+        <!-- <img class="tips" src="https://resource1.dfs.land/icon/tips_icon_btn.svg"> -->
       </div>
       <div class="item flexa" v-for="(v, i) in lists" :key="i">
         <div>

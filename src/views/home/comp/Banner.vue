@@ -3,26 +3,26 @@
     <van-swipe class="my-swipe" :autoplay="6000" indicator-color="white">
       <!-- <van-swipe-item>
         <img class="bannerImg" v-if="language === 'zh-CN'"
-          src="https://leafy-kataifi-c6d825.netlify.app/dfs/banner1.png">
+          src="https://resource2.dfs.land/dfs/banner1.png">
         <img class="bannerImg" v-else
-          src="https://leafy-kataifi-c6d825.netlify.app/dfs/banner1-en.png">
+          src="https://resource2.dfs.land/dfs/banner1-en.png">
       </van-swipe-item> -->
 
       <van-swipe-item>
         <img class="bannerImg"
-          src="https://leafy-kataifi-c6d825.netlify.app/banner/new-inviter.png">
+          src="https://resource2.dfs.land/banner/new-inviter.png">
       </van-swipe-item>
       <!-- <van-swipe-item>
         <img class="bannerImg" @click="handleToObj('town')"
-          src="https://venerable-semolina-21a376.netlify.app//Town-img/login/banner.png">
+          src="https://resource3.dfs.land//Town-img/login/banner.png">
       </van-swipe-item>
       <van-swipe-item>
         <img class="bannerImg" @click="handleToObj('nft')"
-          src="https://leafy-kataifi-c6d825.netlify.app/banner/opensky.png">
+          src="https://resource2.dfs.land/banner/opensky.png">
       </van-swipe-item>
       <van-swipe-item>
         <img class="bannerImg" @click="handleToObj('nft')"
-          src="https://leafy-kataifi-c6d825.netlify.app/banner/nft-banner-1.png">
+          src="https://resource2.dfs.land/banner/nft-banner-1.png">
       </van-swipe-item> -->
     </van-swipe>
   </div>

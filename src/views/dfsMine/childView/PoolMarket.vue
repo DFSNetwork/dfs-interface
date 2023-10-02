@@ -2,7 +2,7 @@
   <div class="poolMarket">
     <div class="select din flexa" @click="showMarketList = true">
       <span>{{ thisMarket.symbol0 }}-{{ thisMarket.symbol1 }} {{ $t('mine.pools') }}</span>
-      <img class="selectImg" src="https://leafy-kataifi-c6d825.netlify.app/icon/select.png">
+      <img class="selectImg" src="https://resource2.dfs.land/icon/select.png">
     </div>
 
     <div class="unMine flexb" v-if="!hasMine">
@@ -20,7 +20,7 @@
             <div class="contract tip">{{ thisMarket.contract0 }}</div>
           </div>
         </div>
-        <img class="addImg" src="https://storied-crepe-e5e65c.netlify.app/svg/add.svg">
+        <img class="addImg" src="https://resource1.dfs.land/svg/add.svg">
         <div class="flexa">
           <img class="logo" :src="thisMarket.sym1Data.imgUrl" >
           <div>

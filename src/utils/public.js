@@ -26,7 +26,7 @@ export function getPng(index) {
 }
 export function getRandomImg() {
   const random = parseInt(Math.random() * 1000 % getPngLen());
-  return `https://leafy-kataifi-c6d825.netlify.app/coin/${getPng(random)}.png`
+  return `https://resource2.dfs.land/coin/${getPng(random)}.png`
 }
 /*
  ** 加法函数，用来得到精确的加法结果
@@ -469,12 +469,12 @@ export function getCoin(contract, coin) {
     const localCoinPng = cdnImgJson.png;
     const has = localeCoin.find(v => v === inData)
     if (has) {
-      return `https://leafy-kataifi-c6d825.netlify.app/coin/${has}.svg`;
+      return `https://resource2.dfs.land/coin/${has}.svg`;
     }
     const hasPng = localCoinPng.find(v => v === inData);
     if (!has && hasPng) {
       // return `/static/coin/${hasPng}.png`;
-      return `https://leafy-kataifi-c6d825.netlify.app/coin/${hasPng}.png`;
+      return `https://resource2.dfs.land/coin/${hasPng}.png`;
     }
     return `https://ndi.340wan.com/eos/${inData}.png`
   } catch (error) {
@@ -575,7 +575,7 @@ export function dealMedia(v) {
     return false
   }
   let memo = v.memo;
-  // let memo = '<audio:https://storied-crepe-e5e65c.netlify.app/mp3/DreamChaser.mp3>1<video:https://storied-crepe-e5e65c.netlify.app/video/JingleBellRock.mp4>2<video:https://storied-crepe-e5e65c.netlify.app/video/JingleBellRock.mp4>'
+  // let memo = '<audio:https://resource1.dfs.land/mp3/DreamChaser.mp3>1<video:https://resource1.dfs.land/video/JingleBellRock.mp4>2<video:https://resource1.dfs.land/video/JingleBellRock.mp4>'
   // 获取所有音频
   const reg = /^(http|https):\/\/.+\.(mp3|ogg|asf|wma|wav|rm|ape|real|MP3|OGG|ASF|WMA|WAV|RM|APE|REAL)$/;
   const regVideo = /^(http|https):\/\/.+\.(avi|mp4|mov|asf|wmv|rmvb|fly|AVI|MP4|MOV|ASF|WMV|RMVB|FLY)$/;

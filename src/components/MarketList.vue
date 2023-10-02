@@ -4,7 +4,7 @@
       <span v-if="$route.name === 'fundation' || $route.name === 'createPool'">选择币种</span>
       <span v-else>{{ $t('pools.chooseMarket') }}</span>
       <span>
-        <img class="closeSvg" @click="handleClose" src="https://storied-crepe-e5e65c.netlify.app/svg/sd_icon_btn.svg" alt="">
+        <img class="closeSvg" @click="handleClose" src="https://resource1.dfs.land/svg/sd_icon_btn.svg" alt="">
       </span>
     </div>
     <div class="iptSearch">
@@ -23,7 +23,7 @@
                 <div class="tip">{{item.contract0}}</div>
               </div>
             </div>
-            <img class="addImg" src="https://storied-crepe-e5e65c.netlify.app/svg/add.svg">
+            <img class="addImg" src="https://resource1.dfs.land/svg/add.svg">
             <div class="flexa">
               <img class="coinImg" :onerror="$errorImg" :src="item.sym1Data.imgUrl">
               <div>

@@ -3,9 +3,9 @@
     <div class="title flexa" @click="handleExchange">
       <span>{{ $t('home.asset') }}</span>
       <img class="exImg" v-if="exchange"
-        src="https://leafy-kataifi-c6d825.netlify.app/icon/price_switch_icon_btn_left.svg">
+        src="https://resource2.dfs.land/icon/price_switch_icon_btn_left.svg">
       <img class="exImg" v-else
-        src="https://leafy-kataifi-c6d825.netlify.app/icon/price_switch_icon_btn_right.svg">
+        src="https://resource2.dfs.land/icon/price_switch_icon_btn_right.svg">
     </div>
     <div class="main">
       <div class="flexb">

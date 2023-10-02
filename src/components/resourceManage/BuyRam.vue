@@ -1,6 +1,6 @@
 <template>
   <div class="buyRam">
-    <img class="close" @click="$emit('listenClose')" src="https://storied-crepe-e5e65c.netlify.app/svg/sd_icon_btn.svg">
+    <img class="close" @click="$emit('listenClose')" src="https://resource1.dfs.land/svg/sd_icon_btn.svg">
     <div class="title">{{ $t('resource.manage') }}</div>
     <div class="info">
       <div class="flexb">
@@ -15,13 +15,13 @@
     <div class="checkboxes flexc">
       <div class="check flexc" :class="{'act': act == 0}" @click="act = 0">
         <div class="box flexc">
-          <img class="checkedImg" src="https://storied-crepe-e5e65c.netlify.app/icon/checked.png" alt="">
+          <img class="checkedImg" src="https://resource1.dfs.land/icon/checked.png" alt="">
         </div>
         <div>{{ $t('resource.buy') }}</div>
       </div>
       <div class="check flexc" :class="{'act': act == 1}" @click="act = 1">
         <div class="box flexc">
-          <img class="checkedImg" src="https://storied-crepe-e5e65c.netlify.app/icon/checked.png" alt="">
+          <img class="checkedImg" src="https://resource1.dfs.land/icon/checked.png" alt="">
         </div>
         <div>{{ $t('resource.sell') }}</div>
       </div>

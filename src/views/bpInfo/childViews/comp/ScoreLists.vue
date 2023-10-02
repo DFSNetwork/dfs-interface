@@ -35,11 +35,11 @@
             <div class="content">{{ v.memo }}</div>
             <div class="flexa replyDiv tip">
               <span class="flexa">
-                <img src="https://storied-crepe-e5e65c.netlify.app/icon/newlike.png" alt="">
+                <img src="https://resource1.dfs.land/icon/newlike.png" alt="">
                 <span>{{ v.likeNum }}</span>
               </span>
               <span class="flexa right">
-                <img src="https://storied-crepe-e5e65c.netlify.app/icon/reply.png" alt="">
+                <img src="https://resource1.dfs.land/icon/reply.png" alt="">
                 <span>{{ v.replyNum }}</span>
               </span>
             </div>
@@ -69,7 +69,7 @@ export default {
   name: '',
   data() {
     return {
-      errImg: 'this.src="https://storied-crepe-e5e65c.netlify.app/icon/pig.png"',
+      errImg: 'this.src="https://resource1.dfs.land/icon/pig.png"',
       value: 3,
       bpname: '',
       loadingMore: false,

@@ -7,7 +7,7 @@
       </span>
       <span class="flexa">
         <van-field v-model="account" disabled />
-        <img class="right" src="https://storied-crepe-e5e65c.netlify.app/icon/itemRight.png" alt="">
+        <img class="right" src="https://resource1.dfs.land/icon/itemRight.png" alt="">
       </span>
     </div>
     <div class="flexb">
@@ -17,7 +17,7 @@
       </span>
       <span class="flexa">
         <van-field v-model="bpName" :placeholder="$t('bpInfo.bpNameTip')" />
-        <img class="right" src="https://storied-crepe-e5e65c.netlify.app/icon/itemRight.png" alt="">
+        <img class="right" src="https://resource1.dfs.land/icon/itemRight.png" alt="">
       </span>
     </div>
     <div class="flexb">
@@ -26,7 +26,7 @@
       </span>
       <span class="flexa">
         <van-field v-model="slogon" :placeholder="$t('bpInfo.bpSlogonTip')" />
-        <img class="right" src="https://storied-crepe-e5e65c.netlify.app/icon/itemRight.png" alt="">
+        <img class="right" src="https://resource1.dfs.land/icon/itemRight.png" alt="">
       </span>
     </div>
     <div class="flexb">
@@ -36,7 +36,7 @@
       </span>
       <span class="flexa" @click="show = true">
         <van-field v-model="time" :placeholder="$t('bpInfo.bpTimeTip')" />
-        <img class="right" src="https://storied-crepe-e5e65c.netlify.app/icon/itemRight.png" alt="">
+        <img class="right" src="https://resource1.dfs.land/icon/itemRight.png" alt="">
       </span>
       <van-calendar v-model="show" :min-date="minDate" :max-date="maxDate"
         color="#29D4B0"

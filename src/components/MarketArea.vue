@@ -9,7 +9,7 @@
         <van-tab v-for="(v, index) in areaLists" :title="v.tab" :key="index"></van-tab>
       </van-tabs>
       <div class="search flexa">
-        <img class="searchImg" src="https://storied-crepe-e5e65c.netlify.app/icon/search.png" alt="">
+        <img class="searchImg" src="https://resource1.dfs.land/icon/search.png" alt="">
         <van-field v-model="search" :placeholder="$t('sys.searchMarket1')"/>
       </div>
       <div class="lists" v-if="type === 'other'">

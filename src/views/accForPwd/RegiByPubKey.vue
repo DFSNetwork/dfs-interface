@@ -21,7 +21,7 @@
         <template #reference>
           <div class="flexa model dinReg">
             <span class="">{{ selectAct }}</span>
-            <img src="https://leafy-kataifi-c6d825.netlify.app/icon/select.png" alt="">
+            <img src="https://resource2.dfs.land/icon/select.png" alt="">
           </div>
         </template>
       </van-popover>

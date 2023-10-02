@@ -1,7 +1,7 @@
 <template>
   <div class="routePath">
     <!-- <img class="close" @click="handleClose"
-      src="https://storied-crepe-e5e65c.netlify.app/svg/sd_icon_btn.svg" alt=""> -->
+      src="https://resource1.dfs.land/svg/sd_icon_btn.svg" alt=""> -->
     <div class="title">{{ $t('dex.moreRoute') }}</div>
     <div class="content">
       <div class="subTitle">{{ $t('dex.nowRouterPath') }}</div>

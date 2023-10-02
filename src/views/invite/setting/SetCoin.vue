@@ -2,7 +2,7 @@
   <div class="setCoin">
     <div class="title flexb">
       <span class="back flexa" @click="$router.back()">
-        <img src="https://storied-crepe-e5e65c.netlify.app/icon/back.png" />
+        <img src="https://resource1.dfs.land/icon/back.png" />
       </span>
       <span>{{ $t('invite.coinSet') }}</span>
       <span class="back"></span>
@@ -28,11 +28,11 @@
         </div>
         <div class="flexb btnDiv">
           <div class="btn flexc" @click="handleShowDeposit(v)">
-            <img src="https://leafy-kataifi-c6d825.netlify.app/farm/deposit.png" />
+            <img src="https://resource2.dfs.land/farm/deposit.png" />
             <span>{{ $t('invite.deposit') }}</span>
           </div>
           <div class="btn flexc" @click="handleEdit(v)">
-            <img src="https://leafy-kataifi-c6d825.netlify.app/farm/edit.png" />
+            <img src="https://resource2.dfs.land/farm/edit.png" />
             <span>{{ $t('invite.edit') }}</span>
           </div>
         </div>

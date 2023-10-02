@@ -11,8 +11,8 @@
         </div>
       </div>
       <div class="follow">
-        <img v-if="isLike" @click="handleCancelLike" src="https://storied-crepe-e5e65c.netlify.app/icon/star-is.png">
-        <img v-else @click="handleAddLike" src="https://storied-crepe-e5e65c.netlify.app/icon/star-un.png">
+        <img v-if="isLike" @click="handleCancelLike" src="https://resource1.dfs.land/icon/star-is.png">
+        <img v-else @click="handleAddLike" src="https://resource1.dfs.land/icon/star-un.png">
       </div>
     </div>
     <!-- 交易对信息 -->

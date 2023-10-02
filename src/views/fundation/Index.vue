@@ -25,7 +25,7 @@
     <div class="btnDiv">
       <!-- <div class="btn flexc" @click="showToFundation=!showToFundation">{{ $t('fundation.toFundation') }}</div> -->
       <img class="btn" @click="showToFundation=!showToFundation"
-        src="https://leafy-kataifi-c6d825.netlify.app/icon/toFundation.png" alt="">
+        src="https://resource2.dfs.land/icon/toFundation.png" alt="">
     </div>
     <!-- 去捐款 -->
     <el-dialog
@@ -61,7 +61,7 @@ export default {
   data() {
     return {
       images: [{
-        image: 'https://storied-crepe-e5e65c.netlify.app/fundation/banner4.png',
+        image: 'https://resource1.dfs.land/fundation/banner4.png',
         routeName: 'fundation'
       }],
       page: 1,

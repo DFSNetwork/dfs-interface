@@ -2,7 +2,7 @@
   <div class="transfer">
     <div class="title flexb">
       <span class="back flexa" @click="handleBack">
-        <img src="https://storied-crepe-e5e65c.netlify.app/icon/back.png">
+        <img src="https://resource1.dfs.land/icon/back.png">
       </span>
       <span>{{ $t('newwallet.transfer') }}</span>
       <span class="back"></span>
@@ -21,7 +21,7 @@
           <span>{{ $t('newwallet.transferNum') }}</span>
           <span class="flexa coin" @click="showMarketList = true">
             <span>{{ tokenInfo.symbol }}</span>
-            <img class="toRight" src="https://storied-crepe-e5e65c.netlify.app/icon/back.png">
+            <img class="toRight" src="https://resource1.dfs.land/icon/back.png">
           </span>
         </div>
         <div class="flexb">

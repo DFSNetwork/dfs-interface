@@ -2,7 +2,7 @@
   <div class="accLists">
     <div class="title flexb">
       <span class="back flexa" @click="$router.back()">
-        <img src="https://storied-crepe-e5e65c.netlify.app/icon/back.png" alt="">
+        <img src="https://resource1.dfs.land/icon/back.png" alt="">
       </span>
       <span v-if="type === 'follow' || type === 'otherFollow'">{{ $t('my.follows') }}</span>
       <span v-else-if="type === 'fans' || type === 'otherFans'">{{ $t('my.fans') }}</span>
@@ -10,7 +10,7 @@
       <span class="back"></span>
     </div>
     <div class="searchDiv flexa">
-      <img src="https://storied-crepe-e5e65c.netlify.app/icon/search.png">
+      <img src="https://resource1.dfs.land/icon/search.png">
       <van-field class="searchIpt" v-model="search" @input="handleSearch" :placeholder="$t('my.searchId')" />
     </div>
 
@@ -23,7 +23,7 @@
           @load="handleCurrentChange"
         > -->
         <div class="noData tip" v-if="!lists.length">
-          <img src="https://storied-crepe-e5e65c.netlify.app/noData/noData.png" alt="">
+          <img src="https://resource1.dfs.land/noData/noData.png" alt="">
           <div v-if="type === 'follow' || type === 'otherFollow'">{{ $t('my.noFollow') }}</div>
           <div v-else-if="type === 'fans' || type === 'otherFans'">{{ $t('my.noFans') }}</div>
           <div v-else>{{ $t('my.noVist') }}</div>
@@ -230,8 +230,8 @@ export default {
     },
     handleGetDefaultInfo(obj) {
       const df = {
-        avatar: "https://leafy-kataifi-c6d825.netlify.app/coin/tagtokenmain-tag.png",
-        cover: "https://storied-crepe-e5e65c.netlify.app/accBanner/banner0.png",
+        avatar: "https://resource2.dfs.land/coin/tagtokenmain-tag.png",
+        cover: "https://resource1.dfs.land/accBanner/banner0.png",
         desc: "",
         nick: "",
         sex: 2,

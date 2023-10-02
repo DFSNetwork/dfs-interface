@@ -1,17 +1,17 @@
 <template>
   <div class="investment">
-    <img class="banner" src="https://leafy-kataifi-c6d825.netlify.app/dfs/investment.png">
+    <img class="banner" src="https://resource2.dfs.land/dfs/investment.png">
     <div class="tools flexb">
       <div class="item" @click="handleTo('inverstRank')">
-        <img src="https://leafy-kataifi-c6d825.netlify.app/dfs/ranking.png" alt="">
+        <img src="https://resource2.dfs.land/dfs/ranking.png" alt="">
         <div>{{ $t('invest.rank') }}</div>
       </div>
       <div class="item" @click="handleTo('myInverst')">
-        <img src="https://leafy-kataifi-c6d825.netlify.app/dfs/fixed.png" alt="">
+        <img src="https://resource2.dfs.land/dfs/fixed.png" alt="">
         <div>{{ $t('invest.myInvest') }}</div>
       </div>
       <div class="item" @click="handleTo('inverstRules')">
-        <img src="https://leafy-kataifi-c6d825.netlify.app/dfs/news.png" alt="">
+        <img src="https://resource2.dfs.land/dfs/news.png" alt="">
         <div>{{ $t('invest.investRules') }}</div>
       </div>
     </div>

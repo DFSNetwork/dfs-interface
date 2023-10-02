@@ -1,8 +1,8 @@
 <template>
   <div class="dfsMine">
     <div class="banner">
-      <img v-if="language === 'zh-CN'" src="https://leafy-kataifi-c6d825.netlify.app/dfs/dfs-mine.png">
-      <img v-else src="https://leafy-kataifi-c6d825.netlify.app/dfs/dfs-mine-en.png">
+      <img v-if="language === 'zh-CN'" src="https://resource2.dfs.land/dfs/dfs-mine.png">
+      <img v-else src="https://resource2.dfs.land/dfs/dfs-mine-en.png">
     </div>
 
     <div class="mineView">

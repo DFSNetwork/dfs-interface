@@ -2,7 +2,7 @@
   <div class="transfer">
     <div class="title flexb">
       <span class="back flexa" @click="handleBack">
-        <img src="https://storied-crepe-e5e65c.netlify.app/icon/back.png">
+        <img src="https://resource1.dfs.land/icon/back.png">
       </span>
       <span>{{ $t('newwallet.receive') }}</span>
       <span class="back"></span>
@@ -11,7 +11,7 @@
     <div class="table">
       <div class="eos">
         <span>EOS</span>
-        <img class="logo" src="https://leafy-kataifi-c6d825.netlify.app/coin/eosio.token-eos.svg">
+        <img class="logo" src="https://resource2.dfs.land/coin/eosio.token-eos.svg">
       </div>
       <div class="qr">
         <canvas class="codeCanvas" id="codeShare"></canvas>

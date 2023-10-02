@@ -2,7 +2,7 @@
   <div class="addCoin">
     <div class="title flexb">
       <span class="back flexa" @click="$router.back()">
-        <img src="https://storied-crepe-e5e65c.netlify.app/icon/back.png" alt="">
+        <img src="https://resource1.dfs.land/icon/back.png" alt="">
       </span>
       <span v-if="$route.name === 'addSignCoin'">{{ $t('invite.addCoin') }}</span>
       <span v-else>{{ $t('invite.editCoin') }}</span>

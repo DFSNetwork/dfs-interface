@@ -1,6 +1,6 @@
 <template>
   <div class="accInfo">
-    <img class="accBgImg" :src="accInfo.cover || 'https://storied-crepe-e5e65c.netlify.app/accBanner/banner1.png'">
+    <img class="accBgImg" :src="accInfo.cover || 'https://resource1.dfs.land/accBanner/banner1.png'">
     <div class="info flexa">
       <div class="headDiv flexc">
         <img class="headImg" :src="accInfo.avatar">
@@ -9,11 +9,11 @@
         <div class="name flexb">
           <div class="flexa">
             <span>{{ accInfo.nick || id }}</span>
-            <img v-if="accInfo.sex == 0" class="sex" src="https://storied-crepe-e5e65c.netlify.app/icon/sex0.png" alt="">
-            <img v-if="accInfo.sex == 1" class="sex" src="https://storied-crepe-e5e65c.netlify.app/icon/sex1.png" alt="">
+            <img v-if="accInfo.sex == 0" class="sex" src="https://resource1.dfs.land/icon/sex0.png" alt="">
+            <img v-if="accInfo.sex == 1" class="sex" src="https://resource1.dfs.land/icon/sex1.png" alt="">
           </div>
           <img class="set" @click="$router.push({name: 'mySetting'})"
-            src="https://storied-crepe-e5e65c.netlify.app/icon/set.png" alt="">
+            src="https://resource1.dfs.land/icon/set.png" alt="">
         </div>
         <div class="account flexa">
           <span
@@ -24,7 +24,7 @@
             v-clipboard:copy="id"
             v-clipboard:success="onCopy"
             v-clipboard:error="onError"
-            src="https://storied-crepe-e5e65c.netlify.app/icon/copy.png" alt="">
+            src="https://resource1.dfs.land/icon/copy.png" alt="">
         </div>
         <div class="intro" @click="showInfo = true">{{ accInfo.desc || $t('my.noDesc') }}</div>
       </div>

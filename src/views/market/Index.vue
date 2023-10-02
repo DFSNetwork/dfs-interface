@@ -14,7 +14,7 @@
               <div class="tip">{{ thisMarket.contract0 }}</div>
             </div>
           </div>
-          <img class="addImg" src="https://storied-crepe-e5e65c.netlify.app/svg/add.svg">
+          <img class="addImg" src="https://resource1.dfs.land/svg/add.svg">
           <div class="flexa">
             <img class="coinImg" :onerror="$errorImg" :src="thisMarket.sym1Data.imgUrl" >
             <div>
@@ -39,8 +39,8 @@
             <div class="num flexa din" @click="exRate = !exRate">
               <span v-if="!exRate">1{{ thisMarket.symbol0 }} = {{ thisMarket.sym0Rate || '-' }}{{ thisMarket.symbol1 }}</span>
               <span v-else>1{{ thisMarket.symbol1 }} = {{ thisMarket.sym1Rate || '-' }}{{ thisMarket.symbol0 }}</span>
-              <img class="iconImg" v-if="!exRate" src="https://leafy-kataifi-c6d825.netlify.app/icon/price_switch_icon_btn_left.svg" alt="">
-              <img class="iconImg" v-else src="https://leafy-kataifi-c6d825.netlify.app/icon/price_switch_icon_btn_right.svg" alt="">
+              <img class="iconImg" v-if="!exRate" src="https://resource2.dfs.land/icon/price_switch_icon_btn_left.svg" alt="">
+              <img class="iconImg" v-else src="https://resource2.dfs.land/icon/price_switch_icon_btn_right.svg" alt="">
             </div>
           </div>
           <div class="item">
@@ -54,7 +54,7 @@
           </div>
           <div class="tip flexa" @click="showAboutMarket = true">
             <span>{{ $t('pools.spcTip') }}</span>
-            <img class="iconImg" src="https://storied-crepe-e5e65c.netlify.app/icon/tips_icon_btn.svg" alt="">
+            <img class="iconImg" src="https://resource1.dfs.land/icon/tips_icon_btn.svg" alt="">
           </div>
         </div>
         <!-- 按钮事件 -->
@@ -64,12 +64,12 @@
         <!-- 跳转连接 -->
         <div class="linkTo flexb">
           <span class="flexc">
-            <img src="https://storied-crepe-e5e65c.netlify.app/svg/create_icon.svg">
+            <img src="https://resource1.dfs.land/svg/create_icon.svg">
             <span @click="handleTo('createMarket')">{{ $t('dex.addMarket') }}</span>
             <i class="el-icon-arrow-right"></i>
           </span>
           <span class="flexc">
-            <img src="https://storied-crepe-e5e65c.netlify.app/svg/record.svg">
+            <img src="https://resource1.dfs.land/svg/record.svg">
             <span @click="handleTo('MarketHis')">{{ $t('more.mkHis') }}</span>
             <i class="el-icon-arrow-right"></i>
           </span>

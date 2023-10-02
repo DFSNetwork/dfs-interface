@@ -2,7 +2,7 @@
   <div class="header flexb">
     <div class="tools flexb">
       <div class="logoDiv flexa" :class="{'ani': ani}" @click="handleToIndex" @dblclick="handleDbClick">
-        <img class="logo" src="https://leafy-kataifi-c6d825.netlify.app/coin/minedfstoken-dfs.png">
+        <img class="logo" src="https://resource2.dfs.land/coin/minedfstoken-dfs.png">
         <div>
           <div class="name">DeFis</div>
           <div class="network">Network</div>
@@ -12,11 +12,11 @@
       <div class="flexa">
         <span class="record" @click="handleSetLocal">
           <img class="svgIcon" @click="handleTo('update')"
-            src="https://leafy-kataifi-c6d825.netlify.app/dfs/up-record.png">
+            src="https://resource2.dfs.land/dfs/up-record.png">
           <div class="desc" v-if="localVes !== rdVes"></div>
         </span>
         <img class="svgIcon"  @click="handleShowNav"
-          src="https://leafy-kataifi-c6d825.netlify.app/dfs/menu.png">
+          src="https://resource2.dfs.land/dfs/menu.png">
       </div>
     </div>
     <van-popup class="popup_p" v-model="showEgg">

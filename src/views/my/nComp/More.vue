@@ -8,19 +8,19 @@
       </div>
       <div class="lists flexa">
         <div class="list" @click="handleTo('history', {mid: 39})">
-          <img class="icon big" src="https://leafy-kataifi-c6d825.netlify.app/icon/swapHis.png" alt="">
+          <img class="icon big" src="https://resource2.dfs.land/icon/swapHis.png" alt="">
           <div>{{ $t('sys.tradeHis') }}</div>
         </div>
         <div class="list" @click="handleTo('MarketHis', {mid: 39})">
-          <img class="icon" src="https://leafy-kataifi-c6d825.netlify.app/icon/marketHis.png" alt="">
+          <img class="icon" src="https://resource2.dfs.land/icon/marketHis.png" alt="">
           <div>{{ $t('sys.marketHis') }}</div>
         </div>
         <div class="list" @click="handleTo('pddexOrder')">
-          <img class="icon" src="https://leafy-kataifi-c6d825.netlify.app/icon/order.png" alt="">
+          <img class="icon" src="https://resource2.dfs.land/icon/order.png" alt="">
           <div>{{ $t('sys.myOrders') }}</div>
         </div>
         <div class="list" @click="handleTo('myMarketList')">
-          <img class="icon big" src="https://leafy-kataifi-c6d825.netlify.app/icon/myMarket.png" alt="">
+          <img class="icon big" src="https://resource2.dfs.land/icon/myMarket.png" alt="">
           <div>{{ $t('sys.myMarkets') }}</div>
         </div>
       </div>
@@ -30,19 +30,19 @@
       <div class="title">常用应用</div>
       <div class="lists flexa">
         <div class="list" @click="handleTo('mineHomeDfs')">
-          <img class="icon" src="https://leafy-kataifi-c6d825.netlify.app/coin/minedfstoken-dfs.png" alt="">
+          <img class="icon" src="https://resource2.dfs.land/coin/minedfstoken-dfs.png" alt="">
           <div>{{ $t('sys.coinPool', {coin: 'DFS'}) }}</div>
         </div>
         <div class="list" @click="handleTo('mineHomeTag')">
-          <img class="icon" src="https://leafy-kataifi-c6d825.netlify.app/coin/tagtokenmain-tag.png" alt="">
+          <img class="icon" src="https://resource2.dfs.land/coin/tagtokenmain-tag.png" alt="">
           <div>{{ $t('sys.coinPool', {coin: 'TAG'}) }}</div>
         </div>
         <div class="list" @click="handleTo('dssHomeDfs')">
-          <img class="icon" src="https://leafy-kataifi-c6d825.netlify.app/dfs/dss.png" alt="">
+          <img class="icon" src="https://resource2.dfs.land/dfs/dss.png" alt="">
           <div>DSS</div>
         </div>
         <div class="list" @click="handleToProject('dtoken')">
-          <img class="icon" src="https://leafy-kataifi-c6d825.netlify.app/dfs/Graph@2x.png" alt="">
+          <img class="icon" src="https://resource2.dfs.land/dfs/Graph@2x.png" alt="">
           <div>{{ $t('sys.dcap') }}</div>
         </div>
       </div>
@@ -53,11 +53,11 @@
       <div class="title">社区项目</div>
       <div class="lists flexa">
         <div class="list" @click="handleToProject('usdx')">
-          <img class="icon biger" src="https://leafy-kataifi-c6d825.netlify.app/dfs/usdx.png" alt="">
+          <img class="icon biger" src="https://resource2.dfs.land/dfs/usdx.png" alt="">
           <div>USDX</div>
         </div>
         <div class="list" @click="handleToProject('dfg')">
-          <img class="icon biger" src="https://leafy-kataifi-c6d825.netlify.app/coin/dfxtokenmain-dfg.png" alt="">
+          <img class="icon biger" src="https://resource2.dfs.land/coin/dfxtokenmain-dfg.png" alt="">
           <div>DFG</div>
         </div>
       </div>

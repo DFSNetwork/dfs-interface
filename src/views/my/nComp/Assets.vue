@@ -6,9 +6,9 @@
         <span v-if="countByU">(USDT)</span>
         <span v-else>(EOS)</span>
         <img class="eye" v-if="!hideAss" @click="hideAss = !hideAss"
-          src="https://leafy-kataifi-c6d825.netlify.app/dfs/eye.png">
+          src="https://resource2.dfs.land/dfs/eye.png">
         <img class="eye hideeye" v-else  @click="hideAss = !hideAss"
-          src="https://leafy-kataifi-c6d825.netlify.app/dfs/hide.png">
+          src="https://resource2.dfs.land/dfs/hide.png">
       </div>
       <div class="flexend" v-if="!hideAss">
         <span class="amt dinBold" v-if="countByU">{{ allCount }}</span>
@@ -16,26 +16,26 @@
         <span class="small flexa">
           <span>≈ ¥{{ allCountCNY }}</span>
           <img class="exCount"  @click="countByU = !countByU"
-            src="https://leafy-kataifi-c6d825.netlify.app/dfs/switch.png">
+            src="https://resource2.dfs.land/dfs/switch.png">
         </span>
       </div>
       <div class="flexa" v-else>
         <span class="amt dinBold">********</span>
         <img class="exCount" @click="countByU = !countByU"
-            src="https://leafy-kataifi-c6d825.netlify.app/dfs/switch.png">
+            src="https://resource2.dfs.land/dfs/switch.png">
       </div>
     </div>
     <div class="walletTrans flexb">
       <div class="flexa" @click="handleTo('myTransfer')">
-        <img src="https://leafy-kataifi-c6d825.netlify.app/dfs/transfer.png">
+        <img src="https://resource2.dfs.land/dfs/transfer.png">
         <span>{{ $t('newwallet.transfer') }}</span>
       </div>
       <div class="flexa" @click="handleTo('myReceive')">
-        <img src="https://leafy-kataifi-c6d825.netlify.app/dfs/payment.png">
+        <img src="https://resource2.dfs.land/dfs/payment.png">
         <span>{{ $t('newwallet.receive') }}</span>
       </div>
       <div class="flexa" @click="handleTo('index')">
-        <img src="https://leafy-kataifi-c6d825.netlify.app/dfs/transaction.png">
+        <img src="https://resource2.dfs.land/dfs/transaction.png">
         <span>{{ $t('newwallet.trade') }}</span>
       </div>
     </div>
@@ -43,13 +43,13 @@
       <div class="flexa" @click="hidLess = !hidLess">
         <div class="select">
           <img class="hideImg" v-if="hidLess"
-            src="https://storied-crepe-e5e65c.netlify.app/icon/checked.png" alt="">
+            src="https://resource1.dfs.land/icon/checked.png" alt="">
         </div>
         <div>{{ $t('my.hideMinAssets') }}</div>
         <img class="tips" src="">
       </div>
       <div class="flexa searchDiv">
-        <img class="searchImg" src="https://storied-crepe-e5e65c.netlify.app/icon/search.png">
+        <img class="searchImg" src="https://resource1.dfs.land/icon/search.png">
         <van-field class="searchIpt" v-model="search"
           @input="handleSearch"
           :placeholder="$t('my.search')" />

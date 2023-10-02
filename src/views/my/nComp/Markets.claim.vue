@@ -16,7 +16,7 @@
         <div class="coin din flexa">
           <img class="logo" :src="v.imgUrl0" :onerror="$errorImg">
           <span>{{ v.symbol0 }}</span>
-          <img class="add" src="https://storied-crepe-e5e65c.netlify.app/svg/add.svg">
+          <img class="add" src="https://resource1.dfs.land/svg/add.svg">
           <img class="logo" :src="v.imgUrl1" :onerror="$errorImg">
           <span>{{ v.symbol1 }}</span>
         </div>

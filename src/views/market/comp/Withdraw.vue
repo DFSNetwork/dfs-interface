@@ -2,7 +2,7 @@
   <div class="removeMarket">
     <div class="title">
       <span>{{ $t('more.remove') }}</span>
-      <img class="closeSvg" @click="handleClose" src="https://storied-crepe-e5e65c.netlify.app/svg/sd_icon_btn.svg" alt="">
+      <img class="closeSvg" @click="handleClose" src="https://resource1.dfs.land/svg/sd_icon_btn.svg" alt="">
     </div>
     <!-- 输入数据 -->
     <div class="iptDiv">

@@ -4,7 +4,7 @@
       get-container="#app"
       v-model="showResource">
       <div class="resource">
-        <img class="close" @click="showResource = false" src="https://storied-crepe-e5e65c.netlify.app/svg/sd_icon_btn.svg">
+        <img class="close" @click="showResource = false" src="https://resource1.dfs.land/svg/sd_icon_btn.svg">
         <div class="title">{{ $t('resource.manage') }}</div> 
         <div class="infos">
           <div class="info flexc">

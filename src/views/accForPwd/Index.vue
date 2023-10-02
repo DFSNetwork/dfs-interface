@@ -21,7 +21,7 @@
         <template #reference>
           <div class="flexa model dinReg">
             <span class="">{{ selectAct }}</span>
-            <img src="https://leafy-kataifi-c6d825.netlify.app/icon/select.png" alt="">
+            <img src="https://resource2.dfs.land/icon/select.png" alt="">
           </div>
         </template>
       </van-popover>
@@ -37,8 +37,8 @@
         @blur="handleBlur(2)"
         :type="pwdType" :placeholder="$t('newwallet.setPwd')" />
       <span class="green" @click="handleExType">
-        <img v-if="pwdType === 'password'" src="https://leafy-kataifi-c6d825.netlify.app/dfs/pwd-show.png">
-        <img v-else src="https://leafy-kataifi-c6d825.netlify.app/dfs/pwd-hide.png">
+        <img v-if="pwdType === 'password'" src="https://resource2.dfs.land/dfs/pwd-show.png">
+        <img v-else src="https://resource2.dfs.land/dfs/pwd-hide.png">
       </span>
     </div>
     <div class="label">{{ $t('newwallet.setPwdTip') }}</div> 
@@ -49,8 +49,8 @@
         v-model="pwd2"
         :type="pwdType" :placeholder="$t('newwallet.setPwd2')" />
       <span class="green" @click="handleExType">
-        <img v-if="pwdType === 'password'" src="https://leafy-kataifi-c6d825.netlify.app/dfs/pwd-show.png">
-        <img v-else src="https://leafy-kataifi-c6d825.netlify.app/dfs/pwd-hide.png">
+        <img v-if="pwdType === 'password'" src="https://resource2.dfs.land/dfs/pwd-show.png">
+        <img v-else src="https://resource2.dfs.land/dfs/pwd-hide.png">
       </span>
     </div>
 

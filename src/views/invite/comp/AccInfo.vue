@@ -3,7 +3,7 @@
     <div class="flexb headTitle">
       <div class="title">{{ $t('invite.myFarm') }}</div>
       <div class="createBtn flexc" v-if="!accInfo.owner && joinInfo.owner" @click="handleTo('farmCreate')">
-        <img class="addGreen" src="https://leafy-kataifi-c6d825.netlify.app/icon/add-green.png">
+        <img class="addGreen" src="https://resource2.dfs.land/icon/add-green.png">
         <span>{{ $t('invite.create') }}</span>
       </div>
     </div>
@@ -11,7 +11,7 @@
       <div class="noData tip" v-if="!joinInfo.owner && !accInfo.owner">
         <div class="subTip">{{ $t('invite.noData') }}</div>
         <div class="createBtn flexc" v-if="!accInfo.owner" @click="handleTo('farmCreate')">
-          <img class="addGreen" src="https://leafy-kataifi-c6d825.netlify.app/icon/add-green.png">
+          <img class="addGreen" src="https://resource2.dfs.land/icon/add-green.png">
           <span>{{ $t('invite.create') }}</span>
         </div>
       </div>
@@ -33,7 +33,7 @@
             <div class="farmHeadImg flexc model">
               <img width="100%" :src="accInfo.avatar">
               <div class="myFarmTab flexa">
-                <img src="https://leafy-kataifi-c6d825.netlify.app/dfs/myFarm.png">
+                <img src="https://resource2.dfs.land/dfs/myFarm.png">
                 <span>{{ $t('invite.myFarm') }}</span>
               </div>
             </div>

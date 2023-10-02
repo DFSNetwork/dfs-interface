@@ -2,24 +2,24 @@
   <div class="risk">
     <img class="close"
       @click="handleClose"
-      src="https://leafy-kataifi-c6d825.netlify.app/icon/close-black.png">
+      src="https://resource2.dfs.land/icon/close-black.png">
     <div class="title">{{ $t('newwallet.warmTip') }}</div>
-    <img class="riskImg" src="https://leafy-kataifi-c6d825.netlify.app/dfs/risk.png">
+    <img class="riskImg" src="https://resource2.dfs.land/dfs/risk.png">
     <div class="tips">
       <div>{{ $t('newwallet.warmTip1') }}</div>
       <div>{{ $t('newwallet.warmTip2') }}</div>
     </div>
     <div class="wallets">
       <div class="flexb">
-        <img src="https://leafy-kataifi-c6d825.netlify.app/dfs/tp.png" alt="">
+        <img src="https://resource2.dfs.land/dfs/tp.png" alt="">
         <span class="down">{{ $t('newwallet.toDown') }}</span>
       </div>
       <div class="flexb">
-        <img src="https://leafy-kataifi-c6d825.netlify.app/dfs/mykey.png" alt="">
+        <img src="https://resource2.dfs.land/dfs/mykey.png" alt="">
         <span class="down">{{ $t('newwallet.toDown') }}</span>
       </div>
       <div class="flexb">
-        <img src="https://leafy-kataifi-c6d825.netlify.app/dfs/start.png" alt="">
+        <img src="https://resource2.dfs.land/dfs/start.png" alt="">
         <span class="down">{{ $t('newwallet.toDown') }}</span>
       </div>
     </div>

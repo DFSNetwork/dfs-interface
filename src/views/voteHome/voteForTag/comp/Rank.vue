@@ -6,7 +6,7 @@
       <template  v-for="(item, index) in rankLists">
         <div v-if="index < 21" class="list flexa" :key="index">
           <div class="rankDiv dinBold">
-            <img v-if="index < 3" :src="`https://storied-crepe-e5e65c.netlify.app/rank/voteRank${index+1}.png`" alt="">
+            <img v-if="index < 3" :src="`https://resource1.dfs.land/rank/voteRank${index+1}.png`" alt="">
             <span v-else>{{index + 1}}</span>
           </div>
           <div>
@@ -23,7 +23,7 @@
               </span>
             </div>
             <div class="num">
-              <img class="voteIcon" src="https://storied-crepe-e5e65c.netlify.app/icon/vote.png" alt="">
+              <img class="voteIcon" src="https://resource1.dfs.land/icon/vote.png" alt="">
               <span>{{ item.total_votes || '0' }}</span>
               <span class="tip small">（{{ item.votesRate || '0.00' }}%）</span>
               <span class="green" @click.stop="handleToDetail(item)">{{ $t('public.detail') }}></span>

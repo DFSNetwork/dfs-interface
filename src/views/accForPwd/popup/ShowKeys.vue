@@ -1,7 +1,7 @@
 <template>
   <div class="keys">
-    <img class="refresh" @click="handleRandom" src="https://leafy-kataifi-c6d825.netlify.app/dfs/refresh.png">
-    <img class="close" @click="handleClose" src="https://leafy-kataifi-c6d825.netlify.app/icon/close-black.png">
+    <img class="refresh" @click="handleRandom" src="https://resource2.dfs.land/dfs/refresh.png">
+    <img class="close" @click="handleClose" src="https://resource2.dfs.land/icon/close-black.png">
     <div class="title">{{ $t('newwallet.generator') }}</div>
     <div class="item">
       <div class="subTitle">{{ $t('newwallet.pubKey') }}</div>
@@ -12,7 +12,7 @@
           v-clipboard:success="onCopy"
           v-clipboard:error="onError">
           <span>{{ $t('newwallet.clkCopuy') }}</span>
-          <img class="copyImg" src="https://leafy-kataifi-c6d825.netlify.app/dfs/copy.png">
+          <img class="copyImg" src="https://resource2.dfs.land/dfs/copy.png">
         </div>
       </div>
     </div>
@@ -25,7 +25,7 @@
           v-clipboard:success="onCopy"
           v-clipboard:error="onError">
           <span>{{ $t('newwallet.clkCopuy') }}</span>
-          <img class="copyImg" src="https://leafy-kataifi-c6d825.netlify.app/dfs/copy.png">
+          <img class="copyImg" src="https://resource2.dfs.land/dfs/copy.png">
         </div>
       </div>
     </div>

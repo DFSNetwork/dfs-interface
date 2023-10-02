@@ -1,7 +1,7 @@
 <template>
   <div class="leave">
     <img class="close" @click="handleClose"
-      src="https://storied-crepe-e5e65c.netlify.app/svg/sd_icon_btn.svg">
+      src="https://resource1.dfs.land/svg/sd_icon_btn.svg">
     <div class="title">{{ $t('invite.leave') }}</div>
     <div class="tips">
       <div>{{ $t('invite.leaveRules1') }}</div>

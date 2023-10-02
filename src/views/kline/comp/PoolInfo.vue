@@ -13,8 +13,8 @@
       <div class="flexa" @click="ex = !ex">
         <span class="dinReg" v-if="ex">1 {{ checkedMarket.symbol1 }} = {{ price | numToPrice}} {{ checkedMarket.symbol0 }}</span>
         <span class="dinReg" v-else>1 {{ checkedMarket.symbol0 }} = {{ price1 | numToPrice}} {{ checkedMarket.symbol1 }}</span>
-        <img class="ex" v-if="ex" src="https://leafy-kataifi-c6d825.netlify.app/icon/price_switch_icon_btn_right.svg">
-        <img class="ex" v-else src="https://leafy-kataifi-c6d825.netlify.app/icon/price_switch_icon_btn_left.svg">
+        <img class="ex" v-if="ex" src="https://resource2.dfs.land/icon/price_switch_icon_btn_right.svg">
+        <img class="ex" v-else src="https://resource2.dfs.land/icon/price_switch_icon_btn_left.svg">
       </div>
     </div>
     <div class="item">

@@ -2,7 +2,7 @@
   <div class="order">
     <div class="title flexb">
       <span class="back flexa" @click="$router.back()">
-        <img src="https://storied-crepe-e5e65c.netlify.app/icon/back.png" alt="">
+        <img src="https://resource1.dfs.land/icon/back.png" alt="">
       </span>
       <span>{{ $t('pddex.myOrder') }}</span>
       <span class="back"></span>
@@ -23,7 +23,7 @@
         >
           <!-- finished-text="没有更多了" -->
           <div class="noData tip" v-if="!list.length && !loading">
-            <img class="noDataPng" src="https://storied-crepe-e5e65c.netlify.app/noData/noOrder.png" alt="">
+            <img class="noDataPng" src="https://resource1.dfs.land/noData/noOrder.png" alt="">
             <div>{{ $t('public.noData') }}</div>
           </div>
           <div v-for="(item, index) in list" :key="index">
@@ -39,7 +39,7 @@
                   <van-button v-if="value2 === 'a'" plain type="danger" @click="handleCancel(item, index)">{{ $t('pddex.cancelOrder') }}</van-button>
                   <span class="source flexa" v-else>
                     <span>Dex: </span>
-                    <img class="dex" v-if="item.dex === 'defisswapcnt'" src="https://leafy-kataifi-c6d825.netlify.app/coin/minedfstoken-dfs.png" alt="">
+                    <img class="dex" v-if="item.dex === 'defisswapcnt'" src="https://resource2.dfs.land/coin/minedfstoken-dfs.png" alt="">
                     <img class="dex" v-else-if="item.dex === 'swap.defi'" src="https://ndi.340wan.com/eos/token.defi-box.png" alt="">
                   </span>
                 </div>

@@ -16,7 +16,7 @@
       <div class="li">{{ $t('financial.rules5') }}</div>
       <div class="li flexa">
         <span>{{ $t('financial.rules6') }}</span>
-        <img @click="showTip = true" class="tipImg" src="https://storied-crepe-e5e65c.netlify.app/dex/tips_icon_btn.svg" alt="">
+        <img @click="showTip = true" class="tipImg" src="https://resource1.dfs.land/dex/tips_icon_btn.svg" alt="">
       </div>
       <div class="li">{{ $t('financial.rules7') }}</div>
       <div class="li">{{ $t('financial.rules8') }}</div>

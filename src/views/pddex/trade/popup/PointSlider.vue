@@ -4,7 +4,7 @@
     <div class="content">
       <div class="subTitle flexa">
         <span>{{ $t('dex.slipPoint') }}</span>
-        <img class="tipCoin" @click.stop="handleShowTip" src="https://storied-crepe-e5e65c.netlify.app/svg/question.svg" alt="">
+        <img class="tipCoin" @click.stop="handleShowTip" src="https://resource1.dfs.land/svg/question.svg" alt="">
         <transition name="fade">
           <div class="tipConten" v-if="showTip">
             {{ $t('dex.slipTip') }}

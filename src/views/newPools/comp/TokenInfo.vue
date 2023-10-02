@@ -48,9 +48,9 @@ export default {
     src() {
       const coin = this.tokenName.toLowerCase()
       const contract = this.contract;
-      let src = `https://leafy-kataifi-c6d825.netlify.app/coin/${contract}-${coin}.png`
+      let src = `https://resource2.dfs.land/coin/${contract}-${coin}.png`
       if (contract === 'eosio.token') {
-        src = `https://leafy-kataifi-c6d825.netlify.app/coin/${contract}-${coin}.svg`
+        src = `https://resource2.dfs.land/coin/${contract}-${coin}.svg`
       }
       return src
     },

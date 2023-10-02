@@ -2,14 +2,14 @@
   <div class="farmEdit">
     <div class="title flexb">
       <span class="back flexa" @click="$router.back()">
-        <img src="https://storied-crepe-e5e65c.netlify.app/icon/back.png" alt="">
+        <img src="https://resource1.dfs.land/icon/back.png" alt="">
       </span>
       <span>{{ $t('invite.editFarm') }}</span>
       <span class="back"></span>
     </div>
 
     <div class="headDiv" @click="handleShowImgCheck('head')">
-      <img class="headImg" :src="avatar || 'https://leafy-kataifi-c6d825.netlify.app/coin/eosio.token-eos.svg'">
+      <img class="headImg" :src="avatar || 'https://resource2.dfs.land/coin/eosio.token-eos.svg'">
       <div class="setHead flexc">{{ $t('invite.setHead') }}</div>
     </div>
     <div class="item flexb">
@@ -20,7 +20,7 @@
         :placeholder="$t('invite.farmNameIpt')"
         input-align="right"
       />
-      <img class="rightIcon" src="https://leafy-kataifi-c6d825.netlify.app/icon/toRight-999.png">
+      <img class="rightIcon" src="https://resource2.dfs.land/icon/toRight-999.png">
     </div>
     <div class="item flexb">
       <van-field
@@ -30,7 +30,7 @@
         :placeholder="$t('invite.slogonIpt')"
         input-align="right"
       />
-      <img class="rightIcon" src="https://leafy-kataifi-c6d825.netlify.app/icon/toRight-999.png">
+      <img class="rightIcon" src="https://resource2.dfs.land/icon/toRight-999.png">
     </div>
     <div class="item flexb">
       <van-field
@@ -40,7 +40,7 @@
         :placeholder="$t('invite.qqIpt')"
         input-align="right"
       />
-      <img class="rightIcon" src="https://leafy-kataifi-c6d825.netlify.app/icon/toRight-999.png">
+      <img class="rightIcon" src="https://resource2.dfs.land/icon/toRight-999.png">
     </div>
     <div class="item flexb">
       <van-field
@@ -50,7 +50,7 @@
         :placeholder="$t('invite.wxIpt')"
         input-align="right"
       />
-      <img class="rightIcon" src="https://leafy-kataifi-c6d825.netlify.app/icon/toRight-999.png">
+      <img class="rightIcon" src="https://resource2.dfs.land/icon/toRight-999.png">
     </div>
     <div class="item flexb">
       <van-field
@@ -60,13 +60,13 @@
         :placeholder="$t('invite.tgIpt')"
         input-align="right"
       />
-      <img class="rightIcon" src="https://leafy-kataifi-c6d825.netlify.app/icon/toRight-999.png">
+      <img class="rightIcon" src="https://resource2.dfs.land/icon/toRight-999.png">
     </div>
     <div class="item flexb" @click="handleShowImgCheck('bg')">
       <span class="subTitle">{{ $t('invite.bg') }}</span>
       <div class="flexa">
-        <img class="bgImg" :src="cover || 'https://leafy-kataifi-c6d825.netlify.app/dfs/farmDefaultBg.png'">
-        <img class="rightIcon" src="https://leafy-kataifi-c6d825.netlify.app/icon/toRight-999.png">
+        <img class="bgImg" :src="cover || 'https://resource2.dfs.land/dfs/farmDefaultBg.png'">
+        <img class="rightIcon" src="https://resource2.dfs.land/icon/toRight-999.png">
       </div>
     </div>
     <div class="descDiv">
@@ -106,7 +106,7 @@ export default {
       type: '',
       // 表单参数
       cover: '', // 背景
-      avatar: 'https://leafy-kataifi-c6d825.netlify.app/coin/eosio.token-eos.svg', // 头像 
+      avatar: 'https://resource2.dfs.land/coin/eosio.token-eos.svg', // 头像 
       nick: '', // 昵称
       slogon: '', // 口号
       desc: '', // 简介

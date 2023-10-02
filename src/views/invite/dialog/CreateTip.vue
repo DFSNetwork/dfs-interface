@@ -1,7 +1,7 @@
 <template>
   <div class="createTip">
     <img class="close" @click="handleClose(false)"
-      src="https://storied-crepe-e5e65c.netlify.app/svg/sd_icon_btn.svg" alt="">
+      src="https://resource1.dfs.land/svg/sd_icon_btn.svg" alt="">
     <div class="title">{{ $t('invite.create') }}</div>
     <div class="main">
       <div>{{ $t('invite.createRules1') }}</div>

@@ -18,9 +18,9 @@
               <div class="farmName flexb">
                 <div>{{ v.farm_name }}</div>
                 <div>
-                  <img v-if="v.wx" class="linkImg" src="https://leafy-kataifi-c6d825.netlify.app/icon/wechat.png">
-                  <img v-if="v.tg" class="linkImg" src="https://leafy-kataifi-c6d825.netlify.app/icon/telegram.png">
-                  <img v-if="v.qq" class="linkImg" src="https://leafy-kataifi-c6d825.netlify.app/icon/QQ.png">
+                  <img v-if="v.wx" class="linkImg" src="https://resource2.dfs.land/icon/wechat.png">
+                  <img v-if="v.tg" class="linkImg" src="https://resource2.dfs.land/icon/telegram.png">
+                  <img v-if="v.qq" class="linkImg" src="https://resource2.dfs.land/icon/QQ.png">
                 </div>
               </div>
               <div class="tip num din">{{ v.slogon }}</div>

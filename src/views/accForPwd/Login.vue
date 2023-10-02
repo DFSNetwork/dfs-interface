@@ -11,8 +11,8 @@
         v-model="pwd"
         :type="pwdType" :placeholder="$t('newwallet.loginPwdTip')" />
       <span class="green" @click="handleExType">
-        <img v-if="pwdType === 'password'" src="https://leafy-kataifi-c6d825.netlify.app/dfs/pwd-show.png">
-        <img v-else src="https://leafy-kataifi-c6d825.netlify.app/dfs/pwd-hide.png">
+        <img v-if="pwdType === 'password'" src="https://resource2.dfs.land/dfs/pwd-show.png">
+        <img v-else src="https://resource2.dfs.land/dfs/pwd-hide.png">
       </span>
     </div>
     <div class="label">{{ $t('newwallet.pwdTip') }}</div>
@@ -23,15 +23,15 @@
       <van-divider>{{ $t('newwallet.loginByWallet') }}</van-divider>
       <div class="flexb pro">
         <div class="logoItem" @click="handleLoginOther('tp')">
-          <img class="logo" src="https://leafy-kataifi-c6d825.netlify.app/dfs/tp_logo.png">
+          <img class="logo" src="https://resource2.dfs.land/dfs/tp_logo.png">
           <div>TP</div>
         </div>
         <div class="logoItem" @click="handleLoginOther('mykey')">
-          <img class="logo" src="https://leafy-kataifi-c6d825.netlify.app/dfs/mykey_logo.png">
+          <img class="logo" src="https://resource2.dfs.land/dfs/mykey_logo.png">
           <div>Mykey</div>
         </div>
         <div class="logoItem" @click="handleLoginOther('start')">
-          <img class="logo" src="https://leafy-kataifi-c6d825.netlify.app/dfs/start_logo.png">
+          <img class="logo" src="https://resource2.dfs.land/dfs/start_logo.png">
           <div>Start</div>
         </div>
       </div>

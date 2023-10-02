@@ -61,7 +61,7 @@
                 <div class="name"  @click="handleTo(item)">
                   <div class="flexa">
                     <span>{{ (item.accInfo ? item.accInfo.nick || item.fromx : item.fromx) }}</span>
-                    <img class="hotImg" width="20px" src="https://storied-crepe-e5e65c.netlify.app/icon/hot.png" alt="">
+                    <img class="hotImg" width="20px" src="https://resource1.dfs.land/icon/hot.png" alt="">
                   </div>
                   <div class="price flexa tip">
                     <span class="">{{ $t('fundation.transNum') }}：</span>
@@ -70,8 +70,8 @@
                 </div>
                 <div class="flexa tip likeDiv" @click="handleShowLike(item)">
                   <span>{{ item.likeNum || 0 }}</span>
-                  <img v-if="item.like_status === 0" src="https://storied-crepe-e5e65c.netlify.app/icon/newlike.png" alt="">
-                  <img v-else width="20px" src="https://storied-crepe-e5e65c.netlify.app/icon/newlike1.png" alt="">
+                  <img v-if="item.like_status === 0" src="https://resource1.dfs.land/icon/newlike.png" alt="">
+                  <img v-else width="20px" src="https://resource1.dfs.land/icon/newlike1.png" alt="">
                 </div>
               </div>
               <div @click="handleReply(item)">
@@ -96,7 +96,7 @@
               <div class="showReply flexa" v-if="!item.showReply && item.replyNum"
                 @click="handleShowItemReply(item)">
                 <span>{{ $t('fundation.openSubReply', {len: item.replyNum}) }}</span>
-                <img src="https://storied-crepe-e5e65c.netlify.app/icon/showMore.png" alt="">
+                <img src="https://resource1.dfs.land/icon/showMore.png" alt="">
               </div>
               <div class="replyLists" v-else-if="item.showReply">
                 <ReplyLists :listsLen="item.replyNum" :reply="item"
@@ -122,8 +122,8 @@
                 </div>
                 <div class="flexa tip likeDiv" @click="handleShowLike(item)">
                   <span>{{ item.likeNum || 0 }}</span>
-                  <img v-if="item.like_status === 0" src="https://storied-crepe-e5e65c.netlify.app/icon/newlike.png" alt="">
-                  <img v-else width="20px" src="https://storied-crepe-e5e65c.netlify.app/icon/newlike1.png" alt="">
+                  <img v-if="item.like_status === 0" src="https://resource1.dfs.land/icon/newlike.png" alt="">
+                  <img v-else width="20px" src="https://resource1.dfs.land/icon/newlike1.png" alt="">
                 </div>
               </div>
               <div @click="handleReply(item)">
@@ -148,7 +148,7 @@
               <div class="showReply flexa" v-if="!item.showReply && item.replyNum"
                 @click="handleShowItemReply(item)">
                 <span>{{ $t('fundation.openSubReply', {len: item.replyNum}) }}</span>
-                <img src="https://storied-crepe-e5e65c.netlify.app/icon/showMore.png" alt="">
+                <img src="https://resource1.dfs.land/icon/showMore.png" alt="">
               </div>
               <div class="replyLists" v-else-if="item.showReply">
                 <ReplyLists :listsLen="item.replyNum" :reply="item"
@@ -221,7 +221,7 @@ export default {
   },
   data() {
     return {
-      errorCoinImg: 'this.src="https://storied-crepe-e5e65c.netlify.app/icon/pig.png"',
+      errorCoinImg: 'this.src="https://resource1.dfs.land/icon/pig.png"',
       
       loadingMore: false,
       toTx: true,

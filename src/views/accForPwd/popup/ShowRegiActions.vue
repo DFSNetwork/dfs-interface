@@ -1,6 +1,6 @@
 <template>
   <div class="info">
-    <img class="close" @click="handleClose" src="https://leafy-kataifi-c6d825.netlify.app/dfs/close-white.png">
+    <img class="close" @click="handleClose" src="https://resource2.dfs.land/dfs/close-white.png">
     <div class="title">{{ $t('newwallet.scanTip') }}</div>
     <div class="bg">
       <div class="qrCode">
@@ -25,7 +25,7 @@
               v-clipboard:copy="'dfsacmanager'"
               v-clipboard:success="onCopy"
               v-clipboard:error="onError"
-              src="https://leafy-kataifi-c6d825.netlify.app/dfs/copy.png">
+              src="https://resource2.dfs.land/dfs/copy.png">
           </div>
           <div class="dinReg">dfsacmanager</div>
         </div>
@@ -38,7 +38,7 @@
               v-clipboard:copy="memo"
               v-clipboard:success="onCopy"
               v-clipboard:error="onError"
-              src="https://leafy-kataifi-c6d825.netlify.app/dfs/copy.png">
+              src="https://resource2.dfs.land/dfs/copy.png">
           </div>
           <div class="dinReg">{{ memo }}</div>
         </div>

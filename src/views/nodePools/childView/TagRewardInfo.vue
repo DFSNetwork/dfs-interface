@@ -10,7 +10,7 @@
     </div>
     <div class="claim flexa">
       <div class="myLoading flexc" v-if="isClaim"><van-loading type="spinner" color="#29D4B0"/></div>
-      <!-- <img class="tipImg" src="https://storied-crepe-e5e65c.netlify.app/icon/tips_icon_btn.svg"> -->
+      <!-- <img class="tipImg" src="https://resource1.dfs.land/icon/tips_icon_btn.svg"> -->
       <div class="btn flexc" @click="handleClaimAll">{{ $t('mine.claimAll') }}</div>
     </div>
   </div>

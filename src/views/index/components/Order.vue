@@ -3,12 +3,12 @@
     <div class="item">
       <div class="num flex">
         <span>1.0000 EOS</span>
-        <img class="iconImg" src="https://storied-crepe-e5e65c.netlify.app/dex/price_switch_icon_green_left.svg" alt="">
+        <img class="iconImg" src="https://resource1.dfs.land/dex/price_switch_icon_green_left.svg" alt="">
         <span>1.0000 EOS</span>
       </div>
       <div class="flexb">
         <span class="user flex">
-          <img class="iconImg" src="https://storied-crepe-e5e65c.netlify.app/dex/user_icon.svg" alt="">
+          <img class="iconImg" src="https://resource1.dfs.land/dex/user_icon.svg" alt="">
           <span>shenz****zhen</span>
         </span>
         <span class="tip">2020-07-23 15:45:47</span>
@@ -18,12 +18,12 @@
     <div class="item">
       <div class="num flex">
         <span>1.0000 EOS</span>
-        <img class="iconImg" src="https://storied-crepe-e5e65c.netlify.app/dex/price_switch_icon_green_left.svg" alt="">
+        <img class="iconImg" src="https://resource1.dfs.land/dex/price_switch_icon_green_left.svg" alt="">
         <span>1.0000 EOS</span>
       </div>
       <div class="flexb">
         <span class="user flex">
-          <img class="iconImg" src="https://storied-crepe-e5e65c.netlify.app/dex/user_icon.svg" alt="">
+          <img class="iconImg" src="https://resource1.dfs.land/dex/user_icon.svg" alt="">
           <span>shenz****zhen</span>
         </span>
         <span class="tip">2020-07-23 15:45:47</span>

@@ -21,8 +21,8 @@ const app = {
     rSwitch: localStorage.getItem('rSwitch') ? JSON.parse(localStorage.getItem('rSwitch')) : true,
     minScreen: false,
     accInfo: {
-      avatar: "https://leafy-kataifi-c6d825.netlify.app/coin/tagtokenmain-tag.png",
-      cover: "https://storied-crepe-e5e65c.netlify.app/accBanner/banner1.png",
+      avatar: "https://resource2.dfs.land/coin/tagtokenmain-tag.png",
+      cover: "https://resource1.dfs.land/accBanner/banner1.png",
       desc: "",
       nick: "",
       sex: 2,

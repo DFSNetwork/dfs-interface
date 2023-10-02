@@ -1,10 +1,10 @@
 <template>
   <div class="allClaim flexb flexs" v-loading="waiting">
-    <img class="bgImg" src="https://storied-crepe-e5e65c.netlify.app/bg/myReward.png" alt="">
+    <img class="bgImg" src="https://resource1.dfs.land/bg/myReward.png" alt="">
     <div>
       <div class="subTitle flexa tip">
         <span>{{ $t('mine.waitClaim') }}</span>
-        <img class="tipIcon ml10" @click="showRules = true" src="https://storied-crepe-e5e65c.netlify.app/icon/tips_icon_btn.svg" alt="">
+        <img class="tipIcon ml10" @click="showRules = true" src="https://resource1.dfs.land/icon/tips_icon_btn.svg" alt="">
         <span class="about tip">({{ $t('nodePools.allReward') }} ≈ {{ allReward }} EOS)</span>
       </div>
       <template v-for="(v) in lpPoolsMid">

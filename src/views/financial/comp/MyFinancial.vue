@@ -8,7 +8,7 @@
       <div class="list">
         <div class="flexb coinInfo">
           <div class="flexa">
-            <img src="https://leafy-kataifi-c6d825.netlify.app/coin/eosio.token-eos.svg" alt="">
+            <img src="https://resource2.dfs.land/coin/eosio.token-eos.svg" alt="">
             <span class="coinName">EOS</span>
           </div>
           <div class="btnDiv flexb">

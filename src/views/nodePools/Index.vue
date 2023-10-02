@@ -2,7 +2,7 @@
   <div class="nodePools">
     <div class="bg">
       <div class="banner">
-        <img class="bannerImg" src="https://storied-crepe-e5e65c.netlify.app/banner/nodePools.png" alt="">
+        <img class="bannerImg" src="https://resource1.dfs.land/banner/nodePools.png" alt="">
       </div>
       <div class="dataInfo">
         <div class="flexb floatDiv">

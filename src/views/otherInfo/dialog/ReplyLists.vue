@@ -1,7 +1,7 @@
 <template>
   <div class="replyLists">
     <img class="close" @click="handleClose(false)"
-      src="https://storied-crepe-e5e65c.netlify.app/svg/sd_icon_btn.svg">
+      src="https://resource1.dfs.land/svg/sd_icon_btn.svg">
     <div class="title">TA的动态</div>
     <div class="mainContent">
       <div class="list flexs">
@@ -19,11 +19,11 @@
           <div class="time tip">{{handleToLocalTime(item.dealTime)}}</div>
           <div class="flexa replyDiv tip">
             <span class="flexa" @click="handleMainLike">
-              <img src="https://storied-crepe-e5e65c.netlify.app/icon/newlike.png" alt="">
+              <img src="https://resource1.dfs.land/icon/newlike.png" alt="">
               <span>{{ item.likeNum }}</span>
             </span>
             <span class="flexa right" @click="handleMainReply">
-              <img src="https://storied-crepe-e5e65c.netlify.app/icon/reply.png" alt="">
+              <img src="https://resource1.dfs.land/icon/reply.png" alt="">
               <span>{{ item.replyNum }}</span>
             </span>
           </div>
@@ -34,7 +34,7 @@
       <div class="subTitle">全部回复</div>
 
       <div class="noDate tip" v-if="!lists.length">
-        <img src="https://storied-crepe-e5e65c.netlify.app/noData/noData1.png" alt="">
+        <img src="https://resource1.dfs.land/noData/noData1.png" alt="">
         <div>暂时没有评论哦</div>
       </div>
 
@@ -52,8 +52,8 @@
               </div>
               <div class="likeDiv tip flexend" @click="handleShowLike(item)">
                 <span>{{ item.likeNum }}</span>
-                <img v-if="!item.like_status" src="https://storied-crepe-e5e65c.netlify.app/icon/newlike.png" alt="">
-                <img v-else width="20px" src="https://storied-crepe-e5e65c.netlify.app/icon/newlike1.png" alt="">
+                <img v-if="!item.like_status" src="https://resource1.dfs.land/icon/newlike.png" alt="">
+                <img v-else width="20px" src="https://resource1.dfs.land/icon/newlike1.png" alt="">
               </div>
             </div>
 
@@ -127,7 +127,7 @@ export default {
   },
   data() {
     return {
-      errorCoinImg: 'this.src="https://storied-crepe-e5e65c.netlify.app/icon/pig.png"',
+      errorCoinImg: 'this.src="https://resource1.dfs.land/icon/pig.png"',
       lists: [],
       showToLike: false,
       showToFundation: false,

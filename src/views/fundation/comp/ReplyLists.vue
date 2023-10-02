@@ -15,8 +15,8 @@
               </div>
               <div class="likeDiv tip flexend" @click="handleShowLike(item)">
                 <span>{{ item.likeNum }}</span>
-                <img v-if="!item.like_status" src="https://storied-crepe-e5e65c.netlify.app/icon/newlike.png" alt="">
-                <img v-else width="20px" src="https://storied-crepe-e5e65c.netlify.app/icon/newlike1.png" alt="">
+                <img v-if="!item.like_status" src="https://resource1.dfs.land/icon/newlike.png" alt="">
+                <img v-else width="20px" src="https://resource1.dfs.land/icon/newlike1.png" alt="">
               </div>
             </div>
           </div>
@@ -47,11 +47,11 @@
     </div>
     <div class="showMore flexa" v-if="lists.length < subLen" @click="handleGetMore">
       <span>{{ $t('fundation.more') }}</span>
-      <img src="https://storied-crepe-e5e65c.netlify.app/icon/showMore.png" alt="">
+      <img src="https://resource1.dfs.land/icon/showMore.png" alt="">
     </div>
     <div class="closeMore flexa" v-else @click="handleCloseMore">
       <span>{{ $t('fundation.close') }}</span>
-      <img src="https://storied-crepe-e5e65c.netlify.app/icon/showMore.png" alt="">
+      <img src="https://resource1.dfs.land/icon/showMore.png" alt="">
     </div>
     <!-- 去捐款 -->
     <el-dialog
@@ -106,7 +106,7 @@ export default {
   },
   data() {
     return {
-      errorCoinImg: 'this.src="https://storied-crepe-e5e65c.netlify.app/icon/pig.png"',
+      errorCoinImg: 'this.src="https://resource1.dfs.land/icon/pig.png"',
       pageSize: 10,
       page: 1,
       lists: [],

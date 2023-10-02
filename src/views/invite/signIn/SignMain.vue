@@ -2,7 +2,7 @@
   <div class="signMain">
     <div class="title flexa">
       <span>{{ $t('invite.subTip2') }}</span>
-      <img @click="showRules = true" src="https://storied-crepe-e5e65c.netlify.app/icon/tips_icon_btn.svg">
+      <img @click="showRules = true" src="https://resource1.dfs.land/icon/tips_icon_btn.svg">
     </div>
     <div class="signTip">{{ $t('invite.signLimitNum') }}：${{ parseFloat(rewardInfo.limit || 0).toFixed(2) }}</div>
     <div class="coinTotal flexc">{{ $t('invite.lessBal') }}</div>
@@ -14,7 +14,7 @@
     <div class="signIn" v-if="!accInfo.isSigned || joinName !== dName">
       <div class="unSign">
         <div class="subTi">{{ $t('invite.todaySign') }}</div>
-        <img src="https://leafy-kataifi-c6d825.netlify.app/farm/rewardIcon.png">
+        <img src="https://resource2.dfs.land/farm/rewardIcon.png">
         <div class="tip">{{ rewardInfo.reward || '-' }}</div>
       </div>
       <div class="signInBtn flexc" v-if="joinName === dName"
@@ -24,7 +24,7 @@
     <div class="signIn" v-else-if="accInfo.joinNow">
       <div class="unSign">
         <div class="subTi">{{ $t('invite.todaySign') }}</div>
-        <img src="https://leafy-kataifi-c6d825.netlify.app/farm/rewardIcon.png">
+        <img src="https://resource2.dfs.land/farm/rewardIcon.png">
         <div class="tip">{{ rewardInfo.reward }}</div>
       </div>
       <div class="signInBtn flexc disabled">{{ $t('invite.wait') }}</div>
@@ -33,7 +33,7 @@
       <div class="signed">
         <div class="subTi2">{{ $t('invite.signSuccess') }}</div>
         <div class="tip2">{{ $t('invite.getReward', {num: rewardInfo.reward}) }}</div>
-        <img src="https://leafy-kataifi-c6d825.netlify.app/farm/signed.png">
+        <img src="https://resource2.dfs.land/farm/signed.png">
       </div>
       <div class="signInBtn flexc disabled">{{ $t('invite.signed') }}</div>
     </div>

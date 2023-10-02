@@ -10,7 +10,7 @@
           </div>
         </div>
         <div class="likeDiv flexa din">
-          <img src="https://storied-crepe-e5e65c.netlify.app/icon/newlike1.png" alt="">
+          <img src="https://resource1.dfs.land/icon/newlike1.png" alt="">
           <span>{{ bpDetailInfo.likeNum }}</span>
         </div>
       </div>
@@ -35,16 +35,16 @@
           </div>
         </div>
         <div class="rank flexa">
-          <img class="rankImg" src="https://storied-crepe-e5e65c.netlify.app/bpInfo/rank.png" alt="">
+          <img class="rankImg" src="https://resource1.dfs.land/bpInfo/rank.png" alt="">
           <span>{{ $t('bpInfo.currRank', {rank: bpDetailInfo.bprank || 0}) }}</span>
         </div>
       </div>
       <div class="social flexa" v-if="bpDetailInfo.social">
-        <img v-if="bpDetailInfo.social.github" src="https://storied-crepe-e5e65c.netlify.app/par/GitHub_icon.svg" alt="">
-        <img v-if="bpDetailInfo.social.twitter" src="https://storied-crepe-e5e65c.netlify.app/par/twitter_icon.svg" alt="">
-        <img v-if="bpDetailInfo.social.telegram" src="https://storied-crepe-e5e65c.netlify.app/par/telegram_icon.svg" alt="">
-        <img v-if="bpDetailInfo.social.wechat" src="https://storied-crepe-e5e65c.netlify.app/par/WeChat_icon.svg" alt="">
-        <img v-if="bpDetailInfo.social.medium" src="https://storied-crepe-e5e65c.netlify.app/par/medium_icon.svg" alt="">
+        <img v-if="bpDetailInfo.social.github" src="https://resource1.dfs.land/par/GitHub_icon.svg" alt="">
+        <img v-if="bpDetailInfo.social.twitter" src="https://resource1.dfs.land/par/twitter_icon.svg" alt="">
+        <img v-if="bpDetailInfo.social.telegram" src="https://resource1.dfs.land/par/telegram_icon.svg" alt="">
+        <img v-if="bpDetailInfo.social.wechat" src="https://resource1.dfs.land/par/WeChat_icon.svg" alt="">
+        <img v-if="bpDetailInfo.social.medium" src="https://resource1.dfs.land/par/medium_icon.svg" alt="">
       </div>
     </div>
 
@@ -68,7 +68,7 @@
       <div class="item flexb">
         <span class="tip flexa" @click="showEdtsTip = true">
           <span>{{ $t('bpInfo.editor') }}</span>
-          <img class="qus" src="https://storied-crepe-e5e65c.netlify.app/icon/tips_icon_btn.svg" alt="">
+          <img class="qus" src="https://resource1.dfs.land/icon/tips_icon_btn.svg" alt="">
         </span>
         <span>{{ edts || '-' }}</span>
       </div>
@@ -76,7 +76,7 @@
         <span class="tip flexa" @click="handleShowBpJsonErr">
           <span>{{ $t('bpInfo.bpjson') }}</span>
           <img v-if="!bpDetailInfo.bpjson || bpDetailInfo.bpjson_error"
-            class="qus" src="https://storied-crepe-e5e65c.netlify.app/icon/tips_icon_btn.svg" alt="">
+            class="qus" src="https://resource1.dfs.land/icon/tips_icon_btn.svg" alt="">
         </span>
         <span class="flexa">
           <span v-if="!bpDetailInfo.bpjson || bpDetailInfo.bpjson_error">{{ $t('bpInfo.noData1') }}</span>
@@ -86,7 +86,7 @@
       <div class="item apiDiv">
         <span class="tip flexa" @click="handleShowApiTip">
           <span>{{ $t('bpInfo.api') }}</span>
-          <img class="qus" src="https://storied-crepe-e5e65c.netlify.app/icon/tips_icon_btn.svg" alt="">
+          <img class="qus" src="https://resource1.dfs.land/icon/tips_icon_btn.svg" alt="">
         </span>
         <div class="apiUrl">
           <div class="tip" v-if="!bpDetailInfo.nodes">{{ $t('bpInfo.noData1') }}</div>
@@ -113,11 +113,11 @@
       <div class="showMore tip flexc" @click="showMore = !showMore">
         <span class="flexa" v-if="!showMore">
           <span>{{ $t('bpInfo.showMore') }}</span>
-          <img src="https://storied-crepe-e5e65c.netlify.app/icon/down.png" alt="">
+          <img src="https://resource1.dfs.land/icon/down.png" alt="">
         </span>
         <span class="closeMore flexa" v-else>
           <span>{{ $t('bpInfo.close') }}</span>
-          <img src="https://storied-crepe-e5e65c.netlify.app/icon/down.png" alt="">
+          <img src="https://resource1.dfs.land/icon/down.png" alt="">
         </span>
       </div>
     </div>

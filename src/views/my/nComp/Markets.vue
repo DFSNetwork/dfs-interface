@@ -6,9 +6,9 @@
         <span v-if="countByU">(USDT)</span>
         <span v-else>(EOS)</span>
         <img class="eye" v-if="!hideAss" @click="hideAss = !hideAss"
-          src="https://leafy-kataifi-c6d825.netlify.app/dfs/eye.png">
+          src="https://resource2.dfs.land/dfs/eye.png">
         <img class="eye hideeye" v-else  @click="hideAss = !hideAss"
-          src="https://leafy-kataifi-c6d825.netlify.app/dfs/hide.png">
+          src="https://resource2.dfs.land/dfs/hide.png">
       </div>
       <div class="flexend" v-if="!hideAss">
         <span class="amt dinBold" v-if="countByU">{{ allCountUsdt }}</span>
@@ -16,19 +16,19 @@
         <span class="small flexa">
           <span>≈ ¥{{ allCountCNY }}</span>
           <img class="exCount"  @click="countByU = !countByU"
-            src="https://leafy-kataifi-c6d825.netlify.app/dfs/switch.png">
+            src="https://resource2.dfs.land/dfs/switch.png">
         </span>
       </div>
       <div class="flexa" v-else>
         <span class="amt dinBold">********</span>
         <img class="exCount" @click="countByU = !countByU"
-            src="https://leafy-kataifi-c6d825.netlify.app/dfs/switch.png">
+            src="https://resource2.dfs.land/dfs/switch.png">
       </div>
     </div>
 
     <div class="lists">
       <div class="noData" v-if="!showArr.length">
-        <img src="https://storied-crepe-e5e65c.netlify.app/noData/noOrder.png">
+        <img src="https://resource1.dfs.land/noData/noOrder.png">
         <div>{{ $t('my.noLiqData') }}</div>
       </div>
       <div class="item" v-for="(v, i) in showArr" :key="i">
@@ -36,7 +36,7 @@
           <div class="coin din flexa">
             <img class="logo" :src="v.imgUrl0" :onerror="$errorImg">
             <span>{{ v.symbol0 }}</span>
-            <img class="add" src="https://storied-crepe-e5e65c.netlify.app/svg/add.svg">
+            <img class="add" src="https://resource1.dfs.land/svg/add.svg">
             <img class="logo" :src="v.imgUrl1" :onerror="$errorImg">
             <span>{{ v.symbol1 }}</span>
           </div>
@@ -90,7 +90,7 @@
                 'red': parseFloat(v.rdType.rewardB || 0) < 0,
                 }">{{ v.rdType.rewardB }} {{ v.symbol1 }}</span>
             </div>
-            <img @click.stop="handleChangeRewardType(v)" class="qusTip" src="https://storied-crepe-e5e65c.netlify.app/dex/price_switch_icon_green_left.svg" alt="">
+            <img @click.stop="handleChangeRewardType(v)" class="qusTip" src="https://resource1.dfs.land/dex/price_switch_icon_green_left.svg" alt="">
           </div>
           <div class="flexa" v-if="v.timer">
             <span class="label">{{ $t('market.marketTime') }}：</span>

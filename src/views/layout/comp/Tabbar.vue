@@ -5,40 +5,40 @@
       <div class="bar" :class="{'act': $route.name === 'home'}"
         @click="handleTo('home')">
         <span class="myCoin flexc">
-          <img v-if="$route.name !== 'home'" src="https://leafy-kataifi-c6d825.netlify.app/dfs/home2-un.png?v=1">
-          <img v-else src="https://leafy-kataifi-c6d825.netlify.app/dfs/home2.png">
+          <img v-if="$route.name !== 'home'" src="https://resource2.dfs.land/dfs/home2-un.png?v=1">
+          <img v-else src="https://resource2.dfs.land/dfs/home2.png">
         </span>
         <div>{{ $t('home.home') }}</div>
       </div>
       <div class="bar" :class="{'act': $route.name === 'pddex'}"
         @click="handleTo('pddex')">
         <span class="myCoin flexc">
-          <img v-if="$route.name !== 'pddex'" src="https://leafy-kataifi-c6d825.netlify.app/dfs/market3-un.png">
-          <img v-else src="https://leafy-kataifi-c6d825.netlify.app/dfs/market3.png">
+          <img v-if="$route.name !== 'pddex'" src="https://resource2.dfs.land/dfs/market3-un.png">
+          <img v-else src="https://resource2.dfs.land/dfs/market3.png">
         </span>
         <div>{{ $t('tabbar.order') }}</div>
       </div>
       <div class="bar" :class="{'act': $route.name === 'index' || $route.name === 'market'}"
         @click="handleTo('index')">
         <span class="myCoin flexc">
-          <img v-if="$route.name !== 'index' && $route.name !== 'market'" src="https://leafy-kataifi-c6d825.netlify.app/dfs/swap2-un.png">
-          <img v-else src="https://leafy-kataifi-c6d825.netlify.app/dfs/swap2.png?v=1">
+          <img v-if="$route.name !== 'index' && $route.name !== 'market'" src="https://resource2.dfs.land/dfs/swap2-un.png">
+          <img v-else src="https://resource2.dfs.land/dfs/swap2.png?v=1">
         </span>
         <div>{{ $t('tabbar.trade') }}</div>
       </div>
       <div class="bar"
         @click="handleToPro('shining')">
         <span class="myCoin flexc">
-          <img class="myCoinImg" v-if="$route.name !== 'shining'" src="https://leafy-kataifi-c6d825.netlify.app/dfs/fun2-un.png">
-          <img class="myCoinImg" v-else src="https://leafy-kataifi-c6d825.netlify.app/dfs/fun2.png">
+          <img class="myCoinImg" v-if="$route.name !== 'shining'" src="https://resource2.dfs.land/dfs/fun2-un.png">
+          <img class="myCoinImg" v-else src="https://resource2.dfs.land/dfs/fun2.png">
         </span>
         <div>{{ $t('home.shining') }}</div>
       </div>
       <div class="bar" :class="{'act': $route.name === 'myCenter'}"
         @click="handleTo('myCenter')">
         <span class="myCoin flexc">
-          <img class="myCoinImg" v-if="$route.name !== 'myCenter'" src="https://leafy-kataifi-c6d825.netlify.app/dfs/my2-un.png">
-          <img class="myCoinImg" v-else src="https://leafy-kataifi-c6d825.netlify.app/dfs/my2.png">
+          <img class="myCoinImg" v-if="$route.name !== 'myCenter'" src="https://resource2.dfs.land/dfs/my2-un.png">
+          <img class="myCoinImg" v-else src="https://resource2.dfs.land/dfs/my2.png">
         </span>
         <div>{{ $t('tab.my') }}</div>
       </div>

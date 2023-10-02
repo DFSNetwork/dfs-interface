@@ -7,7 +7,7 @@
     <div v-if="showType === 'bg'">
       <div class="flexb" v-for="(page, i) in bg" :key="`page${i}`">
         <div class="item" v-for="(item, index) in page" :key="index" @click="handleCheck(item.id)">
-          <img class="checkedImg" v-if="checked === item.id" src="https://storied-crepe-e5e65c.netlify.app/icon/checked.png" alt="">
+          <img class="checkedImg" v-if="checked === item.id" src="https://resource1.dfs.land/icon/checked.png" alt="">
           <img class="bgImg" :src="item.img">
           <div>{{ item.name }}</div>
         </div>
@@ -17,7 +17,7 @@
       <div class="flexb" v-for="(page, i) in head" :key="`page${i}`">
         <div class="item" v-for="(item, index) in page" :key="index">
           <div :class="`imgDiv flexc ${item.bgClass}`" @click="handleCheck(item.id)">
-            <img class="checkedImg" v-if="checked === item.id" src="https://storied-crepe-e5e65c.netlify.app/icon/checked.png" alt="">
+            <img class="checkedImg" v-if="checked === item.id" src="https://resource1.dfs.land/icon/checked.png" alt="">
             <div class="bgFFF flexc">
               <img :src="item.img">
             </div>
@@ -28,7 +28,7 @@
     </div>
     <div class="self flexa" @click="handleCheck(999)">
       <span class="flexc checkDiv">
-        <img class="checkedImg" v-if="checked === 999" src="https://storied-crepe-e5e65c.netlify.app/icon/checked.png" alt="">
+        <img class="checkedImg" v-if="checked === 999" src="https://resource1.dfs.land/icon/checked.png" alt="">
       </span>
       <span>{{ $t('my.self') }}：</span>
       <input class="ipt" v-model="url" @blur="handleReg" placeholder="https://..." />
@@ -51,63 +51,63 @@ export default {
     return {
       checked: -1,
       head: [[{
-        img: 'https://leafy-kataifi-c6d825.netlify.app/coin/tagtokenmain-tag.png',
-        setImg: 'https://leafy-kataifi-c6d825.netlify.app/coin/tagtokenmain-tag.png',
+        img: 'https://resource2.dfs.land/coin/tagtokenmain-tag.png',
+        setImg: 'https://resource2.dfs.land/coin/tagtokenmain-tag.png',
         bgClass: '',
         name: '秋禾',
         id: 1,
       }, {
-        img: 'https://leafy-kataifi-c6d825.netlify.app/coin/dbctokenmain-dbc.png',
-        setImg: 'https://leafy-kataifi-c6d825.netlify.app/coin/dbctokenmain-dbc.png',
+        img: 'https://resource2.dfs.land/coin/dbctokenmain-dbc.png',
+        setImg: 'https://resource2.dfs.land/coin/dbctokenmain-dbc.png',
         bgClass: 'imgDivBg2',
         name: '白菜',
         id: 2,
       }, {
-        img: 'https://storied-crepe-e5e65c.netlify.app/art/bird0.png',
-        setImg: 'https://storied-crepe-e5e65c.netlify.app/art/bird0.png',
+        img: 'https://resource1.dfs.land/art/bird0.png',
+        setImg: 'https://resource1.dfs.land/art/bird0.png',
         bgClass: 'imgDivBg3',
         name: '青鸟',
         id: 3,
       }], [{
-        img: 'https://leafy-kataifi-c6d825.netlify.app/coin/yfctokenmain-yfc.png',
-        setImg: 'https://leafy-kataifi-c6d825.netlify.app/coin/yfctokenmain-yfc.png',
+        img: 'https://resource2.dfs.land/coin/yfctokenmain-yfc.png',
+        setImg: 'https://resource2.dfs.land/coin/yfctokenmain-yfc.png',
         bgClass: 'imgDivBg4',
         name: '锦鲤',
         id: 4,
       }, {
-        img: 'https://storied-crepe-e5e65c.netlify.app/art/kun.png',
-        setImg: 'https://storied-crepe-e5e65c.netlify.app/art/kun.png',
+        img: 'https://resource1.dfs.land/art/kun.png',
+        setImg: 'https://resource1.dfs.land/art/kun.png',
         bgClass: 'imgDivBg5',
         name: '鲲',
         id: 5,
       }, {
-        img: 'https://leafy-kataifi-c6d825.netlify.app/coin/pddtokenmain-pdd.png',
-        setImg: 'https://leafy-kataifi-c6d825.netlify.app/coin/pddtokenmain-pdd.png',
+        img: 'https://resource2.dfs.land/coin/pddtokenmain-pdd.png',
+        setImg: 'https://resource2.dfs.land/coin/pddtokenmain-pdd.png',
         bgClass: 'imgDivBg6',
         name: '金猪',
         id: 6,
       }]],
       bg: [[{
-        img: 'https://storied-crepe-e5e65c.netlify.app/accBanner/smallBanner1.png',
-        setImg: 'https://storied-crepe-e5e65c.netlify.app/accBanner/banner1.png',
+        img: 'https://resource1.dfs.land/accBanner/smallBanner1.png',
+        setImg: 'https://resource1.dfs.land/accBanner/banner1.png',
         bgClass: '',
         name: '青山绿水',
         id: 1,
       }, {
-        img: 'https://storied-crepe-e5e65c.netlify.app/accBanner/smallBanner2.png',
-        setImg: 'https://storied-crepe-e5e65c.netlify.app/accBanner/banner2.png',
+        img: 'https://resource1.dfs.land/accBanner/smallBanner2.png',
+        setImg: 'https://resource1.dfs.land/accBanner/banner2.png',
         bgClass: '',
         name: '秋风芦苇',
         id: 2,
       }], [{
-        img: 'https://storied-crepe-e5e65c.netlify.app/accBanner/smallBanner3.png',
-        setImg: 'https://storied-crepe-e5e65c.netlify.app/accBanner/banner3.png',
+        img: 'https://resource1.dfs.land/accBanner/smallBanner3.png',
+        setImg: 'https://resource1.dfs.land/accBanner/banner3.png',
         bgClass: '',
         name: '浩瀚无限',
         id: 3,
       }, {
-        img: 'https://storied-crepe-e5e65c.netlify.app/accBanner/smallBanner4.png',
-        setImg: 'https://storied-crepe-e5e65c.netlify.app/accBanner/banner4.png',
+        img: 'https://resource1.dfs.land/accBanner/smallBanner4.png',
+        setImg: 'https://resource1.dfs.land/accBanner/banner4.png',
         bgClass: '',
         name: '嫩脆麦芽',
         id: 4,

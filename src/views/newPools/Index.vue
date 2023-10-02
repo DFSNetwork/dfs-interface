@@ -1,7 +1,7 @@
 <template>
   <div class="pools">
     <div class="banner">
-      <img width="100%" src="https://leafy-kataifi-c6d825.netlify.app/banner/mining.png">
+      <img width="100%" src="https://resource2.dfs.land/banner/mining.png">
     </div>
     <div class="main">
       <Claim :dfsTotal="dfsTotal" :tagTotal="tagTotal" :eosTotal="eosTotal"
@@ -18,7 +18,7 @@
           <span>{{ $t('mine.poolsList') }}</span>
           <!-- <span class="flexa">
             <span class="tip">挖矿规则</span>
-            <img class="qus" src="https://storied-crepe-e5e65c.netlify.app/icon/tips_icon_btn.svg">
+            <img class="qus" src="https://resource1.dfs.land/icon/tips_icon_btn.svg">
           </span> -->
         </div>
         <EosPools ref="EosPools" @totalClaim="handleEosClaim"/>

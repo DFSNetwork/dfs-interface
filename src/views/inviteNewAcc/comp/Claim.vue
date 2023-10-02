@@ -4,7 +4,7 @@
       <div class="title flexa">
         <span>{{ $t('newwallet.myRewd') }}</span>
         <img class="tips" @click="showInviteTip = true"
-          src="https://storied-crepe-e5e65c.netlify.app/icon/tips_icon_btn.svg">
+          src="https://resource1.dfs.land/icon/tips_icon_btn.svg">
       </div>
 
       <div class="unClaim flexb">

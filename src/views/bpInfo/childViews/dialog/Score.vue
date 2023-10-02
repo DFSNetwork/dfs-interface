@@ -1,7 +1,7 @@
 <template>
   <div class="scoreDiv">
     <img class="close" @click="handleClose()"
-      src="https://storied-crepe-e5e65c.netlify.app/svg/sd_icon_btn.svg" alt="">
+      src="https://resource1.dfs.land/svg/sd_icon_btn.svg" alt="">
     <div class="title">{{ $t('bpInfo.score') }}</div>
     <div class="content">
       <div>{{ $t('bpInfo.give') }}</div>
@@ -10,12 +10,12 @@
           <span @click="handlePercent(1)">{{ $t('public.balance') }}: {{ bal }}</span>
           <span class="flexa">
             <span>{{ $t('fundation.aboutFundation') }}：{{ about }} </span>
-            <img class="love" src="https://storied-crepe-e5e65c.netlify.app/icon/newlike1.png" alt="">
+            <img class="love" src="https://resource1.dfs.land/icon/newlike1.png" alt="">
           </span>
         </div>
         <div class="flexb infoDiv">
           <div class="coinDiv flexb">
-            <img src="https://leafy-kataifi-c6d825.netlify.app/coin/tagtokenmain-tag.png">
+            <img src="https://resource2.dfs.land/coin/tagtokenmain-tag.png">
             <div class="coin">
               <div class="coinName">TAG</div>
               <div class="contract tip">tagtokenmain</div>

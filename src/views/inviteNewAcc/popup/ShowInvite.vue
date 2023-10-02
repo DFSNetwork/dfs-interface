@@ -1,6 +1,6 @@
 <template>
   <div class="info">
-    <img class="close" @click="handleClose" src="https://leafy-kataifi-c6d825.netlify.app/dfs/close-white.png">
+    <img class="close" @click="handleClose" src="https://resource2.dfs.land/dfs/close-white.png">
     <img class="logo" src="@/assets/img/logo.png">
     <div class="title">{{ $t('newwallet.inviTip') }}</div>
     <div class="bg">
@@ -17,7 +17,7 @@
             v-clipboard:copy="memo"
             v-clipboard:success="onCopy"
             v-clipboard:error="onError">{{ $t('newwallet.copy') }}</span>
-          <!-- <img src="https://leafy-kataifi-c6d825.netlify.app/dfs/copy.png"> -->
+          <!-- <img src="https://resource2.dfs.land/dfs/copy.png"> -->
         </span>
       </div>
     </div>

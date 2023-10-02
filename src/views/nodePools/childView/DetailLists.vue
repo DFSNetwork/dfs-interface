@@ -14,7 +14,7 @@
               <div class="contract tip">{{ lpPool.contract0 }}</div>
             </div>
           </div>
-          <img class="addImg" src="https://storied-crepe-e5e65c.netlify.app/svg/add.svg">
+          <img class="addImg" src="https://resource1.dfs.land/svg/add.svg">
           <div class="flexa">
             <img class="logo" :src="lpPool.imgUrl1" >
             <div>
