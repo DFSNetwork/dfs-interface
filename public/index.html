@@ -197,15 +197,15 @@
   <!-- <script type="text/javascript" src="https://resource2.dfs.land/coin/coinJson.js"></script> -->
 </body>
 <script>
-  if('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js', { scope: '/' });
-  }
-  // if ('serviceWorker' in navigator) {
-  //   caches.keys().then(function(cacheNames) {
-  //     cacheNames.forEach(function(cacheName) {
-  //       caches.delete(cacheName);
-  //     });
-  //   });
+  // if('serviceWorker' in navigator) {
+  //   navigator.serviceWorker.register('/sw.js', { scope: '/' });
   // }
+  if ('serviceWorker' in navigator) {
+    caches.keys().then(function(cacheNames) {
+      cacheNames.forEach(function(cacheName) {
+        caches.delete(cacheName);
+      });
+    });
+  }
   </script>
 </html>

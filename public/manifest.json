@@ -4,8 +4,8 @@
     "short_name": "DFS Swap",
     "description": "A decentralized token exchange",
     "start_url": "/",
-    "background_color": "#f6f7fa",
-    "theme_color": "#f6f7fa",
+    "background_color": "#FFFFFF",
+    "theme_color": "#FFFFFF",
     "orientation": "any",
     "display": "standalone",
     "icons": [
