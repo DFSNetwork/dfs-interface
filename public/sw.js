@@ -1,36 +1,77 @@
-// const CACHE_NAME = `dfs-swap-v1`;
+/**
+ * Unlike most Service Workers, this one always attempts to download assets
+ * from the network. Only when network access fails do we fallback to using
+ * the cache. When a request succeeds we always update the cache with the new
+ * version. If a request fails and the result isn't in the cache then we
+ * display an Offline page.
+ */
+const CACHE = 'content-v1.0.2'; // name of the current cache
+const OFFLINE = '/offline'; // URL to offline HTML document
 
-// // Use the install event to pre-cache all initial resources.
-// self.addEventListener('install', event => {
-//   event.waitUntil((async () => {
-//     const cache = await caches.open(CACHE_NAME);
-//     cache.addAll([
-//       '/',
-//       '/converter.js',
-//       '/favicon.ico'
-//     ]);
-//   })());
-// });
+const AUTO_CACHE = [ // URLs of assets to immediately cache
+    OFFLINE,
+    '/',
+    '/sw.js',
+    '/manifest.json',
+    '/favicon.ico',
+    '/app-icon.png',
+];
 
-// self.addEventListener('fetch', event => {
-//   event.respondWith((async () => {
-//     const cache = await caches.open(CACHE_NAME);
+// Iterate AUTO_CACHE and add cache each entry
+self.addEventListener('install', event => {
+    event.waitUntil(
+        caches.open(CACHE)
+            .then(cache => cache.addAll(AUTO_CACHE))
+            .then(self.skipWaiting())
+    );
+});
 
-//     // Get the resource from the cache.
-//     const cachedResponse = await cache.match(event.request);
-//     if (cachedResponse) {
-//       return cachedResponse;
-//     } else {
-//         try {
-//           // If the resource was not in the cache, try the network.
-//           const fetchResponse = await fetch(event.request);
+// Destroy inapplicable caches
+self.addEventListener('activate', event => {
+    event.waitUntil(
+        caches.keys().then(cacheNames => {
+            return cacheNames.filter(cacheName => CACHE !== cacheName);
+        }).then(unusedCaches => {
+            console.log('DESTROYING CACHE', unusedCaches.join(','));
+            return Promise.all(unusedCaches.map(unusedCache => {
+                return caches.delete(unusedCache);
+            }));
+        }).then(() => self.clients.claim())
+    );
+});
 
-//           // Save the resource in the cache and return it.
-//           cache.put(event.request, fetchResponse.clone());
-//           return fetchResponse;
-//         } catch (e) {
-//           // The network failed.
-//         }
-//     }
-//   })());
-// });
+self.addEventListener('fetch', event => {
+    //   if (!event.request.url.startsWith(self.location.origin) || event.request.method !== 'GET') {
+    if (event.request.method !== 'GET') {
+        // External request, or POST, ignore
+        return void event.respondWith(fetch(event.request));
+    }
+
+    event.respondWith(
+        // Always try to download from server first
+        fetch(event.request).then(response => {
+            // When a download is successful cache the result
+            caches.open(CACHE).then(cache => {
+                cache.put(event.request, response)
+            });
+            // And of course display it
+            return response.clone();
+        }).catch((_err) => {
+            // A failure probably means network access issues
+            // See if we have a cached version
+            return caches.match(event.request).then(cachedResponse => {
+                if (cachedResponse) {
+                    // We did have a cached version, display it
+                    return cachedResponse;
+                }
+
+                // We did not have a cached version, display offline page
+                return caches.open(CACHE).then((cache) => {
+                    const offlineRequest = new Request(OFFLINE);
+                    return cache.match(offlineRequest);
+                });
+
+            });
+        })
+    );
+});
