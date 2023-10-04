@@ -5,16 +5,13 @@
  * version. If a request fails and the result isn't in the cache then we
  * display an Offline page.
  */
-const CACHE = 'content-v1.0.2'; // name of the current cache
-const OFFLINE = '/offline'; // URL to offline HTML document
+const CACHE = 'content-v1.0.5'; // name of the current cache
+const OFFLINE = '/index.html'; // URL to offline HTML document
 
 const AUTO_CACHE = [ // URLs of assets to immediately cache
-    OFFLINE,
-    '/',
-    '/sw.js',
     '/manifest.json',
     '/favicon.ico',
-    '/app-icon.png',
+    '/app-icon.png'
 ];
 
 // Iterate AUTO_CACHE and add cache each entry
