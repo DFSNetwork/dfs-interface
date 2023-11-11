@@ -4,7 +4,7 @@
     <div class="title">{{ $t('node.nodeSet') }}</div>
     <div class="content">
       <div class="nodeList flexa" v-for="(node, index) in nodeList" :key="index" @click="handleCheck(node, index)">
-        <div class="checkBox" :class="{'checked': radio === index}">
+        <div class="checkBox" :class="{ 'checked': radio === index }">
           <img class="checkBoxImg" v-if="radio === index" src="https://resource1.dfs.land/icon/checked.png">
         </div>
         <div class="icon">
@@ -20,7 +20,7 @@
         </div>
       </div>
       <div class="nodeList flexa" @click="handleCheck(node, nodeList.length)">
-        <div class="checkBox" :class="{'checked': radio === nodeList.length}">
+        <div class="checkBox" :class="{ 'checked': radio === nodeList.length }">
           <img class="checkBoxImg" v-if="radio === nodeList.length" src="https://resource1.dfs.land/icon/checked.png">
         </div>
         <div class="icon flexa">
@@ -44,115 +44,61 @@ export default {
     return {
       nodeUrl: '',
       nodeList: [
-        // {
-        //   name: 'Default',
-        //   area: 'production',
-        //   protocol: 'https',
-        //   host: 'eos.blockeden.cn', // eospush.tokenpocket.pro
-        //   port: '443',
-        //   url: 'https://eos.blockeden.cn', // https://eospush.tokenpocket.pro
-        //   chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
-        // },
-        // {
-        //   name: 'Default',
-        //   area: 'production',
-        //   protocol: 'https',
-        //   host: 'eos.chains.one', // eospush.tokenpocket.pro
-        //   port: '443',
-        //   url: 'https://eos.chains.one', // https://eospush.tokenpocket.pro
-        //   chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
-        // },
-        {
-          unShowUrl: true,
-          name: 'Default',
-          area: 'production',
-          protocol: 'https',
-          host: '47.244.192.227', // eospush.tokenpocket.pro
-          port: '443',
-          url: 'https://47.244.192.227', // https://eospush.tokenpocket.pro
-          chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
-        },
-        {
-          name: 'Newdex',
-          area: 'production',
-          protocol: 'https',
-          host: 'eos.newdex.one', // eospush.tokenpocket.pro
-          port: '443',
-          url: 'https://eos.newdex.one', // https://eospush.tokenpocket.pro
-          chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
-        },
-        {
-          name: 'Eosflare',
-          area: 'production',
-          protocol: 'https',
-          host: 'api.eosflare.io', // eospush.tokenpocket.pro
-          port: '443',
-          url: 'https://api.eosflare.io', // https://eospush.tokenpocket.pro
-          chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
-        },
         {
           name: 'TP',
           area: 'production',
           protocol: 'https',
-          host: 'eospush.tokenpocket.pro',
+          host: 'eospush.mytokenpocket.vip',
           port: '443',
-          url: 'https://eospush.tokenpocket.pro',
-          chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
-        },
-        {
-          name: 'Fwnw',
-          area: 'production',
-          protocol: 'https',
-          host: 'api.fwnw.com',
-          port: '443',
-          url: 'https://api.fwnw.com',
+          url: 'https://eospush.mytokenpocket.vip',
           chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
         },
         {
           name: 'Greymass',
           area: 'production',
           protocol: 'https',
-          host: 'eos.greymass.com', // eospush.tokenpocket.pro
+          host: 'eos.greymass.com',
           port: '443',
-          url: 'https://eos.greymass.com', // https://eospush.tokenpocket.pro
+          url: 'https://eos.greymass.com',
           chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
         },
         {
-          name: 'Scatter',
+          name: 'Nation',
           area: 'production',
           protocol: 'https',
-          host: 'nodes.get-scatter.com', // eospush.tokenpocket.pro
+          host: 'eos.api.eosnation.io',
           port: '443',
-          url: 'https://nodes.get-scatter.com', // https://eospush.tokenpocket.pro
+          url: 'https://eos.api.eosnation.io',
           chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
         },
         {
-          name: 'Sweden',
+          unShowUrl: true,
+          name: 'Default',
           area: 'production',
           protocol: 'https',
-          host: 'api.eossweden.se',
+          host: '47.244.192.227',
           port: '443',
-          url: 'https://api.eossweden.se', // https://eospush.tokenpocket.pro
+          url: 'https://47.244.192.227',
           chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
         },
         {
-          name: 'Laomao',
+          name: 'Start',
           area: 'production',
           protocol: 'https',
-          host: 'api.eoslaomao.com',
+          host: 'api-mainnet.starteos.io',
           port: '443',
-          url: 'https://api.eoslaomao.com', // https://eospush.tokenpocket.pro
+          url: 'https://api-mainnet.starteos.io',
           chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
         },
         {
-          name: 'Eosn',
+          name: 'Eosflare',
           area: 'production',
           protocol: 'https',
-          host: 'api.eosn.io',
+          host: 'api.eosflare.io',
           port: '443',
-          url: 'https://api.eosn.io', // https://eospush.tokenpocket.pro
+          url: 'https://api.eosflare.io',
           chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
-        }
+        },
       ],
       node: null,
       radio: 1,
@@ -233,7 +179,7 @@ export default {
       this.nodeList.forEach(async v => {
         const url = v.url;
         let nodeTime = moment().valueOf();
-        const {status} = await this.$api.get_info(url)
+        const { status } = await this.$api.get_info(url)
         if (!status) {
           this.$set(v, 'delay', 9999)
           return
@@ -247,65 +193,78 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.nodeSet{
+.nodeSet {
   font-size: 28px;
   padding: 40px 0 0;
   color: #333;
   position: relative;
-  .close{
+
+  .close {
     position: absolute;
     top: 40px;
     right: 40px;
     width: 24px;
   }
-  .title{
+
+  .title {
     font-size: 36px;
     font-weight: 500;
     margin-bottom: 20px;
   }
-  .content{
+
+  .content {
     height: 700px;
     overflow: auto;
   }
-  .nodeList{
+
+  .nodeList {
     text-align: left;
     height: 120px;
     border-bottom: 1px solid $color-border;
     padding: 0 40px;
+
     // &:last-child{
     //   border-bottom: 0;
     // }
-    .checkBox{
+    .checkBox {
       margin-right: 30px;
       width: 40px;
       height: 40px;
       border-radius: 50%;
       border: 1px solid $color-border;
       box-sizing: border-box;
-      &.checked{
+
+      &.checked {
         border: 0px solid $color-border;
       }
-      .checkBoxImg{
+
+      .checkBoxImg {
         width: 100%;
       }
     }
-    .name{
+
+    .name {
       font-size: 30px;
     }
-    .delay{
+
+    .delay {
       font-size: 24px;
       margin-left: 20px;
-      &.green{
+
+      &.green {
         color: $color-main;
       }
-      &.yellow{
+
+      &.yellow {
         color: #FFBE00;
       }
-      &.red{
+
+      &.red {
         color: #FE3B37;
       }
     }
-    .input{
+
+    .input {
       outline: none;
       border: 1px solid $color-border;
       height: 45px;
@@ -313,16 +272,19 @@ export default {
       padding-left: 10px;
       border-radius: 3px;
     }
-    .icon{
+
+    .icon {
       position: relative;
       padding-left: 10px;
       flex: 1;
     }
   }
-  .btnDiv{
+
+  .btnDiv {
     height: 136px;
   }
-  .btn{
+
+  .btn {
     flex: 1;
     font-size: 36px;
     border-radius: 10px;
@@ -330,10 +292,12 @@ export default {
     min-width: 100px;
     padding: 0 20px;
     height: 120px;
-    &.cancel{
+
+    &.cancel {
       color: $color-tip;
       position: relative;
-      &::after{
+
+      &::after {
         content: '';
         position: absolute;
         top: 50%;
@@ -344,5 +308,4 @@ export default {
       }
     }
   }
-}
-</style>
+}</style>
