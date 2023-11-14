@@ -3,14 +3,14 @@ const sys = {
   state: {
     baseConfig: {
       node: {
-        unShowUrl: true,
-        name: 'Default',
+        name: 'TP',
         area: 'production',
         protocol: 'https',
-        host: '47.244.192.227', // eospush.tokenpocket.pro
+        host: 'eospush.mytokenpocket.vip',
         port: '443',
-        url: 'https://47.244.192.227', // https://eospush.tokenpocket.pro
-        chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
+        url: 'https://eospush.mytokenpocket.vip',
+        chainId:
+          'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
       },
     },
     // 区块链浏览器配置
@@ -21,14 +21,16 @@ const sys = {
         token: 'https://bloks.io/tokens/',
       },
     },
-    testConfig: { // 测试环境配置
+    testConfig: {
+      // 测试环境配置
       node: {
-        area: "test",
-        protocol: "https",
-        host: "api.testnet.eos.io",
-        port: "443",
-        url: "https://api.testnet.eos.io/",
-        chainId: "cf057bbfb72640471fd910bcb67639c22df9f92470936cddc1ade0e2f2e7dc4f",
+        area: 'test',
+        protocol: 'https',
+        host: 'api.testnet.eos.io',
+        port: '443',
+        url: 'https://api.testnet.eos.io/',
+        chainId:
+          'cf057bbfb72640471fd910bcb67639c22df9f92470936cddc1ade0e2f2e7dc4f',
       },
       toAccountSwap: 'jinswap11112', // 主交易 swap 合约
       toAccountJin: ' jinbankoneo2', // JIN 合约
@@ -50,16 +52,17 @@ const sys = {
       pddex: 'pddex.dfs',
       box: 'swap.defi',
     },
-    devConfig: { // 开发环境配置
+    devConfig: {
+      // 开发环境配置
       node: {
-        unShowUrl: true,
-        name: 'Default',
+        name: 'TP',
         area: 'production',
         protocol: 'https',
-        host: '47.244.192.227', // eospush.tokenpocket.pro
+        host: 'eospush.mytokenpocket.vip',
         port: '443',
-        url: 'https://47.244.192.227', // https://eospush.tokenpocket.pro
-        chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
+        url: 'https://eospush.mytokenpocket.vip',
+        chainId:
+          'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
       },
       toAccountSwap: 'defisswapcnt', // 主交易 swap 合约
       toAccountJin: 'bankofusddv1', // JIN 合约
@@ -82,17 +85,20 @@ const sys = {
       pddex: 'pddex.dfs',
       box: 'swap.defi',
     },
-    proConfig: { // 生产环境配置
-      node: localStorage.getItem('proConfig') ? JSON.parse(localStorage.getItem('proConfig')).node : {
-        unShowUrl: true,
-        name: 'Default',
-        area: 'production',
-        protocol: 'https',
-        host: '47.244.192.227', // eospush.tokenpocket.pro
-        port: '443',
-        url: 'https://47.244.192.227', // https://eospush.tokenpocket.pro
-        chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
-      },
+    proConfig: {
+      // 生产环境配置
+      node: localStorage.getItem('proConfig')
+        ? JSON.parse(localStorage.getItem('proConfig')).node
+        : {
+            name: 'TP',
+            area: 'production',
+            protocol: 'https',
+            host: 'eospush.mytokenpocket.vip',
+            port: '443',
+            url: 'https://eospush.mytokenpocket.vip',
+            chainId:
+              'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
+          },
       toAccountSwap: 'defisswapcnt', // 主交易 swap 合约
       toAccountJin: 'bankofusddv1', // JIN 合约
       toAccountByHyk: 'jintokensell', // 限量买HYK
@@ -116,33 +122,45 @@ const sys = {
     },
     damping: localStorage.getItem('damping') || 0.75, // DFS流通量计算得出 - Math.pow(0.75, parseInt(dfsCurrent / 1000000))
     dfsPrice: localStorage.getItem('dfsPrice') || '0', // DFS 5分钟均价
-    eggargs: localStorage.getItem('eggargs') ? JSON.parse(localStorage.getItem('eggargs')) : [], // 全局aprs
-    feesApr: localStorage.getItem('feesApr') ? JSON.parse(localStorage.getItem('feesApr')) : [], // 全局aprs
-    dsrPools: [{
-      "id": 1,
-      "bonus": "1.05000000000000000",
-      "refund_delay_sec": 2592000
-    },
-    {
-      "id": 2,
-      "bonus": "1.10000000000000000",
-      "refund_delay_sec": 7776000
-    },
-    {
-      "id": 3,
-      "bonus": "1.20000000000000000",
-      "refund_delay_sec": 15552000
-    },
-    {
-      "id": 4,
-      "bonus": "1.50000000000000000",
-      "refund_delay_sec": 31104000
-    }],
-    rankInfoV3: localStorage.getItem('rankInfoV3') ? JSON.parse(localStorage.getItem('rankInfoV3')) : [], // 挖矿权重列表,
-    rankTrade: localStorage.getItem('rankTrade') ? JSON.parse(localStorage.getItem('rankTrade')) : [], // 挖矿权重列表,
+    eggargs: localStorage.getItem('eggargs')
+      ? JSON.parse(localStorage.getItem('eggargs'))
+      : [], // 全局aprs
+    feesApr: localStorage.getItem('feesApr')
+      ? JSON.parse(localStorage.getItem('feesApr'))
+      : [], // 全局aprs
+    dsrPools: [
+      {
+        id: 1,
+        bonus: '1.05000000000000000',
+        refund_delay_sec: 2592000,
+      },
+      {
+        id: 2,
+        bonus: '1.10000000000000000',
+        refund_delay_sec: 7776000,
+      },
+      {
+        id: 3,
+        bonus: '1.20000000000000000',
+        refund_delay_sec: 15552000,
+      },
+      {
+        id: 4,
+        bonus: '1.50000000000000000',
+        refund_delay_sec: 31104000,
+      },
+    ],
+    rankInfoV3: localStorage.getItem('rankInfoV3')
+      ? JSON.parse(localStorage.getItem('rankInfoV3'))
+      : [], // 挖矿权重列表,
+    rankTrade: localStorage.getItem('rankTrade')
+      ? JSON.parse(localStorage.getItem('rankTrade'))
+      : [], // 挖矿权重列表,
     dfsData: {},
     poolsBal: '0.0000', // swap EOS数量
-    poolsTagBal: localStorage.getItem('poolsTagBal') ? localStorage.getItem('poolsTagBal') : '1000.00000000', // swap TAG数量
+    poolsTagBal: localStorage.getItem('poolsTagBal')
+      ? localStorage.getItem('poolsTagBal')
+      : '1000.00000000', // swap TAG数量
 
     // 挖矿年化计算数据
     list: [], // yfc挖矿列表
@@ -152,8 +170,12 @@ const sys = {
     dampingYfc: 1, // YFC挖矿衰减
     dampingDbc: 1, // DBC挖矿衰减
 
-    marketLists: localStorage.getItem('marketLists') ? JSON.parse(localStorage.getItem('marketLists')) : [], // 做市列表
-    filterMkLists: localStorage.getItem('filterMkLists') ? JSON.parse(localStorage.getItem('filterMkLists')) : [], // 过滤后的做市列表
+    marketLists: localStorage.getItem('marketLists')
+      ? JSON.parse(localStorage.getItem('marketLists'))
+      : [], // 做市列表
+    filterMkLists: localStorage.getItem('filterMkLists')
+      ? JSON.parse(localStorage.getItem('filterMkLists'))
+      : [], // 过滤后的做市列表
 
     // TagLp余额
     tagLpBal: 0,
@@ -163,12 +185,14 @@ const sys = {
     // pddex
     tradeInfo: {},
     usdtPrice: 6.5,
-    coinPrices: localStorage.getItem('coinPrices') ? JSON.parse(localStorage.getItem('coinPrices')) : [], // 常用价格
+    coinPrices: localStorage.getItem('coinPrices')
+      ? JSON.parse(localStorage.getItem('coinPrices'))
+      : [], // 常用价格
   },
   mutations: {
     SET_CoinPrices: (state, coinPrices) => {
       state.coinPrices = coinPrices;
-      localStorage.setItem('coinPrices', JSON.stringify(coinPrices))
+      localStorage.setItem('coinPrices', JSON.stringify(coinPrices));
     },
     SET_UsdtPrice: (state, usdtPrice) => {
       state.usdtPrice = usdtPrice;
@@ -220,7 +244,7 @@ const sys = {
     },
     SET_PoolsTagBal: (state, poolsTagBal) => {
       state.poolsTagBal = poolsTagBal;
-      localStorage.setItem('poolsTagBal', poolsTagBal)
+      localStorage.setItem('poolsTagBal', poolsTagBal);
     },
     SET_List: (state, list) => {
       state.list = list;
@@ -242,11 +266,11 @@ const sys = {
     },
     SET_MarketLists: (state, marketLists) => {
       state.marketLists = marketLists;
-      localStorage.setItem('marketLists', JSON.stringify(marketLists))
+      localStorage.setItem('marketLists', JSON.stringify(marketLists));
     },
     SET_FilterMkLists: (state, filterMkLists) => {
       state.filterMkLists = filterMkLists;
-      localStorage.setItem('filterMkLists', JSON.stringify(filterMkLists))
+      localStorage.setItem('filterMkLists', JSON.stringify(filterMkLists));
     },
     // pddex
     SET_TRADEINFO: (state, tradeInfo) => {
@@ -301,7 +325,7 @@ const sys = {
       commit('SET_PoolsBal', poolsBal);
     },
     setPoolsTagBal({ commit }, poolsTagBal) {
-      commit('SET_PoolsTagBal', poolsTagBal)
+      commit('SET_PoolsTagBal', poolsTagBal);
     },
     setList({ commit }, list) {
       commit('SET_List', list);
@@ -331,7 +355,7 @@ const sys = {
     setTradeInfo({ commit }, tradeInfo) {
       commit('SET_TRADEINFO', tradeInfo);
     },
-  }
+  },
 };
 
 export default sys;

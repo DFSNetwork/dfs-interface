@@ -1,44 +1,75 @@
 <template>
   <div class="nodeSet">
-    <img class="close" @click="handleClose" src="https://resource1.dfs.land/svg/sd_icon_btn.svg">
+    <img
+      class="close"
+      @click="handleClose"
+      src="https://resource1.dfs.land/svg/sd_icon_btn.svg"
+    />
     <div class="title">{{ $t('node.nodeSet') }}</div>
     <div class="content">
-      <div class="nodeList flexa" v-for="(node, index) in nodeList" :key="index" @click="handleCheck(node, index)">
-        <div class="checkBox" :class="{ 'checked': radio === index }">
-          <img class="checkBoxImg" v-if="radio === index" src="https://resource1.dfs.land/icon/checked.png">
+      <div
+        class="nodeList flexa"
+        v-for="(node, index) in nodeList"
+        :key="index"
+        @click="handleCheck(node, index)"
+      >
+        <div class="checkBox" :class="{ checked: radio === index }">
+          <img
+            class="checkBoxImg"
+            v-if="radio === index"
+            src="https://resource1.dfs.land/icon/checked.png"
+          />
         </div>
         <div class="icon">
           <div class="">
             <span class="name">{{ node.name || $t('node.standbyNode') }}</span>
-            <span class="delay" :class="{
-              'green': node.delay < 1000,
-              'yellow': node.delay < 3000 && node.delay >= 1000,
-              'red': node.delay >= 3000 || !node.delay,
-            }">{{ node.delay || '- ' }}ms</span>
+            <span
+              class="delay"
+              :class="{
+                green: node.delay < 1000,
+                yellow: node.delay < 3000 && node.delay >= 1000,
+                red: node.delay >= 3000 || !node.delay,
+              }"
+              >{{ node.delay || '- ' }}ms</span
+            >
           </div>
           <span class="tip" v-if="!node.unShowUrl">{{ node.url }}</span>
         </div>
       </div>
       <div class="nodeList flexa" @click="handleCheck(node, nodeList.length)">
-        <div class="checkBox" :class="{ 'checked': radio === nodeList.length }">
-          <img class="checkBoxImg" v-if="radio === nodeList.length" src="https://resource1.dfs.land/icon/checked.png">
+        <div class="checkBox" :class="{ checked: radio === nodeList.length }">
+          <img
+            class="checkBoxImg"
+            v-if="radio === nodeList.length"
+            src="https://resource1.dfs.land/icon/checked.png"
+          />
         </div>
         <div class="icon flexa">
           <span class="tip">{{ $t('node.slef') }}：</span>
-          <input class="input" type="text" @blur="handleBlur" v-model="nodeUrl" placeholder="eg. https://...">
+          <input
+            class="input"
+            type="text"
+            @blur="handleBlur"
+            v-model="nodeUrl"
+            placeholder="eg. https://..."
+          />
         </div>
       </div>
     </div>
     <div class="btnDiv flexb">
-      <div class="btn cancel flexc tip" @click="handleClose">{{ $t('public.cancel') }}</div>
-      <div class="btn flexc" @click="handleSetNode">{{ $t('public.confirm') }}</div>
+      <div class="btn cancel flexc tip" @click="handleClose">
+        {{ $t('public.cancel') }}
+      </div>
+      <div class="btn flexc" @click="handleSetNode">
+        {{ $t('public.confirm') }}
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import moment from 'moment';
-import { mapState } from 'vuex'
+import { mapState } from 'vuex';
 export default {
   data() {
     return {
@@ -51,7 +82,8 @@ export default {
           host: 'eospush.mytokenpocket.vip',
           port: '443',
           url: 'https://eospush.mytokenpocket.vip',
-          chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
+          chainId:
+            'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
         },
         {
           name: 'Greymass',
@@ -60,7 +92,8 @@ export default {
           host: 'eos.greymass.com',
           port: '443',
           url: 'https://eos.greymass.com',
-          chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
+          chainId:
+            'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
         },
         {
           name: 'Nation',
@@ -69,17 +102,8 @@ export default {
           host: 'eos.api.eosnation.io',
           port: '443',
           url: 'https://eos.api.eosnation.io',
-          chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
-        },
-        {
-          unShowUrl: true,
-          name: 'Default',
-          area: 'production',
-          protocol: 'https',
-          host: '47.244.192.227',
-          port: '443',
-          url: 'https://47.244.192.227',
-          chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
+          chainId:
+            'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
         },
         {
           name: 'Start',
@@ -88,7 +112,8 @@ export default {
           host: 'api-mainnet.starteos.io',
           port: '443',
           url: 'https://api-mainnet.starteos.io',
-          chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
+          chainId:
+            'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
         },
         {
           name: 'Eosflare',
@@ -97,59 +122,61 @@ export default {
           host: 'api.eosflare.io',
           port: '443',
           url: 'https://api.eosflare.io',
-          chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
+          chainId:
+            'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
         },
       ],
       node: null,
       radio: 1,
-    }
+    };
   },
   computed: {
     ...mapState({
-      baseConfig: state => state.sys.baseConfig, // 基础配置 - 默认为{}
-      testConfig: state => state.sys.testConfig, // 测试网环境
-      devConfig: state => state.sys.devConfig, // 开发环境
-      proConfig: state => state.sys.proConfig, // 生产环境
-    })
+      baseConfig: (state) => state.sys.baseConfig, // 基础配置 - 默认为{}
+      testConfig: (state) => state.sys.testConfig, // 测试网环境
+      devConfig: (state) => state.sys.devConfig, // 开发环境
+      proConfig: (state) => state.sys.proConfig, // 生产环境
+    }),
   },
   watch: {
     baseConfig: {
       handler: function bc() {
         const url = this.baseConfig.node.url;
-        let radio = this.nodeList.findIndex(v => v.url === url);
+        let radio = this.nodeList.findIndex((v) => v.url === url);
         if (radio === -1) {
           radio = this.nodeList.length;
-          this.nodeUrl = url
+          this.nodeUrl = url;
         }
         this.radio = radio;
       },
-      immediate: true
+      immediate: true,
     },
     nodeUrl() {
       this.node.url = this.nodeUrl;
-    }
+    },
   },
   mounted() {
-    this.handleDealNodeDalay()
+    this.handleDealNodeDalay();
   },
   methods: {
     handleClose() {
-      this.$emit('listenClose', false)
+      this.$emit('listenClose', false);
     },
     handleBlur() {
       const inArr = this.nodeUrl.split('://');
 
-      const protocol = inArr.length > 1 ? inArr[0] : 'https'
+      const protocol = inArr.length > 1 ? inArr[0] : 'https';
       const host = inArr.length > 1 ? inArr[1] : inArr[0];
-      const url = inArr.length > 1 ? this.nodeUrl : `https://${inArr[0]}`
+      const url = inArr.length > 1 ? this.nodeUrl : `https://${inArr[0]}`;
       const self = {
         area: 'production',
         protocol,
         host,
         port: '443',
         url, // https://eospush.tokenpocket.pro
-        chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
-      }
+        chainId:
+          'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
+      };
       this.node = self;
     },
     handleCheck(node, index) {
@@ -157,10 +184,10 @@ export default {
       if (index === this.nodeList.length) {
         if (!this.nodeUrl) {
           this.node = {};
-          return
+          return;
         }
-        this.handleBlur()
-        return
+        this.handleBlur();
+        return;
       }
       this.node = node;
     },
@@ -170,26 +197,26 @@ export default {
       const newConf = this.baseConfig;
       newConf.node = this.node;
       newConf.type = true;
-      localStorage.setItem('proConfig', JSON.stringify(newConf))
+      localStorage.setItem('proConfig', JSON.stringify(newConf));
       this.$store.dispatch('setBaseConfig', newConf);
-      location.reload()
+      location.reload();
     },
     // 获取节点延时
     handleDealNodeDalay() {
-      this.nodeList.forEach(async v => {
+      this.nodeList.forEach(async (v) => {
         const url = v.url;
         let nodeTime = moment().valueOf();
-        const { status } = await this.$api.get_info(url)
+        const { status } = await this.$api.get_info(url);
         if (!status) {
-          this.$set(v, 'delay', 9999)
-          return
+          this.$set(v, 'delay', 9999);
+          return;
         }
         let t = moment().valueOf() - nodeTime;
-        this.$set(v, 'delay', t)
-      })
-    }
+        this.$set(v, 'delay', t);
+      });
+    },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -256,11 +283,11 @@ export default {
       }
 
       &.yellow {
-        color: #FFBE00;
+        color: #ffbe00;
       }
 
       &.red {
-        color: #FE3B37;
+        color: #fe3b37;
       }
     }
 
@@ -308,4 +335,5 @@ export default {
       }
     }
   }
-}</style>
+}
+</style>

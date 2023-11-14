@@ -1,10 +1,10 @@
 /*
-* vuex 全站存储
-* get: this.$store.state.模块.state
-* 如： this.$store.state.app.language
-* set: this.$store.dispatch(actions, value)
-* 如： this.$store.dispatch('setLanguage', 'en');
-*/
+ * vuex 全站存储
+ * get: this.$store.state.模块.state
+ * 如： this.$store.state.app.language
+ * set: this.$store.dispatch(actions, value)
+ * 如： this.$store.dispatch('setLanguage', 'en');
+ */
 
 const app = {
   state: {
@@ -13,28 +13,36 @@ const app = {
     // 主题 默认白天
     theme: localStorage.getItem('theme') || 'theme-278EDA',
     // 节点切换参数
-    nodeChecked: localStorage.getItem('nodeChecked') ? JSON.parse(localStorage.getItem('nodeChecked')) : {
-      eos: {},
-      timer: '',
-    },
-    slipPoint: localStorage.getItem('slipPoint') ? parseInt(localStorage.getItem('slipPoint')) : 1,
-    rSwitch: localStorage.getItem('rSwitch') ? JSON.parse(localStorage.getItem('rSwitch')) : true,
+    nodeChecked: localStorage.getItem('nodeChecked')
+      ? JSON.parse(localStorage.getItem('nodeChecked'))
+      : {
+          eos: {},
+          timer: '',
+        },
+    slipPoint: localStorage.getItem('slipPoint')
+      ? parseInt(localStorage.getItem('slipPoint'))
+      : 1,
+    rSwitch: localStorage.getItem('rSwitch')
+      ? JSON.parse(localStorage.getItem('rSwitch'))
+      : true,
     minScreen: false,
     accInfo: {
-      avatar: "https://resource2.dfs.land/coin/tagtokenmain-tag.png",
-      cover: "https://resource1.dfs.land/accBanner/banner1.png",
-      desc: "",
-      nick: "",
+      avatar: 'https://resource2.dfs.land/coin/tagtokenmain-tag.png',
+      cover: 'https://resource1.dfs.land/accBanner/banner1.png',
+      desc: '',
+      nick: '',
       sex: 2,
     },
     account: {},
     accFollow: [],
-    freeCpu: localStorage.getItem('freeCpu') ? JSON.parse(localStorage.getItem('freeCpu')) : false,
+    freeCpu: localStorage.getItem('freeCpu')
+      ? JSON.parse(localStorage.getItem('freeCpu'))
+      : true,
   },
   mutations: {
-    SET_FREECPU: (state, freeCpu) =>  {
+    SET_FREECPU: (state, freeCpu) => {
       state.freeCpu = freeCpu;
-      localStorage.setItem('freeCpu', JSON.stringify(freeCpu))
+      localStorage.setItem('freeCpu', JSON.stringify(freeCpu));
     },
     SET_ACCINFO: (state, accInfo) => {
       state.accInfo = accInfo;
@@ -101,7 +109,7 @@ const app = {
     setAccFollow({ commit }, accFollow) {
       commit('SET_ACCFOLLOW', accFollow);
     },
-  }
+  },
 };
 
 export default app;
