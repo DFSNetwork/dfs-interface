@@ -1,7 +1,7 @@
 <template>
   <div class="tools">
     <!-- 快捷交易 -->
-    <div class="quick flexb">
+    <!-- <div class="quick flexb">
       <img class="bg" src="https://resource2.dfs.land/dfs/quick_bg.png">
       <div class="info">
         <div class="name">{{ $t('home.oChain') }}</div>
@@ -10,7 +10,7 @@
       <div class="btn flexc" @click="handleToPro('dcap')">
         <span>{{ $t('home.onkey') }}</span>
       </div>
-    </div>
+    </div> -->
 
     <!-- 应用工具 -->
     <div class="appLists">
